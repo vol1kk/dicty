@@ -13,14 +13,14 @@ export default function Header() {
     <header className="flex items-center justify-between">
       <Link
         href="/"
-        className="rounded-md outline-2 outline-offset-2 outline-fuchsia-300 focus-visible:outline"
+        className="rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
       >
         <Dictionary />
       </Link>
       <div className="flex items-center gap-4">
         <select
           onChange={e => changeFont(e.currentTarget.value)}
-          className="rounded-md border-2 border-[#757575] px-2 py-1 outline-2 outline-offset-2 outline-fuchsia-300 focus-visible:outline"
+          className="rounded-md border-2 border-[#757575] px-2 py-1 outline-2 outline-offset-2 outline-primary focus-visible:outline"
           name="font"
           id="font"
         >
