@@ -17,10 +17,14 @@ export default function Home() {
             placeholder="Search for your words..."
           />
           <button
-            className="absolute right-0 top-1/2 -translate-y-1/2 p-4 outline-primary focus-visible:outline-2"
+            className="group absolute right-0 top-1/2 -translate-y-1/2 p-4 outline-primary focus-visible:outline-2"
             type="button"
           >
-            <SearchIcon dimensions={30} className=" hover:fill-primary " />
+            <label className="sr-only">Search button</label>
+            <SearchIcon
+              dimensions={30}
+              className="hover:fill-primary group-focus-visible:fill-primary"
+            />
           </button>
         </div>
       </main>
