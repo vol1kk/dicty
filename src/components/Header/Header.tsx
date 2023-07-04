@@ -86,7 +86,7 @@ export default function Header() {
         <Dictionary />
       </Link>
       <div className="flex items-center gap-4">
-        <div>
+        <div className="relative z-10">
           <div
             tabIndex={0}
             aria-expanded={isFontMenuOpen}
@@ -113,7 +113,7 @@ export default function Header() {
             role="listbox"
             className={clsx(
               isFontMenuOpen ? "block" : "hidden",
-              "absolute rounded-md bg-white p-4 shadow-2xl",
+              "absolute min-w-[175px] rounded-md bg-white p-4 shadow-2xl",
             )}
           >
             <ul className="[&>li]:leading-8">
