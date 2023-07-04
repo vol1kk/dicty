@@ -8,9 +8,9 @@ type useUserPreferences = {
 };
 
 const useUserPreferences = create<useUserPreferences>()(set => ({
-  font: "sans",
+  font: "sans-serif",
   darkTheme: false,
-  setFont: name => set(() => ({ font: name })),
+  setFont: name => set(() => ({ font: name.toLowerCase() })),
   setDarkTheme: () => set(state => ({ darkTheme: !state.darkTheme })),
 }));
 
