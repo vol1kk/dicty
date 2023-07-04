@@ -16,7 +16,7 @@ export default function Layout({ children }: LayoutProps) {
   const getFont = FONTS.get(font) ?? "font-poppins";
   return (
     <div
-      className={`m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] p-6 ${getFont}`}
+      className={`m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12 ${getFont}`}
     >
       <Header />
       {children}
