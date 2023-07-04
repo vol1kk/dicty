@@ -5,7 +5,8 @@ const config = {
   "printWidth": 80,
   "spaceBeforeFunctionParen": false,
   "arrowParens": "avoid",
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  plugins: [require('prettier-plugin-tailwindcss')],
 }
 
 module.exports = config;
