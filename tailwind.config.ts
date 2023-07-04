@@ -7,6 +7,11 @@ export default {
       colors: {
         primary: "#a445ed",
       },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        merriweather: ["Merriweather", "serif"],
+        inconsolata: ["Inconsolata", "monospace"],
+      },
     },
   },
   plugins: [],
