@@ -9,9 +9,6 @@ export default function Header() {
   const setDarkTheme = useUserPreferences(state => state.setDarkTheme);
   const changeFont = useUserPreferences(state => state.setFont);
 
-  const state = useUserPreferences(state => state);
-  console.log(state);
-
   return (
     <header className="flex items-center justify-between">
       <Link
