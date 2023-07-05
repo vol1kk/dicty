@@ -3,6 +3,7 @@ import Header from "~/components/Header/Header";
 import useUserPreferences from "~/store/useUserPreferences";
 import clsx from "clsx";
 import { useEffect } from "react";
+import MobileHeader from "~/components/MobileHeader/MobileHeader";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -39,11 +40,12 @@ export default function Layout({ children }: LayoutProps) {
       <div
         className={clsx(
           getFont,
-          "m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12",
+          "m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12 mobile:grid-rows-[1fr,_auto]",
         )}
       >
         <Header />
         {children}
+        <MobileHeader />
       </div>
     </div>
   );
