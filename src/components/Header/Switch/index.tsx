@@ -35,7 +35,14 @@ export default function Switch() {
           )}
         />
       </span>
-      <MoonIcon className="group-hover:fill-primary" />
+      <span className="-rotate-[32deg]">
+        <MoonIcon
+          className={clsx(
+            "fill-none stroke-[5px] group-hover:stroke-primary",
+            isDarkTheme ? "stroke-primary" : "stroke-[#757575]",
+          )}
+        />
+      </span>
     </label>
   );
 }
