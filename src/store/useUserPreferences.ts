@@ -2,16 +2,16 @@ import { create } from "zustand";
 
 type useUserPreferences = {
   font: string;
-  darkTheme: boolean;
+  theme: string;
   setFont: (name: string) => void;
-  setDarkTheme: () => void;
+  setTheme: (theme: string) => void;
 };
 
 const useUserPreferences = create<useUserPreferences>()(set => ({
   font: "sans-serif",
-  darkTheme: false,
+  theme: "light",
   setFont: name => set(() => ({ font: name.toLowerCase() })),
-  setDarkTheme: () => set(state => ({ darkTheme: !state.darkTheme })),
+  setTheme: theme => set(() => ({ theme: theme })),
 }));
 
 export default useUserPreferences;
