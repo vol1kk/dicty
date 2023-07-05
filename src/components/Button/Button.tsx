@@ -1,14 +1,14 @@
 import { type ButtonHTMLAttributes } from "react";
 
 type ButtonProps = {
-  isSubmit: boolean;
+  isSubmit?: boolean;
   children: React.ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function Button({
   children,
-  isSubmit,
-  className,
+  className = "",
+  isSubmit = false,
   ...props
 }: ButtonProps) {
   return (
