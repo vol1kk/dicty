@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import Header from "~/components/Header/Header";
 import useUserPreferences from "~/store/useUserPreferences";
+import clsx from "clsx";
+import { useEffect } from "react";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -11,15 +14,37 @@ const FONTS = new Map([
   ["sans-serif", "font-poppins"],
 ]);
 
+let once = true;
 export default function Layout({ children }: LayoutProps) {
+  const setFont = useUserPreferences(state => state.setFont);
   const font = useUserPreferences(state => state.font);
+  const setTheme = useUserPreferences(state => state.setTheme);
+  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
+
   const getFont = FONTS.get(font) ?? "font-poppins";
+  useEffect(() => {
+    if (once) {
+      const localTheme = localStorage.getItem("theme") ?? "light";
+      const localFont = localStorage.getItem("font") ?? "serif";
+
+      setFont(localFont);
+      setTheme(localTheme);
+
+      once = false;
+    }
+  }, [setFont, setTheme]);
+
   return (
-    <div
-      className={`m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12 ${getFont}`}
-    >
-      <Header />
-      {children}
+    <div className={clsx(isDarkTheme && "bg-gray-900 text-white")}>
+      <div
+        className={clsx(
+          getFont,
+          "m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12",
+        )}
+      >
+        <Header />
+        {children}
+      </div>
     </div>
   );
 }
