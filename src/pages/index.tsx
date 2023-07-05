@@ -17,7 +17,7 @@ export default function Home() {
         <meta name="description" content="Create your own dictionary!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="mt-10">
+      <main>
         <form className="relative">
           <input
             className={`w-full rounded-xl p-4 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline ${

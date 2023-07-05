@@ -6,7 +6,7 @@ import FontDropdown from "~/components/Header/FontDropdown";
 
 export default function Header() {
   return (
-    <header className="flex items-center justify-between">
+    <header className="mb-10 flex items-center justify-between mobile:hidden">
       <Link
         href="/"
         className="rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
