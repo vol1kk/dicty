@@ -13,6 +13,9 @@ const config = {
         merriweather: ["Merriweather", "serif"],
         inconsolata: ["Inconsolata", "monospace"],
       },
+      screens: {
+        mobile: { max: "425px" },
+      },
     },
   },
   plugins: [],
