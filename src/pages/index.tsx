@@ -2,6 +2,7 @@ import clsx from "clsx";
 import Head from "next/head";
 import SearchIcon from "~/components/Icons/SearchIcon";
 import useUserPreferences from "~/store/useUserPreferences";
+import WordsList from "~/components/WordsList/WordsList";
 
 export default function Home() {
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
@@ -20,9 +21,10 @@ export default function Home() {
       <main>
         <form className="relative">
           <input
-            className={`w-full rounded-xl p-4 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline ${
-              isDarkTheme ? "bg-gray-800" : "bg-gray-100"
-            }`}
+            className={clsx(
+              isDarkTheme ? "bg-gray-800" : "bg-gray-100",
+              `w-full rounded-xl p-4 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline`,
+            )}
             type="text"
             placeholder="Search for your words..."
           />
@@ -42,6 +44,9 @@ export default function Home() {
             />
           </button>
         </form>
+        <div className="mt-8">
+          <WordsList />
+        </div>
       </main>
     </>
   );
