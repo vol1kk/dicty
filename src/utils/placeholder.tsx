@@ -62,11 +62,11 @@ export interface Word {
   id?: string;
   createdById?: string;
   name: string;
-  transcription?: string;
+  transcription: string;
   categories: Category[];
 }
 
-interface Category {
+export interface Category {
   id?: string;
   wordId?: string;
   name: string;
@@ -75,7 +75,7 @@ interface Category {
   antonyms?: string[];
 }
 
-interface Meaning {
+export interface Meaning {
   id?: string;
   categoryId?: string;
   definition: string;
