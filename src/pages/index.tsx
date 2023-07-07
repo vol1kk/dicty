@@ -3,12 +3,24 @@ import Head from "next/head";
 import SearchIcon from "~/components/Icons/SearchIcon";
 import useUserPreferences from "~/store/useUserPreferences";
 import WordsList from "~/components/WordsList/WordsList";
+import useDebounce from "~/hooks/useDebounce";
+import { placeholder } from "~/utils/placeholder";
+import { useMemo, useState } from "react";
+import filterData from "~/utils/filterData";
 
 export default function Home() {
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
-  function inputSearchHandler(e: React.MouseEvent) {
+
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
+
+  const data = useMemo(
+    () => filterData(placeholder, debouncedSearch),
+    [debouncedSearch],
+  );
+
+  function submitFormHandler(e: React.FormEvent) {
     e.preventDefault();
-    console.log(1);
   }
 
   return (
@@ -19,8 +31,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <form className="relative">
+        <form className="relative" onSubmit={submitFormHandler}>
           <input
+            value={search}
+            onChange={e => setSearch(e.target.value.trim())}
             className={clsx(
               isDarkTheme ? "bg-gray-800" : "bg-gray-100",
               `w-full rounded-xl p-4 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline`,
@@ -30,7 +44,6 @@ export default function Home() {
           />
           <button
             aria-hidden="true"
-            onClick={inputSearchHandler}
             className="group absolute right-0 top-1/2 -translate-y-1/2 rounded-lg p-3 outline-2 outline-primary focus-visible:outline"
             type="submit"
           >
@@ -45,7 +58,7 @@ export default function Home() {
           </button>
         </form>
         <div className="mt-8">
-          <WordsList />
+          <WordsList data={data} />
         </div>
       </main>
     </>

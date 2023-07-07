@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { useState } from "react";
-import { placeholder } from "~/utils/placeholder";
 import EditIcon from "~/components/Icons/EditIcon";
 import Accordion from "~/components/Accordion/Accordion";
 import WordTitle from "~/components/Word/WordTitle";
@@ -8,14 +7,19 @@ import WordCategory from "~/components/Word/WordCategory";
 import WordMeanings from "~/components/Word/WordMeanings";
 import useUserPreferences from "~/store/useUserPreferences";
 import WordEdit from "~/components/Word/WordEdit";
+import { type Word } from "~/utils/placeholder";
 
-export default function WordsList() {
+type WordsListProps = {
+  data: Word[];
+};
+
+export default function WordsList({ data }: WordsListProps) {
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
 
   return (
     <ul className="[&>li]:mb-4">
-      {placeholder.map((word, i) => (
+      {data.map((word, i) => (
         <li
           key={word.name}
           className={clsx(
