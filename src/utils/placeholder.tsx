@@ -1,5 +1,25 @@
 export const placeholder: Word[] = [
   {
+    name: "Stufi",
+    transcription: "/ədˈhɪr/",
+    createdById: "c2f5e9ba-0d19-44d9-958a-d1194e45f1f9",
+    categories: [
+      {
+        name: "Verb",
+        meanings: [
+          {
+            definition: "Stick fast to (a surface or substance)",
+            exampleSentences: ["Paint won't adhere well to a greasy surface"],
+          },
+          {
+            definition: "Believe in and follow the practices of",
+            exampleSentences: ["The people adhere to the Muslim religion"],
+          },
+        ],
+      },
+    ],
+  },
+  {
     name: "Suit",
     transcription: "/hoʊm/",
     createdById: "c2f5e9ba-0d19-44d9-958a-d1194e45f1f9",
