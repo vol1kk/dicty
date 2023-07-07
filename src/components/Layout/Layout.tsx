@@ -36,7 +36,7 @@ export default function Layout({ children }: LayoutProps) {
   }, [setFont, setTheme]);
 
   return (
-    <div className={clsx(isDarkTheme && "bg-gray-900 text-white")}>
+    <div className={clsx(isDarkTheme && "bg-gray-900 text-gray-100")}>
       <div
         className={clsx(
           getFont,
