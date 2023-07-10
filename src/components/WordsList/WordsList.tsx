@@ -30,12 +30,14 @@ export default function WordsList({ data }: WordsListProps) {
         >
           <div
             onClick={() => setIsOpen(curr => (curr === i ? null : i))}
-            className="flex cursor-pointer items-center justify-between"
+            className="flex items-center justify-between"
           >
             <WordTitle
+              index={i}
               word={word.name}
-              transcription={word.transcription}
+              setAccordionOpen={setIsOpen}
               isAccordionOpen={isOpen === i}
+              transcription={word.transcription}
             />
             <WordEdit href={"/edit/1"}>
               <EditIcon className="transition-transform group-hover:scale-110 group-hover:fill-primary" />
