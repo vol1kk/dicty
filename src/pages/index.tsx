@@ -19,10 +19,6 @@ export default function Home() {
     [debouncedSearch],
   );
 
-  function submitFormHandler(e: React.FormEvent) {
-    e.preventDefault();
-  }
-
   return (
     <>
       <Head>
@@ -31,7 +27,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <form className="relative" onSubmit={submitFormHandler}>
+        <form className="relative">
           <input
             value={search}
             onChange={e => setSearch(e.target.value.trim())}
