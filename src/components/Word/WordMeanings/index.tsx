@@ -11,10 +11,10 @@ export default function WordMeanings({
   return (
     <ul className="ml-8 list-disc marker:text-primary">
       {meanings.map(meaning => (
-        <li key={meaning.definition} className="mb-2 text-justify">
+        <li key={meaning.id} className="mb-2 text-justify">
           {meaning.definition}
           {showExamples && (
-            <p className="ml-5 text-[#757575]">{meaning.exampleSentences}</p>
+            <p className="ml-5 text-[#757575]">{meaning.example}</p>
           )}
         </li>
       ))}

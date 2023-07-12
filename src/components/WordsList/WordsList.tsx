@@ -37,7 +37,7 @@ export default function WordsList({ data }: WordsListProps) {
     <ul className="[&>li]:mb-4">
       {data.map((word, i) => (
         <li
-          key={word.name}
+          key={word.id}
           className={clsx(
             isDarkTheme && "bg-gray-800",
             !isDarkTheme && "bg-gray-100",
@@ -61,7 +61,7 @@ export default function WordsList({ data }: WordsListProps) {
           </div>
           <Accordion isOpen={isOpen === i}>
             {word.categories.map(category => (
-              <WordCategory key={category.name} name={category.name}>
+              <WordCategory key={category.id} name={category.name}>
                 <WordMeanings meanings={category.meanings} />
               </WordCategory>
             ))}

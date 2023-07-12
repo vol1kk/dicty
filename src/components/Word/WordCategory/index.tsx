@@ -9,7 +9,7 @@ export default function WordCategory({ name, children }: WordCategoryProps) {
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
 
   return (
-    <div key={name}>
+    <div>
       <h3 className="relative flex gap-4 text-xl">
         {name}
         <div
