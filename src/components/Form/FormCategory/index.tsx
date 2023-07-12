@@ -53,7 +53,7 @@ export default function FormCategory({ category, index }: FormCategoryProps) {
             <Button
               className={clsx(
                 isDarkTheme ? "bg-gray-900" : "bg-gray-300",
-                "m-2 mx-auto block rounded-md px-4 py-2",
+                "m-2 mx-auto w-2/6 block rounded-md px-4 py-2",
               )}
               onClick={() => pushMeaning(meaningTemplate)}
             >
