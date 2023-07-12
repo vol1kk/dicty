@@ -4,6 +4,7 @@ import Button from "~/components/Button/Button";
 import useUserPreferences from "~/store/useUserPreferences";
 import FormCategory from "~/components/Form/FormCategory";
 import clsx from "clsx";
+import { type Push } from "~/types/Push";
 
 type FormProps = {
   initialValues: {
@@ -21,6 +22,7 @@ type FormProps = {
       },
     ];
   };
+  isFormOpen: boolean;
 };
 
 const categoryTemplate = {
@@ -28,9 +30,7 @@ const categoryTemplate = {
   meanings: [{ definition: "", example: "" }],
 };
 
-export type Push<T> = { push: (data: T) => void };
-
-export default function Form({ initialValues }: FormProps) {
+export default function Form({ initialValues, isFormOpen }: FormProps) {
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -42,7 +42,20 @@ export default function Form({ initialValues }: FormProps) {
       {({ values: word, isValid }) => (
         <FormikForm className="px-2 py-4 [&>div]:mb-4">
           <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
-            <Input id="name" placeholder="Enter Name" isDarkTheme={isDarkTheme}>
+            <Input
+              onFocus={e => {
+                const items =
+                  e.target.closest(".accordion")?.nextElementSibling;
+
+                const firstItemHeader = items?.querySelector(
+                  "h2 > button",
+                ) as HTMLElement;
+                if (!isFormOpen) firstItemHeader.focus();
+              }}
+              id="name"
+              placeholder="Enter Name"
+              isDarkTheme={isDarkTheme}
+            >
               <span>Name</span>
             </Input>
 
@@ -55,43 +68,61 @@ export default function Form({ initialValues }: FormProps) {
             </Input>
           </div>
           <FieldArray name="categories">
-            {({ push: pushCategory }: Push<typeof categoryTemplate>) => (
-              <div>
-                <h2 className="text-center">Categories</h2>
-                {word.categories.map((category, cIndex) => (
-                  <FormCategory
-                    key={cIndex}
-                    category={category}
-                    index={cIndex}
-                  />
-                ))}
-                <Button
-                  className={clsx(
-                    isDarkTheme ? "bg-gray-900" : "bg-gray-300",
-                    "mx-auto block w-4/6 rounded-md px-4 py-2",
-                  )}
-                  onClick={() =>
-                    pushCategory({
-                      name: "",
-                      meanings: [{ definition: "", example: "" }],
-                    })
-                  }
-                >
-                  Add Category
-                </Button>
-              </div>
-            )}
+            {({
+              push: pushCategory,
+              remove: removeCategory,
+            }: Push<typeof categoryTemplate> & {
+              remove: (index: number) => void;
+            }) => {
+              const removeCategoryHandler = (i: number) => {
+                if (word.categories.length > 1) removeCategory(i);
+              };
+
+              return (
+                <div>
+                  <h2 className="text-center">Categories</h2>
+                  {word.categories.map((category, cIndex) => (
+                    <FormCategory
+                      key={cIndex}
+                      index={cIndex}
+                      category={category}
+                      pushCategory={pushCategory}
+                      removeCategory={removeCategoryHandler}
+                      totalCategories={word.categories.length}
+                    />
+                  ))}
+                </div>
+              );
+            }}
           </FieldArray>
-          <Button
-            disabled={!isValid}
-            isSubmit={true}
-            className={clsx(
-              isDarkTheme ? "bg-gray-900" : "bg-gray-300",
-              "mx-auto block w-full rounded-md px-4 py-2",
-            )}
-          >
-            Add Word
-          </Button>
+          <div className="flex gap-4">
+            <Button
+              disabled={!isValid}
+              isSubmit={true}
+              className={clsx(
+                isDarkTheme ? "bg-gray-900" : "bg-gray-300",
+                "mx-auto block flex-grow-[5] rounded-md px-4 py-2",
+              )}
+            >
+              Add Word
+            </Button>
+            <Button
+              onFocus={e => {
+                const accordionTitle = e.target.closest(".accordion")
+                  ?.firstElementChild as HTMLElement;
+
+                if (!isFormOpen) accordionTitle?.focus();
+              }}
+              disabled={!isValid}
+              isSubmit={true}
+              className={clsx(
+                isDarkTheme ? "bg-gray-900" : "bg-gray-300",
+                "mx-auto block flex-grow rounded-md px-4 py-2",
+              )}
+            >
+              Cancel
+            </Button>
+          </div>
         </FormikForm>
       )}
     </Formik>

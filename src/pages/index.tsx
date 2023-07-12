@@ -61,7 +61,7 @@ export default function Home() {
           <div
             className={clsx(
               isDarkTheme ? "bg-gray-800" : "bg-gray-100",
-              `mb-4 rounded-md p-4`,
+              `accordion mb-4 rounded-md p-4`,
             )}
           >
             <Button
@@ -81,6 +81,7 @@ export default function Home() {
             </Button>
             <Accordion isOpen={isFormOpen}>
               <Form
+                isFormOpen={isFormOpen}
                 initialValues={{
                   name: "",
                   transcription: "",
