@@ -1,17 +1,22 @@
 import { FieldArray, Form as FormikForm, Formik } from "formik";
-import clsx from "clsx";
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
 import { type WordWithoutId } from "~/utils/placeholder";
 import FormCategory from "~/components/Form/FormCategory";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
+import { type Dispatch, type SetStateAction } from "react";
 
 type FormProps = {
   isFormOpen: boolean;
+  setIsFormOpen: Dispatch<SetStateAction<boolean>>;
   initialValues: WordWithoutId;
 };
 
-export default function Form({ initialValues, isFormOpen }: FormProps) {
+export default function Form({
+  initialValues,
+  isFormOpen,
+  setIsFormOpen,
+}: FormProps) {
   const formSubmitHandler = (values: WordWithoutId) => console.log(values);
   function firstFormItem(e: React.FocusEvent<HTMLInputElement>) {
     const items = e.target.closest(".accordion")?.nextElementSibling;
@@ -29,7 +34,7 @@ export default function Form({ initialValues, isFormOpen }: FormProps) {
 
   return (
     <Formik initialValues={initialValues} onSubmit={formSubmitHandler}>
-      {({ values: word, isValid }) => (
+      {({ values: word, isValid, resetForm }) => (
         <FormikForm className="px-2 py-4 [&>div]:mb-4">
           <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
             <Input onFocus={firstFormItem} id="name" placeholder="Enter Name">
@@ -66,8 +71,11 @@ export default function Form({ initialValues, isFormOpen }: FormProps) {
               Add Word
             </Button>
             <Button
+              onClick={() => {
+                setIsFormOpen(false);
+                resetForm();
+              }}
               onFocus={lastFormItem}
-              isSubmit={true}
               className="mx-auto block flex-grow rounded-md bg-gray-300 px-4 py-2 dark:bg-gray-900"
             >
               Cancel

@@ -72,7 +72,11 @@ export default function Home() {
               </span>
             </Button>
             <Accordion isOpen={isFormOpen}>
-              <Form isFormOpen={isFormOpen} initialValues={formTemplate} />
+              <Form
+                setIsFormOpen={setIsFormOpen}
+                isFormOpen={isFormOpen}
+                initialValues={formTemplate}
+              />
             </Accordion>
           </div>
           <WordsList data={data} />
