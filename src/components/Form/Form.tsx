@@ -7,29 +7,25 @@ import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import { type Dispatch, type SetStateAction } from "react";
 
 type FormProps = {
-  isFormOpen: boolean;
   setIsFormOpen: Dispatch<SetStateAction<boolean>>;
   initialValues: WordWithoutId;
 };
 
-export default function Form({
-  initialValues,
-  isFormOpen,
-  setIsFormOpen,
-}: FormProps) {
+export default function Form({ initialValues, setIsFormOpen }: FormProps) {
   const formSubmitHandler = (values: WordWithoutId) => console.log(values);
   function firstFormItem(e: React.FocusEvent<HTMLInputElement>) {
-    const items = e.target.closest(".accordion")?.nextElementSibling;
+    const accordion = e.target.closest(".accordion") as HTMLElement;
 
+    const items = accordion.nextElementSibling;
     const firstItemHeader = items?.querySelector("h2 > button") as HTMLElement;
 
-    if (!isFormOpen) firstItemHeader.focus();
+    if (!!accordion.ariaExpanded) firstItemHeader.focus();
   }
   function lastFormItem(e: React.FocusEvent<HTMLButtonElement>) {
-    const accordionTitle = e.target.closest(".accordion")
-      ?.firstElementChild as HTMLElement;
+    const accordion = e.target.closest(".accordion") as HTMLElement;
+    const accordionTitle = accordion?.firstElementChild as HTMLElement;
 
-    if (!isFormOpen) accordionTitle?.focus();
+    if (!!accordion.ariaExpanded) accordionTitle?.focus();
   }
 
   return (
@@ -62,11 +58,11 @@ export default function Form({
               </div>
             )}
           </FieldArray>
-          <div className="flex gap-4">
+          <div className="flex gap-4 [&>button:first-child]:flex-grow-[5] [&>button:last-child]:flex-grow [&>button]:px-4 [&>button]:py-2">
             <Button
               disabled={!isValid}
               isSubmit={true}
-              className="mx-auto block flex-grow-[5] rounded-md bg-gray-300 px-4 py-2 dark:bg-gray-900"
+              className="rounded-md bg-gray-300 dark:bg-gray-900"
             >
               Add Word
             </Button>
@@ -76,7 +72,7 @@ export default function Form({
                 resetForm();
               }}
               onFocus={lastFormItem}
-              className="mx-auto block flex-grow rounded-md bg-gray-300 px-4 py-2 dark:bg-gray-900"
+              className="rounded-md bg-gray-300 dark:bg-gray-900"
             >
               Cancel
             </Button>

@@ -55,7 +55,10 @@ export default function Home() {
           </Button>
         </form>
         <div className="mt-8">
-          <div className="accordion mb-4 rounded-md bg-gray-100 p-4 dark:bg-gray-800">
+          <div
+            aria-expanded={isFormOpen}
+            className="accordion mb-4 rounded-md bg-gray-100 p-4 dark:bg-gray-800"
+          >
             <Button
               className="flex w-full items-center justify-center text-xl"
               onClick={() => setIsFormOpen(p => !p)}
@@ -74,7 +77,6 @@ export default function Home() {
             <Accordion isOpen={isFormOpen}>
               <Form
                 setIsFormOpen={setIsFormOpen}
-                isFormOpen={isFormOpen}
                 initialValues={formTemplate}
               />
             </Accordion>
