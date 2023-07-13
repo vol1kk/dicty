@@ -1,13 +1,11 @@
-import clsx from "clsx";
 import { useState } from "react";
+import { type Word } from "~/utils/placeholder";
 import EditIcon from "~/components/Icons/EditIcon";
 import Accordion from "~/components/Accordion/Accordion";
 import WordTitle from "~/components/Word/WordTitle";
 import WordCategory from "~/components/Word/WordCategory";
 import WordMeanings from "~/components/Word/WordMeanings";
-import useUserPreferences from "~/store/useUserPreferences";
 import WordEdit from "~/components/Word/WordEdit";
-import { type Word } from "~/utils/placeholder";
 import DictionaryIcon from "~/components/Icons/DictionaryIcon";
 
 type WordsListProps = {
@@ -16,16 +14,11 @@ type WordsListProps = {
 
 export default function WordsList({ data }: WordsListProps) {
   const [isOpen, setIsOpen] = useState<number | null>(null);
-  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
 
   if (data.length === 0) {
     return (
       <div className="flex flex-col items-center gap-4">
-        <div
-          className={`rounded-full ${
-            isDarkTheme ? "bg-gray-800" : "bg-gray-100"
-          } p-6`}
-        >
+        <div className="rounded-full bg-gray-100 p-6 dark:bg-gray-800">
           <DictionaryIcon dimensions={64} />
         </div>
         <h2>Your dictionary is empty!</h2>
@@ -38,11 +31,7 @@ export default function WordsList({ data }: WordsListProps) {
       {data.map((word, i) => (
         <li
           key={word.id}
-          className={clsx(
-            isDarkTheme && "bg-gray-800",
-            !isDarkTheme && "bg-gray-100",
-            "rounded-md p-4",
-          )}
+          className="rounded-md bg-gray-100 p-4 dark:bg-gray-800"
         >
           <div
             onClick={() => setIsOpen(curr => (curr === i ? null : i))}

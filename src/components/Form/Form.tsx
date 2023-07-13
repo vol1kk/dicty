@@ -4,7 +4,6 @@ import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
 import { type WordWithoutId } from "~/utils/placeholder";
 import FormCategory from "~/components/Form/FormCategory";
-import useUserPreferences from "~/store/useUserPreferences";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 
 type FormProps = {
@@ -13,8 +12,6 @@ type FormProps = {
 };
 
 export default function Form({ initialValues, isFormOpen }: FormProps) {
-  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
-
   const formSubmitHandler = (values: WordWithoutId) => console.log(values);
   function firstFormItem(e: React.FocusEvent<HTMLInputElement>) {
     const items = e.target.closest(".accordion")?.nextElementSibling;
@@ -35,20 +32,11 @@ export default function Form({ initialValues, isFormOpen }: FormProps) {
       {({ values: word, isValid }) => (
         <FormikForm className="px-2 py-4 [&>div]:mb-4">
           <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
-            <Input
-              onFocus={firstFormItem}
-              id="name"
-              placeholder="Enter Name"
-              isDarkTheme={isDarkTheme}
-            >
+            <Input onFocus={firstFormItem} id="name" placeholder="Enter Name">
               <span>Name</span>
             </Input>
 
-            <Input
-              id="transcription"
-              placeholder="Enter Transcription"
-              isDarkTheme={isDarkTheme}
-            >
+            <Input id="transcription" placeholder="Enter Transcription">
               <span>Transcription</span>
             </Input>
           </div>
@@ -73,20 +61,14 @@ export default function Form({ initialValues, isFormOpen }: FormProps) {
             <Button
               disabled={!isValid}
               isSubmit={true}
-              className={clsx(
-                isDarkTheme ? "bg-gray-900" : "bg-gray-300",
-                "mx-auto block flex-grow-[5] rounded-md px-4 py-2",
-              )}
+              className="mx-auto block flex-grow-[5] rounded-md bg-gray-300 px-4 py-2 dark:bg-gray-900"
             >
               Add Word
             </Button>
             <Button
               onFocus={lastFormItem}
               isSubmit={true}
-              className={clsx(
-                isDarkTheme ? "bg-gray-900" : "bg-gray-300",
-                "mx-auto block flex-grow rounded-md px-4 py-2",
-              )}
+              className="mx-auto block flex-grow rounded-md bg-gray-300 px-4 py-2 dark:bg-gray-900"
             >
               Cancel
             </Button>

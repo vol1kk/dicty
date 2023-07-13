@@ -35,8 +35,16 @@ export default function Layout({ children }: LayoutProps) {
     }
   }, [setFont, setTheme]);
 
+  useEffect(() => {
+    if (isDarkTheme) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkTheme]);
+
   return (
-    <div className={clsx(isDarkTheme && "bg-gray-900 text-gray-100")}>
+    <div className="dark:bg-gray-900 dark:text-gray-100">
       <div
         className={clsx(
           getFont,

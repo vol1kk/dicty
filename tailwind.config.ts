@@ -2,6 +2,7 @@ import { type Config } from "tailwindcss";
 import withMT from "@material-tailwind/react/utils/withMT";
 
 const config = {
+  darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {

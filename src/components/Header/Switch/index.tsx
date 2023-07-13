@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import MoonIcon from "~/components/Icons/MoonIcon";
 import useUserPreferences from "~/store/useUserPreferences";
 
@@ -22,26 +21,11 @@ export default function Switch() {
       >
         Toggle Dark Theme
       </button>
-      <span
-        className={clsx(
-          isDarkTheme ? "bg-primary [&~svg]:fill-primary" : "bg-gray-600",
-          "relative block h-6 w-12 rounded-full border-4 border-transparent outline-2 outline-offset-2 outline-primary peer-focus-visible:outline [&~svg]:hover:fill-primary",
-        )}
-      >
-        <span
-          className={clsx(
-            isDarkTheme ? "left-6" : "left-0",
-            "absolute h-4 w-4 rounded-full bg-white transition-all",
-          )}
-        />
+      <span className="relative block h-6 w-12 rounded-full border-4 border-transparent bg-gray-600 outline-2 outline-offset-2 outline-primary peer-focus-visible:outline dark:bg-primary [&~svg]:hover:fill-primary dark:[&~svg]:fill-primary">
+        <span className="absolute left-0 h-4 w-4 rounded-full bg-white transition-all dark:left-6" />
       </span>
       <span className="-rotate-[32deg]">
-        <MoonIcon
-          className={clsx(
-            "fill-none stroke-[5px] group-hover:stroke-primary",
-            isDarkTheme ? "stroke-primary" : "stroke-[#757575]",
-          )}
-        />
+        <MoonIcon className="fill-none stroke-[#757575] stroke-[5px] group-hover:stroke-primary dark:stroke-primary" />
       </span>
     </label>
   );

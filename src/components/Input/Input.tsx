@@ -3,7 +3,6 @@ import clsx from "clsx";
 
 type InputProps = {
   id: string;
-  isDarkTheme: boolean;
   classNameLabel?: string;
   before?: boolean;
   labelCentered?: boolean;
@@ -15,7 +14,6 @@ export default function Input({
   before = true,
   className,
   classNameLabel,
-  isDarkTheme,
   placeholder,
   ...props
 }: InputProps) {
@@ -24,8 +22,7 @@ export default function Input({
       {before && children}
       <Field
         className={clsx(
-          isDarkTheme ? "bg-gray-900" : "bg-gray-300",
-          "rounded-md p-2 placeholder-[#757575] outline-1 outline-offset-2 outline-primary focus-visible:outline",
+          "rounded-md bg-gray-300 p-2 placeholder-[#757575] outline-1 outline-offset-2 outline-primary focus-visible:outline dark:bg-gray-900",
           className,
         )}
         placeholder={placeholder}

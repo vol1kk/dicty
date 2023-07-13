@@ -20,7 +20,6 @@ const FONT_TYPES = [
   },
 ] as const;
 export default function FontDropdown() {
-  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
   const setFont = useUserPreferences(state => state.setFont);
   const font = useUserPreferences(state => state.font);
   const [isFontMenuOpen, setIsFontMenuOpen] = useState(false);
@@ -104,8 +103,7 @@ export default function FontDropdown() {
         role="listbox"
         className={clsx(
           isFontMenuOpen ? "block" : "hidden",
-          isDarkTheme ? "bg-gray-800" : "bg-white",
-          "absolute mt-4 min-w-[175px] rounded-md p-4 shadow-2xl",
+          "absolute mt-4 min-w-[175px] rounded-md bg-white p-4 shadow-2xl dark:bg-gray-800",
         )}
       >
         <ul className="[&>li]:leading-8">

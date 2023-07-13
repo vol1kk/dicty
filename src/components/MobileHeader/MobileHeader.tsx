@@ -1,7 +1,6 @@
 import HomeIcon from "~/components/Icons/HomeIcon";
 import useUserPreferences from "~/store/useUserPreferences";
 import MoonIcon from "~/components/Icons/MoonIcon";
-import clsx from "clsx";
 import SearchIcon from "~/components/Icons/SearchIcon";
 import Button from "~/components/Button/Button";
 import AccountIcon from "~/components/Icons/AccountIcon";
@@ -37,10 +36,7 @@ export default function MobileHeader() {
           <Button onClick={onThemeToggle}>
             <MoonIcon
               dimensions={28}
-              className={clsx(
-                isDarkTheme ? "fill-[#757575]" : "fill-none",
-                "stroke-[#757575] stroke-[3px] transition-all",
-              )}
+              className="fill-none stroke-[#757575] stroke-[3px] transition-all dark:fill-[#757575]"
             />
           </Button>
         </li>

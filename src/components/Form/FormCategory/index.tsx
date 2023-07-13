@@ -1,14 +1,11 @@
-import clsx from "clsx";
 import { FieldArray } from "formik";
 import { useRef, useState } from "react";
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
 import DotsIcon from "~/components/Icons/DotsIcon";
 import FormMeaning from "~/components/Form/FormMeaning";
-import useUserPreferences from "~/store/useUserPreferences";
 import {
   type CategoryWithoutId,
-  type MeaningWithoutId,
 } from "~/utils/placeholder";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 
@@ -39,7 +36,6 @@ export default function FormCategory({
     {} as Pick<FieldArrayHelpers, "push" | "remove">,
   );
   const [isExpanded, setIsExpanded] = useState(false);
-  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
 
   function removeCategoryHandler(i: number) {
     if (categoriesLength > 1) removeCategory(i);
@@ -64,27 +60,17 @@ export default function FormCategory({
         classNameLabel="relative block col-span-2"
         value={category.name}
         placeholder="Enter Category"
-        isDarkTheme={isDarkTheme}
       >
         <Button
           onClick={() => setIsExpanded(p => !p)}
-          className={clsx(
-            isDarkTheme ? "bg-gray-800" : "bg-primary bg-opacity-30",
-            "absolute right-2 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full p-2",
-          )}
+          className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-primary bg-opacity-30 p-2 dark:bg-gray-800"
         >
-          <DotsIcon
-            dimensions={16}
-            className={clsx(isDarkTheme ? "fill-white" : "fill-primary")}
-          />
+          <DotsIcon dimensions={16} className="fill-primary dark:fill-white" />
         </Button>
         {isExpanded && (
           <div
             onClick={e => e.preventDefault()}
-            className={clsx(
-              isDarkTheme ? "bg-gray-900" : "bg-white",
-              "absolute right-0 top-10 z-10 rounded-md p-4 shadow-2xl",
-            )}
+            className="absolute right-0 top-10 z-10 rounded-md bg-white p-4 shadow-2xl dark:bg-gray-900"
           >
             <ul className="[&>li]:cursor-pointer [&>li]:p-2">
               <li onClick={() => pushMeaningRef.current?.push(meaningTemplate)}>
