@@ -11,6 +11,12 @@ import Accordion from "~/components/Accordion/Accordion";
 import Button from "~/components/Button/Button";
 import Form from "~/components/Form/Form";
 
+const formTemplate = {
+  name: "",
+  transcription: "",
+  categories: [{ name: "", meanings: [{ definition: "", example: "" }] }],
+};
+
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
@@ -42,20 +48,19 @@ export default function Home() {
             type="text"
             placeholder="Search for your words..."
           />
-          <button
-            aria-hidden="true"
-            className="group absolute right-0 top-1/2 -translate-y-1/2 rounded-lg p-3 outline-2 outline-primary focus-visible:outline"
+          <Button
+            tabIndex={-1}
+            className="group absolute right-1 top-1/2 -translate-y-1/2 rounded-lg p-3"
             type="submit"
           >
             <SearchIcon
-              aria-hidden="true"
               dimensions={30}
               className={clsx(
                 isDarkTheme && "fill-primary",
                 `hover:fill-primary group-focus-visible:fill-primary`,
               )}
             />
-          </button>
+          </Button>
         </form>
         <div className="mt-8">
           <div
@@ -70,6 +75,7 @@ export default function Home() {
             >
               Add word
               <span
+                aria-hidden={true}
                 className={clsx(
                   isDarkTheme ? "border-white" : "border-black",
                   isFormOpen && "rotate-45 border-primary text-primary",
@@ -80,24 +86,7 @@ export default function Home() {
               </span>
             </Button>
             <Accordion isOpen={isFormOpen}>
-              <Form
-                isFormOpen={isFormOpen}
-                initialValues={{
-                  name: "",
-                  transcription: "",
-                  categories: [
-                    {
-                      name: "",
-                      meanings: [
-                        {
-                          definition: "",
-                          example: "",
-                        },
-                      ],
-                    },
-                  ],
-                }}
-              />
+              <Form isFormOpen={isFormOpen} initialValues={formTemplate} />
             </Accordion>
           </div>
           <WordsList data={data} />
