@@ -19,13 +19,13 @@ export default function Form({ initialValues, setIsFormOpen }: FormProps) {
     const items = accordion.nextElementSibling;
     const firstItemHeader = items?.querySelector("h2 > button") as HTMLElement;
 
-    if (!!accordion.ariaExpanded) firstItemHeader.focus();
+    if (accordion.ariaExpanded === "false") firstItemHeader.focus();
   }
   function lastFormItem(e: React.FocusEvent<HTMLButtonElement>) {
     const accordion = e.target.closest(".accordion") as HTMLElement;
     const accordionTitle = accordion?.firstElementChild as HTMLElement;
 
-    if (!!accordion.ariaExpanded) accordionTitle?.focus();
+    if (accordion.ariaExpanded === "false") accordionTitle?.focus();
   }
 
   return (
