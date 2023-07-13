@@ -1,14 +1,14 @@
-import Input from "~/components/Input/Input";
-import useUserPreferences from "~/store/useUserPreferences";
-import { type Meaning } from "~/utils/placeholder";
-import Button from "~/components/Button/Button";
 import clsx from "clsx";
+import Input from "~/components/Input/Input";
+import Button from "~/components/Button/Button";
+import { type MeaningWithoutId } from "~/utils/placeholder";
+import useUserPreferences from "~/store/useUserPreferences";
 
 type FormMeaningProps = {
   meaningIndex: number;
-  removeMeaning: (index: number) => void;
   categoryIndex: number;
-  meaning: Omit<Meaning, "id">;
+  meaning: MeaningWithoutId;
+  removeMeaning: (index: number) => void;
 };
 
 export default function FormMeaning({

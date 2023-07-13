@@ -1,50 +1,64 @@
-import Input from "~/components/Input/Input";
+import clsx from "clsx";
 import { FieldArray } from "formik";
+import { useRef, useState } from "react";
+import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
+import DotsIcon from "~/components/Icons/DotsIcon";
 import FormMeaning from "~/components/Form/FormMeaning";
 import useUserPreferences from "~/store/useUserPreferences";
-import clsx from "clsx";
-import DotsIcon from "~/components/Icons/DotsIcon";
-import { useRef, useState } from "react";
-import { type Push } from "~/types/Push";
-import { type Meaning } from "~/utils/placeholder";
-
-const categoryTemplate = {
-  name: "",
-  meanings: [{ definition: "", example: "" }],
-};
+import {
+  type CategoryWithoutId,
+  type MeaningWithoutId,
+} from "~/utils/placeholder";
+import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 
 type FormCategoryProps = {
-  index: number;
-  totalCategories: number;
-  category: {
-    name: string;
-    meanings: Omit<Meaning, "id">[];
-  };
-  pushCategory: (data: typeof categoryTemplate) => void;
-  removeCategory: (index: number) => void;
-};
+  categoryIndex: number;
+  categoriesLength: number;
+  category: CategoryWithoutId;
+} & Pick<FieldArrayHelpers, "push" | "remove">;
 
 const meaningTemplate = {
   definition: "",
   example: "",
 };
 
+const categoryTemplate = {
+  name: "",
+  meanings: [meaningTemplate],
+};
+
 export default function FormCategory({
+  categoryIndex,
   category,
-  totalCategories,
-  pushCategory,
-  removeCategory,
-  index,
+  categoriesLength,
+  push: pushCategory,
+  remove: removeCategory,
 }: FormCategoryProps) {
-  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
+  const pushMeaningRef = useRef(
+    {} as Pick<FieldArrayHelpers, "push" | "remove">,
+  );
   const [isExpanded, setIsExpanded] = useState(false);
-  const pushMeaningRef = useRef<(data: typeof meaningTemplate) => void>();
+  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
+
+  function removeCategoryHandler(i: number) {
+    if (categoriesLength > 1) removeCategory(i);
+  }
+  function removeMeaningHandler(i: number) {
+    if (category.meanings.length !== 1) pushMeaningRef.current.remove(i);
+
+    if (category.meanings.length === 1 && categoriesLength > 1)
+      removeCategoryHandler(categoryIndex);
+  }
 
   return (
-    <div role="list" className="mb-8 [&>*]:mb-4" key={`categories.${index}`}>
+    <div
+      role="list"
+      className="mb-8 [&>*]:mb-4"
+      key={`categories.${categoryIndex}`}
+    >
       <Input
-        id={`categories.${index}.name`}
+        id={`categories.${categoryIndex}.name`}
         before={false}
         className="w-full "
         classNameLabel="relative block col-span-2"
@@ -73,48 +87,34 @@ export default function FormCategory({
             )}
           >
             <ul className="[&>li]:cursor-pointer [&>li]:p-2">
-              <li
-                onClick={() =>
-                  pushMeaningRef.current &&
-                  pushMeaningRef.current(meaningTemplate)
-                }
-              >
+              <li onClick={() => pushMeaningRef.current?.push(meaningTemplate)}>
                 Add Meaning
               </li>
               <li onClick={() => pushCategory(categoryTemplate)}>
                 Add Category
               </li>
-              <li onClick={() => removeCategory(index)}>Remove Category</li>
+              <li onClick={() => removeCategoryHandler(categoryIndex)}>
+                Remove Category
+              </li>
             </ul>
           </div>
         )}
       </Input>
 
-      <FieldArray name={`categories.${index}.meanings`}>
-        {({
-          push: pushMeaning,
-          remove: removeMeaning,
-        }: Push<typeof meaningTemplate> & {
-          remove: (index: number) => void;
-        }) => {
-          pushMeaningRef.current = pushMeaning;
-
-          const removeMeaningHandler = (i: number) => {
-            if (category.meanings.length !== 1) removeMeaning(i);
-
-            if (category.meanings.length === 1 && totalCategories > 1)
-              removeCategory(index);
-          };
+      <FieldArray name={`categories.${categoryIndex}.meanings`}>
+        {(arrayHelpers: FieldArrayHelpers) => {
+          pushMeaningRef.current.push = arrayHelpers.push;
+          pushMeaningRef.current.remove = arrayHelpers.remove;
 
           return (
             <>
-              {category.meanings.map((meaning, mIndex) => (
+              {category.meanings.map((meaning, meaningIndex) => (
                 <FormMeaning
-                  key={mIndex}
                   meaning={meaning}
+                  key={meaningIndex}
+                  meaningIndex={meaningIndex}
+                  categoryIndex={categoryIndex}
                   removeMeaning={removeMeaningHandler}
-                  meaningIndex={mIndex}
-                  categoryIndex={index}
                 />
               ))}
             </>

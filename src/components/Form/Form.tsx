@@ -1,41 +1,34 @@
-import Input from "~/components/Input/Input";
 import { FieldArray, Form as FormikForm, Formik } from "formik";
-import Button from "~/components/Button/Button";
-import useUserPreferences from "~/store/useUserPreferences";
-import FormCategory from "~/components/Form/FormCategory";
 import clsx from "clsx";
-import { type Push } from "~/types/Push";
+import Input from "~/components/Input/Input";
+import Button from "~/components/Button/Button";
+import { type WordWithoutId } from "~/utils/placeholder";
+import FormCategory from "~/components/Form/FormCategory";
+import useUserPreferences from "~/store/useUserPreferences";
+import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 
 type FormProps = {
-  initialValues: {
-    name: string;
-    transcription: string;
-    categories: [
-      {
-        name: string;
-        meanings: [
-          {
-            definition: string;
-            example: string;
-          },
-        ];
-      },
-    ];
-  };
   isFormOpen: boolean;
-};
-
-const categoryTemplate = {
-  name: "",
-  meanings: [{ definition: "", example: "" }],
+  initialValues: WordWithoutId;
 };
 
 export default function Form({ initialValues, isFormOpen }: FormProps) {
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const formSubmitHandler = values => console.log(values);
+  const formSubmitHandler = (values: WordWithoutId) => console.log(values);
+  function firstFormItem(e: React.FocusEvent<HTMLInputElement>) {
+    const items = e.target.closest(".accordion")?.nextElementSibling;
+
+    const firstItemHeader = items?.querySelector("h2 > button") as HTMLElement;
+
+    if (!isFormOpen) firstItemHeader.focus();
+  }
+  function lastFormItem(e: React.FocusEvent<HTMLButtonElement>) {
+    const accordionTitle = e.target.closest(".accordion")
+      ?.firstElementChild as HTMLElement;
+
+    if (!isFormOpen) accordionTitle?.focus();
+  }
 
   return (
     <Formik initialValues={initialValues} onSubmit={formSubmitHandler}>
@@ -43,15 +36,7 @@ export default function Form({ initialValues, isFormOpen }: FormProps) {
         <FormikForm className="px-2 py-4 [&>div]:mb-4">
           <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
             <Input
-              onFocus={e => {
-                const items =
-                  e.target.closest(".accordion")?.nextElementSibling;
-
-                const firstItemHeader = items?.querySelector(
-                  "h2 > button",
-                ) as HTMLElement;
-                if (!isFormOpen) firstItemHeader.focus();
-              }}
+              onFocus={firstFormItem}
               id="name"
               placeholder="Enter Name"
               isDarkTheme={isDarkTheme}
@@ -68,32 +53,21 @@ export default function Form({ initialValues, isFormOpen }: FormProps) {
             </Input>
           </div>
           <FieldArray name="categories">
-            {({
-              push: pushCategory,
-              remove: removeCategory,
-            }: Push<typeof categoryTemplate> & {
-              remove: (index: number) => void;
-            }) => {
-              const removeCategoryHandler = (i: number) => {
-                if (word.categories.length > 1) removeCategory(i);
-              };
-
-              return (
-                <div>
-                  <h2 className="text-center">Categories</h2>
-                  {word.categories.map((category, cIndex) => (
-                    <FormCategory
-                      key={cIndex}
-                      index={cIndex}
-                      category={category}
-                      pushCategory={pushCategory}
-                      removeCategory={removeCategoryHandler}
-                      totalCategories={word.categories.length}
-                    />
-                  ))}
-                </div>
-              );
-            }}
+            {(arrayHelpers: FieldArrayHelpers) => (
+              <div>
+                <h2 className="text-center">Categories</h2>
+                {word.categories.map((category, cIndex) => (
+                  <FormCategory
+                    key={cIndex}
+                    category={category}
+                    categoryIndex={cIndex}
+                    push={arrayHelpers.push}
+                    remove={arrayHelpers.remove}
+                    categoriesLength={word.categories.length}
+                  />
+                ))}
+              </div>
+            )}
           </FieldArray>
           <div className="flex gap-4">
             <Button
@@ -107,13 +81,7 @@ export default function Form({ initialValues, isFormOpen }: FormProps) {
               Add Word
             </Button>
             <Button
-              onFocus={e => {
-                const accordionTitle = e.target.closest(".accordion")
-                  ?.firstElementChild as HTMLElement;
-
-                if (!isFormOpen) accordionTitle?.focus();
-              }}
-              disabled={!isValid}
+              onFocus={lastFormItem}
               isSubmit={true}
               className={clsx(
                 isDarkTheme ? "bg-gray-900" : "bg-gray-300",
