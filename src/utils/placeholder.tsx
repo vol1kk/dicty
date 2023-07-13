@@ -113,3 +113,11 @@ export interface Meaning {
   definition: string;
   example?: string;
 }
+
+export type MeaningWithoutId = Omit<Meaning, "id">;
+export type CategoryWithoutId = Omit<Category, "meanings" | "id"> & {
+  meanings: MeaningWithoutId[];
+};
+export type WordWithoutId = Omit<Word, "id" | "categories" | "createdById"> & {
+  categories: CategoryWithoutId[];
+};
