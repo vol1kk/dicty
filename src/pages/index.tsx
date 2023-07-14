@@ -39,14 +39,13 @@ export default function Home() {
           <input
             value={search}
             onChange={e => setSearch(e.target.value.trim())}
-            className="w-full rounded-xl bg-gray-100 p-4 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline dark:bg-gray-800"
+            className="w-full rounded-xl bg-gray-100 p-4 pr-12 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline dark:bg-gray-800"
             type="text"
             placeholder="Search for your words..."
           />
           <Button
             tabIndex={-1}
             className="group absolute right-1 top-1/2 -translate-y-1/2 rounded-lg p-3"
-            type="submit"
           >
             <SearchIcon
               dimensions={30}
