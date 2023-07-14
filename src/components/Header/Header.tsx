@@ -11,7 +11,7 @@ export default function Header() {
         href="/"
         className="rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
       >
-        <Dictionary />
+        <Dictionary aria-label="Home Icon" />
       </Link>
       <div className="flex items-center gap-4">
         <FontDropdown />
