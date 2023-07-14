@@ -35,10 +35,12 @@ export default function Dropdown({
     e.stopPropagation();
     setIsDropdownOpen(p => !p);
   }
+
   function dropdownItemHandler(e: React.MouseEvent) {
     setIsDropdownOpen(false);
     callback(e.target as HTMLLIElement);
   }
+
   function dropdownKeyboardHandler(e: React.KeyboardEvent) {
     if (
       e.key === " " ||
@@ -58,8 +60,6 @@ export default function Dropdown({
 
     let data = selectedItem;
     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      // console.log(dropdown, dropdownItems, selectedItem);
-
       if (e.key === "ArrowUp") {
         data = selectedItem?.previousElementSibling
           ? (selectedItem.previousElementSibling as HTMLLIElement)
@@ -71,6 +71,7 @@ export default function Dropdown({
           ? (selectedItem?.nextElementSibling as HTMLLIElement)
           : (dropdownItems[0] as HTMLLIElement);
       }
+
       selectedItem.ariaSelected = "false";
       data.ariaSelected = "true";
     }
