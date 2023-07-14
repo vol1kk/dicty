@@ -1,10 +1,10 @@
+import { type Dispatch, type SetStateAction } from "react";
 import { FieldArray, Form as FormikForm, Formik } from "formik";
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
 import { type WordWithoutId } from "~/utils/placeholder";
 import FormCategory from "~/components/Form/FormCategory";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
-import { type Dispatch, type SetStateAction } from "react";
 
 type FormProps = {
   setIsFormOpen: Dispatch<SetStateAction<boolean>>;
@@ -31,7 +31,7 @@ export default function Form({ initialValues, setIsFormOpen }: FormProps) {
   return (
     <Formik initialValues={initialValues} onSubmit={formSubmitHandler}>
       {({ values: word, isValid, resetForm }) => (
-        <FormikForm className="px-2 py-4 [&>div]:mb-4">
+        <FormikForm className="px-2 py-4 pb-6 [&>div]:mb-4">
           <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
             <Input onFocus={firstFormItem} id="name" placeholder="Enter Name">
               <span>Name</span>
