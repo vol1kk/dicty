@@ -4,16 +4,17 @@ export default function Chevron({
   dimensions = 18,
   fill = "#010002",
   className = "",
+  ...props
 }: Icon) {
   return (
     <svg
+      id="chevron"
+      viewBox="0 0 185.343 185.343"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
       height={dimensions}
       width={dimensions}
-      className={className}
-      version="1.1"
-      id="Capa_1"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 185.343 185.343"
+      {...props}
     >
       <path
         fill={fill}

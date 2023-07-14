@@ -3,14 +3,15 @@ import { type Icon } from "~/types/Icon";
 export default function DictionaryIcon({
   dimensions = 48,
   fill = "#757575",
+  ...props
 }: Icon) {
   return (
     <svg
-      width={dimensions}
-      height={dimensions}
       viewBox="0 0 24 24"
-      version="1.1"
       xmlns="http://www.w3.org/2000/svg"
+      height={dimensions}
+      width={dimensions}
+      {...props}
     >
       <g stroke="none" fill="none">
         <g fill={fill}>

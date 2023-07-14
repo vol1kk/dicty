@@ -3,15 +3,16 @@ import { type Icon } from "~/types/Icon";
 export default function MoonIcon({
   dimensions = 24,
   className = "",
+  ...props
 }: Icon) {
   return (
     <svg
+      id="moon_icon"
+      viewBox="0 -1 60 60"
+      xmlns="http://www.w3.org/2000/svg"
       height={dimensions}
       width={dimensions}
-      version="1.1"
-      id="Capa_1"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 -1 60 60"
+      {...props}
     >
       <path
         className={className}

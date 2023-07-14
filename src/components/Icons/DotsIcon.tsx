@@ -3,16 +3,17 @@ import { type Icon } from "~/types/Icon";
 export default function DotsIcon({
   dimensions = 24,
   className,
+  ...props
 }: Icon) {
   return (
     <svg
-      height={dimensions}
-      className={className}
-      width={dimensions}
-      version="1.1"
-      id="Capa_1"
-      xmlns="http://www.w3.org/2000/svg"
+      id="triple_dots"
       viewBox="0 0 32.055 32.055"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      height={dimensions}
+      width={dimensions}
+      {...props}
     >
       <g>
         <path
