@@ -9,7 +9,7 @@ export default function Accordion({ children, isOpen }: DropdownProps) {
   return (
     <div
       className={clsx(
-        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+        isOpen ? "grid-rows-[1fr]" : "invisible grid-rows-[0fr]",
         "grid transition-[grid-template-rows]",
       )}
     >

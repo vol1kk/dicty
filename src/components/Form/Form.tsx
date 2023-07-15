@@ -13,27 +13,13 @@ type FormProps = {
 
 export default function Form({ initialValues, setIsFormOpen }: FormProps) {
   const formSubmitHandler = (values: WordWithoutId) => console.log(values);
-  function firstFormItem(e: React.FocusEvent<HTMLInputElement>) {
-    const accordion = e.target.closest(".accordion") as HTMLElement;
-
-    const items = accordion.nextElementSibling;
-    const firstItemHeader = items?.querySelector("h2 > button") as HTMLElement;
-
-    if (accordion.ariaExpanded === "false") firstItemHeader.focus();
-  }
-  function lastFormItem(e: React.FocusEvent<HTMLButtonElement>) {
-    const accordion = e.target.closest(".accordion") as HTMLElement;
-    const accordionTitle = accordion?.firstElementChild as HTMLElement;
-
-    if (accordion.ariaExpanded === "false") accordionTitle?.focus();
-  }
 
   return (
     <Formik initialValues={initialValues} onSubmit={formSubmitHandler}>
       {({ values: word, isValid, resetForm }) => (
         <FormikForm className="px-2 py-4 pb-6 [&>div]:mb-4">
           <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
-            <Input onFocus={firstFormItem} id="name" placeholder="Enter Name">
+            <Input id="name" placeholder="Enter Name">
               <span>Name</span>
             </Input>
 
@@ -71,7 +57,6 @@ export default function Form({ initialValues, setIsFormOpen }: FormProps) {
                 setIsFormOpen(false);
                 resetForm();
               }}
-              onFocus={lastFormItem}
               className="rounded-md bg-gray-300 dark:bg-gray-900"
             >
               Cancel
