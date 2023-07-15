@@ -30,6 +30,7 @@ export default function WordTitle({
         >
           <span className="max-w-[25ch] truncate">{word}</span>
           <Chevron
+            aria-hidden={true}
             className={clsx(
               "mt-1 transition-transform [&>path]:fill-gray-900",
               isAccordionOpen && "rotate-90 ",
@@ -37,7 +38,9 @@ export default function WordTitle({
           />
         </Button>
       </h2>
-      <h3 className="relative text-lg text-primary">{transcription}</h3>
+      <h3 aria-hidden={true} className="text-lg text-primary">
+        {transcription}
+      </h3>
     </div>
   );
 }
