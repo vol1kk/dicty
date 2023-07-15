@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import Head from "next/head";
 import { useMemo, useState } from "react";
 import WordsList from "~/components/WordsList/WordsList";
@@ -56,7 +55,7 @@ export default function Home() {
         <div className="mt-8">
           <div
             aria-expanded={isFormOpen}
-            className="accordion mb-4 rounded-md bg-gray-100 p-4 dark:bg-gray-800"
+            className="group mb-4 rounded-md bg-gray-100 p-4 dark:bg-gray-800"
           >
             <Button
               className="flex w-full items-center justify-center text-xl"
@@ -65,10 +64,7 @@ export default function Home() {
               Add word
               <span
                 aria-hidden={true}
-                className={clsx(
-                  isFormOpen && "rotate-45 border-primary text-primary",
-                  "ml-4 inline-flex h-7 w-7 items-center justify-center rounded-full border-2 border-black text-2xl  transition-transform dark:border-white",
-                )}
+                className="ml-4 inline-flex h-7 w-7 items-center justify-center rounded-full border-2 border-black text-2xl transition-transform  group-aria-expanded:rotate-45 group-aria-expanded:border-primary  group-aria-expanded:text-primary dark:border-white dark:group-aria-expanded:border-white"
               >
                 +
               </span>
