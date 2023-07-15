@@ -1,17 +1,23 @@
 import { useRef } from "react";
-import { FieldArray } from "formik";
+import { FieldArray, type FormikErrors, type FormikTouched } from "formik";
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
 import DotsIcon from "~/components/Icons/DotsIcon";
 import Dropdown from "~/components/Dropdown/Dropdown";
 import FormMeaning from "~/components/Form/FormMeaning";
-import { type CategoryWithoutId } from "~/utils/placeholder";
+import {
+  type CategoryWithoutId,
+  type MeaningWithoutId,
+} from "~/utils/placeholder";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
+import clsx from "clsx";
 
 type FormCategoryProps = {
   categoryIndex: number;
   categoriesLength: number;
   category: CategoryWithoutId;
+  categoryErrors: FormikErrors<CategoryWithoutId[]> | undefined;
+  categoryTouched: FormikTouched<CategoryWithoutId[]> | undefined;
 } & Pick<FieldArrayHelpers, "push" | "remove">;
 
 const meaningTemplate = {
@@ -25,8 +31,10 @@ const categoryTemplate = {
 };
 
 export default function FormCategory({
-  categoryIndex,
+  categoryErrors,
+  categoryTouched,
   category,
+  categoryIndex,
   categoriesLength,
   push: pushCategory,
   remove: removeCategory,
@@ -38,6 +46,7 @@ export default function FormCategory({
   function removeCategoryHandler(i: number) {
     if (categoriesLength > 1) removeCategory(i);
   }
+
   function removeMeaningHandler(i: number) {
     if (category.meanings.length !== 1) pushMeaningRef.current.remove(i);
 
@@ -59,6 +68,13 @@ export default function FormCategory({
       "true";
   }
 
+  const currentCategoryErrors = categoryErrors?.at(categoryIndex);
+  const currentCategoryTouched = categoryTouched?.at(categoryIndex);
+
+  const currentCategoryMeaningsErrors = currentCategoryErrors?.meanings as
+    | FormikErrors<MeaningWithoutId[]>
+    | undefined;
+
   return (
     <div
       role="list"
@@ -70,7 +86,12 @@ export default function FormCategory({
           id={`categories.${categoryIndex}.name`}
           before={false}
           className="w-full"
-          classNameLabel="relative flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md"
+          classNameLabel={clsx(
+            currentCategoryErrors?.name &&
+              currentCategoryTouched?.name &&
+              "border-2 border-red-500",
+            "relative flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md",
+          )}
           value={category.name}
           placeholder="Enter Category"
         >
@@ -127,6 +148,8 @@ export default function FormCategory({
                   meaningIndex={meaningIndex}
                   categoryIndex={categoryIndex}
                   removeMeaning={removeMeaningHandler}
+                  meaningsErrors={currentCategoryMeaningsErrors}
+                  meaningsTouched={currentCategoryTouched?.meanings}
                 />
               ))}
             </>
