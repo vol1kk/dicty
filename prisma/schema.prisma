@@ -9,26 +9,24 @@ datasource db {
 }
 
 model Meaning {
-  id               String   @id @default(uuid())
-  definition       String
-  exampleSentences String[]
-  categoryId       String
-  category         Category @relation(fields: [categoryId], references: [id])
+  id         String   @id @default(uuid())
+  definition String
+  example    String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
   id       String    @id @default(uuid())
   name     String
   meanings Meaning[]
-  synonyms String[]
-  antonyms String[]
   wordId   String
   word     Word      @relation(fields: [wordId], references: [id])
 }
 
 model Word {
   id            String     @id @default(uuid())
-  word          String
+  name          String
   transcription String
   categories    Category[]
   createdById   String
