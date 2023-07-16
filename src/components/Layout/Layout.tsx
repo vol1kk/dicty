@@ -4,6 +4,8 @@ import useUserPreferences from "~/store/useUserPreferences";
 import clsx from "clsx";
 import { useEffect } from "react";
 import MobileHeader from "~/components/MobileHeader/MobileHeader";
+import { setToken } from "~/utils/api";
+import { useSession } from "next-auth/react";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -17,12 +19,13 @@ const FONTS = new Map([
 
 let once = true;
 export default function Layout({ children }: LayoutProps) {
+  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
+  const setTheme = useUserPreferences(state => state.setTheme);
   const setFont = useUserPreferences(state => state.setFont);
   const font = useUserPreferences(state => state.font);
-  const setTheme = useUserPreferences(state => state.setTheme);
-  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
-
   const getFont = FONTS.get(font) ?? "font-poppins";
+  const { data: sessionData } = useSession();
+
   useEffect(() => {
     if (once) {
       const localTheme = localStorage.getItem("theme") ?? "light";
@@ -42,6 +45,12 @@ export default function Layout({ children }: LayoutProps) {
       document.documentElement.classList.remove("dark");
     }
   }, [isDarkTheme]);
+
+  useEffect(() => {
+    if (sessionData && Object.keys(sessionData).length > 0)
+      setToken(sessionData.user.accessToken);
+    else setToken("");
+  }, [sessionData]);
 
   return (
     <div className="dark:bg-gray-900 dark:text-gray-100">
