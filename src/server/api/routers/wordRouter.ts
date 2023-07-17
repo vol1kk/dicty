@@ -1,44 +1,46 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
-const meaning = z.object({
+const MeaningSchema = z.object({
   definition: z.string(),
   example: z.string().optional(),
 });
 
-const category = z.object({
+const CategorySchema = z.object({
   name: z.string(),
-  meanings: z.array(meaning),
+  meanings: z.array(MeaningSchema),
 });
 
-const word = z.object({
-  createdById: z.string(),
+const WordSchema = z.object({
   name: z.string(),
+  createdById: z.string(),
   transcription: z.string(),
-  categories: z.array(category),
+  categories: z.array(CategorySchema),
 });
 
 export const wordRouter = createTRPCRouter({
-  createWord: protectedProcedure.input(word).mutation(({ ctx, input }) => {
-    return ctx.prisma.word.create({
-      data: {
-        name: input.name,
-        createdById: ctx.authedUser.id,
-        transcription: input.transcription,
-        categories: {
-          create: input.categories.map(category => ({
-            name: category.name,
-            meanings: {
-              create: category.meanings.map(meaning => ({
-                definition: meaning.definition,
-                example: meaning.example,
-              })),
-            },
-          })),
+  createWord: protectedProcedure
+    .input(WordSchema)
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.word.create({
+        data: {
+          name: input.name,
+          createdById: ctx.authedUser.id,
+          transcription: input.transcription,
+          categories: {
+            create: input.categories.map(category => ({
+              name: category.name,
+              meanings: {
+                create: category.meanings.map(meaning => ({
+                  definition: meaning.definition,
+                  example: meaning.example,
+                })),
+              },
+            })),
+          },
         },
-      },
-    });
-  }),
+      });
+    }),
 
   getWords: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.word.findMany({
