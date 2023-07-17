@@ -1,16 +1,16 @@
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
-import { type MeaningWithoutId } from "~/utils/placeholder";
+import { type Meaning } from "~/utils/placeholder";
 import { type FormikErrors, type FormikTouched } from "formik";
 import clsx from "clsx";
 
 type FormMeaningProps = {
   meaningIndex: number;
   categoryIndex: number;
-  meaning: MeaningWithoutId;
+  meaning: Meaning;
   removeMeaning: (index: number) => void;
-  meaningsErrors: FormikErrors<MeaningWithoutId[]> | undefined;
-  meaningsTouched: FormikTouched<MeaningWithoutId[]> | undefined;
+  meaningsErrors: FormikErrors<Meaning[]> | undefined;
+  meaningsTouched: FormikTouched<Meaning[]> | undefined;
 };
 
 export default function FormMeaning({

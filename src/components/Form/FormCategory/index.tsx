@@ -5,19 +5,16 @@ import Button from "~/components/Button/Button";
 import DotsIcon from "~/components/Icons/DotsIcon";
 import Dropdown from "~/components/Dropdown/Dropdown";
 import FormMeaning from "~/components/Form/FormMeaning";
-import {
-  type CategoryWithoutId,
-  type MeaningWithoutId,
-} from "~/utils/placeholder";
+import { type Category, type Meaning } from "~/utils/placeholder";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import clsx from "clsx";
 
 type FormCategoryProps = {
   categoryIndex: number;
   categoriesLength: number;
-  category: CategoryWithoutId;
-  categoryErrors: FormikErrors<CategoryWithoutId[]> | undefined;
-  categoryTouched: FormikTouched<CategoryWithoutId[]> | undefined;
+  category: Category;
+  categoryErrors: FormikErrors<Category[]> | undefined;
+  categoryTouched: FormikTouched<Category[]> | undefined;
 } & Pick<FieldArrayHelpers, "push" | "remove">;
 
 const meaningTemplate = {
@@ -72,7 +69,7 @@ export default function FormCategory({
   const currentCategoryTouched = categoryTouched?.at(categoryIndex);
 
   const currentCategoryMeaningsErrors = currentCategoryErrors?.meanings as
-    | FormikErrors<MeaningWithoutId[]>
+    | FormikErrors<Meaning[]>
     | undefined;
 
   return (

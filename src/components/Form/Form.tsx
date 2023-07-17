@@ -9,16 +9,15 @@ import {
 } from "formik";
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
-import {
-  type CategoryWithoutId,
-  type WordWithoutId,
-} from "~/utils/placeholder";
+import { type Category, type Word } from "~/utils/placeholder";
 import FormCategory from "~/components/Form/FormCategory";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
+import wordWithId from "~/utils/wordWithId";
 
 type FormProps = {
-  setIsFormOpen: Dispatch<SetStateAction<boolean>>;
-  initialValues: WordWithoutId;
+  setIsFormOpen?: Dispatch<SetStateAction<boolean>>;
+  initialValues: Word;
+  submitHandler: (word: Word) => void;
 };
 
 const FormSchema = Yup.object({
@@ -41,8 +40,12 @@ const FormSchema = Yup.object({
     ),
 });
 
-export default function Form({ initialValues, setIsFormOpen }: FormProps) {
-  const formSubmitHandler = (values: WordWithoutId) => console.log(values);
+export default function Form({
+  initialValues,
+  setIsFormOpen,
+  submitHandler,
+}: FormProps) {
+  const formSubmitHandler = (values: Word) => submitHandler(wordWithId(values));
 
   return (
     <Formik
@@ -63,14 +66,14 @@ export default function Form({ initialValues, setIsFormOpen }: FormProps) {
         } = formHelpers;
 
         const errorCategories = errors.categories as
-          | FormikErrors<CategoryWithoutId[]>
+          | FormikErrors<Category[]>
           | undefined;
 
         function handleFormNavigationBtns() {
           resetForm();
           setErrors({});
           setTouched({});
-          setIsFormOpen(false);
+          if (setIsFormOpen) setIsFormOpen(false);
         }
 
         return (
