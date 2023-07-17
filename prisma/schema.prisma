@@ -11,7 +11,7 @@ datasource db {
 model Meaning {
   id         String   @id @default(uuid())
   definition String
-  example    String
+  example    String?
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
 }
