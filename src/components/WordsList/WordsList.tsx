@@ -44,7 +44,7 @@ export default function WordsList({ data }: WordsListProps) {
               isAccordionOpen={isOpen === i}
               transcription={word.transcription}
             />
-            <WordEdit href={"/edit/1"}>
+            <WordEdit href={`/edit/${word.id}`}>
               <EditIcon
                 aria-hidden={true}
                 className="transition-transform group-hover:scale-110 group-hover:fill-primary"
