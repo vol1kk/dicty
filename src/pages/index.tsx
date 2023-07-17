@@ -3,13 +3,13 @@ import { useMemo, useState } from "react";
 import WordsList from "~/components/WordsList/WordsList";
 import Accordion from "~/components/Accordion/Accordion";
 import SearchIcon from "~/components/Icons/SearchIcon";
-import { type Word } from "~/utils/placeholder";
 import Button from "~/components/Button/Button";
 import useDebounce from "~/hooks/useDebounce";
+import { type Word } from "~/types/ApiTypes";
 import filterData from "~/utils/filterData";
-import useWords from "~/hooks/useWords";
-import Form from "~/components/Form/Form";
 import wordWithId from "~/utils/wordWithId";
+import Form from "~/components/Form/Form";
+import useWords from "~/hooks/useWords";
 
 const formTemplate = {
   name: "",

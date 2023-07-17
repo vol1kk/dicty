@@ -7,7 +7,7 @@ import {
   Form as FormikForm,
 } from "formik";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
-import { type Category, type Word } from "~/utils/placeholder";
+import { type Category, type Word } from "~/types/ApiTypes";
 import FormCategory from "~/components/Form/FormCategory";
 import Input from "~/components/Input/Input";
 

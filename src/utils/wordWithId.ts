@@ -1,5 +1,5 @@
-import { type Word } from "~/utils/placeholder";
 import { nanoid } from "nanoid";
+import { type Word } from "~/types/ApiTypes";
 
 export default function wordWithId(word: Word): Word {
   const wordId = word.id || nanoid();

@@ -1,4 +1,4 @@
-import { type Meaning } from "~/utils/placeholder";
+import { type Meaning } from "~/types/ApiTypes";
 
 type WordMeaningsProps = {
   meanings: Meaning[];

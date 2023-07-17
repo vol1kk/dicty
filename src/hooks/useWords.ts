@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
-import { type Word } from "~/utils/placeholder";
-import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
+import { type Word } from "~/types/ApiTypes";
+import { api } from "~/utils/api";
 
 type UseWordsResultWithData = {
   data: Word[];

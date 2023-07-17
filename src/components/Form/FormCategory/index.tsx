@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useRef } from "react";
 import { FieldArray, type FormikErrors, type FormikTouched } from "formik";
 import Input from "~/components/Input/Input";
@@ -5,9 +6,8 @@ import Button from "~/components/Button/Button";
 import DotsIcon from "~/components/Icons/DotsIcon";
 import Dropdown from "~/components/Dropdown/Dropdown";
 import FormMeaning from "~/components/Form/FormMeaning";
-import { type Category, type Meaning } from "~/utils/placeholder";
+import { type Category, type Meaning } from "~/types/ApiTypes";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
-import clsx from "clsx";
 
 type FormCategoryProps = {
   categoryIndex: number;

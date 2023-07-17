@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type Word } from "~/utils/placeholder";
+import { type Word } from "~/types/ApiTypes";
 import EditIcon from "~/components/Icons/EditIcon";
 import Accordion from "~/components/Accordion/Accordion";
 import WordTitle from "~/components/Word/WordTitle";

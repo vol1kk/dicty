@@ -1,6 +1,6 @@
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
-import { type Meaning } from "~/utils/placeholder";
+import { type Meaning } from "~/types/ApiTypes";
 import { type FormikErrors, type FormikTouched } from "formik";
 import clsx from "clsx";
 
