@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useRouter as useNavigationRouter } from "next/navigation";
 import Form from "~/components/Form/Form";
-import useWords from "~/hooks/useGetWords";
+import useWords from "~/hooks/useWords";
 import { type Word } from "~/utils/placeholder";
 import Button from "~/components/Button/Button";
 

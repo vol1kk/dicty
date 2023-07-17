@@ -7,7 +7,7 @@ import { type Word } from "~/utils/placeholder";
 import Button from "~/components/Button/Button";
 import useDebounce from "~/hooks/useDebounce";
 import filterData from "~/utils/filterData";
-import useWords from "~/hooks/useGetWords";
+import useWords from "~/hooks/useWords";
 import Form from "~/components/Form/Form";
 import wordWithId from "~/utils/wordWithId";
 
