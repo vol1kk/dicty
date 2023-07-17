@@ -13,7 +13,7 @@ model Meaning {
   definition String
   example    String?
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model Category {
@@ -21,7 +21,7 @@ model Category {
   name     String
   meanings Meaning[]
   wordId   String
-  word     Word      @relation(fields: [wordId], references: [id])
+  word     Word      @relation(fields: [wordId], references: [id], onDelete: Cascade)
 }
 
 model Word {
@@ -30,7 +30,7 @@ model Word {
   transcription String
   categories    Category[]
   createdById   String
-  createdBy     User       @relation(fields: [createdById], references: [id])
+  createdBy     User       @relation(fields: [createdById], references: [id], onDelete: Cascade)
 }
 
 // Necessary for Next auth
