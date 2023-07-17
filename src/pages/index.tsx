@@ -3,16 +3,21 @@ import { useMemo, useState } from "react";
 import WordsList from "~/components/WordsList/WordsList";
 import Accordion from "~/components/Accordion/Accordion";
 import SearchIcon from "~/components/Icons/SearchIcon";
-import { placeholder } from "~/utils/placeholder";
+import { placeholder, type Word } from "~/utils/placeholder";
 import Button from "~/components/Button/Button";
 import useDebounce from "~/hooks/useDebounce";
 import filterData from "~/utils/filterData";
 import Form from "~/components/Form/Form";
+import useWords from "~/hooks/useGetWords";
 
-const formTemplate = {
+const formTemplate: Word = {
+  id: "",
   name: "",
+  createdById: "",
   transcription: "",
-  categories: [{ name: "", meanings: [{ definition: "", example: "" }] }],
+  categories: [
+    { id: "", name: "", meanings: [{ id: "", definition: "", example: "" }] },
+  ],
 };
 
 export default function Home() {
@@ -21,10 +26,21 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 
+  const [words, setWords] = useWords();
+
   const data = useMemo(
-    () => filterData(placeholder, debouncedSearch),
-    [debouncedSearch],
+    () => filterData(words, debouncedSearch),
+    [words, debouncedSearch],
   );
+
+  function handlerSubmit(word: Word) {
+    setWords(p => {
+      const newWords = [word, ...p];
+      localStorage.setItem("words", JSON.stringify(newWords));
+
+      return newWords;
+    });
+  }
 
   return (
     <>
@@ -72,6 +88,7 @@ export default function Home() {
             <Accordion isOpen={isFormOpen}>
               <Form
                 setIsFormOpen={setIsFormOpen}
+                submitHandler={handlerSubmit}
                 initialValues={formTemplate}
               />
             </Accordion>
