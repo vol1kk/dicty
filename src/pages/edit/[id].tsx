@@ -56,7 +56,7 @@ export default function EditPage() {
                   onClick={deleteHandler}
                   className="dark:hover:bg-red-500"
                 >
-                  Del
+                  Delete
                 </Button>
               </>
             )}
