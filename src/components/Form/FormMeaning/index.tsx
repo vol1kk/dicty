@@ -26,7 +26,7 @@ export default function FormMeaning({
 
   return (
     <div
-      className="grid grid-cols-[1fr,_1fr,_auto] gap-4"
+      className="grid grid-cols-[1fr,_1fr,_auto] gap-4 mobile:grid-cols-none"
       key={`meaning.${meaningIndex}`}
     >
       <Input
@@ -51,7 +51,7 @@ export default function FormMeaning({
       />
       <Button
         onClick={() => removeMeaning(meaningIndex)}
-        className="rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500"
+        className="rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
       >
         <span className="sr-only">Delete definition</span>
         <span aria-hidden={true}>X</span>
