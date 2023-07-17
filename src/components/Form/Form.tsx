@@ -10,7 +10,6 @@ import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import { type Category, type Word } from "~/utils/placeholder";
 import FormCategory from "~/components/Form/FormCategory";
 import Input from "~/components/Input/Input";
-import wordWithId from "~/utils/wordWithId";
 
 type FormProps = {
   renderButtons: (
@@ -46,7 +45,7 @@ export default function Form({
   initialValues,
   submitHandler,
 }: FormProps) {
-  const formSubmitHandler = (values: Word) => submitHandler(wordWithId(values));
+  const formSubmitHandler = (values: Word) => submitHandler(values);
 
   return (
     <Formik
