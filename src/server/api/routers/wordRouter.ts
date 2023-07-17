@@ -1,22 +1,21 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
-const meanings = {
+const meaning = z.object({
   definition: z.string(),
-  example: z.string(),
-  categoryId: z.string(),
-};
+  example: z.string().optional(),
+});
 
-const categories = {
+const category = z.object({
   name: z.string(),
-  meanings: z.object(meanings).array(),
-};
+  meanings: z.array(meaning),
+});
 
 const word = z.object({
-  userId: z.string(),
+  createdById: z.string(),
   name: z.string(),
   transcription: z.string(),
-  categories: z.object(categories).array(),
+  categories: z.array(category),
 });
 
 export const wordRouter = createTRPCRouter({
@@ -24,7 +23,7 @@ export const wordRouter = createTRPCRouter({
     return ctx.prisma.word.create({
       data: {
         name: input.name,
-        createdById: input.userId,
+        createdById: ctx.authedUser.id,
         transcription: input.transcription,
         categories: {
           create: input.categories.map(category => ({
