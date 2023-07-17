@@ -3,12 +3,12 @@ import { useMemo, useState } from "react";
 import WordsList from "~/components/WordsList/WordsList";
 import Accordion from "~/components/Accordion/Accordion";
 import SearchIcon from "~/components/Icons/SearchIcon";
-import { placeholder, type Word } from "~/utils/placeholder";
+import { type Word } from "~/utils/placeholder";
 import Button from "~/components/Button/Button";
 import useDebounce from "~/hooks/useDebounce";
 import filterData from "~/utils/filterData";
-import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useGetWords";
+import Form from "~/components/Form/Form";
 
 const formTemplate: Word = {
   id: "",
@@ -50,31 +50,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <form className="relative">
+        <div className="relative">
           <input
+            id="search"
+            type="text"
+            name="search"
             value={search}
+            placeholder="Search for your words..."
             onChange={e => setSearch(e.target.value.trim())}
             className="w-full rounded-xl bg-gray-100 p-4 pr-12 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline dark:bg-gray-800"
-            type="text"
-            placeholder="Search for your words..."
           />
-          <Button
-            tabIndex={-1}
-            className="group absolute right-1 top-1/2 -translate-y-1/2 rounded-lg p-3"
-          >
-            <SearchIcon
-              dimensions={30}
-              className="hover:fill-primary group-focus-visible:fill-primary dark:fill-primary"
-            />
-          </Button>
-        </form>
+          <SearchIcon
+            dimensions={36}
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg fill-primary"
+          />
+        </div>
         <div className="mt-8">
           <div
             aria-expanded={isFormOpen}
             className="group mb-4 rounded-md bg-gray-100 dark:bg-gray-800"
           >
             <Button
-              className="flex w-full items-center justify-center p-4 text-xl"
+              className="flex w-full items-center justify-center rounded-md p-4 text-xl !outline-offset-0"
               onClick={() => setIsFormOpen(p => !p)}
             >
               Add word
