@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import Header from "~/components/Header/Header";
 import useUserPreferences from "~/store/useUserPreferences";
 import clsx from "clsx";
 import { useEffect } from "react";
-import MobileHeader from "~/components/MobileHeader/MobileHeader";
 import { setToken } from "~/utils/api";
 import { useSession } from "next-auth/react";
 
@@ -57,12 +55,11 @@ export default function Layout({ children }: LayoutProps) {
       <div
         className={clsx(
           getFont,
-          "m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12 mobile:grid-rows-[1fr,_auto]",
+          "m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12",
         )}
       >
         <Header />
         {children}
-        <MobileHeader />
       </div>
     </div>
   );
