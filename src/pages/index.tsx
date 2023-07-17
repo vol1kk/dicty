@@ -33,7 +33,7 @@ export default function Home() {
     [words, debouncedSearch],
   );
 
-  function handlerSubmit(word: Word) {
+  function formSubmitHandler(word: Word) {
     setWords(p => {
       const newWords = [word, ...p];
       localStorage.setItem("words", JSON.stringify(newWords));
@@ -71,10 +71,10 @@ export default function Home() {
         <div className="mt-8">
           <div
             aria-expanded={isFormOpen}
-            className="group mb-4 rounded-md bg-gray-100 p-4 dark:bg-gray-800"
+            className="group mb-4 rounded-md bg-gray-100 dark:bg-gray-800"
           >
             <Button
-              className="flex w-full items-center justify-center text-xl"
+              className="flex w-full items-center justify-center p-4 text-xl"
               onClick={() => setIsFormOpen(p => !p)}
             >
               Add word
@@ -87,9 +87,28 @@ export default function Home() {
             </Button>
             <Accordion isOpen={isFormOpen}>
               <Form
-                setIsFormOpen={setIsFormOpen}
-                submitHandler={handlerSubmit}
+                submitHandler={formSubmitHandler}
                 initialValues={formTemplate}
+                renderButtons={(isValid, handleFormReset) => {
+                  const handleFormResetWrapper = () => {
+                    setIsFormOpen(false);
+                    handleFormReset();
+                  };
+
+                  return (
+                    <>
+                      <Button
+                        isSubmit={true}
+                        onClick={() => {
+                          if (isValid) setTimeout(handleFormResetWrapper, 500);
+                        }}
+                      >
+                        Add Word
+                      </Button>
+                      <Button onClick={handleFormResetWrapper}>Close</Button>
+                    </>
+                  );
+                }}
               />
             </Accordion>
           </div>

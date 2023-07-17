@@ -1,21 +1,22 @@
-import * as Yup from "yup";
 import clsx from "clsx";
-import { type Dispatch, type SetStateAction } from "react";
+import * as Yup from "yup";
 import {
   Formik,
   FieldArray,
   type FormikErrors,
   Form as FormikForm,
 } from "formik";
-import Input from "~/components/Input/Input";
-import Button from "~/components/Button/Button";
+import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import { type Category, type Word } from "~/utils/placeholder";
 import FormCategory from "~/components/Form/FormCategory";
-import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
+import Input from "~/components/Input/Input";
 import wordWithId from "~/utils/wordWithId";
 
 type FormProps = {
-  setIsFormOpen?: Dispatch<SetStateAction<boolean>>;
+  renderButtons: (
+    isValid: boolean,
+    handleFormReset: () => void,
+  ) => React.ReactElement;
   initialValues: Word;
   submitHandler: (word: Word) => void;
 };
@@ -41,8 +42,8 @@ const FormSchema = Yup.object({
 });
 
 export default function Form({
+  renderButtons,
   initialValues,
-  setIsFormOpen,
   submitHandler,
 }: FormProps) {
   const formSubmitHandler = (values: Word) => submitHandler(wordWithId(values));
@@ -69,15 +70,16 @@ export default function Form({
           | FormikErrors<Category[]>
           | undefined;
 
-        function handleFormNavigationBtns() {
+        function handleFormReset() {
           resetForm();
           setErrors({});
           setTouched({});
-          if (setIsFormOpen) setIsFormOpen(false);
         }
 
+        const formButtons = renderButtons(isValid, handleFormReset);
+
         return (
-          <FormikForm className="px-2 py-4 pb-6 [&>div]:mb-4">
+          <FormikForm className="rounded-md bg-gray-100 p-4 dark:bg-gray-800 [&>div]:mb-4">
             <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
               <Input
                 id="name"
@@ -100,34 +102,20 @@ export default function Form({
                   {values.categories.map((category, cIndex) => (
                     <FormCategory
                       key={cIndex}
-                      categoryErrors={errorCategories}
-                      categoryTouched={touched.categories}
                       category={category}
                       categoryIndex={cIndex}
                       push={arrayHelpers.push}
                       remove={arrayHelpers.remove}
+                      categoryErrors={errorCategories}
+                      categoryTouched={touched.categories}
                       categoriesLength={values.categories.length}
                     />
                   ))}
                 </div>
               )}
             </FieldArray>
-            <div className="flex gap-4 [&>button:first-child]:flex-grow-[5] [&>button:last-child]:flex-grow [&>button]:px-4 [&>button]:py-2">
-              <Button
-                isSubmit={true}
-                onClick={() => {
-                  if (isValid) setTimeout(handleFormNavigationBtns, 500);
-                }}
-                className="rounded-md bg-gray-300 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:bg-opacity-50 dark:bg-gray-900 dark:disabled:bg-opacity-50"
-              >
-                Add Word
-              </Button>
-              <Button
-                onClick={handleFormNavigationBtns}
-                className="rounded-md bg-gray-300 dark:bg-gray-900"
-              >
-                Cancel
-              </Button>
+            <div className="flex flex-wrap gap-4 [&>button:first-child]:flex-grow-[6] [&>button:nth-child(2)]:flex-grow [&>button]:flex-grow [&>button]:rounded-md [&>button]:bg-gray-300 [&>button]:px-4 [&>button]:py-2 [&>button]:dark:bg-gray-900">
+              {formButtons}
             </div>
           </FormikForm>
         );
