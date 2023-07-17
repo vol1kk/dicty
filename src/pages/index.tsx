@@ -9,16 +9,14 @@ import useDebounce from "~/hooks/useDebounce";
 import filterData from "~/utils/filterData";
 import useWords from "~/hooks/useGetWords";
 import Form from "~/components/Form/Form";
+import wordWithId from "~/utils/wordWithId";
 
-const formTemplate: Word = {
-  id: "",
+const formTemplate = {
   name: "",
   createdById: "",
   transcription: "",
-  categories: [
-    { id: "", name: "", meanings: [{ id: "", definition: "", example: "" }] },
-  ],
-};
+  categories: [{ name: "", meanings: [{ definition: "", example: "" }] }],
+} as Word;
 
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -26,21 +24,22 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 
-  const [words, setWords] = useWords();
+  const words = useWords();
 
   const data = useMemo(
-    () => filterData(words, debouncedSearch),
+    () => filterData(words.data ?? [], debouncedSearch),
     [words, debouncedSearch],
   );
 
-  function formSubmitHandler(word: Word) {
-    setWords(p => {
-      const newWords = [word, ...p];
-      localStorage.setItem("words", JSON.stringify(newWords));
+  const formSubmitHandler = function formSubmitHandler(word: Word) {
+    if ("fromApi" in words && !words.fromApi) {
+      const withId = wordWithId(word);
+      words.setWords(p => [withId, ...p]);
+      localStorage.setItem("words", JSON.stringify([withId, ...words.data]));
+    }
 
-      return newWords;
-    });
-  }
+    if ("fromApi" in words && words.fromApi) words.createWord(word);
+  };
 
   return (
     <>

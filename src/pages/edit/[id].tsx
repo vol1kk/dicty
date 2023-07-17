@@ -1,30 +1,38 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useRouter as useNavigationRouter } from "next/navigation";
 import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useGetWords";
 import { type Word } from "~/utils/placeholder";
 import Button from "~/components/Button/Button";
-import Head from "next/head";
 
 export default function EditPage() {
-  const [words] = useWords();
-  const router = useRouter();
-  const word = words.find(w => w.id === router.query.id);
+  const words = useWords();
   const navigation = useNavigationRouter();
+  const router = useRouter();
 
-  function submitHandler(data: Word) {
-    const changedWords = words.map(w => (w.id === data.id ? data : w));
+  const word = words.data?.find(w => w.id === router.query.id);
+
+  const submitHandler = function submitHandler(data: Word) {
+    if (!words.data || !word) return;
+
+    const changedWords = words.data.map(w => (w.id === data.id ? data : w));
     localStorage.setItem("words", JSON.stringify(changedWords));
     navigation.replace("/");
-  }
+  };
 
-  function deleteHandler() {
-    let changedWords = words;
-    if (word) changedWords = words.filter(w => w.id !== word.id);
+  const deleteHandler = function deleteHandler() {
+    if (!words.data || !word) return;
 
-    localStorage.setItem("words", JSON.stringify(changedWords));
+    if (words.fromApi) words.deleteWord({ id: word.id });
+
+    if (!words.fromApi) {
+      const filteredWords = words.data.filter(w => w.id !== word.id);
+      localStorage.setItem("words", JSON.stringify(filteredWords));
+    }
+
     navigation.replace("/");
-  }
+  };
 
   if (!word) return <h1>placeholder</h1>;
 
