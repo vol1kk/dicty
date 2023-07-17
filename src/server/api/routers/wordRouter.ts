@@ -39,4 +39,19 @@ export const wordRouter = createTRPCRouter({
       },
     });
   }),
+
+  getWords: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.word.findMany({
+      where: { createdById: ctx.authedUser.id },
+      include: { categories: { include: { meanings: true } } },
+    });
+  }),
+
+  deleteWord: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.word.deleteMany({
+        where: { createdById: ctx.authedUser.id, id: input.id },
+      });
+    }),
 });
