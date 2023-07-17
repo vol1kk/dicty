@@ -1,11 +1,34 @@
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { type Word } from "~/utils/placeholder";
+import { api } from "~/utils/api";
+import { useSession } from "next-auth/react";
 
-export default function useWords() {
-  // const { data: sessionData } = useSession();
-  // const words = api
-  // const { mutate: addWordMutation } = api
+type UseWordsResultWithData = {
+  data: Word[];
+  setWords: Dispatch<SetStateAction<Word[]>>;
+  fromApi: false;
+};
+
+type UseWordsResultFromApi = {
+  data: Word[];
+  deleteWord: ReturnType<typeof api.words.deleteWord.useMutation>["mutate"];
+  createWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
+  fromApi: true;
+};
+
+export default function useWords():
+  | UseWordsResultWithData
+  | UseWordsResultFromApi
+  | { data: undefined } {
+  const { data: sessionData } = useSession();
+  const authedWords = api.words.getWords.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+
+  const { mutate: deleteWord } = api.words.deleteWord.useMutation();
+  const { mutate: createWord } = api.words.createWord.useMutation();
+
   const [words, setWords] = useState<Word[]>([]);
 
   useEffect(() => {
@@ -13,9 +36,21 @@ export default function useWords() {
     if (localWords) setWords(JSON.parse(localWords) as Word[]);
   }, []);
 
-  // if (sessionData) {
-  //   return [words.data, addWordMutation];
-  // }
+  if (authedWords.data) {
+    return {
+      deleteWord,
+      createWord,
+      fromApi: true,
+      data: authedWords.data as Word[],
+    } as const;
+  }
 
-  return [words, setWords] as const;
+  if (!authedWords.isFetching && !sessionData?.user)
+    return {
+      setWords,
+      data: words,
+      fromApi: false,
+    } as const;
+
+  return { data: undefined };
 }
