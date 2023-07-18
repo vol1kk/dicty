@@ -13,6 +13,7 @@ type UseWordsApiResult = {
   data: Word[];
   deleteWord: ReturnType<typeof api.words.deleteWord.useMutation>["mutate"];
   createWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
+  updateWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
   fromApi: true;
 };
 
@@ -31,6 +32,7 @@ export default function useWords():
 
   const { mutate: deleteWord } = api.words.deleteWord.useMutation();
   const { mutate: createWord } = api.words.createWord.useMutation();
+  const { mutate: updateWord } = api.words.updateWord.useMutation();
 
   const [words, setWords] = useState<Word[]>([]);
 
@@ -48,7 +50,7 @@ export default function useWords():
     return {
       createWord,
       deleteWord,
-      // updateWord,
+      updateWord,
       fromApi: true,
       data: authedWords.data as Word[],
     };
