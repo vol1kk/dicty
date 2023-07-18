@@ -1,11 +1,12 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
+import { type Word } from "~/types/ApiTypes";
 
 const MeaningSchema = z.object({
   id: z.string().optional(),
   definition: z.string(),
-  example: z.string().optional(),
+  example: z.string().nullable().optional(),
 });
 
 const CategorySchema = z.object({
@@ -60,10 +61,88 @@ export const wordRouter = createTRPCRouter({
       if (existingWord.createdById !== updatedWord.createdById)
         throw new TRPCError({ code: "UNAUTHORIZED" });
 
-      await ctx.prisma.word.delete({ where: { id: existingWord.id } });
-      return ctx.prisma.word.create({
-        data: createWord(updatedWord, ctx.authedUser.id),
+      const deletedCategories = existingWord.categories.filter(category =>
+        updatedWord.categories.some(
+          c => c.id !== category.id || c.meanings.length === 0,
+        ),
+      );
+
+      const currentMeanings = existingWord.categories
+        .map(c => c.meanings)
+        .flat();
+      const newMeanings = updatedWord.categories.map(c => c.meanings).flat();
+      const deletedMeanings = currentMeanings.filter(
+        currMean => !newMeanings.some(newMean => newMean.id === currMean.id),
+      );
+
+      const deletedMeaningsIds = deletedMeanings.map(m => m.id);
+      const deletedCategoriesIds = deletedCategories.map(c => c.id);
+      if (deletedCategories.length > 0) {
+        await ctx.prisma.category.deleteMany({
+          where: { id: { in: deletedCategoriesIds } },
+        });
+      }
+      if (deletedMeanings.length > 0) {
+        await ctx.prisma.meaning.deleteMany({
+          where: { id: { in: deletedMeaningsIds } },
+        });
+      }
+
+      const updatedCategories = updatedWord.categories.map(async category => {
+        const existingCategory = existingWord.categories.find(
+          c => c.id === category.id,
+        );
+
+        if (existingCategory) {
+          const updatedMeanings = category.meanings.map(meaning => {
+            const existingMeaning = existingCategory.meanings.find(
+              m => m.id === meaning.id,
+            );
+
+            if (existingMeaning) {
+              return ctx.prisma.meaning.update({
+                where: { id: existingMeaning.id },
+                data: meaning,
+              });
+            }
+
+            if (!existingMeaning) {
+              return ctx.prisma.meaning.create({
+                data: {
+                  ...meaning,
+                  category: { connect: { id: existingCategory.id } },
+                },
+              });
+            }
+          });
+
+          await Promise.all(updatedMeanings);
+        }
+
+        if (!existingCategory) {
+          return ctx.prisma.category.create({
+            data: {
+              name: category.name,
+              meanings: {
+                create: category.meanings,
+              },
+              word: { connect: { id: existingWord.id } },
+            },
+          });
+        }
       });
+
+      await Promise.all(updatedCategories);
+
+      await ctx.prisma.word.update({
+        where: { id: existingWord.id },
+        data: {
+          name: updatedWord.name,
+          transcription: updatedWord.transcription,
+        },
+      });
+
+      return ctx.prisma.word.findUnique({ where: { id: existingWord.id } });
     }),
 });
 
@@ -73,12 +152,37 @@ function createWord(data: z.infer<typeof WordSchema>, userId: string) {
     createdById: userId,
     transcription: data.transcription,
     categories: {
-      create: data.categories.map(category => ({
-        name: category.name,
-        meanings: {
-          create: category.meanings,
-        },
-      })),
+      create: data.categories.map(createCategory),
     },
   };
 }
+
+function createCategory(category: z.infer<typeof CategorySchema>) {
+  return {
+    name: category.name,
+    meanings: {
+      create: category.meanings,
+    },
+  };
+}
+
+// [
+//   {
+//     id: 'f8574848-313a-47fd-a896-3e50f86d4d07',
+//     name: 'gjgj',
+//     meanings: [ [Object] ],
+//     wordId: '9a26b677-ac25-4f85-b91c-c9f1bcf875f1'
+//   },
+//   {
+//     id: 'e263906b-8aa2-43ff-8b45-21ecccc0fb65',
+//     name: '12313',
+//     meanings: [ [Object] ],
+//     wordId: '9a26b677-ac25-4f85-b91c-c9f1bcf875f1'
+//   }
+// ]
+// function test<T extends { id?: string; meanings: { id?: string }[] }>(
+//   data: T[],
+// ) {
+//   return data;
+// }
+//
