@@ -16,8 +16,13 @@ export default function EditPage() {
   const submitHandler = function submitHandler(data: Word) {
     if (!words.data || !word) return;
 
-    const changedWords = words.data.map(w => (w.id === data.id ? data : w));
-    localStorage.setItem("words", JSON.stringify(changedWords));
+    if (words.fromApi) words.updateWord(data);
+
+    if (!words.fromApi) {
+      const changedWords = words.data.map(w => (w.id === data.id ? data : w));
+      localStorage.setItem("words", JSON.stringify(changedWords));
+    }
+
     navigation.replace("/");
   };
 
