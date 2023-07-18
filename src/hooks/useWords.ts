@@ -13,7 +13,7 @@ type UseWordsApiResult = {
   data: Word[];
   deleteWord: ReturnType<typeof api.words.deleteWord.useMutation>["mutate"];
   createWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
-  updateWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
+  updateWord: ReturnType<typeof api.words.updateWord.useMutation>["mutate"];
   fromApi: true;
 };
 
@@ -27,7 +27,6 @@ export default function useWords():
   const [isAuthed, setIsAuthed] = useState(false);
   const authedWords = api.words.getWords.useQuery(undefined, {
     enabled: isAuthed,
-    refetchOnWindowFocus: false,
   });
 
   const { mutate: deleteWord } = api.words.deleteWord.useMutation();
