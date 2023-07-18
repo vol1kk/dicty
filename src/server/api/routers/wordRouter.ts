@@ -2,19 +2,24 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 const MeaningSchema = z.object({
+  id: z.string().optional(),
   definition: z.string(),
   example: z.string().optional(),
+  categoryId: z.string().optional(),
 });
 
 const CategorySchema = z.object({
+  id: z.string().optional(),
   name: z.string(),
   meanings: z.array(MeaningSchema),
+  wordId: z.string().optional(),
 });
 
 const WordSchema = z.object({
+  id: z.string().optional(),
   name: z.string(),
-  createdById: z.string(),
   transcription: z.string(),
+  createdById: z.string(),
   categories: z.array(CategorySchema),
 });
 
@@ -31,10 +36,7 @@ export const wordRouter = createTRPCRouter({
             create: input.categories.map(category => ({
               name: category.name,
               meanings: {
-                create: category.meanings.map(meaning => ({
-                  definition: meaning.definition,
-                  example: meaning.example,
-                })),
+                create: category.meanings,
               },
             })),
           },
