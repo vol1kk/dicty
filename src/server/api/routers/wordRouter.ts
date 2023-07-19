@@ -1,26 +1,25 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { type Word } from "~/types/ApiTypes";
 
 const MeaningSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   definition: z.string(),
-  example: z.string().nullable().optional(),
+  example: z.string().nullable(),
 });
 
 const CategorySchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string(),
   meanings: z.array(MeaningSchema),
-  wordId: z.string().optional(),
+  wordId: z.string().nullable(),
 });
 
 const WordSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string(),
   transcription: z.string(),
-  createdById: z.string(),
+  createdById: z.string().optional(),
   categories: z.array(CategorySchema),
 });
 
@@ -161,28 +160,10 @@ function createCategory(category: z.infer<typeof CategorySchema>) {
   return {
     name: category.name,
     meanings: {
-      create: category.meanings,
+      create: category.meanings.map(meaning => ({
+        definition: meaning.definition,
+        example: meaning.example,
+      })),
     },
   };
 }
-
-// [
-//   {
-//     id: 'f8574848-313a-47fd-a896-3e50f86d4d07',
-//     name: 'gjgj',
-//     meanings: [ [Object] ],
-//     wordId: '9a26b677-ac25-4f85-b91c-c9f1bcf875f1'
-//   },
-//   {
-//     id: 'e263906b-8aa2-43ff-8b45-21ecccc0fb65',
-//     name: '12313',
-//     meanings: [ [Object] ],
-//     wordId: '9a26b677-ac25-4f85-b91c-c9f1bcf875f1'
-//   }
-// ]
-// function test<T extends { id?: string; meanings: { id?: string }[] }>(
-//   data: T[],
-// ) {
-//   return data;
-// }
-//

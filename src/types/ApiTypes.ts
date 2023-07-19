@@ -10,10 +10,11 @@ export interface Category {
   id: string;
   name: string;
   meanings: Meaning[];
+  wordId: string;
 }
 
 export interface Meaning {
   id: string;
-  example?: string;
+  example: string | null;
   definition: string;
 }
