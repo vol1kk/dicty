@@ -18,11 +18,13 @@ type FormCategoryProps = {
 } & Pick<FieldArrayHelpers, "push" | "remove">;
 
 const meaningTemplate = {
+  id: "",
   definition: "",
   example: "",
 };
 
 const categoryTemplate = {
+  id: "",
   name: "",
   meanings: [meaningTemplate],
 };

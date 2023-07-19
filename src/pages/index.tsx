@@ -13,9 +13,10 @@ import useWords from "~/hooks/useWords";
 
 const formTemplate = {
   name: "",
-  createdById: "",
   transcription: "",
-  categories: [{ name: "", meanings: [{ definition: "", example: "" }] }],
+  categories: [
+    { id: "", name: "", meanings: [{ id: "", definition: "", example: "" }] },
+  ],
 } as Word;
 
 export default function Home() {
@@ -38,7 +39,8 @@ export default function Home() {
       localStorage.setItem("words", JSON.stringify([withId, ...words.data]));
     }
 
-    if ("fromApi" in words && words.fromApi) words.createWord(word);
+    if ("fromApi" in words && words.fromApi)
+      words.createWord(wordWithId(word, true));
   };
 
   return (
