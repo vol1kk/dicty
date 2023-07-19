@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 const MeaningSchema = z.object({
   id: z.string(),
@@ -64,77 +64,66 @@ export const wordRouter = createTRPCRouter({
         updatedWord.categories,
       );
 
-      if (deleted.categories.length > 0)
-        await ctx.prisma.category.deleteMany({
-          where: { id: { in: deleted.categories } },
-        });
-
-      if (deleted.meanings.length > 0)
-        await ctx.prisma.meaning.deleteMany({
-          where: { id: { in: deleted.meanings } },
-        });
-
-      const updatedCategories = updatedWord.categories.map(async category => {
+      const updatedCategories = updatedWord.categories.map(category => {
         const existingCategory = existingWord.categories.find(
           c => c.id === category.id,
         );
 
-        if (existingCategory) {
-          const updatedMeanings = category.meanings.map(meaning => {
-            const existingMeaning = existingCategory.meanings.find(
-              m => m.id === meaning.id,
-            );
+        const updatedMeanings = category.meanings.map(meaning => {
+          const existingMeaning = existingCategory?.meanings.find(
+            m => m.id === meaning.id,
+          );
 
-            if (existingMeaning) {
-              if (
-                existingMeaning.definition !== meaning.definition ||
-                existingMeaning.example !== meaning.example
-              )
-                return ctx.prisma.meaning.update({
-                  where: { id: existingMeaning.id },
-                  data: meaning,
-                });
-            }
-
-            if (!existingMeaning) {
-              return ctx.prisma.meaning.create({
-                data: {
-                  ...createMeaning(meaning),
-                  category: { connect: { id: existingCategory.id } },
-                },
-              });
-            }
-          });
-
-          await ctx.prisma.category.update({
-            where: { id: existingCategory.id },
-            data: {
-              name: category.name,
+          return {
+            where: {
+              id:
+                existingMeaning?.id === undefined
+                  ? "NOT_FOUND"
+                  : existingMeaning.id,
             },
-          });
-          await Promise.all(updatedMeanings);
-        }
-
-        if (!existingCategory) {
-          return ctx.prisma.category.create({
-            data: {
-              ...createCategory(category),
-              word: { connect: { id: existingWord.id } },
+            update: {
+              definition: meaning.definition,
+              example: meaning.example,
             },
-          });
-        }
+            create: {
+              ...createMeaning(meaning),
+            },
+          };
+        });
+
+        return {
+          where: {
+            id:
+              existingCategory?.id === undefined
+                ? "NOT_FOUND"
+                : existingCategory.id,
+          },
+          update: {
+            name: category.name,
+            meanings: {
+              upsert: updatedMeanings,
+              deleteMany: deleted.meanings.map(m => ({ id: m })),
+            },
+          },
+          create: {
+            ...createCategory(category),
+          },
+        };
       });
 
-      await Promise.all(updatedCategories);
-      await ctx.prisma.word.update({
-        where: { id: existingWord.id },
-        data: {
-          name: updatedWord.name,
-          transcription: updatedWord.transcription,
-        },
+      return ctx.prisma.$transaction(async tx => {
+        return await tx.word.update({
+          where: { id: existingWord.id },
+          data: {
+            name: updatedWord.name,
+            transcription: updatedWord.transcription,
+            categories: {
+              upsert: updatedCategories,
+              deleteMany: deleted.categories.map(m => ({ id: m })),
+            },
+          },
+        });
       });
-
-      return ctx.prisma.word.findUnique({ where: { id: existingWord.id } });
     }),
 });
 
