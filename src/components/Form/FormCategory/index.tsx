@@ -26,6 +26,7 @@ const meaningTemplate = {
 const categoryTemplate = {
   id: "",
   name: "",
+  wordId: "",
   meanings: [meaningTemplate],
 };
 
