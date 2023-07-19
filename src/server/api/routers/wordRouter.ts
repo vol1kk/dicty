@@ -12,7 +12,6 @@ const CategorySchema = z.object({
   id: z.string(),
   name: z.string(),
   meanings: z.array(MeaningSchema),
-  wordId: z.string().nullable(),
 });
 
 const WordSchema = z.object({
@@ -87,32 +86,39 @@ export const wordRouter = createTRPCRouter({
             );
 
             if (existingMeaning) {
-              return ctx.prisma.meaning.update({
-                where: { id: existingMeaning.id },
-                data: meaning,
-              });
+              if (
+                existingMeaning.definition !== meaning.definition ||
+                existingMeaning.example !== meaning.example
+              )
+                return ctx.prisma.meaning.update({
+                  where: { id: existingMeaning.id },
+                  data: meaning,
+                });
             }
 
             if (!existingMeaning) {
               return ctx.prisma.meaning.create({
                 data: {
-                  ...meaning,
+                  ...createMeaning(meaning),
                   category: { connect: { id: existingCategory.id } },
                 },
               });
             }
           });
 
+          await ctx.prisma.category.update({
+            where: { id: existingCategory.id },
+            data: {
+              name: category.name,
+            },
+          });
           await Promise.all(updatedMeanings);
         }
 
         if (!existingCategory) {
           return ctx.prisma.category.create({
             data: {
-              name: category.name,
-              meanings: {
-                create: category.meanings,
-              },
+              ...createCategory(category),
               word: { connect: { id: existingWord.id } },
             },
           });
@@ -120,7 +126,6 @@ export const wordRouter = createTRPCRouter({
       });
 
       await Promise.all(updatedCategories);
-
       await ctx.prisma.word.update({
         where: { id: existingWord.id },
         data: {
@@ -137,10 +142,11 @@ function getDeletedItems<T extends { id: string; meanings: { id: string }[] }>(
   existingCategories: T[],
   updatedCategories: T[],
 ) {
-  const deletedCategories = existingCategories.filter(category =>
-    updatedCategories.some(
-      c => c.id !== category.id || c.meanings.length === 0,
-    ),
+  const deletedCategories = existingCategories.filter(
+    category =>
+      !updatedCategories.some(
+        c => c.id === category.id || category.meanings.length === 0,
+      ),
   );
 
   const currentMeanings = existingCategories.map(c => c.meanings).flat();
@@ -170,10 +176,14 @@ function createCategory(category: z.infer<typeof CategorySchema>) {
   return {
     name: category.name,
     meanings: {
-      create: category.meanings.map(meaning => ({
-        definition: meaning.definition,
-        example: meaning.example,
-      })),
+      create: category.meanings.map(createMeaning),
     },
+  };
+}
+
+function createMeaning(meaning: z.infer<typeof MeaningSchema>) {
+  return {
+    definition: meaning.definition,
+    example: meaning.example,
   };
 }
