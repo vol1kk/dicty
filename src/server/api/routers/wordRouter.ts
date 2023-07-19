@@ -60,32 +60,20 @@ export const wordRouter = createTRPCRouter({
       if (existingWord.createdById !== updatedWord.createdById)
         throw new TRPCError({ code: "UNAUTHORIZED" });
 
-      const deletedCategories = existingWord.categories.filter(category =>
-        updatedWord.categories.some(
-          c => c.id !== category.id || c.meanings.length === 0,
-        ),
+      const deleted = getDeletedItems(
+        existingWord.categories,
+        updatedWord.categories,
       );
 
-      const currentMeanings = existingWord.categories
-        .map(c => c.meanings)
-        .flat();
-      const newMeanings = updatedWord.categories.map(c => c.meanings).flat();
-      const deletedMeanings = currentMeanings.filter(
-        currMean => !newMeanings.some(newMean => newMean.id === currMean.id),
-      );
-
-      const deletedMeaningsIds = deletedMeanings.map(m => m.id);
-      const deletedCategoriesIds = deletedCategories.map(c => c.id);
-      if (deletedCategories.length > 0) {
+      if (deleted.categories.length > 0)
         await ctx.prisma.category.deleteMany({
-          where: { id: { in: deletedCategoriesIds } },
+          where: { id: { in: deleted.categories } },
         });
-      }
-      if (deletedMeanings.length > 0) {
+
+      if (deleted.meanings.length > 0)
         await ctx.prisma.meaning.deleteMany({
-          where: { id: { in: deletedMeaningsIds } },
+          where: { id: { in: deleted.meanings } },
         });
-      }
 
       const updatedCategories = updatedWord.categories.map(async category => {
         const existingCategory = existingWord.categories.find(
@@ -144,6 +132,28 @@ export const wordRouter = createTRPCRouter({
       return ctx.prisma.word.findUnique({ where: { id: existingWord.id } });
     }),
 });
+
+function getDeletedItems<T extends { id: string; meanings: { id: string }[] }>(
+  existingCategories: T[],
+  updatedCategories: T[],
+) {
+  const deletedCategories = existingCategories.filter(category =>
+    updatedCategories.some(
+      c => c.id !== category.id || c.meanings.length === 0,
+    ),
+  );
+
+  const currentMeanings = existingCategories.map(c => c.meanings).flat();
+  const newMeanings = updatedCategories.map(c => c.meanings).flat();
+  const deletedMeanings = currentMeanings.filter(
+    currMean => !newMeanings.some(newMean => newMean.id === currMean.id),
+  );
+
+  return {
+    categories: deletedCategories.map(c => c.id),
+    meanings: deletedMeanings.map(m => m.id),
+  };
+}
 
 function createWord(data: z.infer<typeof WordSchema>, userId: string) {
   return {
