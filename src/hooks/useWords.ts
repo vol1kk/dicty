@@ -23,6 +23,7 @@ export default function useWords():
   | UseWordsDefaultReturn
   | UseWordsLocalResult
   | UseWordsApiResult {
+  const utils = api.useContext();
   const { data: sessionData } = useSession();
   const [isAuthed, setIsAuthed] = useState(false);
   const authedWords = api.words.getWords.useQuery(undefined, {
@@ -30,7 +31,11 @@ export default function useWords():
   });
 
   const { mutate: deleteWord } = api.words.deleteWord.useMutation();
-  const { mutate: createWord } = api.words.createWord.useMutation();
+  const { mutate: createWord } = api.words.createWord.useMutation({
+    onSuccess() {
+      utils.words.invalidate().catch(console.log);
+    },
+  });
   const { mutate: updateWord } = api.words.updateWord.useMutation();
 
   const [words, setWords] = useState<Word[]>([]);
