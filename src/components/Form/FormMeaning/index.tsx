@@ -23,6 +23,7 @@ export default function FormMeaning({
 }: FormMeaningProps) {
   const currentMeaningError = meaningsErrors?.at(meaningIndex);
   const currentMeaningTouched = meaningsTouched?.at(meaningIndex);
+  const hasErrorBorder = currentMeaningError && currentMeaningTouched;
 
   return (
     <div
@@ -32,12 +33,7 @@ export default function FormMeaning({
       <Input
         role="option"
         id={`categories.${categoryIndex}.meanings.${meaningIndex}.definition`}
-        className={clsx(
-          currentMeaningError?.definition &&
-            currentMeaningTouched?.definition &&
-            "border-2 border-red-500",
-          "w-full",
-        )}
+        className={clsx(hasErrorBorder && "border-2 border-red-500", "w-full")}
         value={meaning.definition}
         placeholder="Enter Definition"
       />
@@ -46,15 +42,17 @@ export default function FormMeaning({
         role="option"
         id={`categories.${categoryIndex}.meanings.${meaningIndex}.example`}
         className="w-full"
-        value={meaning.example}
+        value={meaning.example || ""}
         placeholder="Enter Example"
       />
       <Button
         onClick={() => removeMeaning(meaningIndex)}
-        className="rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
+        className="group rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
       >
         <span className="sr-only">Delete definition</span>
-        <span aria-hidden={true}>X</span>
+        <span className="group-hover:text-white" aria-hidden={true}>
+          X
+        </span>
       </Button>
     </div>
   );
