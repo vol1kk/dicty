@@ -70,6 +70,7 @@ export default function FormCategory({
 
   const currentCategoryErrors = categoryErrors?.at(categoryIndex);
   const currentCategoryTouched = categoryTouched?.at(categoryIndex);
+  const hasErrorBorder = currentCategoryErrors && currentCategoryTouched;
 
   const currentCategoryMeaningsErrors = currentCategoryErrors?.meanings as
     | FormikErrors<Meaning[]>
@@ -85,12 +86,10 @@ export default function FormCategory({
         <Input
           id={`categories.${categoryIndex}.name`}
           before={false}
-          className="w-full"
+          className="w-full !outline-0"
           classNameLabel={clsx(
-            currentCategoryErrors?.name &&
-              currentCategoryTouched?.name &&
-              "border-2 border-red-500",
-            "relative flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md",
+            hasErrorBorder && "border-2 border-red-500",
+            "relative flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md focus-within:outline outline-1 outline-primary outline-offset-2",
           )}
           value={category.name}
           placeholder="Enter Category"
