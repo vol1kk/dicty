@@ -28,6 +28,7 @@ model Word {
   id            String     @id @default(uuid())
   name          String
   transcription String
+  createdAt     DateTime   @default(now())
   categories    Category[]
   createdById   String?
   createdBy     User?      @relation(fields: [createdById], references: [id], onDelete: Cascade)

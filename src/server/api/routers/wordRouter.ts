@@ -35,6 +35,7 @@ export const wordRouter = createTRPCRouter({
     return ctx.prisma.word.findMany({
       where: { createdById: ctx.authedUser.id },
       include: { categories: { include: { meanings: true } } },
+      orderBy: { createdAt: "desc" },
     });
   }),
 
