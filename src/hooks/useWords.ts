@@ -1,54 +1,49 @@
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { type Word } from "~/types/ApiTypes";
 import { api } from "~/utils/api";
+import useSessionData from "~/store/useSessionData";
 
 type UseWordsLocalResult = {
   data: Word[];
-  setWords: Dispatch<SetStateAction<Word[]>>;
   fromApi: false;
+  setWords: Dispatch<SetStateAction<Word[]>>;
 };
 
 type UseWordsApiResult = {
   data: Word[];
-  deleteWord: ReturnType<typeof api.words.deleteWord.useMutation>["mutate"];
-  createWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
-  updateWord: ReturnType<typeof api.words.updateWord.useMutation>["mutate"];
   fromApi: true;
+  deleteWord: ReturnType<typeof api.words.deleteWord.useMutation>["mutate"];
+  updateWord: ReturnType<typeof api.words.updateWord.useMutation>["mutate"];
+  createWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
 };
 
 type UseWordsDefaultReturn = { data: undefined };
 
-export default function useWords():
+type UseWordsReturnType =
   | UseWordsDefaultReturn
   | UseWordsLocalResult
-  | UseWordsApiResult {
+  | UseWordsApiResult;
+
+export default function useWords(): UseWordsReturnType {
   const utils = api.useContext();
-  const { data: sessionData } = useSession();
-  const [isAuthed, setIsAuthed] = useState(false);
+  const isAuthed = useSessionData(state => state.isAuthed);
+
   const authedWords = api.words.getWords.useQuery(undefined, {
     enabled: isAuthed,
   });
-
   const { mutate: deleteWord } = api.words.deleteWord.useMutation();
+  const { mutate: updateWord } = api.words.updateWord.useMutation();
   const { mutate: createWord } = api.words.createWord.useMutation({
     onSuccess() {
       utils.words.invalidate().catch(console.log);
     },
   });
-  const { mutate: updateWord } = api.words.updateWord.useMutation();
 
-  const [words, setWords] = useState<Word[]>([]);
-
+  const [localWords, setLocalWords] = useState<Word[]>([]);
   useEffect(() => {
-    const localWords = localStorage.getItem("words");
-    if (localWords) setWords(JSON.parse(localWords) as Word[]);
+    const localData = localStorage.getItem("words");
+    if (localData) setLocalWords(JSON.parse(localData) as Word[]);
   }, []);
-
-  useEffect(() => {
-    if (sessionData?.user) setIsAuthed(true);
-    else setIsAuthed(false);
-  }, [sessionData]);
 
   if (authedWords.data) {
     return {
@@ -60,11 +55,11 @@ export default function useWords():
     };
   }
 
-  if (!sessionData?.user)
+  if (!isAuthed)
     return {
-      setWords,
-      data: words,
       fromApi: false,
+      data: localWords,
+      setWords: setLocalWords,
     };
 
   return { data: undefined };

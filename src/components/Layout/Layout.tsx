@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useEffect } from "react";
 import { setToken } from "~/utils/api";
 import { useSession } from "next-auth/react";
+import useSessionData from "~/store/useSessionData";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -18,11 +19,12 @@ const FONTS = new Map([
 let once = true;
 export default function Layout({ children }: LayoutProps) {
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
+  const setSession = useSessionData(state => state.setSession);
   const setTheme = useUserPreferences(state => state.setTheme);
   const setFont = useUserPreferences(state => state.setFont);
   const font = useUserPreferences(state => state.font);
   const getFont = FONTS.get(font) ?? "font-poppins";
-  const { data: sessionData } = useSession();
+  const sessionData = useSession();
 
   useEffect(() => {
     if (once) {
@@ -45,10 +47,14 @@ export default function Layout({ children }: LayoutProps) {
   }, [isDarkTheme]);
 
   useEffect(() => {
-    if (sessionData && Object.keys(sessionData).length > 0)
-      setToken(sessionData.user.accessToken);
-    else setToken("");
-  }, [sessionData]);
+    if (sessionData.data?.user) {
+      setToken(sessionData.data.user.accessToken);
+      setSession(sessionData.data);
+    } else {
+      setToken("");
+      setSession(null);
+    }
+  }, [sessionData, setSession]);
 
   return (
     <div className="dark:bg-gray-900 dark:text-gray-100">
