@@ -47,10 +47,10 @@ export default function FormMeaning({
       />
       <Button
         onClick={() => removeMeaning(meaningIndex)}
-        className="group rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
+        className="group/button rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
       >
         <span className="sr-only">Delete definition</span>
-        <span className="group-hover:text-white" aria-hidden={true}>
+        <span className="group-hover/button:text-white" aria-hidden={true}>
           X
         </span>
       </Button>
