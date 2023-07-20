@@ -10,6 +10,8 @@ import filterData from "~/utils/filterData";
 import wordWithId from "~/utils/wordWithId";
 import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
+import useHeaderData from "~/store/useHeaderData";
+import clsx from "clsx";
 
 const formTemplate = {
   name: "",
@@ -21,6 +23,7 @@ const formTemplate = {
 
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
@@ -50,7 +53,7 @@ export default function Home() {
         <meta name="description" content="Create your own dictionary!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className={clsx(isHeaderOpen && "invisible")}>
         <div className="relative">
           <input
             id="search"

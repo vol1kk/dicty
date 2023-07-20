@@ -5,11 +5,14 @@ import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
 import { type Word } from "~/types/ApiTypes";
 import Button from "~/components/Button/Button";
+import useHeaderData from "~/store/useHeaderData";
+import clsx from "clsx";
 
 export default function EditPage() {
+  const router = useRouter();
   const words = useWords();
   const navigation = useNavigationRouter();
-  const router = useRouter();
+  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
 
   const word = words.data?.find(w => w.id === router.query.id);
 
@@ -48,7 +51,7 @@ export default function EditPage() {
         <meta name="description" content="Create your own dictionary!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className={clsx(isHeaderOpen && "invisible")}>
         <div>
           <Form
             initialValues={word}
