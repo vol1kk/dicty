@@ -1,24 +1,34 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { signIn, signOut } from "next-auth/react";
-import Switch from "~/components/Header/Switch";
 import Button from "~/components/Button/Button";
 import useHeaderData from "~/store/useHeaderData";
 import Overlay from "~/components/Overlay/Overlay";
 import useSessionData from "~/store/useSessionData";
 import Dictionary from "~/components/Icons/DictionaryIcon";
 import FontDropdown from "~/components/Header/FontDropdown";
+import Switch from "~/components/Switch";
+import useUserPreferences from "~/store/useUserPreferences";
 
 export default function Header() {
+  const setTheme = useUserPreferences(state => state.setTheme);
   const isAuthed = useSessionData(state => state.isAuthed);
-  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
+  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
+  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
+
+  function themeToggleHandler() {
+    const calculatedTheme = isDarkTheme ? "light" : "dark";
+    setTheme(calculatedTheme);
+    localStorage.setItem("theme", calculatedTheme);
+  }
 
   function authenticationHandler() {
     if (isAuthed) void signOut();
 
     if (!isAuthed) void signIn();
   }
+
   function openMenuHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
     setIsHeaderOpen();
@@ -68,7 +78,10 @@ export default function Header() {
               <FontDropdown />
             </li>
             <li>
-              <Switch />
+              <Switch
+                isChecked={isDarkTheme}
+                handleCheck={themeToggleHandler}
+              />
             </li>
           </ul>
         </div>
