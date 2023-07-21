@@ -57,16 +57,19 @@ export default function Layout({ children }: LayoutProps) {
   }, [sessionData, setSession]);
 
   return (
-    <div className="dark:bg-gray-900 dark:text-gray-100">
-      <div
-        className={clsx(
-          getFont,
-          "m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12",
-        )}
-      >
-        <Header />
-        {children}
+    <>
+      <div id="overlay" />
+      <div className="dark:bg-gray-900 dark:text-gray-100">
+        <div
+          className={clsx(
+            getFont,
+            "m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12",
+          )}
+        >
+          <Header />
+          {children}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
