@@ -16,6 +16,7 @@ export default function Header() {
   const setIsMenuOpen = useHeaderData(state => state.setIsHeaderOpen);
 
   useEffect(() => {
+    document.body.classList.toggle("overflow-hidden");
     const clickCloseHandler = () => {
       if (isMenuOpen) setIsMenuOpen(false);
     };
@@ -63,7 +64,7 @@ export default function Header() {
         <div className="grid h-full place-content-center place-items-center gap-4 ">
           <ul
             onClick={e => e.stopPropagation()}
-            className="grid place-items-center gap-4 text-black dark:text-gray-100"
+            className="grid place-items-center gap-4 text-2xl text-black dark:text-gray-100"
           >
             <li className="[&>button]:rounded-md">
               {isAuthed ? (
