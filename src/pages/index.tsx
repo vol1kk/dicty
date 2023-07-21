@@ -53,7 +53,9 @@ export default function Home() {
         <meta name="description" content="Create your own dictionary!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={clsx(isHeaderOpen && "invisible")}>
+      <main
+        className={clsx(isHeaderOpen && "invisible", "transition-[visibility]")}
+      >
         <div className="relative">
           <input
             id="search"
