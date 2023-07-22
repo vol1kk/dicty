@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { signIn, signOut } from "next-auth/react";
+import Modal from "~/components/Modal/Modal";
 import Button from "~/components/Button/Button";
 import useHeaderData from "~/store/useHeaderData";
 import Overlay from "~/components/Overlay/Overlay";
@@ -64,10 +65,10 @@ export default function Header() {
           "bg-gray-300 transition-[transform,_visibility] dark:bg-gray-800",
         )}
       >
-        <div className="grid h-full place-items-center">
+        <Modal>
           <ul
             onClick={e => e.stopPropagation()}
-            className="grid place-items-center gap-6 text-3xl"
+            className="grid place-items-center gap-6 p-2 text-3xl"
           >
             <li className="[&>button]:rounded-md">
               <Button onClick={authenticationHandler}>
@@ -84,7 +85,7 @@ export default function Header() {
               />
             </li>
           </ul>
-        </div>
+        </Modal>
       </Overlay>
     </header>
   );
