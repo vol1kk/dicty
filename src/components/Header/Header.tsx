@@ -61,7 +61,7 @@ export default function Header() {
         isOverlayActive={isHeaderOpen}
         className={clsx(
           !isHeaderOpen && "translate-x-full",
-          "transition-[transform,_visibility]",
+          "bg-gray-300 transition-[transform,_visibility] dark:bg-gray-800",
         )}
       >
         <div className="grid h-full place-items-center">
