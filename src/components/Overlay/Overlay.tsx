@@ -30,8 +30,6 @@ export default function Overlay({
     };
 
     const keyboardCloseHandler = (e: KeyboardEvent) => {
-      e.preventDefault();
-
       if (e.key === "Escape") setIsMenuOpen(false);
 
       const focusableNodes = overlayRef.current?.querySelectorAll(
@@ -48,6 +46,7 @@ export default function Overlay({
       let nextIndex = currentFocusIndex;
 
       if (e.key === "Tab") {
+        e.preventDefault();
         nextIndex =
           focusableElements.length - 1 === currentFocusIndex
             ? 0
@@ -55,6 +54,7 @@ export default function Overlay({
       }
 
       if (e.key === "Tab" && e.shiftKey) {
+        e.preventDefault();
         nextIndex =
           currentFocusIndex - 1 < 0
             ? focusableElements.length - 1
