@@ -32,7 +32,7 @@ export default function HeaderMenu() {
       isOverlayActive={isHeaderOpen}
       className={clsx(
         !isHeaderOpen && "translate-x-full",
-        "bg-gray-300 transition-[transform,_visibility] dark:bg-gray-800",
+        "bg-gray-300 bg-opacity-80 transition-[transform,_visibility] duration-300 dark:bg-gray-800 dark:bg-opacity-90",
       )}
     >
       <Modal>
