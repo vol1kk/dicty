@@ -23,7 +23,6 @@ const formTemplate = {
 
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
@@ -53,9 +52,7 @@ export default function Home() {
         <meta name="description" content="Create your own dictionary!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main
-        className={clsx(isHeaderOpen && "invisible", "transition-[visibility]")}
-      >
+      <main>
         <div className="relative">
           <input
             id="search"

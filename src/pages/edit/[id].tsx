@@ -12,7 +12,6 @@ export default function EditPage() {
   const router = useRouter();
   const words = useWords();
   const navigation = useNavigationRouter();
-  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
 
   const word = words.data?.find(w => w.id === router.query.id);
 
@@ -51,7 +50,7 @@ export default function EditPage() {
         <meta name="description" content="Create your own dictionary!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={clsx(isHeaderOpen && "invisible")}>
+      <main>
         <div>
           <Form
             initialValues={word}
