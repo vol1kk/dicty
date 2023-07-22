@@ -96,7 +96,7 @@ export default function Dropdown({
         aria-expanded={isDropdownOpen}
         onKeyDown={dropdownKeyboardHandler}
         onClick={dropdownClickHandler}
-        className="rounded-md p-2 outline-2 outline-offset-2 outline-primary focus-visible:outline"
+        className="rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
       >
         {title}
       </div>

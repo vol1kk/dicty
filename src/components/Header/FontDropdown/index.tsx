@@ -34,7 +34,7 @@ export default function FontDropdown() {
     <Dropdown
       callback={fontCallback}
       renderTitle={isDropdownOpen => (
-        <div className="relative flex min-w-[120px] cursor-pointer items-center justify-center gap-2">
+        <div className="relative flex min-w-[120px] cursor-pointer items-center justify-center gap-4">
           <span className="sr-only">Change font</span>
           <span>{capitalize(font.split("-")).join("-")}</span>
           <span>
