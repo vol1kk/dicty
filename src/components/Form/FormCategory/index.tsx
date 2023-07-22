@@ -95,6 +95,7 @@ export default function FormCategory({
           placeholder="Enter Category"
         >
           <Dropdown
+            className="p-2"
             tabIndex={-1}
             renderTitle={() => (
               <Button className="rounded-full bg-primary bg-opacity-30 p-2 dark:bg-gray-800">
