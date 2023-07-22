@@ -8,8 +8,11 @@ import { signIn, signOut } from "next-auth/react";
 import useUserPreferences from "~/store/useUserPreferences";
 import useSessionData from "~/store/useSessionData";
 import useHeaderData from "~/store/useHeaderData";
+import useWords from "~/hooks/useWords";
+import modifyWordId from "~/utils/modifyWordId";
 
 export default function HeaderMenu() {
+  const { data } = useWords();
   const setTheme = useUserPreferences(state => state.setTheme);
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
@@ -27,6 +30,22 @@ export default function HeaderMenu() {
     if (!isAuthed) void signIn();
   }
 
+  function downloadWordsHandler() {
+    if (!data) return;
+
+    const modifiedWords = data.map(w =>
+      modifyWordId(w, { appendWithEmptyId: true }),
+    );
+    const encodedWords = encodeURIComponent(JSON.stringify(modifiedWords));
+    const jsonString = `data:text/json;chatset=utf-8,` + encodedWords;
+
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = `words${+new Date()}.json`;
+
+    link.click();
+  }
+
   return (
     <Overlay
       isOverlayActive={isHeaderOpen}
@@ -40,6 +59,9 @@ export default function HeaderMenu() {
           onClick={e => e.stopPropagation()}
           className="grid place-items-center gap-6 p-2 text-3xl"
         >
+          <li>
+            <Button onClick={downloadWordsHandler}>Export</Button>
+          </li>
           <li className="[&>button]:rounded-md">
             <Button onClick={authenticationHandler}>
               {isAuthed ? "Logout" : "Login"}
