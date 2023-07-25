@@ -34,9 +34,8 @@ export default function FontDropdown() {
     <Dropdown
       callback={fontCallback}
       renderTitle={isDropdownOpen => (
-        <div className="relative flex min-w-[120px] cursor-pointer items-center justify-center gap-4">
+        <div className="relative flex min-w-[120px] cursor-pointer items-center gap-4">
           <span className="sr-only">Change font</span>
-          <span>{capitalize(font.split("-")).join("-")}</span>
           <span>
             <Chevron
               className={clsx(
@@ -45,10 +44,11 @@ export default function FontDropdown() {
               )}
             />
           </span>
+          <span>{capitalize(font.split("-")).join("-")}</span>
         </div>
       )}
       renderContent={dropdownItemHandler => (
-        <ul className="min-w-[125px] rounded-md bg-white p-4 dark:bg-gray-900 [&>li]:leading-8">
+        <ul className="rounded-md bg-white p-4 dark:bg-gray-900 [&>li]:leading-8">
           {FONT_TYPES.map(type => {
             const isFontSame = type.name.toLowerCase() === font.toLowerCase();
             return (
@@ -58,7 +58,7 @@ export default function FontDropdown() {
                 data-font={type.name}
                 aria-selected={isFontSame}
                 tabIndex={isFontSame ? 0 : -1}
-                className={`${type.className} cursor-pointer rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary`}
+                className={`${type.className} cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary`}
                 onClick={e => dropdownItemHandler(e)}
               >
                 {type.name}
