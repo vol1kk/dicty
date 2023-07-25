@@ -8,7 +8,7 @@ type ModifyingOptions = {
 
 export default function modifyWordId(
   word: Word,
-  options: ModifyingOptions = { appendWithEmptyId: true },
+  options: ModifyingOptions = { appendWithId: false, appendWithEmptyId: false },
 ): Word {
   const { appendWithId, appendWithEmptyId } = options;
 
@@ -24,28 +24,28 @@ export default function modifyWordId(
       if (appendWithId) newMeaningId = nanoid();
 
       return {
-        id: appendWithEmptyId ? newMeaningId : newMeaningId ?? oldMeaning.id,
+        id: appendWithEmptyId ? newMeaningId : newMeaningId || oldMeaning.id,
         definition: oldMeaning.definition,
         example: oldMeaning.example,
         categoryId: appendWithEmptyId
           ? newCategoryId
-          : newCategoryId ?? oldCategory.id,
+          : newCategoryId || oldCategory.id,
       };
     });
 
     return {
-      id: appendWithEmptyId ? newCategoryId : newCategoryId ?? oldCategory.id,
+      id: appendWithEmptyId ? newCategoryId : newCategoryId || oldCategory.id,
       name: oldCategory.name,
       meanings: modifiedMeanings,
-      wordId: appendWithEmptyId ? newWordId : newWordId ?? oldCategory.wordId,
+      wordId: appendWithEmptyId ? newWordId : newWordId || oldCategory.wordId,
     };
   });
 
   return {
-    id: appendWithEmptyId ? newWordId : newWordId ?? word.id,
+    id: appendWithEmptyId ? newWordId : newWordId || word.id,
     name: word.name,
     transcription: word.transcription,
     categories: modifiedCategories,
-    createdById: appendWithEmptyId ? newWordId : newWordId ?? word.createdById,
+    createdById: appendWithEmptyId ? newWordId : newWordId || word.createdById,
   };
 }
