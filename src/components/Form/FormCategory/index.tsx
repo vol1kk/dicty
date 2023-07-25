@@ -89,13 +89,13 @@ export default function FormCategory({
           className="w-full !outline-0"
           classNameLabel={clsx(
             hasErrorBorder && "border-2 border-red-500",
-            "relative flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md focus-within:outline outline-1 outline-primary outline-offset-2",
+            "flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md focus-within:outline outline-1 outline-primary outline-offset-2",
           )}
           value={category.name}
           placeholder="Enter Category"
         >
           <Dropdown
-            className="p-2"
+            className="relative p-2"
             tabIndex={-1}
             renderTitle={() => (
               <Button className="rounded-full bg-primary bg-opacity-30 p-2 dark:bg-gray-800">
