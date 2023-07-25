@@ -10,6 +10,8 @@ import useSessionData from "~/store/useSessionData";
 import useHeaderData from "~/store/useHeaderData";
 import useWords from "~/hooks/useWords";
 import modifyWordId from "~/utils/modifyWordId";
+import AccountIcon from "~/components/Icons/AccountIcon";
+import ImportIcon from "~/components/Icons/ImportIcon";
 
 export default function HeaderMenu() {
   const { data } = useWords();
@@ -57,20 +59,31 @@ export default function HeaderMenu() {
       <Modal>
         <ul
           onClick={e => e.stopPropagation()}
-          className="grid place-items-center gap-6 p-2 text-3xl"
+          className="grid gap-6 p-2 text-3xl dark:[&>li>button>svg]:fill-white [&>li>button]:flex [&>li>button]:items-center [&>li>button]:gap-4 [&>li>button]:rounded-md"
         >
           <li>
-            <Button onClick={downloadWordsHandler}>Export</Button>
-          </li>
-          <li className="[&>button]:rounded-md">
-            <Button onClick={authenticationHandler}>
-              {isAuthed ? "Logout" : "Login"}
+            <Button onClick={downloadWordsHandler}>
+              <ImportIcon className="rotate-180" dimensions={24} />
+              Import
             </Button>
           </li>
           <li>
+            <Button onClick={downloadWordsHandler}>
+              <ImportIcon dimensions={24} />
+              Export
+            </Button>
+          </li>
+
+          <li>
+            <Button onClick={authenticationHandler}>
+              <AccountIcon dimensions={24} />
+              {isAuthed ? "Logout" : "Login"}
+            </Button>
+          </li>
+          <li className="place-self-center">
             <FontDropdown />
           </li>
-          <li>
+          <li className="place-self-center">
             <Switch isChecked={isDarkTheme} handleCheck={themeToggleHandler} />
           </li>
         </ul>
