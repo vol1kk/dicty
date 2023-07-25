@@ -1,26 +1,12 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-
-const MeaningSchema = z.object({
-  id: z.string(),
-  definition: z.string(),
-  example: z.string().nullable(),
-});
-
-const CategorySchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  meanings: z.array(MeaningSchema),
-});
-
-const WordSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  transcription: z.string(),
-  createdById: z.string().optional(),
-  categories: z.array(CategorySchema),
-});
+import {
+  type Category,
+  type Meaning,
+  type Word,
+  WordSchema,
+} from "~/types/ApiTypes";
 
 export const wordRouter = createTRPCRouter({
   createWord: protectedProcedure
@@ -151,7 +137,7 @@ function getDeletedItems<T extends { id: string; meanings: { id: string }[] }>(
   };
 }
 
-function createWord(data: z.infer<typeof WordSchema>, userId: string) {
+function createWord(data: Word, userId: string) {
   return {
     name: data.name,
     createdById: userId,
@@ -162,7 +148,7 @@ function createWord(data: z.infer<typeof WordSchema>, userId: string) {
   };
 }
 
-function createCategory(category: z.infer<typeof CategorySchema>) {
+function createCategory(category: Category) {
   return {
     name: category.name,
     meanings: {
@@ -171,7 +157,7 @@ function createCategory(category: z.infer<typeof CategorySchema>) {
   };
 }
 
-function createMeaning(meaning: z.infer<typeof MeaningSchema>) {
+function createMeaning(meaning: Meaning) {
   return {
     definition: meaning.definition,
     example: meaning.example,

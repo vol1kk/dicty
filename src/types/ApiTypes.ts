@@ -1,20 +1,26 @@
-export interface Word {
-  id: string;
-  name: string;
-  createdById: string;
-  transcription: string;
-  categories: Category[];
-}
+import { z } from "zod";
 
-export interface Category {
-  id: string;
-  name: string;
-  meanings: Meaning[];
-  wordId: string;
-}
+export const MeaningSchema = z.object({
+  id: z.string(),
+  definition: z.string(),
+  example: z.string().nullable(),
+});
 
-export interface Meaning {
-  id: string;
-  example: string | null;
-  definition: string;
-}
+export const CategorySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  meanings: z.array(MeaningSchema),
+  wordId: z.string().nullable(),
+});
+
+export const WordSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  transcription: z.string(),
+  createdById: z.string().nullable(),
+  categories: z.array(CategorySchema),
+});
+
+export type Word = z.infer<typeof WordSchema>;
+export type Category = z.infer<typeof CategorySchema>;
+export type Meaning = z.infer<typeof MeaningSchema>;
