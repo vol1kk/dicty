@@ -40,7 +40,7 @@ export default function Home() {
     }
 
     if ("fromApi" in words && words.fromApi)
-      words.createWord(modifyWordId(word));
+      words.createWord(modifyWordId(word, { appendWithEmptyId: true }));
   };
 
   return (
