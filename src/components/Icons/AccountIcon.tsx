@@ -2,7 +2,7 @@ import { type Icon } from "~/types/Icon";
 
 export default function AccountIcon({
   dimensions = 36,
-  fill = "#757575",
+  fill = "#000",
   ...props
 }: Icon) {
   return (
