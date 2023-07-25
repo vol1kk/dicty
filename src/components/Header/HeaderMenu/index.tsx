@@ -39,7 +39,7 @@ export default function HeaderMenu() {
       modifyWordId(w, { appendWithEmptyId: true }),
     );
     const encodedWords = encodeURIComponent(JSON.stringify(modifiedWords));
-    const jsonString = `data:text/json;chatset=utf-8,` + encodedWords;
+    const jsonString = `data:text/json;charset=utf-8,` + encodedWords;
 
     const link = document.createElement("a");
     link.href = jsonString;
