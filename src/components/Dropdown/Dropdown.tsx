@@ -106,7 +106,7 @@ export default function Dropdown({
         tabIndex={-1}
         className={clsx(
           isDropdownOpen ? "block" : "hidden",
-          "absolute z-10 mt-2 w-fit shadow-2xl",
+          "absolute left-0 z-10 mt-2 w-fit shadow-2xl",
         )}
       >
         {content}
