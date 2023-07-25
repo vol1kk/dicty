@@ -5,8 +5,6 @@ import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
 import { type Word } from "~/types/ApiTypes";
 import Button from "~/components/Button/Button";
-import useHeaderData from "~/store/useHeaderData";
-import clsx from "clsx";
 
 export default function EditPage() {
   const router = useRouter();

@@ -1,8 +1,7 @@
-import Link from "next/link";
-import Chevron from "~/components/Icons/Chevron";
 import clsx from "clsx";
-import Button from "~/components/Button/Button";
 import { type SetStateAction } from "react";
+import Chevron from "~/components/Icons/Chevron";
+import Button from "~/components/Button/Button";
 
 type WordTitleProps = {
   word: string;
