@@ -7,11 +7,9 @@ import Button from "~/components/Button/Button";
 import useDebounce from "~/hooks/useDebounce";
 import { type Word } from "~/types/ApiTypes";
 import filterData from "~/utils/filterData";
-import wordWithId from "~/utils/wordWithId";
+import modifyWordId from "~/utils/modifyWordId";
 import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
-import useHeaderData from "~/store/useHeaderData";
-import clsx from "clsx";
 
 const formTemplate = {
   name: "",
@@ -36,13 +34,13 @@ export default function Home() {
 
   const formSubmitHandler = function formSubmitHandler(word: Word) {
     if ("fromApi" in words && !words.fromApi) {
-      const withId = wordWithId(word);
+      const withId = modifyWordId(word, { appendWithId: true });
       words.setWords(p => [withId, ...p]);
       localStorage.setItem("words", JSON.stringify([withId, ...words.data]));
     }
 
     if ("fromApi" in words && words.fromApi)
-      words.createWord(wordWithId(word, true));
+      words.createWord(modifyWordId(word));
   };
 
   return (
