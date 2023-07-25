@@ -36,6 +36,11 @@ export default function Dropdown({
     setIsDropdownOpen(p => !p);
   }
 
+  function dropdownFocusLoseHandler(e: React.FocusEvent) {
+    // If focused element doesn't have role of listbox, then close the menu
+    if (!e.relatedTarget?.closest("[role='listbox']")) setIsDropdownOpen(false);
+  }
+
   function dropdownItemHandler(e: React.MouseEvent) {
     setIsDropdownOpen(false);
     callback(e.target as HTMLLIElement);
@@ -94,6 +99,7 @@ export default function Dropdown({
       <div
         tabIndex={tabIndex}
         aria-expanded={isDropdownOpen}
+        onBlur={dropdownFocusLoseHandler}
         onKeyDown={dropdownKeyboardHandler}
         onClick={dropdownClickHandler}
         className="rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
