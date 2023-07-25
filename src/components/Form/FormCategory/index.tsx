@@ -70,7 +70,8 @@ export default function FormCategory({
 
   const currentCategoryErrors = categoryErrors?.at(categoryIndex);
   const currentCategoryTouched = categoryTouched?.at(categoryIndex);
-  const hasErrorBorder = currentCategoryErrors && currentCategoryTouched;
+  const hasErrorBorder =
+    currentCategoryErrors?.name && currentCategoryTouched?.name;
 
   const currentCategoryMeaningsErrors = currentCategoryErrors?.meanings as
     | FormikErrors<Meaning[]>
