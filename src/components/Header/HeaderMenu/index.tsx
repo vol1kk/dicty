@@ -14,12 +14,14 @@ import ImportIcon from "~/components/Icons/ImportIcon";
 import AccountIcon from "~/components/Icons/AccountIcon";
 import useUserPreferences from "~/store/useUserPreferences";
 import FontDropdown from "~/components/Header/HeaderMenu/FontDropdown";
+import { nanoid } from "nanoid";
 
 export default function HeaderMenu() {
   const { data: words, importWords } = useWords();
   const setTheme = useUserPreferences(state => state.setTheme);
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
+  const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
 
   function themeToggleHandler() {
@@ -47,6 +49,8 @@ export default function HeaderMenu() {
     link.download = `words${+new Date()}.json`;
 
     link.click();
+
+    setIsHeaderOpen(false);
   }
 
   function triggerInputHandler(e: React.MouseEvent<HTMLButtonElement>) {
@@ -63,6 +67,8 @@ export default function HeaderMenu() {
     readFileAsync(file)
       .then(data => importWords(data))
       .catch(console.error);
+
+    setIsHeaderOpen(false);
   }
 
   return (
