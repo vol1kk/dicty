@@ -17,6 +17,33 @@ export const wordRouter = createTRPCRouter({
       });
     }),
 
+  importWords: protectedProcedure
+    .input(WordSchema.array())
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.$transaction(async tx => {
+        const words = input.map(w => ({
+          where: { id: w.id },
+          create: createWord(w, ctx.authedUser.id),
+        }));
+
+        const existingWords = await ctx.prisma.word.findMany({
+          where: { createdById: ctx.authedUser.id },
+        });
+
+        return tx.user.update({
+          where: { id: ctx.authedUser.id },
+          data: {
+            words: {
+              connectOrCreate: words,
+              deleteMany: existingWords.map(w => ({
+                id: w.id,
+              })),
+            },
+          },
+        });
+      });
+    }),
+
   getWords: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.word.findMany({
       where: { createdById: ctx.authedUser.id },

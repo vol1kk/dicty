@@ -15,6 +15,7 @@ type UseWordsApiResult = {
   deleteWord: ReturnType<typeof api.words.deleteWord.useMutation>["mutate"];
   updateWord: ReturnType<typeof api.words.updateWord.useMutation>["mutate"];
   createWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
+  importWords: ReturnType<typeof api.words.importWords.useMutation>["mutate"];
 };
 
 type UseWordsDefaultReturn = { data: undefined };
@@ -38,6 +39,11 @@ export default function useWords(): UseWordsReturnType {
       utils.words.invalidate().catch(console.log);
     },
   });
+  const { mutate: importWords } = api.words.importWords.useMutation({
+    onSuccess() {
+      utils.words.invalidate().catch(console.log);
+    },
+  });
 
   const [localWords, setLocalWords] = useState<Word[]>([]);
   useEffect(() => {
@@ -50,6 +56,7 @@ export default function useWords(): UseWordsReturnType {
       createWord,
       deleteWord,
       updateWord,
+      importWords,
       fromApi: true,
       data: authedWords.data as Word[],
     };
