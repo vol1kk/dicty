@@ -33,7 +33,7 @@ export default function Overlay({
       if (e.key === "Escape") setIsMenuOpen(false);
 
       const focusableNodes = overlayRef.current?.querySelectorAll(
-        "a, input, button, div[tabindex='0']",
+        "a, button, div[tabindex='0']",
       );
 
       if (focusableNodes?.length === 0) return;
