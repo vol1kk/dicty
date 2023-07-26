@@ -1,5 +1,4 @@
 import { signIn, signOut } from "next-auth/react";
-import { useRouter } from "next/router";
 import React from "react";
 import clsx from "clsx";
 import useWords from "~/hooks/useWords";
@@ -17,7 +16,6 @@ import useUserPreferences from "~/store/useUserPreferences";
 import FontDropdown from "~/components/Header/HeaderMenu/FontDropdown";
 
 export default function HeaderMenu() {
-  const navigation = useRouter();
   const { data: words, importWords } = useWords();
   const setTheme = useUserPreferences(state => state.setTheme);
   const isAuthed = useSessionData(state => state.isAuthed);
@@ -36,7 +34,7 @@ export default function HeaderMenu() {
     if (!isAuthed) void signIn();
   }
 
-  function downloadWordsHandler() {
+  function exportWordsHandler() {
     const modifiedWords = words.map(w =>
       modifyWordId(w, { appendWithEmptyId: true }),
     );
@@ -65,8 +63,6 @@ export default function HeaderMenu() {
     readFileAsync(file)
       .then(data => importWords(data))
       .catch(console.error);
-
-    if (!isAuthed) navigation.reload();
   }
 
   return (
@@ -94,7 +90,7 @@ export default function HeaderMenu() {
             </Button>
           </li>
           <li>
-            <Button onClick={downloadWordsHandler}>
+            <Button onClick={exportWordsHandler}>
               <ImportIcon dimensions={24} />
               Export
             </Button>
