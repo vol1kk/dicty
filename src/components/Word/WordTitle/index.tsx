@@ -27,7 +27,7 @@ export default function WordTitle({
           }}
           className="flex items-center gap-2 rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
         >
-          <span className="max-w-[25ch] truncate">{word}</span>
+          <span className="max-w-[25ch] truncate pb-1">{word}</span>
           <Chevron
             aria-hidden={true}
             className={clsx(
