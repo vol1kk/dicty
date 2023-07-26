@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { type Word } from "~/types/ApiTypes";
 import { api } from "~/utils/api";
 import useSessionData from "~/store/useSessionData";
 import modifyWordId from "~/utils/modifyWordId";
+import useUserPreferences from "~/store/useUserPreferences";
 
 type UseWordsReturnType = {
   data: Word[];
@@ -14,6 +15,8 @@ type UseWordsReturnType = {
 
 export default function useWords(): UseWordsReturnType {
   const utils = api.useContext();
+  const localWords = useUserPreferences(state => state.words);
+  const setLocalWords = useUserPreferences(state => state.setWords);
   const isAuthed = useSessionData(state => state.isAuthed);
 
   const authedWords = api.words.getWords.useQuery(undefined, {
@@ -32,11 +35,10 @@ export default function useWords(): UseWordsReturnType {
     },
   });
 
-  const [localWords, setLocalWords] = useState<Word[]>([]);
   useEffect(() => {
     const localData = localStorage.getItem("words");
     if (localData) setLocalWords(JSON.parse(localData) as Word[]);
-  }, []);
+  }, [setLocalWords]);
 
   function createWord(word: Word) {
     if (isAuthed)
@@ -48,7 +50,7 @@ export default function useWords(): UseWordsReturnType {
         "words",
         JSON.stringify([wordWithId, ...localWords]),
       );
-      setLocalWords(p => [wordWithId, ...p]);
+      setLocalWords([wordWithId, ...localWords]);
     }
   }
 
@@ -56,24 +58,21 @@ export default function useWords(): UseWordsReturnType {
     if (isAuthed) updateWordMutation(word);
 
     if (!isAuthed) {
-      setLocalWords(prevWords => {
-        const updatedWords = prevWords.map(prevWord =>
-          prevWord.id === word.id ? word : prevWord,
-        );
-        localStorage.setItem("words", JSON.stringify(updatedWords));
-        return updatedWords;
-      });
+      const updatedWords = localWords.map(prevWord =>
+        prevWord.id === word.id ? word : prevWord,
+      );
+      setLocalWords(updatedWords);
+      localStorage.setItem("words", JSON.stringify(updatedWords));
     }
   }
 
   function deleteWord(id: string) {
     if (isAuthed) deleteWordMutation({ id });
     if (!isAuthed) {
-      setLocalWords(prevWords => {
-        const filteredWords = prevWords.filter(w => w.id !== id);
-        localStorage.setItem("words", JSON.stringify(filteredWords));
-        return filteredWords;
-      });
+      const filteredWords = localWords.filter(w => w.id !== id);
+      localStorage.setItem("words", JSON.stringify(filteredWords));
+
+      setLocalWords(filteredWords);
     }
   }
 
