@@ -1,29 +1,16 @@
-import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { type Word } from "~/types/ApiTypes";
 import { api } from "~/utils/api";
 import useSessionData from "~/store/useSessionData";
+import modifyWordId from "~/utils/modifyWordId";
 
-type UseWordsLocalResult = {
+type UseWordsReturnType = {
   data: Word[];
-  fromApi: false;
-  setWords: Dispatch<SetStateAction<Word[]>>;
+  createWord: (word: Word) => void;
+  updateWord: (word: Word) => void;
+  deleteWord: (id: string) => void;
+  importWords: (words: Word[]) => void;
 };
-
-type UseWordsApiResult = {
-  data: Word[];
-  fromApi: true;
-  deleteWord: ReturnType<typeof api.words.deleteWord.useMutation>["mutate"];
-  updateWord: ReturnType<typeof api.words.updateWord.useMutation>["mutate"];
-  createWord: ReturnType<typeof api.words.createWord.useMutation>["mutate"];
-  importWords: ReturnType<typeof api.words.importWords.useMutation>["mutate"];
-};
-
-type UseWordsDefaultReturn = { data: undefined };
-
-type UseWordsReturnType =
-  | UseWordsDefaultReturn
-  | UseWordsLocalResult
-  | UseWordsApiResult;
 
 export default function useWords(): UseWordsReturnType {
   const utils = api.useContext();
@@ -32,14 +19,14 @@ export default function useWords(): UseWordsReturnType {
   const authedWords = api.words.getWords.useQuery(undefined, {
     enabled: isAuthed,
   });
-  const { mutate: deleteWord } = api.words.deleteWord.useMutation();
-  const { mutate: updateWord } = api.words.updateWord.useMutation();
-  const { mutate: createWord } = api.words.createWord.useMutation({
+  const { mutate: deleteWordMutation } = api.words.deleteWord.useMutation();
+  const { mutate: updateWordMutation } = api.words.updateWord.useMutation();
+  const { mutate: createWordMutation } = api.words.createWord.useMutation({
     onSuccess() {
       utils.words.invalidate().catch(console.log);
     },
   });
-  const { mutate: importWords } = api.words.importWords.useMutation({
+  const { mutate: importWordsMutation } = api.words.importWords.useMutation({
     onSuccess() {
       utils.words.invalidate().catch(console.log);
     },
@@ -51,23 +38,67 @@ export default function useWords(): UseWordsReturnType {
     if (localData) setLocalWords(JSON.parse(localData) as Word[]);
   }, []);
 
-  if (authedWords.data) {
-    return {
-      createWord,
-      deleteWord,
-      updateWord,
-      importWords,
-      fromApi: true,
-      data: authedWords.data as Word[],
-    };
+  function createWord(word: Word) {
+    if (isAuthed)
+      createWordMutation(modifyWordId(word, { appendWithEmptyId: true }));
+
+    if (!isAuthed) {
+      const wordWithId = modifyWordId(word, { appendWithId: true });
+      localStorage.setItem(
+        "words",
+        JSON.stringify([wordWithId, ...localWords]),
+      );
+      setLocalWords(p => [wordWithId, ...p]);
+    }
   }
 
-  if (!isAuthed)
-    return {
-      fromApi: false,
-      data: localWords,
-      setWords: setLocalWords,
-    };
+  function updateWord(word: Word) {
+    if (isAuthed) updateWordMutation(word);
 
-  return { data: undefined };
+    if (!isAuthed) {
+      setLocalWords(prevWords => {
+        const updatedWords = prevWords.map(prevWord =>
+          prevWord.id === word.id ? word : prevWord,
+        );
+        localStorage.setItem("words", JSON.stringify(updatedWords));
+        return updatedWords;
+      });
+    }
+  }
+
+  function deleteWord(id: string) {
+    if (isAuthed) deleteWordMutation({ id });
+    if (!isAuthed) {
+      setLocalWords(prevWords => {
+        const filteredWords = prevWords.filter(w => w.id !== id);
+        localStorage.setItem("words", JSON.stringify(filteredWords));
+        return filteredWords;
+      });
+    }
+  }
+
+  function importWords(words: Word[]) {
+    if (isAuthed) {
+      const wordsWithEmptyIds = words.map(w =>
+        modifyWordId(w, { appendWithEmptyId: true }),
+      );
+      importWordsMutation(wordsWithEmptyIds);
+    }
+
+    if (!isAuthed) {
+      const wordsWithId = words.map(w =>
+        modifyWordId(w, { appendWithId: true }),
+      );
+      setLocalWords(wordsWithId);
+      localStorage.setItem("words", JSON.stringify(wordsWithId));
+    }
+  }
+
+  return {
+    data: isAuthed ? authedWords.data || [] : localWords,
+    createWord,
+    updateWord,
+    deleteWord,
+    importWords,
+  };
 }
