@@ -23,7 +23,7 @@ export const wordRouter = createTRPCRouter({
       return ctx.prisma.$transaction(async tx => {
         const words = input.map(w => ({
           where: { id: w.id },
-          create: createWord(w, ctx.authedUser.id),
+          create: createWord(w),
         }));
 
         const existingWords = await ctx.prisma.word.findMany({
@@ -164,11 +164,11 @@ function getDeletedItems<T extends { id: string; meanings: { id: string }[] }>(
   };
 }
 
-function createWord(data: Word, userId: string) {
+function createWord(data: Word, userId?: string) {
   return {
     name: data.name,
-    createdById: userId,
     transcription: data.transcription,
+    ...(userId && { createdById: userId }),
     categories: {
       create: data.categories.map(createCategory),
     },
