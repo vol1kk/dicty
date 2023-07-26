@@ -1,6 +1,11 @@
 import { type Icon } from "~/types/Icon";
+import clsx from "clsx";
 
-export default function ImportIcon({ dimensions, className }: Icon) {
+type ImportIcon = {
+  type?: "export" | "import";
+} & Icon;
+
+export default function ImportIcon({ dimensions, className, type = "export" }: ImportIcon) {
   return (
     <svg
       viewBox="0 0 67.671 67.671"
@@ -8,7 +13,7 @@ export default function ImportIcon({ dimensions, className }: Icon) {
       fill="#000000"
       height={dimensions}
       width={dimensions}
-      className={className}
+      className={clsx(type === "import" && "rotate-180", className)}
     >
       <g>
         <path
