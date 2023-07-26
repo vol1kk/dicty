@@ -17,8 +17,8 @@ import useUserPreferences from "~/store/useUserPreferences";
 import FontDropdown from "~/components/Header/HeaderMenu/FontDropdown";
 
 export default function HeaderMenu() {
-  const words = useWords();
   const navigation = useRouter();
+  const { data: words, importWords } = useWords();
   const setTheme = useUserPreferences(state => state.setTheme);
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
@@ -37,11 +37,10 @@ export default function HeaderMenu() {
   }
 
   function downloadWordsHandler() {
-    if (!words.data) return;
-
-    const modifiedWords = words.data.map(w =>
+    const modifiedWords = words.map(w =>
       modifyWordId(w, { appendWithEmptyId: true }),
     );
+
     const encodedWords = encodeURIComponent(JSON.stringify(modifiedWords));
     const jsonString = `data:text/json;charset=utf-8,` + encodedWords;
 
@@ -59,25 +58,15 @@ export default function HeaderMenu() {
     fileInput.click();
   }
 
-  async function importWordsHandler(e: React.ChangeEvent<HTMLInputElement>) {
+  function importWordsHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (!file || !words.data) return;
+    if (!file) return;
 
-    const data = await readFileAsync(file);
+    readFileAsync(file)
+      .then(data => importWords(data))
+      .catch(console.error);
 
-    if (!words.fromApi) {
-      const withId = data.map(w => modifyWordId(w, { appendWithId: true }));
-      localStorage.setItem("words", JSON.stringify(withId));
-      words.setWords(withId);
-      navigation.reload();
-    }
-
-    if (words.fromApi) {
-      const withId = data.map(w =>
-        modifyWordId(w, { appendWithEmptyId: true }),
-      );
-      words.importWords(withId);
-    }
+    if (!isAuthed) navigation.reload();
   }
 
   return (

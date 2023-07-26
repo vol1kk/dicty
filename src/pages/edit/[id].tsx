@@ -8,36 +8,26 @@ import Button from "~/components/Button/Button";
 
 export default function EditPage() {
   const router = useRouter();
-  const words = useWords();
   const navigation = useNavigationRouter();
 
-  const word = words.data?.find(w => w.id === router.query.id);
+  const { data: words, deleteWord, updateWord } = useWords();
+  const word = words.find(w => w.id === router.query.id);
 
-  const submitHandler = function submitHandler(data: Word) {
-    if (!words.data || !word) return;
+  function submitHandler(data: Word) {
+    if (!word) return;
 
-    if (words.fromApi) words.updateWord(data);
-
-    if (!words.fromApi) {
-      const changedWords = words.data.map(w => (w.id === data.id ? data : w));
-      localStorage.setItem("words", JSON.stringify(changedWords));
-    }
+    updateWord(data);
 
     navigation.replace("/");
-  };
+  }
 
-  const deleteHandler = function deleteHandler() {
-    if (!words.data || !word) return;
+  function deleteHandler() {
+    if (!word) return;
 
-    if (words.fromApi) words.deleteWord({ id: word.id });
-
-    if (!words.fromApi) {
-      const filteredWords = words.data.filter(w => w.id !== word.id);
-      localStorage.setItem("words", JSON.stringify(filteredWords));
-    }
+    deleteWord(word.id);
 
     navigation.replace("/");
-  };
+  }
 
   if (!word) return <h1>placeholder</h1>;
 

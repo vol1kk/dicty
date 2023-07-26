@@ -7,7 +7,6 @@ import Button from "~/components/Button/Button";
 import useDebounce from "~/hooks/useDebounce";
 import { type Word } from "~/types/ApiTypes";
 import filterData from "~/utils/filterData";
-import modifyWordId from "~/utils/modifyWordId";
 import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
 
@@ -25,23 +24,13 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 
-  const words = useWords();
-
+  const { data: words, createWord } = useWords();
   const data = useMemo(
-    () => filterData(words.data ?? [], debouncedSearch),
+    () => filterData(words ?? [], debouncedSearch),
     [words, debouncedSearch],
   );
 
-  const formSubmitHandler = function formSubmitHandler(word: Word) {
-    if ("fromApi" in words && !words.fromApi) {
-      const withId = modifyWordId(word, { appendWithId: true });
-      words.setWords(p => [withId, ...p]);
-      localStorage.setItem("words", JSON.stringify([withId, ...words.data]));
-    }
-
-    if ("fromApi" in words && words.fromApi)
-      words.createWord(modifyWordId(word, { appendWithEmptyId: true }));
-  };
+  const formSubmitHandler = (word: Word) => createWord(word);
 
   return (
     <>
