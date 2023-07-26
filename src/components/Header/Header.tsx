@@ -29,7 +29,8 @@ export default function Header() {
           <Dictionary
             aria-label="Home Icon"
             className={clsx(
-              isHeaderOpen && "fill-black delay-150 dark:fill-gray-100",
+              "delay-75",
+              isHeaderOpen && "fill-black dark:fill-gray-100",
             )}
           />
         </Link>
