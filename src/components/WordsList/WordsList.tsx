@@ -7,6 +7,7 @@ import WordCategory from "~/components/Word/WordCategory";
 import WordMeanings from "~/components/Word/WordMeanings";
 import WordEdit from "~/components/Word/WordEdit";
 import DictionaryIcon from "~/components/Icons/DictionaryIcon";
+import WordShare from "~/components/Word/WordShare";
 
 type WordsListProps = {
   data: Word[];
@@ -57,6 +58,7 @@ export default function WordsList({ data }: WordsListProps) {
                 <WordMeanings meanings={category.meanings} />
               </WordCategory>
             ))}
+            <WordShare wordId={word.id} code={word.shareCode} />
           </Accordion>
         </li>
       ))}
