@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import WordsList from "~/components/WordsList/WordsList";
 import Accordion from "~/components/Accordion/Accordion";
 import SearchIcon from "~/components/Icons/SearchIcon";
@@ -9,9 +9,11 @@ import { type Word } from "~/types/ApiTypes";
 import filterData from "~/utils/filterData";
 import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
+import FormCodeShare from "~/components/Form/FormCodeShare";
 
 const formTemplate = {
   name: "",
+  shareCode: "",
   transcription: "",
   categories: [
     { id: "", name: "", meanings: [{ id: "", definition: "", example: "" }] },
@@ -20,6 +22,7 @@ const formTemplate = {
 
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const inputCodeRef = useRef<HTMLInputElement>(null);
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
@@ -73,6 +76,7 @@ export default function Home() {
               </span>
             </Button>
             <Accordion isOpen={isFormOpen}>
+              <FormCodeShare ref={inputCodeRef} />
               <Form
                 submitHandler={formSubmitHandler}
                 initialValues={formTemplate}
