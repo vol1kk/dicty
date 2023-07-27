@@ -33,7 +33,10 @@ export default function Home() {
     [words, debouncedSearch],
   );
 
-  const formSubmitHandler = (word: Word) => createWord(word);
+  function formCloseHandler() {
+    if (inputCodeRef.current) inputCodeRef.current.value = "";
+    setIsFormOpen(false);
+  }
 
   return (
     <>
@@ -76,15 +79,18 @@ export default function Home() {
               </span>
             </Button>
             <Accordion isOpen={isFormOpen}>
-              <FormCodeShare ref={inputCodeRef} />
+              <FormCodeShare
+                ref={inputCodeRef}
+                closeHandler={formCloseHandler}
+              />
               <Form
-                submitHandler={formSubmitHandler}
+                submitHandler={word => createWord(word)}
                 initialValues={formTemplate}
                 renderButtons={(isValid, handleFormReset) => {
-                  const handleFormResetWrapper = () => {
-                    setIsFormOpen(false);
+                  function handleFormResetWrapper() {
+                    formCloseHandler();
                     handleFormReset();
-                  };
+                  }
 
                   return (
                     <>
