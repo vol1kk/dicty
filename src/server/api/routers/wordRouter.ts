@@ -54,6 +54,27 @@ export const wordRouter = createTRPCRouter({
       });
     }),
 
+  importFromCode: protectedProcedure
+    .input(z.object({ code: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const existingWord = await ctx.prisma.word.findUnique({
+        where: { shareCode: input.code },
+        include: { categories: { include: { meanings: true } } },
+      });
+
+      if (!existingWord) throw new TRPCError({ code: "NOT_FOUND" });
+
+      await ctx.prisma.word.update({
+        where: { id: existingWord.id },
+        data: { shareCode: null },
+      });
+
+      existingWord.shareCode = null;
+      return ctx.prisma.word.create({
+        data: createWord(existingWord, ctx.authedUser.id),
+      });
+    }),
+
   importWords: protectedProcedure
     .input(WordSchema.array())
     .mutation(({ ctx, input }) => {
@@ -205,6 +226,7 @@ function createWord(data: Word, userId?: string) {
   return {
     name: data.name,
     transcription: data.transcription,
+    shareCode: data.shareCode,
     ...(userId && { createdById: userId }),
     categories: {
       create: data.categories.map(createCategory),
