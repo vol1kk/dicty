@@ -7,6 +7,7 @@ import {
   type Word,
   WordSchema,
 } from "~/types/ApiTypes";
+import { nanoid } from "nanoid";
 
 export const wordRouter = createTRPCRouter({
   createWord: protectedProcedure
@@ -14,6 +15,42 @@ export const wordRouter = createTRPCRouter({
     .mutation(({ ctx, input }) => {
       return ctx.prisma.word.create({
         data: createWord(input, ctx.authedUser.id),
+      });
+    }),
+
+  generateShareCode: protectedProcedure
+    .input(z.object({ wordId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const existingWord = await ctx.prisma.word.findUnique({
+        where: { id: input.wordId },
+      });
+
+      if (!existingWord) throw new TRPCError({ code: "NOT_FOUND" });
+
+      if (existingWord.createdById !== ctx.authedUser.id)
+        throw new TRPCError({ code: "FORBIDDEN" });
+
+      return ctx.prisma.word.update({
+        where: { id: input.wordId },
+        data: { shareCode: nanoid() },
+      });
+    }),
+
+  deleteShareCode: protectedProcedure
+    .input(z.object({ wordId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const existingWord = await ctx.prisma.word.findUnique({
+        where: { id: input.wordId },
+      });
+
+      if (!existingWord) throw new TRPCError({ code: "NOT_FOUND" });
+
+      if (existingWord.createdById !== ctx.authedUser.id)
+        throw new TRPCError({ code: "FORBIDDEN" });
+
+      return ctx.prisma.word.update({
+        where: { id: input.wordId },
+        data: { shareCode: null },
       });
     }),
 
