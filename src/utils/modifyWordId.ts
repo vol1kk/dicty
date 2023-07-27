@@ -45,6 +45,7 @@ export default function modifyWordId(
     id: appendWithEmptyId ? newWordId : newWordId || word.id,
     name: word.name,
     transcription: word.transcription,
+    shareCode: word.shareCode,
     categories: modifiedCategories,
     createdById: appendWithEmptyId ? newWordId : newWordId || word.createdById,
   };
