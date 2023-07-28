@@ -1,0 +1,43 @@
+{
+  "header.import": "Import",
+  "header.export": "Export",
+  "header.openMenu": "Open Menu",
+  "header.icon": "Home Icon",
+  "header.login": "Login",
+  "header.logout": "Logout",
+
+  "header.changeFont": "Change Font",
+  "header.theme": "Toggle Dark Theme",
+
+  "searchWords": "Search for your word...",
+  "form.code.import": "Import",
+  "form.code.import.placeholder": "Enter Code",
+
+  "form.code.generate": "Generate Word Code",
+  "form.code.delete": "Delete Word Code",
+
+  "form.word.name": "Name",
+  "form.word.name.placeholder": "Enter Name",
+
+  "form.word.transcription": "Transcription",
+  "form.word.transcription.placeholder": "Enter Transcription",
+
+
+  "form.word.categories.label": "Categories",
+  "form.word.category.placeholder": "Enter Category",
+  "form.word.category.meaning.definition": "Enter Definition",
+  "form.word.category.meaning.example": "Enter Example",
+
+  "form.word.category.add": "Add Category",
+  "form.word.category.remove": "Remove Category",
+  "form.word.category.edit": "Edit Category",
+  "form.word.category.meaning.add": "Add Meaning",
+  "form.word.category.meaning.remove": "Remove Meaning",
+
+  "form.word.button.add": "Create Word",
+  "form.word.button.close": "Close",
+
+  "form.word.button.save": "Save Changes",
+  "form.word.button.cancel": "Cancel",
+  "form.word.button.delete": "Delete"
+}

@@ -1,0 +1,43 @@
+{
+  "header.import": "Імпортувати",
+  "header.export": "Експортувати",
+  "header.openMenu": "Відкрити меню",
+  "header.icon": "Головна сторінка",
+  "header.login": "Увійти",
+  "header.logout": "Вийти",
+
+  "header.changeFont": "Змінити шрифт",
+  "header.changeTheme": "Перемкнути Темну Тему",
+
+  "searchWords": "Знайти слово...",
+  "form.code.import": "Імпортувати",
+  "form.code.import.placeholder": "Введіть код",
+
+  "form.code.generate": "Згенерувати код",
+  "form.code.delete": "Видалити код",
+
+  "form.word.name": "Назва",
+  "form.word.name.placeholder": "Введіть Назву",
+
+  "form.word.transcription": "Транскрипція",
+  "form.word.transcription.placeholder": "Введіть Транскрипцію",
+
+
+  "form.word.categories.label": "Категорії",
+  "form.word.category.placeholder": "Введіть Категорію",
+  "form.word.category.meaning.definition": "Введіть Значення",
+  "form.word.category.meaning.example": "Введь приклад",
+
+  "form.word.category.add": "Додати Категорію",
+  "form.word.category.remove": "Видалити Категорію",
+  "form.word.category.edit": "Редагувати категорію",
+  "form.word.category.meaning.add": "Додати Визначення",
+  "form.word.category.meaning.remove": "Видалити Визначення",
+
+  "form.word.button.add": "Створити Слово",
+  "form.word.button.close": "Закрити",
+
+  "form.word.button.save": "Зберегти зміни",
+  "form.word.button.cancel": "Відмінити",
+  "form.word.button.delete": "Видалити"
+}
