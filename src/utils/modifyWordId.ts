@@ -24,9 +24,8 @@ export default function modifyWordId(
       if (appendWithId) newMeaningId = nanoid();
 
       return {
+        ...oldMeaning,
         id: appendWithEmptyId ? newMeaningId : newMeaningId || oldMeaning.id,
-        definition: oldMeaning.definition,
-        example: oldMeaning.example,
         categoryId: appendWithEmptyId
           ? newCategoryId
           : newCategoryId || oldCategory.id,
@@ -34,18 +33,16 @@ export default function modifyWordId(
     });
 
     return {
+      ...oldCategory,
       id: appendWithEmptyId ? newCategoryId : newCategoryId || oldCategory.id,
-      name: oldCategory.name,
       meanings: modifiedMeanings,
       wordId: appendWithEmptyId ? newWordId : newWordId || oldCategory.wordId,
     };
   });
 
   return {
+    ...word,
     id: appendWithEmptyId ? newWordId : newWordId || word.id,
-    name: word.name,
-    transcription: word.transcription,
-    shareCode: word.shareCode,
     categories: modifiedCategories,
     createdById: appendWithEmptyId ? newWordId : newWordId || word.createdById,
   };
