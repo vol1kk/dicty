@@ -84,7 +84,7 @@ export default function Form({
             <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
               <Input
                 id="name"
-                placeholder={t("form.word.category.placeholder")}
+                placeholder={t("form.word.name.placeholder")}
                 className={clsx(
                   errors.name && touched.name && "border-2 border-red-500",
                 )}
