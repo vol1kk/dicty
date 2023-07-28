@@ -1,6 +1,7 @@
 import Button from "~/components/Button/Button";
 import { api } from "~/utils/api";
 import { forwardRef, type MutableRefObject } from "react";
+import { useTranslation } from "next-i18next";
 
 type FormCodeShareProps = {
   closeHandler: () => void;
@@ -8,6 +9,7 @@ type FormCodeShareProps = {
 
 export default forwardRef<HTMLInputElement, FormCodeShareProps>(
   function FormCodeShare({ closeHandler }, ref) {
+    const { t } = useTranslation();
     const utils = api.useContext();
 
     const { mutate: importFromCode } = api.words.importFromCode.useMutation({
@@ -30,14 +32,14 @@ export default forwardRef<HTMLInputElement, FormCodeShareProps>(
         <input
           ref={ref}
           className="rounded-md bg-gray-300 px-4 py-2 outline-1 outline-offset-2 outline-primary focus-visible:outline dark:bg-gray-900"
-          placeholder="Enter Code"
+          placeholder={t("form.code.import.placeholder")}
           type="text"
         />
         <Button
           className="rounded-md bg-gray-300 p-2 !outline-1 dark:bg-gray-900"
           isSubmit={true}
         >
-          Import from Code
+          {t("form.code.import")}
         </Button>
       </form>
     );

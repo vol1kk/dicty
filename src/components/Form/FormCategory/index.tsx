@@ -8,6 +8,7 @@ import Dropdown from "~/components/Dropdown/Dropdown";
 import FormMeaning from "~/components/Form/FormMeaning";
 import { type Category, type Meaning } from "~/types/ApiTypes";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
+import { useTranslation } from "next-i18next";
 
 type FormCategoryProps = {
   categoryIndex: number;
@@ -39,6 +40,22 @@ export default function FormCategory({
   push: pushCategory,
   remove: removeCategory,
 }: FormCategoryProps) {
+  const { t } = useTranslation();
+  const CATEGORY_OPTIONS = [
+    {
+      displayName: t("form.word.category.meaning.add"),
+      action: "add-meaning",
+    },
+    {
+      displayName: t("form.word.category.add"),
+      action: "add-category",
+    },
+    {
+      displayName: t("form.word.category.remove"),
+      action: "remove-category",
+    },
+  ];
+
   const pushMeaningRef = useRef(
     {} as Pick<FieldArrayHelpers, "push" | "remove">,
   );
@@ -93,14 +110,14 @@ export default function FormCategory({
             "flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md focus-within:outline outline-1 outline-primary outline-offset-2",
           )}
           value={category.name}
-          placeholder="Enter Category"
+          placeholder={t("form.word.category.placeholder")}
         >
           <Dropdown
             className="relative p-2"
             tabIndex={-1}
             renderTitle={() => (
               <Button className="rounded-full bg-primary bg-opacity-30 p-2 dark:bg-gray-800">
-                <span className="sr-only">Edit Category</span>
+                <span className="sr-only">{t("form.word.category.edit")}</span>
                 <DotsIcon
                   aria-hidden={true}
                   dimensions={16}
@@ -114,20 +131,18 @@ export default function FormCategory({
                   onClick={e => e.preventDefault()}
                   className="absolute -top-5 right-0 min-w-[180px] rounded-md bg-white p-4 shadow-xl dark:bg-gray-900 [&>li]:cursor-pointer [&>li]:leading-10"
                 >
-                  {["Add Meaning", "Add Category", "Remove Category"].map(
-                    (name, index) => (
-                      <li
-                        key={name}
-                        role="option"
-                        aria-selected={0 === index}
-                        onClick={dropdownItemHandler}
-                        data-action={name.toLowerCase().split(" ").join("-")}
-                        className="outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary"
-                      >
-                        {name}
-                      </li>
-                    ),
-                  )}
+                  {CATEGORY_OPTIONS.map((options, index) => (
+                    <li
+                      key={options.action}
+                      role="option"
+                      aria-selected={0 === index}
+                      onClick={dropdownItemHandler}
+                      data-action={options.action}
+                      className="outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary"
+                    >
+                      {options.displayName}
+                    </li>
+                  ))}
                 </ul>
               );
             }}

@@ -3,6 +3,7 @@ import capitalize from "~/utils/capitalize";
 import Chevron from "~/components/Icons/Chevron";
 import Dropdown from "~/components/Dropdown/Dropdown";
 import useUserPreferences from "~/store/useUserPreferences";
+import { useTranslation } from "next-i18next";
 
 const FONT_TYPES = [
   {
@@ -20,6 +21,7 @@ const FONT_TYPES = [
 ] as const;
 
 export default function FontDropdown() {
+  const { t } = useTranslation();
   const font = useUserPreferences(state => state.font);
   const setFont = useUserPreferences(state => state.setFont);
 
@@ -35,7 +37,7 @@ export default function FontDropdown() {
       callback={fontCallback}
       renderTitle={isDropdownOpen => (
         <div className="relative flex min-w-[120px] cursor-pointer items-center gap-4">
-          <span className="sr-only">Change font</span>
+          <span className="sr-only">{t("header.changeFont")}</span>
           <span>
             <Chevron
               className={clsx(

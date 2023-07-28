@@ -1,5 +1,11 @@
 import Head from "next/head";
+import { type GetStaticProps } from "next";
+import { useTranslation } from "next-i18next";
 import { useMemo, useRef, useState } from "react";
+import nextI18nConfig from "../../next-i18next.config.mjs";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import FormCodeShare from "~/components/Form/FormCodeShare";
 import WordsList from "~/components/WordsList/WordsList";
 import Accordion from "~/components/Accordion/Accordion";
 import SearchIcon from "~/components/Icons/SearchIcon";
@@ -9,7 +15,6 @@ import { type Word } from "~/types/ApiTypes";
 import filterData from "~/utils/filterData";
 import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
-import FormCodeShare from "~/components/Form/FormCodeShare";
 
 const formTemplate = {
   name: "",
@@ -21,6 +26,8 @@ const formTemplate = {
 } as Word;
 
 export default function Home() {
+  const { t } = useTranslation("common");
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const inputCodeRef = useRef<HTMLInputElement>(null);
 
@@ -52,7 +59,7 @@ export default function Home() {
             type="text"
             name="search"
             value={search}
-            placeholder="Search for your words..."
+            placeholder={t("searchWords")}
             onChange={e => setSearch(e.target.value.trim())}
             className="w-full rounded-xl bg-gray-100 p-4 pr-12 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline dark:bg-gray-800"
           />
@@ -70,7 +77,7 @@ export default function Home() {
               className="flex w-full items-center justify-center rounded-md p-4 text-xl !outline-offset-0"
               onClick={() => setIsFormOpen(p => !p)}
             >
-              Add word
+              {t("form.word.button.add")}
               <span
                 aria-hidden={true}
                 className="ml-4 inline-flex h-7 w-7 items-center justify-center rounded-full border-2 border-black text-2xl transition-transform  group-aria-expanded/accordionTitle:rotate-45 group-aria-expanded/accordionTitle:border-primary  group-aria-expanded/accordionTitle:text-primary dark:border-white dark:group-aria-expanded/accordionTitle:border-white"
@@ -100,9 +107,11 @@ export default function Home() {
                           if (isValid) setTimeout(handleFormResetWrapper, 500);
                         }}
                       >
-                        Add Word
+                        {t("form.word.button.add")}
                       </Button>
-                      <Button onClick={handleFormResetWrapper}>Close</Button>
+                      <Button onClick={handleFormResetWrapper}>
+                        {t("form.word.button.close")}
+                      </Button>
                     </>
                   );
                 }}
@@ -115,3 +124,13 @@ export default function Home() {
     </>
   );
 }
+
+export const getStaticProps: GetStaticProps<object> = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(
+      locale ?? "en",
+      ["common"],
+      nextI18nConfig,
+    )),
+  },
+});

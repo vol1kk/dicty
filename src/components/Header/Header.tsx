@@ -4,10 +4,12 @@ import useHeaderData from "~/store/useHeaderData";
 import Dictionary from "~/components/Icons/DictionaryIcon";
 import HeaderMenu from "~/components/Header/HeaderMenu";
 import ButtonBurger from "~/components/Button/ButtonBurger";
+import { useTranslation } from "next-i18next";
 
 export default function Header() {
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
+  const { t } = useTranslation();
 
   function openMenuHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
@@ -18,7 +20,7 @@ export default function Header() {
     <header className="mb-10">
       <nav className="relative z-20 grid grid-cols-[auto,_1fr] items-center">
         <ButtonBurger
-          ariaLabel="Open header menu"
+          ariaLabel={t("header.openMenu")}
           isBurgerMenuOpen={isHeaderOpen}
           openBurgerMenuHandler={openMenuHandler}
         />
@@ -27,7 +29,7 @@ export default function Header() {
           className="place-self-center rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
         >
           <Dictionary
-            aria-label="Home Icon"
+            aria-label={t("header.icon")}
             className={clsx(
               "delay-75",
               isHeaderOpen && "fill-black dark:fill-gray-100",

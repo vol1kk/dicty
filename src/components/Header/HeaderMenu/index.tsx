@@ -1,6 +1,7 @@
-import { signIn, signOut } from "next-auth/react";
 import React from "react";
 import clsx from "clsx";
+import { useTranslation } from "next-i18next";
+import { signIn, signOut } from "next-auth/react";
 import useWords from "~/hooks/useWords";
 import Switch from "~/components/Switch";
 import Modal from "~/components/Modal/Modal";
@@ -14,9 +15,10 @@ import ImportIcon from "~/components/Icons/ImportIcon";
 import AccountIcon from "~/components/Icons/AccountIcon";
 import useUserPreferences from "~/store/useUserPreferences";
 import FontDropdown from "~/components/Header/HeaderMenu/FontDropdown";
-import { nanoid } from "nanoid";
+import LanguageDropdown from "~/components/Header/HeaderMenu/LanguageDropdown";
 
 export default function HeaderMenu() {
+  const { t } = useTranslation();
   const { data: words, importWords } = useWords();
   const setTheme = useUserPreferences(state => state.setTheme);
   const isAuthed = useSessionData(state => state.isAuthed);
@@ -86,7 +88,8 @@ export default function HeaderMenu() {
         >
           <li>
             <Button onClick={triggerInputHandler}>
-              <ImportIcon dimensions={24} type="import" /> Import
+              <ImportIcon dimensions={24} type="import" />
+              {t("header.import")}
               <input
                 onChange={importWordsHandler}
                 className="hidden"
@@ -98,20 +101,27 @@ export default function HeaderMenu() {
           <li>
             <Button onClick={exportWordsHandler}>
               <ImportIcon dimensions={24} />
-              Export
+              {t("header.export")}
             </Button>
           </li>
           <li>
             <Button onClick={authenticationHandler}>
               <AccountIcon dimensions={24} />
-              {isAuthed ? "Logout" : "Login"}
+              {isAuthed ? t("header.logout") : t("header.login")}
             </Button>
           </li>
-          <li className="place-self-center">
+          <li>
             <FontDropdown />
           </li>
+          <li>
+            <LanguageDropdown />
+          </li>
           <li className="place-self-center">
-            <Switch isChecked={isDarkTheme} handleCheck={themeToggleHandler} />
+            <Switch
+              isChecked={isDarkTheme}
+              handleCheck={themeToggleHandler}
+              switchAction={t("header.changeTheme")}
+            />
           </li>
         </ul>
       </Modal>

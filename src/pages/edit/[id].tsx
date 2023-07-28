@@ -5,9 +5,14 @@ import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
 import { type Word } from "~/types/ApiTypes";
 import Button from "~/components/Button/Button";
+import { type GetStaticPaths, type GetStaticProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import nextI18nConfig from "../../../next-i18next.config.mjs";
+import { useTranslation } from "next-i18next";
 
 export default function EditPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const navigation = useNavigationRouter();
 
   const { data: words, deleteWord, updateWord } = useWords();
@@ -52,14 +57,16 @@ export default function EditPage() {
                   }}
                   className="rounded-md bg-gray-300 dark:bg-gray-900"
                 >
-                  Save Changes
+                  {t("form.word.button.save")}
                 </Button>
-                <Button onClick={() => navigation.push("/")}>Cancel</Button>
+                <Button onClick={() => navigation.push("/")}>
+                  {t("form.word.button.cancel")}
+                </Button>
                 <Button
                   onClick={deleteHandler}
                   className="dark:hover:bg-red-500"
                 >
-                  Delete
+                  {t("form.word.button.delete")}
                 </Button>
               </>
             )}
@@ -69,3 +76,20 @@ export default function EditPage() {
     </>
   );
 }
+
+export const getStaticPaths: GetStaticPaths<{ slug: string }> = () => {
+  return {
+    paths: [], //indicates that no page needs be created at build time
+    fallback: "blocking", //indicates the type of fallback
+  };
+};
+
+export const getStaticProps: GetStaticProps<object> = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(
+      locale ?? "en",
+      ["common"],
+      nextI18nConfig,
+    )),
+  },
+});

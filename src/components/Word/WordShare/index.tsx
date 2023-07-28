@@ -3,6 +3,7 @@ import KeyIcon from "~/components/Icons/KeyIcon";
 import { useRef, useState } from "react";
 import CloseIcon from "~/components/Icons/CloseIcon";
 import { api } from "~/utils/api";
+import { useTranslation } from "next-i18next";
 
 type WordShareProps = {
   code: string | null;
@@ -10,14 +11,14 @@ type WordShareProps = {
 };
 
 export default function WordShare({ code, wordId }: WordShareProps) {
+  const { t } = useTranslation();
   const [shareCode, setShareCode] = useState(code);
   const formCodeRef = useRef<HTMLInputElement>(null);
 
   const { mutate: generateCodeMutation } =
     api.words.generateShareCode.useMutation({
       onSuccess(res) {
-        console.log(res.shareCode);
-        setShareCode(res.shareCode as string | null);
+        setShareCode(res.shareCode);
       },
     });
   const { mutate: deleteCodeMutation } = api.words.deleteShareCode.useMutation({
@@ -42,19 +43,19 @@ export default function WordShare({ code, wordId }: WordShareProps) {
         key={shareCode ?? ""}
         tabIndex={shareCode ? 0 : -1}
         defaultValue={shareCode ?? ""}
-        placeholder="Generate Word Code"
+        placeholder={t("form.code.generate")}
         onClick={e => e.currentTarget.select()}
         className="mr-2 max-w-[18ch] border-r-[1px] border-r-[#adb2b8] bg-transparent pr-2 outline-0"
       />
       <Button onClick={clickHandler} className="[&>svg]:fill-primary">
         {shareCode ? (
           <>
-            <span className="sr-only">Delete sharing code</span>
+            <span className="sr-only">{t("form.code.delete")}</span>
             <CloseIcon />
           </>
         ) : (
           <>
-            <span className="sr-only">Generate sharing code</span>
+            <span className="sr-only">{t("form.code.generate")}</span>
             <KeyIcon />
           </>
         )}

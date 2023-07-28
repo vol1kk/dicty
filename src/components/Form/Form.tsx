@@ -10,6 +10,7 @@ import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import { type Category, type Word } from "~/types/ApiTypes";
 import FormCategory from "~/components/Form/FormCategory";
 import Input from "~/components/Input/Input";
+import { useTranslation } from "next-i18next";
 
 type FormProps = {
   renderButtons: (
@@ -45,6 +46,7 @@ export default function Form({
   initialValues,
   submitHandler,
 }: FormProps) {
+  const { t } = useTranslation();
   const formSubmitHandler = (values: Word) => submitHandler(values);
 
   return (
@@ -82,22 +84,27 @@ export default function Form({
             <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
               <Input
                 id="name"
-                placeholder="Enter Name"
+                placeholder={t("form.word.category.placeholder")}
                 className={clsx(
                   errors.name && touched.name && "border-2 border-red-500",
                 )}
               >
-                <span>Name</span>
+                <span>{t("form.word.name")}</span>
               </Input>
 
-              <Input id="transcription" placeholder="Enter Transcription">
-                <span>Transcription</span>
+              <Input
+                id="transcription"
+                placeholder={t("form.word.transcription.placeholder")}
+              >
+                <span>{t("form.word.transcription")}</span>
               </Input>
             </div>
             <FieldArray name="categories">
               {(arrayHelpers: FieldArrayHelpers) => (
                 <div>
-                  <h2 className="text-center">Categories</h2>
+                  <h2 className="text-center">
+                    {t("form.word.categories.label")}
+                  </h2>
                   {values.categories.map((category, cIndex) => (
                     <FormCategory
                       key={cIndex}
