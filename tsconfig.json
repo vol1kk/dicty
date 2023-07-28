@@ -23,6 +23,7 @@
     }
   },
   "include": [
+    "next-i18next.config.mjs",
     ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",

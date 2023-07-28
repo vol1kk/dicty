@@ -4,6 +4,8 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Layout from "~/components/Layout/Layout";
+import { appWithTranslation } from "next-i18next";
+import nextI18nConfig from "../../next-i18next.config.mjs";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -18,4 +20,4 @@ const MyApp: AppType<{ session: Session | null }> = ({
   );
 };
 
-export default api.withTRPC(MyApp);
+export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig));
