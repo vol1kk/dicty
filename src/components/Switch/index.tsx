@@ -1,12 +1,14 @@
 type SwitchProps = {
-  isChecked: boolean;
-  handleCheck: () => void;
   before?: boolean;
+  isChecked: boolean;
+  switchAction: string;
+  handleCheck: () => void;
   children?: React.ReactNode;
 };
 
 export default function Switch({
   children,
+  switchAction,
   isChecked,
   handleCheck,
   before = false,
@@ -19,7 +21,7 @@ export default function Switch({
         className="peer sr-only"
         aria-checked={isChecked}
       >
-        Toggle Dark Theme
+        {switchAction}
       </button>
       {before && children}
       <span className="relative block h-6 w-12 rounded-full border-4 border-transparent bg-gray-600 outline-2 outline-offset-2 outline-primary peer-focus-visible:outline dark:bg-primary [&~svg]:hover:fill-primary dark:[&~svg]:fill-primary">
