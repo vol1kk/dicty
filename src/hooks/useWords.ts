@@ -101,7 +101,7 @@ export default function useWords(): UseWordsReturnType {
     updateWord,
     deleteWord,
     importWords,
-    isLoading: authedWords.isLoading,
+    isLoading: status === "unauthenticated" ? false : authedWords.isLoading,
     data: status === "unauthenticated" ? localWords : authedWords.data || [],
   };
 }
