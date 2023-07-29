@@ -1,17 +1,27 @@
 import { create } from "zustand";
 import { type Session } from "next-auth";
+import { type useSession } from "next-auth/react";
+
+type StatusTypes = ReturnType<typeof useSession>["status"];
 
 type UseSessionDataProps = {
-  sessionData: Session | null;
-  setSession: (data: Session | null) => void;
   isAuthed: boolean;
+  session: Session | null;
+  status: StatusTypes | null;
+  setSession: (sessionData: ReturnType<typeof useSession>) => void;
 };
 
 const useSessionData = create<UseSessionDataProps>()(set => {
   return {
-    sessionData: null,
+    session: null,
+    status: null,
     isAuthed: false,
-    setSession: data => set(() => ({ sessionData: data, isAuthed: !!data })),
+    setSession: sessionData =>
+      set(() => ({
+        session: sessionData.data,
+        status: sessionData.status,
+        isAuthed: !!sessionData.data,
+      })),
   };
 });
 

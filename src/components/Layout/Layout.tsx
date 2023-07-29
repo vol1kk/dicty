@@ -18,11 +18,11 @@ const FONTS = new Map([
 
 let once = true;
 export default function Layout({ children }: LayoutProps) {
+  const font = useUserPreferences(state => state.font);
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
   const setSession = useSessionData(state => state.setSession);
   const setTheme = useUserPreferences(state => state.setTheme);
   const setFont = useUserPreferences(state => state.setFont);
-  const font = useUserPreferences(state => state.font);
   const getFont = FONTS.get(font) ?? "font-poppins";
   const sessionData = useSession();
 
@@ -49,10 +49,10 @@ export default function Layout({ children }: LayoutProps) {
   useEffect(() => {
     if (sessionData.data?.user) {
       setToken(sessionData.data.user.accessToken);
-      setSession(sessionData.data);
+      setSession(sessionData);
     } else {
       setToken("");
-      setSession(null);
+      setSession(sessionData);
     }
   }, [sessionData, setSession]);
 
