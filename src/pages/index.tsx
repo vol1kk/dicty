@@ -2,28 +2,19 @@ import Head from "next/head";
 import { type GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
 import { useMemo, useRef, useState } from "react";
-import nextI18nConfig from "../../next-i18next.config.mjs";
+import nextI18nConfig from "~/../next-i18next.config.mjs";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import FormCodeShare from "~/components/Form/FormCodeShare";
 import WordsList from "~/components/WordsList/WordsList";
 import Accordion from "~/components/Accordion/Accordion";
 import SearchIcon from "~/components/Icons/SearchIcon";
+import { formTemplate } from "~/utils/formUtils";
 import Button from "~/components/Button/Button";
 import useDebounce from "~/hooks/useDebounce";
-import { type Word } from "~/types/ApiTypes";
 import filterData from "~/utils/filterData";
 import Form from "~/components/Form/Form";
 import useWords from "~/hooks/useWords";
-
-const formTemplate = {
-  name: "",
-  shareCode: null,
-  transcription: "",
-  categories: [
-    { id: "", name: "", meanings: [{ id: "", definition: "", example: "" }] },
-  ],
-} as Word;
 
 export default function Home() {
   const { t } = useTranslation("common");
@@ -36,7 +27,7 @@ export default function Home() {
 
   const { data: words, createWord } = useWords();
   const data = useMemo(
-    () => filterData(words ?? [], debouncedSearch),
+    () => filterData(words, debouncedSearch),
     [words, debouncedSearch],
   );
 

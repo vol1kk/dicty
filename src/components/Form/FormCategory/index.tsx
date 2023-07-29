@@ -9,6 +9,7 @@ import FormMeaning from "~/components/Form/FormMeaning";
 import { type Category, type Meaning } from "~/types/ApiTypes";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import { useTranslation } from "next-i18next";
+import { categoryTemplate, meaningTemplate } from "~/utils/formUtils";
 
 type FormCategoryProps = {
   categoryIndex: number;
@@ -17,19 +18,6 @@ type FormCategoryProps = {
   categoryErrors: FormikErrors<Category[]> | undefined;
   categoryTouched: FormikTouched<Category[]> | undefined;
 } & Pick<FieldArrayHelpers, "push" | "remove">;
-
-const meaningTemplate = {
-  id: "",
-  definition: "",
-  example: "",
-};
-
-const categoryTemplate = {
-  id: "",
-  name: "",
-  wordId: "",
-  meanings: [meaningTemplate],
-};
 
 export default function FormCategory({
   categoryErrors,
