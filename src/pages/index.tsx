@@ -10,6 +10,7 @@ import WordsList from "~/components/WordsList/WordsList";
 import Accordion from "~/components/Accordion/Accordion";
 import SearchIcon from "~/components/Icons/SearchIcon";
 import { formTemplate } from "~/utils/formUtils";
+import Spinner from "~/components/Spinner/Spinner";
 import Button from "~/components/Button/Button";
 import useDebounce from "~/hooks/useDebounce";
 import filterData from "~/utils/filterData";
@@ -25,7 +26,7 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 
-  const { data: words, createWord } = useWords();
+  const { data: words, createWord, isLoading } = useWords();
   const data = useMemo(
     () => filterData(words, debouncedSearch),
     [words, debouncedSearch],
@@ -35,6 +36,13 @@ export default function Home() {
     if (inputCodeRef.current) inputCodeRef.current.value = "";
     setIsFormOpen(false);
   }
+
+  if (isLoading)
+    return (
+      <main className="flex items-center justify-center">
+        <Spinner dimensions={64} />
+      </main>
+    );
 
   return (
     <>
