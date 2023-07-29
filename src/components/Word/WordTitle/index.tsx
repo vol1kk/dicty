@@ -1,32 +1,22 @@
 import clsx from "clsx";
-import { type SetStateAction } from "react";
 import Chevron from "~/components/Icons/Chevron";
 import Button from "~/components/Button/Button";
 
 type WordTitleProps = {
   word: string;
-  index: number;
   transcription: string;
   isAccordionOpen: boolean;
-  setAccordionOpen: React.Dispatch<SetStateAction<number | null>>;
 };
+
 export default function WordTitle({
   word,
-  index,
-  setAccordionOpen,
   transcription,
   isAccordionOpen,
 }: WordTitleProps) {
   return (
     <div>
       <h2 className="text-4xl font-bold">
-        <Button
-          onClick={e => {
-            e.stopPropagation();
-            setAccordionOpen(curr => (curr === index ? null : index));
-          }}
-          className="flex items-center gap-2 rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
-        >
+        <Button className="flex items-center gap-2 rounded-md">
           <span className="max-w-[25ch] truncate pb-1">{word}</span>
           <Chevron
             aria-hidden={true}
