@@ -18,7 +18,7 @@ import useWords from "~/hooks/useWords";
 
 const formTemplate = {
   name: "",
-  shareCode: "",
+  shareCode: null,
   transcription: "",
   categories: [
     { id: "", name: "", meanings: [{ id: "", definition: "", example: "" }] },
