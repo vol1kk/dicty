@@ -8,12 +8,14 @@ import WordMeanings from "~/components/Word/WordMeanings";
 import WordEdit from "~/components/Word/WordEdit";
 import DictionaryIcon from "~/components/Icons/DictionaryIcon";
 import WordShare from "~/components/Word/WordShare";
+import { useTranslation } from "next-i18next";
 
 type WordsListProps = {
   data: Word[];
 };
 
 export default function WordsList({ data }: WordsListProps) {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<number | null>(null);
 
   if (data.length === 0) {
@@ -22,7 +24,7 @@ export default function WordsList({ data }: WordsListProps) {
         <div className="rounded-full bg-gray-100 p-6 dark:bg-gray-800">
           <DictionaryIcon dimensions={64} />
         </div>
-        <h2>Your dictionary is empty!</h2>
+        <h2>{t("list.empty")}</h2>
       </div>
     );
   }

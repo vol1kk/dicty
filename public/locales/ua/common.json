@@ -39,5 +39,7 @@
 
   "form.word.button.save": "Зберегти зміни",
   "form.word.button.cancel": "Відмінити",
-  "form.word.button.delete": "Видалити"
+  "form.word.button.delete": "Видалити",
+
+  "list.empty": "Ваш словни порожній!"
 }

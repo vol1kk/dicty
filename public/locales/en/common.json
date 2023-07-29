@@ -39,5 +39,7 @@
 
   "form.word.button.save": "Save Changes",
   "form.word.button.cancel": "Cancel",
-  "form.word.button.delete": "Delete"
+  "form.word.button.delete": "Delete",
+
+  "list.empty": "Your dictionary is empty!"
 }
