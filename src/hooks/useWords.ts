@@ -7,6 +7,7 @@ import useUserPreferences from "~/store/useUserPreferences";
 
 type UseWordsReturnType = {
   data: Word[];
+  isLoading: boolean;
   createWord: (word: Word) => void;
   updateWord: (word: Word) => void;
   deleteWord: (id: string) => void;
@@ -15,12 +16,14 @@ type UseWordsReturnType = {
 
 export default function useWords(): UseWordsReturnType {
   const utils = api.useContext();
+  const isAuthed = useSessionData(state => state.isAuthed);
   const localWords = useUserPreferences(state => state.words);
   const setLocalWords = useUserPreferences(state => state.setWords);
-  const isAuthed = useSessionData(state => state.isAuthed);
+  const status = useSessionData(state => state.status);
 
   const authedWords = api.words.getWords.useQuery(undefined, {
     enabled: isAuthed,
+    refetchOnWindowFocus: false,
   });
   const { mutate: deleteWordMutation } = api.words.deleteWord.useMutation();
   const { mutate: updateWordMutation } = api.words.updateWord.useMutation();
@@ -94,10 +97,11 @@ export default function useWords(): UseWordsReturnType {
   }
 
   return {
-    data: isAuthed ? authedWords.data || [] : localWords,
     createWord,
     updateWord,
     deleteWord,
     importWords,
+    isLoading: authedWords.isLoading,
+    data: status === "unauthenticated" ? localWords : authedWords.data || [],
   };
 }
