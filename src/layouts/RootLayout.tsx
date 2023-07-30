@@ -17,7 +17,7 @@ const FONTS = new Map([
 ]);
 
 let once = true;
-export default function Layout({ children }: LayoutProps) {
+export default function RootLayout({ children }: LayoutProps) {
   const font = useUserPreferences(state => state.font);
   const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
   const setSession = useSessionData(state => state.setSession);
