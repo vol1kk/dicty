@@ -1,17 +1,13 @@
 import { useState } from "react";
-import { type Word } from "~/types/ApiTypes";
-import EditIcon from "~/components/Icons/EditIcon";
-import Accordion from "~/components/Accordion/Accordion";
-import WordTitle from "~/components/Word/WordTitle";
-import WordCategory from "~/components/Word/WordCategory";
-import WordMeanings from "~/components/Word/WordMeanings";
-import WordEdit from "~/components/Word/WordEdit";
-import DictionaryIcon from "~/components/Icons/DictionaryIcon";
-import WordShare from "~/components/Word/WordShare";
 import { useTranslation } from "next-i18next";
+import { Word } from "~/components/Word/Word";
+import EditIcon from "~/components/Icons/EditIcon";
+import { type Word as IWord } from "~/types/ApiTypes";
+import Accordion from "~/components/Accordion/Accordion";
+import DictionaryIcon from "~/components/Icons/DictionaryIcon";
 
 type WordsListProps = {
-  data: Word[];
+  data: IWord[];
 };
 
 export default function WordsList({ data }: WordsListProps) {
@@ -30,38 +26,35 @@ export default function WordsList({ data }: WordsListProps) {
   }
 
   return (
-    <ul className="[&>li]:mb-4">
+    <ul className="grid gap-4">
       {data.map((word, i) => (
         <li
           key={word.id}
           className="rounded-md bg-gray-100 p-4 dark:bg-gray-800"
         >
-          <div
-            onClick={() => setIsOpen(curr => (curr === i ? null : i))}
-            className="flex items-center justify-between"
-          >
-            <WordTitle
-              index={i}
-              word={word.name}
-              setAccordionOpen={setIsOpen}
-              isAccordionOpen={isOpen === i}
-              transcription={word.transcription}
-            />
-            <WordEdit href={`/edit/${word.id}`}>
-              <EditIcon
-                aria-hidden={true}
-                className="transition-transform group-hover:scale-110 group-hover:fill-primary"
+          <Word onClick={() => setIsOpen(curr => (curr === i ? null : i))}>
+            <div className="flex items-center justify-between">
+              <Word.Title
+                word={word.name}
+                isAccordionOpen={isOpen === i}
+                transcription={word.transcription}
               />
-            </WordEdit>
-          </div>
-          <Accordion isOpen={isOpen === i}>
-            {word.categories.map(category => (
-              <WordCategory key={category.id} name={category.name}>
-                <WordMeanings meanings={category.meanings} />
-              </WordCategory>
-            ))}
-            <WordShare wordId={word.id} code={word.shareCode} />
-          </Accordion>
+              <Word.Edit href={`/edit/${word.id}`}>
+                <EditIcon
+                  aria-hidden={true}
+                  className="transition-transform group-hover:scale-110 group-hover:fill-primary"
+                />
+              </Word.Edit>
+            </div>
+            <Accordion isOpen={isOpen === i}>
+              {word.categories.map(category => (
+                <Word.Category key={category.id} name={category.name}>
+                  <Word.Meaning meanings={category.meanings} />
+                </Word.Category>
+              ))}
+              <Word.Share wordId={word.id} code={word.shareCode} />
+            </Accordion>
+          </Word>
         </li>
       ))}
     </ul>
