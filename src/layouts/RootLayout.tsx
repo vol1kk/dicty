@@ -1,5 +1,5 @@
 import Header from "~/components/Header/Header";
-import useUserPreferences from "~/store/useUserPreferences";
+import useLocalData from "~/store/useLocalData";
 import clsx from "clsx";
 import { useEffect } from "react";
 import { setToken } from "~/utils/api";
@@ -18,11 +18,11 @@ const FONTS = new Map([
 
 let once = true;
 export default function RootLayout({ children }: LayoutProps) {
-  const font = useUserPreferences(state => state.font);
-  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
+  const font = useLocalData(state => state.font);
+  const isDarkTheme = useLocalData(state => state.theme) === "dark";
   const setSession = useSessionData(state => state.setSession);
-  const setTheme = useUserPreferences(state => state.setTheme);
-  const setFont = useUserPreferences(state => state.setFont);
+  const setTheme = useLocalData(state => state.setTheme);
+  const setFont = useLocalData(state => state.setFont);
   const getFont = FONTS.get(font) ?? "font-poppins";
   const sessionData = useSession();
 

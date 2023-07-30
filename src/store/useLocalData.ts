@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { type Word } from "~/types/ApiTypes";
 
-type useUserPreferences = {
+type useLocalData = {
   font: string;
   theme: string;
   words: Word[];
@@ -10,13 +10,13 @@ type useUserPreferences = {
   setWords: (words: Word[]) => void;
 };
 
-const useUserPreferences = create<useUserPreferences>()(set => ({
-  font: "Sans-Serif",
-  theme: "light",
+const useLocalData = create<useLocalData>()(set => ({
   words: [],
+  theme: "light",
+  font: "Sans-Serif",
   setFont: name => set(() => ({ font: name })),
   setTheme: theme => set(() => ({ theme: theme })),
   setWords: words => set(() => ({ words })),
 }));
 
-export default useUserPreferences;
+export default useLocalData;

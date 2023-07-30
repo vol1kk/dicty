@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Chevron from "~/components/Icons/Chevron";
 import Dropdown from "~/components/Dropdown/Dropdown";
-import useUserPreferences from "~/store/useUserPreferences";
+import useLocalData from "~/store/useLocalData";
 import { useTranslation } from "next-i18next";
 
 const FONT_TYPES = [
@@ -21,8 +21,8 @@ const FONT_TYPES = [
 
 export default function FontDropdown() {
   const { t } = useTranslation();
-  const font = useUserPreferences(state => state.font);
-  const setFont = useUserPreferences(state => state.setFont);
+  const font = useLocalData(state => state.font);
+  const setFont = useLocalData(state => state.setFont);
 
   function fontCallback(data: HTMLLIElement) {
     const parsedData = data.dataset.font ?? "Sans-Serif";

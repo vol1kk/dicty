@@ -13,18 +13,18 @@ import Overlay from "~/components/Overlay/Overlay";
 import useSessionData from "~/store/useSessionData";
 import ImportIcon from "~/components/Icons/ImportIcon";
 import AccountIcon from "~/components/Icons/AccountIcon";
-import useUserPreferences from "~/store/useUserPreferences";
+import useLocalData from "~/store/useLocalData";
 import FontDropdown from "~/components/Header/HeaderMenu/FontDropdown";
 import LanguageDropdown from "~/components/Header/HeaderMenu/LanguageDropdown";
 
 export default function HeaderMenu() {
   const { t } = useTranslation();
   const { data: words, importWords } = useWords();
-  const setTheme = useUserPreferences(state => state.setTheme);
+  const setTheme = useLocalData(state => state.setTheme);
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
-  const isDarkTheme = useUserPreferences(state => state.theme) === "dark";
+  const isDarkTheme = useLocalData(state => state.theme) === "dark";
 
   function themeToggleHandler() {
     const calculatedTheme = isDarkTheme ? "light" : "dark";

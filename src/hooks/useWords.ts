@@ -3,7 +3,7 @@ import { type Word } from "~/types/ApiTypes";
 import { api } from "~/utils/api";
 import useSessionData from "~/store/useSessionData";
 import modifyWordId from "~/utils/modifyWordId";
-import useUserPreferences from "~/store/useUserPreferences";
+import useLocalData from "~/store/useLocalData";
 
 type UseWordsReturnType = {
   data: Word[];
@@ -17,8 +17,8 @@ type UseWordsReturnType = {
 export default function useWords(): UseWordsReturnType {
   const utils = api.useContext();
   const isAuthed = useSessionData(state => state.isAuthed);
-  const localWords = useUserPreferences(state => state.words);
-  const setLocalWords = useUserPreferences(state => state.setWords);
+  const localWords = useLocalData(state => state.words);
+  const setLocalWords = useLocalData(state => state.setWords);
   const status = useSessionData(state => state.status);
 
   const authedWords = api.words.getWords.useQuery(undefined, {
