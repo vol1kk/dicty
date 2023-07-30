@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import capitalize from "~/utils/capitalize";
 import Chevron from "~/components/Icons/Chevron";
 import Dropdown from "~/components/Dropdown/Dropdown";
 import useUserPreferences from "~/store/useUserPreferences";
@@ -26,7 +25,7 @@ export default function FontDropdown() {
   const setFont = useUserPreferences(state => state.setFont);
 
   function fontCallback(data: HTMLLIElement) {
-    const parsedData = data.dataset.font ?? "sans-serif";
+    const parsedData = data.dataset.font ?? "Sans-Serif";
 
     setFont(parsedData);
     localStorage.setItem("font", parsedData);
@@ -46,7 +45,7 @@ export default function FontDropdown() {
               )}
             />
           </span>
-          <span>{capitalize(font.split("-")).join("-")}</span>
+          <span>{font}</span>
         </div>
       )}
       renderContent={dropdownItemHandler => (

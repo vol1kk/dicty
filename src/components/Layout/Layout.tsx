@@ -11,9 +11,9 @@ type LayoutProps = {
 };
 
 const FONTS = new Map([
-  ["mono", "font-inconsolata"],
-  ["serif", "font-merriweather"],
-  ["sans-serif", "font-poppins"],
+  ["Mono", "font-inconsolata"],
+  ["Serif", "font-merriweather"],
+  ["Sans-Serif", "font-poppins"],
 ]);
 
 let once = true;
@@ -58,7 +58,7 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <>
-      <div id="overlay" />
+      <div id="overlay" className={getFont} />
       <div className="dark:bg-gray-900 dark:text-gray-100">
         <div
           className={clsx(

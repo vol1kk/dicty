@@ -11,10 +11,10 @@ type useUserPreferences = {
 };
 
 const useUserPreferences = create<useUserPreferences>()(set => ({
-  font: "sans-serif",
+  font: "Sans-Serif",
   theme: "light",
   words: [],
-  setFont: name => set(() => ({ font: name.toLowerCase() })),
+  setFont: name => set(() => ({ font: name })),
   setTheme: theme => set(() => ({ theme: theme })),
   setWords: words => set(() => ({ words })),
 }));
