@@ -27,7 +27,9 @@ export default function WordShare({ code, wordId }: WordShareProps) {
     },
   });
 
-  function clickHandler() {
+  function clickHandler(e: React.MouseEvent) {
+    e.stopPropagation();
+
     if (shareCode) deleteCodeMutation({ wordId });
     if (!shareCode) {
       generateCodeMutation({ wordId });
