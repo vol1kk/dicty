@@ -1,8 +1,9 @@
-import Dropdown from "~/components/Dropdown/Dropdown";
-import Chevron from "~/components/Icons/Chevron";
 import clsx from "clsx";
 import { useRouter } from "next/router";
+
+import Chevron from "~/components/Icons/Chevron";
 import useHeaderData from "~/store/useHeaderData";
+import Dropdown from "~/components/Dropdown/Dropdown";
 
 const LANGUAGES = [
   {

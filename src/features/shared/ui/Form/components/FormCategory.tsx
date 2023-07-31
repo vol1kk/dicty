@@ -1,15 +1,14 @@
 import clsx from "clsx";
 import { useRef } from "react";
+import { useTranslation } from "next-i18next";
 import { FieldArray, type FormikErrors, type FormikTouched } from "formik";
+
 import Input from "~/components/Input/Input";
-import Button from "~/components/Button/Button";
-import DotsIcon from "~/components/Icons/DotsIcon";
-import Dropdown from "~/components/Dropdown/Dropdown";
-import FormMeaning from "~/components/Form/FormMeaning";
 import { type Category, type Meaning } from "~/types/ApiTypes";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
-import { useTranslation } from "next-i18next";
-import { categoryTemplate, meaningTemplate } from "~/utils/formUtils";
+import FormMeaning from "~/features/shared/ui/Form/components/FormMeaning";
+import { categoryTemplate, meaningTemplate } from "~/features/shared/ui/Form";
+import CategoryOptions from "~/features/shared/ui/Form/components/FormCategoryOptions";
 
 type FormCategoryProps = {
   categoryIndex: number;
@@ -20,29 +19,15 @@ type FormCategoryProps = {
 } & Pick<FieldArrayHelpers, "push" | "remove">;
 
 export default function FormCategory({
-  categoryErrors,
-  categoryTouched,
   category,
   categoryIndex,
+  categoryErrors,
+  categoryTouched,
   categoriesLength,
   push: pushCategory,
   remove: removeCategory,
 }: FormCategoryProps) {
   const { t } = useTranslation();
-  const CATEGORY_OPTIONS = [
-    {
-      displayName: t("form.word.category.meaning.add"),
-      action: "add-meaning",
-    },
-    {
-      displayName: t("form.word.category.add"),
-      action: "add-category",
-    },
-    {
-      displayName: t("form.word.category.remove"),
-      action: "remove-category",
-    },
-  ];
 
   const pushMeaningRef = useRef(
     {} as Pick<FieldArrayHelpers, "push" | "remove">,
@@ -62,11 +47,9 @@ export default function FormCategory({
   function categoryCallback(data: HTMLLIElement) {
     const action = data.dataset.action ?? "Add Meaning";
 
-    if (action === "add-meaning") pushMeaningRef.current?.push(meaningTemplate);
-
     if (action === "add-category") pushCategory(categoryTemplate);
-
     if (action === "remove-category") removeCategoryHandler(categoryIndex);
+    if (action === "add-meaning") pushMeaningRef.current?.push(meaningTemplate);
 
     data.ariaSelected = "false";
     (data.parentElement?.firstElementChild as HTMLLIElement).ariaSelected =
@@ -100,42 +83,7 @@ export default function FormCategory({
           value={category.name}
           placeholder={t("form.word.category.placeholder")}
         >
-          <Dropdown
-            className="relative p-2"
-            tabIndex={-1}
-            renderTitle={() => (
-              <Button className="rounded-full bg-primary bg-opacity-30 p-2 dark:bg-gray-800">
-                <span className="sr-only">{t("form.word.category.edit")}</span>
-                <DotsIcon
-                  aria-hidden={true}
-                  dimensions={16}
-                  className="fill-primary dark:fill-white"
-                />
-              </Button>
-            )}
-            renderContent={dropdownItemHandler => {
-              return (
-                <ul
-                  onClick={e => e.preventDefault()}
-                  className="absolute -top-5 right-0 min-w-[180px] rounded-md bg-white p-4 shadow-xl dark:bg-gray-900 [&>li]:cursor-pointer [&>li]:leading-10"
-                >
-                  {CATEGORY_OPTIONS.map((options, index) => (
-                    <li
-                      key={options.action}
-                      role="option"
-                      aria-selected={0 === index}
-                      onClick={dropdownItemHandler}
-                      data-action={options.action}
-                      className="outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary"
-                    >
-                      {options.displayName}
-                    </li>
-                  ))}
-                </ul>
-              );
-            }}
-            callback={categoryCallback}
-          />
+          <CategoryOptions callback={categoryCallback} />
         </Input>
       </div>
       <FieldArray name={`categories.${categoryIndex}.meanings`}>

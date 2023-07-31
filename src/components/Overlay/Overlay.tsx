@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { createPortal } from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import useHeaderData from "~/store/useHeaderData";
 
 type OverlayProps = {

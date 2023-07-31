@@ -1,3 +1,5 @@
+import React from "react";
+
 type WordCategoryProps = {
   name: string;
   children: React.ReactNode;

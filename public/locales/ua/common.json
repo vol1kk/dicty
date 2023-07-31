@@ -41,5 +41,6 @@
   "form.word.button.cancel": "Відмінити",
   "form.word.button.delete": "Видалити",
 
-  "list.empty": "Ваш словни порожній!"
+  "list.empty": "Ваш словник порожній!",
+  "list.not-found": "Жодного слова не було знайдено!"
 }

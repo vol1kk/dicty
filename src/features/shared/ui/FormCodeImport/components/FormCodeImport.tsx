@@ -1,14 +1,15 @@
+import { useTranslation } from "next-i18next";
+import { forwardRef, type MutableRefObject } from "react";
+
 import Button from "~/components/Button/Button";
 import { api } from "~/utils/api";
-import { forwardRef, type MutableRefObject } from "react";
-import { useTranslation } from "next-i18next";
 
 type FormCodeShareProps = {
   closeHandler: () => void;
 };
 
-export default forwardRef<HTMLInputElement, FormCodeShareProps>(
-  function FormCodeShare({ closeHandler }, ref) {
+const FormCodeImport = forwardRef<HTMLInputElement, FormCodeShareProps>(
+  function FormCodeImport({ closeHandler }, ref) {
     const { t } = useTranslation();
     const utils = api.useContext();
 
@@ -45,3 +46,5 @@ export default forwardRef<HTMLInputElement, FormCodeShareProps>(
     );
   },
 );
+
+export default FormCodeImport;

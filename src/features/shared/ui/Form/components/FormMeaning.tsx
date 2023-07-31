@@ -1,9 +1,10 @@
+import clsx from "clsx";
+import { useTranslation } from "next-i18next";
+import { type FormikErrors, type FormikTouched } from "formik";
+
 import Input from "~/components/Input/Input";
 import Button from "~/components/Button/Button";
 import { type Meaning } from "~/types/ApiTypes";
-import { type FormikErrors, type FormikTouched } from "formik";
-import clsx from "clsx";
-import { useTranslation } from "next-i18next";
 
 type FormMeaningProps = {
   meaningIndex: number;

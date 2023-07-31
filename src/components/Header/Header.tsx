@@ -1,10 +1,12 @@
 import clsx from "clsx";
+import React from "react";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
+
 import useHeaderData from "~/store/useHeaderData";
 import Dictionary from "~/components/Icons/DictionaryIcon";
 import HeaderMenu from "~/components/Header/HeaderMenu";
 import ButtonBurger from "~/components/Button/ButtonBurger";
-import { useTranslation } from "next-i18next";
 
 export default function Header() {
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);

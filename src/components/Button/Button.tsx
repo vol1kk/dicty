@@ -1,9 +1,9 @@
-import { type ButtonHTMLAttributes } from "react";
+import React from "react";
 
-type ButtonProps = {
+export type ButtonProps = {
   isSubmit?: boolean;
   children: React.ReactNode;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function Button({
   children,

@@ -1,3 +1,5 @@
+import React from "react";
+
 import WordTitle from "~/components/Word/WordTitle";
 import WordEdit from "~/components/Word/WordEdit";
 import WordCategory from "~/components/Word/WordCategory";
@@ -9,7 +11,7 @@ type WordProps = {
   onClick?: (e: React.MouseEvent) => void;
 };
 
-export function Word({ children, ...props }: WordProps) {
+export default function Word({ children, ...props }: WordProps) {
   return <div {...props}>{children}</div>;
 }
 

@@ -1,57 +1,39 @@
 import clsx from "clsx";
-import * as Yup from "yup";
+import { type ReactElement } from "react";
 import {
   Formik,
   FieldArray,
   type FormikErrors,
   Form as FormikForm,
 } from "formik";
-import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
-import { type Category, type Word } from "~/types/ApiTypes";
-import FormCategory from "~/components/Form/FormCategory";
-import Input from "~/components/Input/Input";
 import { useTranslation } from "next-i18next";
 
+import Input from "~/components/Input/Input";
+import { type Category, type Word } from "~/types/ApiTypes";
+import { formTemplate, formValidationSchema } from "~/features/shared/ui/Form";
+import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
+import FormCategory from "~/features/shared/ui/Form/components/FormCategory";
+
 type FormProps = {
+  initialValues?: Word;
+  submitHandler: (word: Word) => void;
   renderButtons: (
     isValid: boolean,
     handleFormReset: () => void,
-  ) => React.ReactElement;
-  initialValues: Word;
-  submitHandler: (word: Word) => void;
+  ) => ReactElement;
 };
-
-const FormSchema = Yup.object({
-  name: Yup.string().required(),
-  transcription: Yup.string(),
-  categories: Yup.array()
-    .min(1, "At least one category should be present")
-    .of(
-      Yup.object({
-        name: Yup.string().required("Category name is required"),
-        meanings: Yup.array()
-          .min(1)
-          .of(
-            Yup.object().shape({
-              definition: Yup.string().required(),
-              example: Yup.string(),
-            }),
-          ),
-      }),
-    ),
-});
 
 export default function Form({
   renderButtons,
-  initialValues,
   submitHandler,
+  initialValues = formTemplate,
 }: FormProps) {
   const { t } = useTranslation();
   const formSubmitHandler = (values: Word) => submitHandler(values);
 
   return (
     <Formik
-      validationSchema={FormSchema}
+      validationSchema={formValidationSchema}
       initialValues={initialValues}
       validateOnMount={true}
       onSubmit={formSubmitHandler}

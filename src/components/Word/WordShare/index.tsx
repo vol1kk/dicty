@@ -1,9 +1,10 @@
+import React, { useRef, useState } from "react";
+import { useTranslation } from "next-i18next";
+
+import { api } from "~/utils/api";
 import Button from "~/components/Button/Button";
 import KeyIcon from "~/components/Icons/KeyIcon";
-import { useRef, useState } from "react";
 import CloseIcon from "~/components/Icons/CloseIcon";
-import { api } from "~/utils/api";
-import { useTranslation } from "next-i18next";
 
 type WordShareProps = {
   code: string | null;

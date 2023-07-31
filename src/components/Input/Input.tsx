@@ -1,5 +1,6 @@
 import { Field } from "formik";
 import clsx from "clsx";
+import React from "react";
 
 type InputProps = {
   id: string;
@@ -11,10 +12,10 @@ type InputProps = {
 export default function Input({
   id,
   children,
-  before = true,
   className,
-  classNameLabel,
   placeholder,
+  classNameLabel,
+  before = true,
   ...props
 }: InputProps) {
   return (

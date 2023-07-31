@@ -1,3 +1,5 @@
+import React from "react";
+
 type SwitchProps = {
   before?: boolean;
   isChecked: boolean;

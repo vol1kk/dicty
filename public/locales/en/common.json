@@ -41,5 +41,6 @@
   "form.word.button.cancel": "Cancel",
   "form.word.button.delete": "Delete",
 
-  "list.empty": "Your dictionary is empty!"
+  "list.empty": "Your dictionary is empty!",
+  "list.not-found": "Couldn't find any words!"
 }

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useTranslation } from "next-i18next";
-import { Word } from "~/components/Word/Word";
+
+import Word from "~/components/Word/Word";
 import EditIcon from "~/components/Icons/EditIcon";
 import { type Word as IWord } from "~/types/ApiTypes";
+import NotFound from "~/components/NotFound/NotFound";
 import Accordion from "~/components/Accordion/Accordion";
-import DictionaryIcon from "~/components/Icons/DictionaryIcon";
 
 type WordsListProps = {
   data: IWord[];
@@ -15,14 +16,7 @@ export default function WordsList({ data }: WordsListProps) {
   const [isOpen, setIsOpen] = useState<number | null>(null);
 
   if (data.length === 0) {
-    return (
-      <div className="flex flex-col items-center gap-4">
-        <div className="rounded-full bg-gray-100 p-6 dark:bg-gray-800">
-          <DictionaryIcon dimensions={64} />
-        </div>
-        <h2>{t("list.empty")}</h2>
-      </div>
-    );
+    return <NotFound dimensions={64} text={t("list.empty")} />;
   }
 
   return (
