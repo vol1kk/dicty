@@ -1,7 +1,8 @@
-import Dropdown from "~/components/Dropdown/Dropdown";
-import Button from "~/components/Button/Button";
-import DotsIcon from "~/components/Icons/DotsIcon";
 import { useTranslation } from "next-i18next";
+
+import Button from "~/components/Button/Button";
+import { DotsIcon } from "~/features/shared/ui/Form";
+import Dropdown from "~/components/Dropdown/Dropdown";
 
 type CategoryOptionsProps = {
   callback: (data: HTMLLIElement) => void;
@@ -31,18 +32,14 @@ export default function CategoryOptions({ callback }: CategoryOptionsProps) {
       renderTitle={() => (
         <Button className="rounded-full bg-primary bg-opacity-30 p-2 dark:bg-gray-800">
           <span className="sr-only">{t("form.word.category.edit")}</span>
-          <DotsIcon
-            aria-hidden={true}
-            dimensions={16}
-            className="fill-primary dark:fill-white"
-          />
+          <DotsIcon className="h-[16px] w-[16px] fill-primary dark:fill-white" />
         </Button>
       )}
       renderContent={dropdownItemHandler => {
         return (
           <ul
             onClick={e => e.preventDefault()}
-            className="absolute -top-5 right-0 min-w-[180px] rounded-md bg-white p-4 shadow-xl dark:bg-gray-900 [&>li]:cursor-pointer [&>li]:leading-10"
+            className="absolute -top-5 right-0 whitespace-nowrap rounded-md bg-white p-4 shadow-xl dark:bg-gray-900 [&>li]:cursor-pointer [&>li]:leading-10"
           >
             {CATEGORY_OPTIONS.map((options, index) => (
               <li

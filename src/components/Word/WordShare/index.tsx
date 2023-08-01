@@ -2,9 +2,9 @@ import React, { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 
 import { api } from "~/utils/api";
+import KeyIcon from "~/assets/key.svg";
+import CloseIcon from "~/assets/close.svg";
 import Button from "~/components/Button/Button";
-import KeyIcon from "~/components/Icons/KeyIcon";
-import CloseIcon from "~/components/Icons/CloseIcon";
 
 type WordShareProps = {
   code: string | null;

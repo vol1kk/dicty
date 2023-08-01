@@ -3,8 +3,7 @@ import { useTranslation } from "next-i18next";
 
 import Button from "~/components/Button/Button";
 import useHeaderData from "~/store/useHeaderData";
-import ImportIcon from "~/components/Icons/ImportIcon";
-import { useImportWords } from "~/features/import-words";
+import { ImportIcon, useImportWords } from "~/features/import-words";
 import readFileAsync from "~/features/import-words/utils/readFileAsync";
 
 export default function ImportWords() {
@@ -32,7 +31,7 @@ export default function ImportWords() {
 
   return (
     <Button onClick={triggerInputHandler}>
-      <ImportIcon dimensions={24} type="import" />
+      <ImportIcon className="rotate-180" />
       {t("header.import")}
       <input
         onChange={importWordsHandler}

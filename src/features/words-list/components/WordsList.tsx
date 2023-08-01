@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "next-i18next";
 
 import Word from "~/components/Word/Word";
-import EditIcon from "~/components/Icons/EditIcon";
+import { EditIcon } from "~/features/words-list";
 import { type Word as IWord } from "~/types/ApiTypes";
 import NotFound from "~/components/NotFound/NotFound";
 import Accordion from "~/components/Accordion/Accordion";
@@ -15,9 +15,8 @@ export default function WordsList({ data }: WordsListProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<number | null>(null);
 
-  if (data.length === 0) {
+  if (data.length === 0)
     return <NotFound dimensions={64} text={t("list.empty")} />;
-  }
 
   return (
     <ul className="grid gap-4">
@@ -35,6 +34,8 @@ export default function WordsList({ data }: WordsListProps) {
               />
               <Word.Edit href={`/edit/${word.id}`}>
                 <EditIcon
+                  width={24}
+                  heigth={24}
                   aria-hidden={true}
                   className="transition-transform group-hover:scale-110 group-hover:fill-primary"
                 />

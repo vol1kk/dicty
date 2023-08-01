@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
 
-import Chevron from "~/components/Icons/Chevron";
+import ChevronIcon from "~/assets/chevron.svg";
 import useHeaderData from "~/store/useHeaderData";
 import Dropdown from "~/components/Dropdown/Dropdown";
 
@@ -36,7 +36,9 @@ export default function LanguageDropdown() {
         <div className="relative flex min-w-[120px] cursor-pointer items-center gap-4">
           <span className="sr-only">Change font</span>
           <span>
-            <Chevron
+            <ChevronIcon
+              width={18}
+              heigth={18}
               className={clsx(
                 "transition-transform [&>path]:fill-gray-600",
                 isDropdownOpen && "rotate-90 [&>path]:!fill-primary",

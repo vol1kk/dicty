@@ -6,16 +6,15 @@ import { signIn, signOut } from "next-auth/react";
 import useWords from "~/hooks/useWords";
 import Switch from "~/components/Switch";
 import Modal from "~/components/Modal/Modal";
+import AccountIcon from "~/assets/account.svg";
 import modifyWordId from "~/utils/modifyWordId";
 import downloadData from "~/utils/downloadData";
 import Button from "~/components/Button/Button";
 import useLocalData from "~/store/useLocalData";
 import useHeaderData from "~/store/useHeaderData";
-import ImportWords from "~/features/import-words";
 import Overlay from "~/components/Overlay/Overlay";
 import useSessionData from "~/store/useSessionData";
-import ImportIcon from "~/components/Icons/ImportIcon";
-import AccountIcon from "~/components/Icons/AccountIcon";
+import ImportWords, { ImportIcon } from "~/features/import-words";
 import FontDropdown from "~/components/Header/HeaderMenu/FontDropdown";
 import LanguageDropdown from "~/components/Header/HeaderMenu/LanguageDropdown";
 

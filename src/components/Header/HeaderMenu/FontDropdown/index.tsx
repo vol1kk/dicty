@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 
+import ChevronIcon from "~/assets/chevron.svg";
 import useLocalData from "~/store/useLocalData";
-import Chevron from "~/components/Icons/Chevron";
 import Dropdown from "~/components/Dropdown/Dropdown";
 
 const FONT_TYPES = [
@@ -39,7 +39,9 @@ export default function FontDropdown() {
         <div className="relative flex min-w-[120px] cursor-pointer items-center gap-4">
           <span className="sr-only">{t("header.changeFont")}</span>
           <span>
-            <Chevron
+            <ChevronIcon
+              width={18}
+              heigth={18}
               className={clsx(
                 "transition-transform [&>path]:fill-gray-600",
                 isDropdownOpen && "rotate-90 [&>path]:!fill-primary",

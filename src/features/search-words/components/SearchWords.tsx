@@ -1,6 +1,6 @@
-import SearchIcon from "~/components/Icons/SearchIcon";
 import { type Dispatch, type SetStateAction } from "react";
 import { useTranslation } from "next-i18next";
+import { SearchIcon } from "~/features/search-words";
 
 type SearchWordsProps = {
   searchValue: string;
@@ -25,7 +25,8 @@ export default function SearchWords({
         className="w-full rounded-xl bg-gray-100 p-4 pr-12 text-lg outline-2 outline-offset-2 outline-primary placeholder:font-bold focus-visible:outline dark:bg-gray-800"
       />
       <SearchIcon
-        dimensions={36}
+        heigth={36}
+        width={36}
         className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg fill-primary"
       />
     </div>

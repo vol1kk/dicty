@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
 import useHeaderData from "~/store/useHeaderData";
-import Dictionary from "~/components/Icons/DictionaryIcon";
+import DictionaryIcon from "~/assets/dictionary.svg";
 import HeaderMenu from "~/components/Header/HeaderMenu";
 import ButtonBurger from "~/components/Button/ButtonBurger";
 
@@ -30,7 +30,9 @@ export default function Header() {
           href="/"
           className="place-self-center rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
         >
-          <Dictionary
+          <DictionaryIcon
+            width={48}
+            height={48}
             aria-label={t("header.icon")}
             className={clsx(
               "delay-75",
