@@ -1,4 +1,4 @@
-import Form from "~/features/shared/ui/Form/components/Form";
+import FormWord from "~/features/shared/ui/Form/components/FormWord";
 import formValidationSchema from "./lib/validationSchema";
 import {
   formTemplate,
@@ -14,4 +14,4 @@ export {
   meaningTemplate,
   DotsIcon,
 };
-export default Form;
+export default FormWord;
