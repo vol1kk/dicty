@@ -6,6 +6,7 @@ import { EditIcon } from "~/features/words-list";
 import { type Word as IWord } from "~/types/ApiTypes";
 import NotFound from "~/components/NotFound/NotFound";
 import Accordion from "~/components/Accordion/Accordion";
+import useSessionData from "~/store/useSessionData";
 
 type WordsListProps = {
   data: IWord[];
@@ -14,6 +15,7 @@ type WordsListProps = {
 export default function WordsList({ data }: WordsListProps) {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<number | null>(null);
+  const isAuthed = useSessionData(state => state.isAuthed);
 
   if (data.length === 0)
     return <NotFound dimensions={64} text={t("list.empty")} />;
@@ -47,7 +49,9 @@ export default function WordsList({ data }: WordsListProps) {
                   <Word.Meaning meanings={category.meanings} />
                 </Word.Category>
               ))}
-              <Word.Share wordId={word.id} code={word.shareCode} />
+              {isAuthed && (
+                <Word.Share wordId={word.id} code={word.shareCode} />
+              )}
             </Accordion>
           </Word>
         </li>
