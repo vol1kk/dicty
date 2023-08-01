@@ -19,7 +19,12 @@ export default function WordShare({ code, wordId }: WordShareProps) {
   const { generateCodeMutation, deleteCodeMutation } =
     useShareCode(setShareCode);
 
-  function clickHandler(e: React.MouseEvent) {
+  function inputClickHandler(e: React.MouseEvent<HTMLInputElement>) {
+    e.stopPropagation();
+    e.currentTarget.select();
+  }
+
+  function buttonClickHandler(e: React.MouseEvent) {
     e.stopPropagation();
 
     if (shareCode) deleteCodeMutation({ wordId });
@@ -35,13 +40,13 @@ export default function WordShare({ code, wordId }: WordShareProps) {
         readOnly={true}
         ref={formCodeRef}
         key={shareCode ?? ""}
+        onClick={inputClickHandler}
         tabIndex={shareCode ? 0 : -1}
         defaultValue={shareCode ?? ""}
         placeholder={t("form.code.generate")}
-        onClick={e => e.currentTarget.select()}
         className="mr-2 max-w-[18ch] border-r-[1px] border-r-[#adb2b8] bg-transparent pr-2 outline-0"
       />
-      <Button onClick={clickHandler} className="[&>svg]:fill-primary">
+      <Button onClick={buttonClickHandler} className="[&>svg]:fill-primary">
         {shareCode ? (
           <>
             <span className="sr-only">{t("form.code.delete")}</span>
