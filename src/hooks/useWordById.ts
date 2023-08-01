@@ -1,6 +1,6 @@
 import { api } from "~/utils/api";
-import useSessionData from "~/store/useSessionData";
 import useLocalData from "~/store/useLocalData";
+import useSessionData from "~/store/useSessionData";
 
 export default function useWordById(wordId: string) {
   const isAuthed = useSessionData(state => state.isAuthed);
