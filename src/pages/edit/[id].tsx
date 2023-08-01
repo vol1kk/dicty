@@ -4,11 +4,11 @@ import { useTranslation } from "next-i18next";
 import { type GetStaticPaths, type GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import FormEditWord from "~/features/word-edit";
-import Spinner from "~/components/Spinner/Spinner";
-import NotFound from "~/components/NotFound/NotFound";
-import nextI18nConfig from "~/../next-i18next.config.mjs";
+import Spinner from "~/components/Spinner";
+import NotFound from "~/components/NotFound";
 import useWordById from "~/hooks/useWordById";
+import FormEditWord from "~/features/word-edit";
+import nextI18nConfig from "~/../next-i18next.config.mjs";
 
 export default function EditPage() {
   const router = useRouter();

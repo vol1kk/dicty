@@ -7,7 +7,7 @@ import useWords from "~/hooks/useWords";
 import useDebounce from "~/hooks/useDebounce";
 import WordsList from "~/features/words-list";
 import SearchWords from "~/features/search-words";
-import Spinner from "~/components/Spinner/Spinner";
+import Spinner from "~/components/Spinner";
 import FormAddWord from "~/features/word-add";
 import { filterData } from "~/features/search-words";
 import nextI18nConfig from "~/../next-i18next.config.mjs";

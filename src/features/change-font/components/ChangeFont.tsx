@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 
+import Dropdown from "~/components/Dropdown";
 import ChevronIcon from "~/assets/chevron.svg";
 import useLocalData from "~/store/useLocalData";
-import Dropdown from "~/components/Dropdown/Dropdown";
 
 const FONT_TYPES = [
   {

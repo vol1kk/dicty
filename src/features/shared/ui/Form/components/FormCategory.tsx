@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useTranslation } from "next-i18next";
 import { FieldArray, type FormikErrors, type FormikTouched } from "formik";
 
-import Input from "~/components/Input/Input";
+import Input from "~/components/Input";
 import { type Category, type Meaning } from "~/types/ApiTypes";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import FormMeaning from "~/features/shared/ui/Form/components/FormMeaning";

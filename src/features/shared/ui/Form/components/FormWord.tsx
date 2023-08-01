@@ -8,11 +8,11 @@ import {
 } from "formik";
 import { useTranslation } from "next-i18next";
 
-import Input from "~/components/Input/Input";
+import Input from "~/components/Input";
 import { type Category, type Word } from "~/types/ApiTypes";
-import { formTemplate, formValidationSchema } from "~/features/shared/ui/Form";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import FormCategory from "~/features/shared/ui/Form/components/FormCategory";
+import { formTemplate, formValidationSchema } from "~/features/shared/ui/Form";
 
 type FormProps = {
   initialValues?: Word;

@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import { useRouter } from "next/router";
 
+import Dropdown from "~/components/Dropdown";
 import ChevronIcon from "~/assets/chevron.svg";
 import useHeaderData from "~/store/useHeaderData";
-import Dropdown from "~/components/Dropdown/Dropdown";
 
 const LANGUAGES = [
   {

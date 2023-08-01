@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 
+import Accordion from "~/components/Accordion";
 import Button from "~/components/Button/Button";
 import FormWord from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
-import Accordion from "~/components/Accordion/Accordion";
 import FormImportWord from "~/features/word-add/components/FormImportWord";
 
 export default function FormAddWord() {

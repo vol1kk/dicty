@@ -3,14 +3,14 @@ import React from "react";
 import { useTranslation } from "next-i18next";
 import { signIn, signOut } from "next-auth/react";
 
-import Modal from "~/components/Modal/Modal";
+import Modal from "~/components/Modal";
+import Overlay from "~/components/Overlay";
 import AccountIcon from "~/assets/account.svg";
 import Button from "~/components/Button/Button";
 import ChangeFont from "~/features/change-font";
-import useHeaderData from "~/store/useHeaderData";
-import Overlay from "~/components/Overlay/Overlay";
-import useSessionData from "~/store/useSessionData";
 import ChangeTheme from "~/features/change-theme";
+import useHeaderData from "~/store/useHeaderData";
+import useSessionData from "~/store/useSessionData";
 import ChangeLanguage from "~/features/change-language";
 import { ExportWords, ImportWords } from "~/features/import-export-words";
 

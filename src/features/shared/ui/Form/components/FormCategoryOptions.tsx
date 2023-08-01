@@ -1,8 +1,8 @@
 import { useTranslation } from "next-i18next";
 
+import Dropdown from "~/components/Dropdown";
 import Button from "~/components/Button/Button";
 import { DotsIcon } from "~/features/shared/ui/Form";
-import Dropdown from "~/components/Dropdown/Dropdown";
 
 type CategoryOptionsProps = {
   callback: (data: HTMLLIElement) => void;
