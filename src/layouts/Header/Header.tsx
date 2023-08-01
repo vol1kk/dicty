@@ -28,7 +28,7 @@ export default function Header() {
         />
         <Link
           href="/"
-          className="place-self-center rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
+          className="place-self-center rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline [&>svg]:fill-black dark:[&>svg]:fill-white"
         >
           <DictionaryIcon
             width={48}

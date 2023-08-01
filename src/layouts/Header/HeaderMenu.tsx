@@ -37,7 +37,7 @@ export default function HeaderMenu() {
       <Modal>
         <ul
           onClick={e => e.stopPropagation()}
-          className="grid gap-6 p-2 text-3xl dark:[&>li>button>svg]:fill-white [&>li>button]:flex [&>li>button]:items-center [&>li>button]:gap-4 [&>li>button]:rounded-md"
+          className="grid gap-6 p-2 text-3xl [&>li>button>svg]:fill-black dark:[&>li>button>svg]:fill-white [&>li>button]:flex [&>li>button]:items-center [&>li>button]:gap-4 [&>li>button]:rounded-md"
         >
           <li>
             <ImportWords />
