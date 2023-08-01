@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
 import { type Word } from "~/types/ApiTypes";
-import Form from "~/features/shared/ui/Form";
+import FormWord from "~/features/shared/ui/Form";
 import Button from "~/components/Button/Button";
 import { useDeleteWord, useUpdateWord } from "~/features/word-edit";
 
@@ -28,7 +28,7 @@ export default function FormEditWord({ word }: FormEditWord) {
   }
 
   return (
-    <Form
+    <FormWord
       initialValues={word}
       submitHandler={submitHandler}
       renderButtons={(isValid, handleFormReset) => (

@@ -2,29 +2,25 @@ import { useTranslation } from "next-i18next";
 import React, { forwardRef, type MutableRefObject } from "react";
 
 import Button from "~/components/Button/Button";
-import { api } from "~/utils/api";
+import useSessionData from "~/store/useSessionData";
+import { useWordCode } from "~/features/word-add";
 
 type FormCodeShareProps = {
   closeHandler: () => void;
 };
 
-const FormCodeImport = forwardRef<HTMLInputElement, FormCodeShareProps>(
-  function FormCodeImport({ closeHandler }, ref) {
+const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
+  function FormImportWord({ closeHandler }, ref) {
     const { t } = useTranslation();
-    const utils = api.useContext();
+    const isAuthed = useSessionData(state => state.isAuthed);
 
-    const { mutate: importFromCode } = api.words.importFromCode.useMutation({
-      onSuccess() {
-        utils.words.invalidate().catch(console.error);
-        setTimeout(closeHandler, 500);
-      },
-    });
+    const importFromCode = useWordCode(closeHandler);
 
     function shareCodeFormHandler(e: React.FormEvent) {
       e.preventDefault();
 
       const assertedRef = ref as MutableRefObject<HTMLInputElement>;
-      if (assertedRef.current)
+      if (isAuthed && assertedRef.current)
         importFromCode({ code: assertedRef.current.value });
     }
 
@@ -47,4 +43,4 @@ const FormCodeImport = forwardRef<HTMLInputElement, FormCodeShareProps>(
   },
 );
 
-export default FormCodeImport;
+export default FormImportWord;

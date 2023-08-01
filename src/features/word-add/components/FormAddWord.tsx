@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 
-import Form from "~/features/shared/ui/Form";
 import Button from "~/components/Button/Button";
+import FormWord from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
 import Accordion from "~/components/Accordion/Accordion";
-import FormCodeImport from "~/features/shared/ui/FormCodeImport/components/FormCodeImport";
+import FormImportWord from "~/features/word-add/components/FormImportWord";
 
 export default function FormAddWord() {
   const { t } = useTranslation("common");
@@ -35,8 +35,8 @@ export default function FormAddWord() {
         </span>
       </Button>
       <Accordion isOpen={isFormOpen}>
-        <FormCodeImport ref={inputCodeRef} closeHandler={formCloseHandler} />
-        <Form
+        <FormImportWord ref={inputCodeRef} closeHandler={formCloseHandler} />
+        <FormWord
           submitHandler={word => createWord(word)}
           renderButtons={(isValid, handleFormReset) => {
             function handleFormResetWrapper() {
