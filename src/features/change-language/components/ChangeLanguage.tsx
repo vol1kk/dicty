@@ -16,7 +16,7 @@ const LANGUAGES = [
   },
 ];
 
-export default function LanguageDropdown() {
+export default function ChangeLanguage() {
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
   const { locale, asPath, query, pathname, ...router } = useRouter();
   const languageDisplayName = LANGUAGES.find(

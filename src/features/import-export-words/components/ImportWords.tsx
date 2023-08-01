@@ -3,8 +3,11 @@ import { useTranslation } from "next-i18next";
 
 import Button from "~/components/Button/Button";
 import useHeaderData from "~/store/useHeaderData";
-import { ImportIcon, useImportWords } from "~/features/import-words";
-import readFileAsync from "~/features/import-words/utils/readFileAsync";
+import {
+  ImportIcon,
+  readFileAsync,
+  useImportWords,
+} from "~/features/import-export-words";
 
 export default function ImportWords() {
   const { t } = useTranslation();

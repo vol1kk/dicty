@@ -20,7 +20,7 @@ const FONT_TYPES = [
   },
 ] as const;
 
-export default function FontDropdown() {
+export default function ChangeFont() {
   const { t } = useTranslation();
   const font = useLocalData(state => state.font);
   const setFont = useLocalData(state => state.setFont);

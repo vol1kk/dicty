@@ -3,51 +3,27 @@ import React from "react";
 import { useTranslation } from "next-i18next";
 import { signIn, signOut } from "next-auth/react";
 
-import useWords from "~/hooks/useWords";
-import Switch from "~/components/Switch";
 import Modal from "~/components/Modal/Modal";
 import AccountIcon from "~/assets/account.svg";
-import modifyWordId from "~/utils/modifyWordId";
-import downloadData from "~/utils/downloadData";
 import Button from "~/components/Button/Button";
-import useLocalData from "~/store/useLocalData";
+import ChangeFont from "~/features/change-font";
 import useHeaderData from "~/store/useHeaderData";
 import Overlay from "~/components/Overlay/Overlay";
 import useSessionData from "~/store/useSessionData";
-import ImportWords, { ImportIcon } from "~/features/import-words";
-import FontDropdown from "~/components/Header/HeaderMenu/FontDropdown";
-import LanguageDropdown from "~/components/Header/HeaderMenu/LanguageDropdown";
+import ChangeTheme from "~/features/change-theme";
+import ChangeLanguage from "~/features/change-language";
+import { ExportWords, ImportWords } from "~/features/import-export-words";
 
 export default function HeaderMenu() {
   const { t } = useTranslation();
-  const { data: words } = useWords();
 
-  const setTheme = useLocalData(state => state.setTheme);
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
-  const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
-  const isDarkTheme = useLocalData(state => state.theme) === "dark";
-
-  function themeToggleHandler() {
-    const calculatedTheme = isDarkTheme ? "light" : "dark";
-
-    setTheme(calculatedTheme);
-    localStorage.setItem("theme", calculatedTheme);
-  }
 
   function authenticationHandler() {
     if (isAuthed) void signOut();
 
     if (!isAuthed) void signIn();
-  }
-
-  function exportWordsHandler() {
-    const modifiedWords = words.map(w =>
-      modifyWordId(w, { appendWithEmptyId: true }),
-    );
-
-    downloadData(modifiedWords, `words-${+new Date()}`);
-    setIsHeaderOpen(false);
   }
 
   return (
@@ -67,10 +43,7 @@ export default function HeaderMenu() {
             <ImportWords />
           </li>
           <li>
-            <Button onClick={exportWordsHandler}>
-              <ImportIcon dimensions={24} />
-              {t("header.export")}
-            </Button>
+            <ExportWords />
           </li>
           <li>
             <Button onClick={authenticationHandler}>
@@ -79,17 +52,13 @@ export default function HeaderMenu() {
             </Button>
           </li>
           <li>
-            <FontDropdown />
+            <ChangeFont />
           </li>
           <li>
-            <LanguageDropdown />
+            <ChangeLanguage />
           </li>
           <li className="place-self-center">
-            <Switch
-              isChecked={isDarkTheme}
-              handleCheck={themeToggleHandler}
-              switchAction={t("header.changeTheme")}
-            />
+            <ChangeTheme />
           </li>
         </ul>
       </Modal>
