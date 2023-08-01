@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next";
 
 import useHeaderData from "~/store/useHeaderData";
 import DictionaryIcon from "~/assets/dictionary.svg";
-import HeaderMenu from "~/components/Header/HeaderMenu";
+import HeaderMenu from "~/layouts/Header/HeaderMenu";
 import ButtonBurger from "~/components/Button/ButtonBurger";
 
 export default function Header() {

@@ -1,9 +1,10 @@
-import Header from "~/components/Header/Header";
-import useLocalData from "~/store/useLocalData";
 import clsx from "clsx";
-import { useEffect } from "react";
-import { setToken } from "~/utils/api";
+import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
+
+import { setToken } from "~/utils/api";
+import Header from "~/layouts/Header/Header";
+import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 
 type LayoutProps = {
