@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 
-import { api } from "~/utils/api";
 import KeyIcon from "~/assets/key.svg";
 import CloseIcon from "~/assets/close.svg";
 import Button from "~/components/Button/Button";
+import useShareCode from "~/hooks/useShareCode";
 
 type WordShareProps = {
   code: string | null;
@@ -16,17 +16,8 @@ export default function WordShare({ code, wordId }: WordShareProps) {
   const [shareCode, setShareCode] = useState(code);
   const formCodeRef = useRef<HTMLInputElement>(null);
 
-  const { mutate: generateCodeMutation } =
-    api.words.generateShareCode.useMutation({
-      onSuccess(res) {
-        setShareCode(res.shareCode);
-      },
-    });
-  const { mutate: deleteCodeMutation } = api.words.deleteShareCode.useMutation({
-    onSuccess() {
-      setShareCode(null);
-    },
-  });
+  const { generateCodeMutation, deleteCodeMutation } =
+    useShareCode(setShareCode);
 
   function clickHandler(e: React.MouseEvent) {
     e.stopPropagation();
