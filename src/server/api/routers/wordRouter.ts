@@ -54,7 +54,7 @@ export const wordRouter = createTRPCRouter({
       if (!existingWord) throw new TRPCError({ code: "NOT_FOUND" });
 
       if (existingWord.createdById !== updatedWord.createdById)
-        throw new TRPCError({ code: "UNAUTHORIZED" });
+        throw new TRPCError({ code: "FORBIDDEN" });
 
       const deleted = getDeletedItems(
         existingWord.categories,
@@ -125,9 +125,18 @@ export const wordRouter = createTRPCRouter({
 
   deleteWord: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.word.deleteMany({
-        where: { createdById: ctx.authedUser.id, id: input.id },
+    .mutation(async ({ ctx, input }) => {
+      const existingWord = await ctx.prisma.word.findUnique({
+        where: { id: input.id },
+      });
+
+      if (!existingWord) throw new TRPCError({ code: "NOT_FOUND" });
+
+      if (existingWord.createdById !== ctx.authedUser.id)
+        throw new TRPCError({ code: "FORBIDDEN" });
+
+      return ctx.prisma.word.delete({
+        where: { id: input.id },
       });
     }),
 
@@ -204,14 +213,16 @@ export const wordRouter = createTRPCRouter({
 
       if (!existingWord) throw new TRPCError({ code: "NOT_FOUND" });
 
-      await ctx.prisma.word.update({
-        where: { id: existingWord.id },
-        data: { shareCode: null },
-      });
+      return ctx.prisma.$transaction(async tx => {
+        await tx.word.update({
+          where: { id: existingWord.id },
+          data: { shareCode: null },
+        });
 
-      existingWord.shareCode = null;
-      return ctx.prisma.word.create({
-        data: createWord(existingWord, ctx.authedUser.id),
+        existingWord.shareCode = null;
+        return tx.word.create({
+          data: createWord(existingWord, ctx.authedUser.id),
+        });
       });
     }),
 });
