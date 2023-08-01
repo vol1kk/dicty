@@ -4,11 +4,11 @@ import { useMemo, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import useWords from "~/hooks/useWords";
-import useDebounce from "~/hooks/useDebounce";
-import WordsList from "~/features/words-list";
-import SearchWords from "~/features/search-words";
 import Spinner from "~/components/Spinner";
+import useDebounce from "~/hooks/useDebounce";
 import FormAddWord from "~/features/word-add";
+import SearchWords from "~/features/search-words";
+import { WordsList } from "~/features/words-list";
 import { filterData } from "~/features/search-words";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 

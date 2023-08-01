@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useTranslation } from "next-i18next";
 
-import Word from "~/components/Word/Word";
 import NotFound from "~/components/NotFound";
-import { EditIcon } from "~/features/words-list";
-import { type Word as IWord } from "~/types/ApiTypes";
 import Accordion from "~/components/Accordion";
+import { EditIcon, Word } from "~/features/words-list";
 import useSessionData from "~/store/useSessionData";
+import { type Word as IWord } from "~/types/ApiTypes";
 
 type WordsListProps = {
   data: IWord[];
