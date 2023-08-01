@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { forwardRef, type MutableRefObject } from "react";
+import React, { forwardRef, type MutableRefObject } from "react";
 
 import Button from "~/components/Button/Button";
 import { api } from "~/utils/api";
@@ -22,7 +22,7 @@ const FormCodeImport = forwardRef<HTMLInputElement, FormCodeShareProps>(
 
     function shareCodeFormHandler(e: React.FormEvent) {
       e.preventDefault();
-      if (!ref) return;
+
       const assertedRef = ref as MutableRefObject<HTMLInputElement>;
       if (assertedRef.current)
         importFromCode({ code: assertedRef.current.value });

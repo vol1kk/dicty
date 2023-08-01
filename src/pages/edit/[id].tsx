@@ -18,10 +18,10 @@ export default function EditPage() {
   const { data: word, isLoading } = useWordById(wordId);
 
   let noData;
-  if (isLoading) noData = <Spinner dimensions={64} />;
   if (!word) noData = <NotFound dimensions={128} text={t("list.not-found")} />;
+  if (isLoading) noData = <Spinner dimensions={64} />;
 
-  if (isLoading || !word) {
+  if (isLoading || !word)
     return (
       <>
         <Head>
@@ -31,7 +31,6 @@ export default function EditPage() {
         <main className="grid place-content-center">{noData}</main>
       </>
     );
-  }
 
   return (
     <>
