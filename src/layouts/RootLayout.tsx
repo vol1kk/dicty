@@ -6,6 +6,7 @@ import { setToken } from "~/utils/api";
 import Header from "~/layouts/Header/Header";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
+import ToastList from "~/features/toast/components/ToastList";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -59,16 +60,14 @@ export default function RootLayout({ children }: LayoutProps) {
 
   return (
     <>
-      <div id="overlay" className={getFont} />
-      <div className="dark:bg-gray-900 dark:text-gray-100">
-        <div
-          className={clsx(
-            getFont,
-            "m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12",
-          )}
-        >
+      <div className={`dark:bg-gray-900 dark:text-gray-100 ${getFont}`}>
+        <div id="overlay" />
+        <div className="m-auto grid min-h-screen max-w-screen-md grid-rows-[auto,_1fr] px-6 py-12">
           <Header />
           {children}
+        </div>
+        <div id="toasts">
+          <ToastList />
         </div>
       </div>
     </>
