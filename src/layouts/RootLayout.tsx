@@ -31,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps) {
   useEffect(() => {
     if (once) {
       const localTheme = localStorage.getItem("theme") ?? "light";
-      const localFont = localStorage.getItem("font") ?? "serif";
+      const localFont = localStorage.getItem("font") ?? "Serif";
 
       setFont(localFont);
       setTheme(localTheme);
