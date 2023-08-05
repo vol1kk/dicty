@@ -149,18 +149,11 @@ export const wordRouter = createTRPCRouter({
           create: createWord(w),
         }));
 
-        const existingWords = await ctx.prisma.word.findMany({
-          where: { createdById: ctx.authedUser.id },
-        });
-
         return tx.user.update({
           where: { id: ctx.authedUser.id },
           data: {
             words: {
               connectOrCreate: words,
-              deleteMany: existingWords.map(w => ({
-                id: w.id,
-              })),
             },
           },
         });
@@ -253,12 +246,13 @@ function getDeletedItems<T extends { id: string; meanings: { id: string }[] }>(
 function createWord(data: Word, userId?: string) {
   return {
     name: data.name,
-    transcription: data.transcription,
-    shareCode: data.shareCode,
-    ...(userId && { createdById: userId }),
+    shareCode: null,
     categories: {
       create: data.categories.map(createCategory),
     },
+    transcription: data.transcription,
+    ...(userId && { createdById: userId }),
+    ...(data.createdAt && { createdAt: data.createdAt }),
   };
 }
 
