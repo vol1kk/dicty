@@ -21,7 +21,11 @@ export default function useCreateWord() {
     if (isAuthed) mutate(modifyWordId(word, { appendWithEmptyId: true }));
 
     if (!isAuthed) {
-      const wordWithId = modifyWordId(word, { appendWithId: true });
+      const wordWithId = {
+        ...modifyWordId(word, { appendWithId: true }),
+        createdAt: new Date(),
+      };
+
       localStorage.setItem(
         "words",
         JSON.stringify([wordWithId, ...localWords]),
