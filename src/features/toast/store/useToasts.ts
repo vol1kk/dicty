@@ -11,10 +11,10 @@ type UseToastsStoreProps = {
 const DEFAULT_OPTIONS = {
   id: nanoid(),
   type: "success",
-  autoClose: false,
-  pauseOnBlur: false,
-  pauseOnHover: false,
-  text: "Default message",
+  autoClose: 5000,
+  text: "Success!",
+  pauseOnBlur: true,
+  pauseOnHover: true,
   position: "bottom-right",
 } as const;
 
