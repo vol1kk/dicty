@@ -11,6 +11,7 @@ export const formTemplate = {
   id: "",
   createdById: "",
   name: "",
+  createdAt: null,
   shareCode: null,
   transcription: "",
   categories: [categoryTemplate],

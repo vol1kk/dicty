@@ -17,6 +17,7 @@ export const WordSchema = z.object({
   id: z.string(),
   name: z.string(),
   transcription: z.string(),
+  createdAt: z.coerce.date().nullable(),
   shareCode: z.string().nullable(),
   createdById: z.string().nullable(),
   categories: z.array(CategorySchema),
