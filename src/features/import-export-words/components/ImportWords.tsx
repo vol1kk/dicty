@@ -11,6 +11,7 @@ import {
   readFileAsync,
   useImportWords,
 } from "~/features/import-export-words";
+import ButtonUndo from "~/components/Button/ButtonUndo";
 
 export default function ImportWords() {
   const words = useWords();
@@ -27,15 +28,14 @@ export default function ImportWords() {
         autoClose: 10000,
         text: t("toast.import.success", { count: 0 }),
         action: (
-          <Button
-            className="rounded-md bg-gray-300 py-1 dark:bg-gray-900"
+          <ButtonUndo
             onClick={() => {
               undoImport(words.data);
               removeToast(id);
             }}
           >
             Undo
-          </Button>
+          </ButtonUndo>
         ),
       });
     },

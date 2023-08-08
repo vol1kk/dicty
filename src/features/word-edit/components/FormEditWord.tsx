@@ -7,6 +7,7 @@ import Button from "~/components/Button/Button";
 import FormWord from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
 import { useDeleteWord, useUpdateWord } from "~/features/word-edit";
+import ButtonUndo from "~/components/Button/ButtonUndo";
 
 type FormEditWord = {
   word: Word;
@@ -37,7 +38,9 @@ export default function FormEditWord({ word }: FormEditWord) {
         autoClose: 10000,
         text: t("toast.update.success"),
         action: (
-          <Button onClick={undoUpdate.bind(undefined, word)}>Undo</Button>
+          <ButtonUndo onClick={undoUpdate.bind(undefined, word)}>
+            {t("toast.undo")}
+          </ButtonUndo>
         ),
       });
     },
@@ -58,7 +61,11 @@ export default function FormEditWord({ word }: FormEditWord) {
         type: "warning",
         autoClose: 10000,
         text: t("toast.delete.success"),
-        action: <Button onClick={() => undoDelete(word)}>Undo</Button>,
+        action: (
+          <ButtonUndo onClick={() => undoDelete(word)}>
+            {t("toast.undo")}
+          </ButtonUndo>
+        ),
       });
     },
 
