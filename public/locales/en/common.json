@@ -10,6 +10,9 @@
   "header.theme": "Toggle Dark Theme",
 
   "searchWords": "Search for your word...",
+
+  "form.or": "Or",
+
   "form.code.import": "Import",
   "form.code.import.placeholder": "Enter Code",
 

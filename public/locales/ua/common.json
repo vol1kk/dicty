@@ -10,6 +10,9 @@
   "header.changeTheme": "Перемкнути Темну Тему",
 
   "searchWords": "Знайти слово...",
+
+  "form.or": "Або",
+
   "form.code.import": "Імпортувати",
   "form.code.import.placeholder": "Введіть код",
 
