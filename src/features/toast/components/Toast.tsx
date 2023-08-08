@@ -99,7 +99,7 @@ export default function Toast({ toast, position, closeToast }: ToastProps) {
         isMounted ? "translate-[0%,_0%]" : getTranslateDirection(position),
         position.endsWith("-right") && "ml-auto",
         position.endsWith("-left") && "mr-auto",
-        "group/toast relative max-w-fit overflow-hidden rounded-md bg-gray-300 px-7 py-6 outline-2 outline-offset-2 outline-primary transition-transform focus-visible:outline dark:bg-gray-800",
+        "group/toast relative max-w-fit overflow-hidden rounded-md bg-gray-300 px-7 py-6 shadow-2xl outline-2 outline-offset-2 outline-primary transition-transform focus-visible:outline dark:bg-gray-800",
       )}
     >
       <div className="grid gap-4">
