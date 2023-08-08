@@ -22,6 +22,7 @@ export default function useWords() {
   }, [setLocalWords]);
 
   return {
+    ...authedWords,
     isLoading: status === "unauthenticated" ? false : authedWords.isLoading,
     data: status === "unauthenticated" ? localWords : authedWords.data || [],
   };

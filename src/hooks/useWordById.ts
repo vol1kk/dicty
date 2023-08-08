@@ -18,6 +18,7 @@ export default function useWordById(wordId: string) {
   );
 
   return {
+    ...authedWord,
     isLoading: status === "unauthenticated" ? false : authedWord.isLoading,
     data: status === "unauthenticated" ? localWord : authedWord.data,
   };
