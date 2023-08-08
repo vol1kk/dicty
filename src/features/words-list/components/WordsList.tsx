@@ -26,8 +26,11 @@ export default function WordsList({ data }: WordsListProps) {
           key={word.id}
           className="rounded-md bg-gray-100 p-4 dark:bg-gray-800"
         >
-          <Word onClick={() => setIsOpen(curr => (curr === i ? null : i))}>
-            <div className="flex items-center justify-between">
+          <Word>
+            <div
+              className="flex items-center justify-between"
+              onClick={() => setIsOpen(curr => (curr === i ? null : i))}
+            >
               <Word.Title
                 word={word.name}
                 isAccordionOpen={isOpen === i}

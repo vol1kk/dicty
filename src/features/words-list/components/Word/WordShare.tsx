@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import KeyIcon from "~/assets/key.svg";
 import CloseIcon from "~/assets/close.svg";
 import Button from "~/components/Button/Button";
-import useShareCode from "~/hooks/useShareCode";
+import { useToggleShareCode } from "~/features/words-list";
 
 type WordShareProps = {
   code: string | null;
@@ -16,22 +16,14 @@ export default function WordShare({ code, wordId }: WordShareProps) {
   const [shareCode, setShareCode] = useState(code);
   const formCodeRef = useRef<HTMLInputElement>(null);
 
-  const { generateCodeMutation, deleteCodeMutation } =
-    useShareCode(setShareCode);
+  const { toggleShareCodeMutation } = useToggleShareCode(setShareCode);
 
   function inputClickHandler(e: React.MouseEvent<HTMLInputElement>) {
     e.stopPropagation();
     e.currentTarget.select();
   }
 
-  function buttonClickHandler(e: React.MouseEvent) {
-    e.stopPropagation();
-
-    if (shareCode) deleteCodeMutation({ wordId });
-    if (!shareCode) {
-      generateCodeMutation({ wordId });
-    }
-  }
+  const buttonClickHandler = () => toggleShareCodeMutation({ wordId });
 
   return (
     <div className="mx-auto mb-1 flex w-fit rounded-md bg-gray-300 p-2 dark:bg-gray-900">
