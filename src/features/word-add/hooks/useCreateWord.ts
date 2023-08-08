@@ -1,10 +1,18 @@
 import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
 import modifyWordId from "~/utils/modifyWordId";
-import useSessionData from "~/store/useSessionData";
 import useLocalData from "~/store/useLocalData";
+import useSessionData from "~/store/useSessionData";
 
-export default function useCreateWord() {
+type UseCreateWordProps = {
+  onSuccess?(): void;
+  onError?(e: string): void;
+};
+
+export default function useCreateWord({
+  onError,
+  onSuccess,
+}: UseCreateWordProps) {
   const utils = api.useContext();
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -14,6 +22,10 @@ export default function useCreateWord() {
   const { mutate } = api.words.createWord.useMutation({
     onSuccess() {
       utils.words.invalidate().catch(console.error);
+      if (onSuccess) onSuccess();
+    },
+    onError(e) {
+      if (onError) onError(e.message);
     },
   });
 

@@ -2,8 +2,10 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
 import { type Word } from "~/types/ApiTypes";
-import FormWord from "~/features/shared/ui/Form";
+import { useToasts } from "~/features/toast";
 import Button from "~/components/Button/Button";
+import FormWord from "~/features/shared/ui/Form";
+import { useCreateWord } from "~/features/word-add";
 import { useDeleteWord, useUpdateWord } from "~/features/word-edit";
 
 type FormEditWord = {
@@ -13,9 +15,61 @@ type FormEditWord = {
 export default function FormEditWord({ word }: FormEditWord) {
   const { t } = useTranslation();
   const navigation = useRouter();
+  const { addToast, removeToast } = useToasts();
 
-  const updateWord = useUpdateWord();
-  const deleteWord = useDeleteWord();
+  const undoDelete = useCreateWord({
+    onSuccess() {
+      removeToast("toast-" + word.id);
+    },
+  });
+
+  const undoUpdate = useUpdateWord({
+    onSuccess() {
+      removeToast("toast-" + word.id);
+    },
+  });
+
+  const updateWord = useUpdateWord({
+    onSuccess() {
+      addToast({
+        id: `toast-${word.id}`,
+        type: "warning",
+        autoClose: 10000,
+        text: t("toast.update.success"),
+        action: (
+          <Button onClick={undoUpdate.bind(undefined, word)}>Undo</Button>
+        ),
+      });
+    },
+
+    onError(e: string) {
+      addToast({
+        type: "error",
+        autoClose: false,
+        text: t("toast.update.error", { error: e }),
+      });
+    },
+  });
+
+  const deleteWord = useDeleteWord({
+    onSuccess() {
+      addToast({
+        id: `toast-` + word.id,
+        type: "warning",
+        autoClose: 10000,
+        text: t("toast.delete.success"),
+        action: <Button onClick={() => undoDelete(word)}>Undo</Button>,
+      });
+    },
+
+    onError(e: string) {
+      addToast({
+        type: "error",
+        autoClose: false,
+        text: t("toast.delete.error", { error: e }),
+      });
+    },
+  });
 
   function submitHandler(data: Word) {
     updateWord(data);

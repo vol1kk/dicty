@@ -1,6 +1,9 @@
+import { nanoid } from "nanoid";
 import React from "react";
 import { useTranslation } from "next-i18next";
 
+import useWords from "~/hooks/useWords";
+import { useToasts } from "~/features/toast";
 import Button from "~/components/Button/Button";
 import useHeaderData from "~/store/useHeaderData";
 import {
@@ -10,9 +13,42 @@ import {
 } from "~/features/import-export-words";
 
 export default function ImportWords() {
+  const words = useWords();
   const { t } = useTranslation();
-  const importWords = useImportWords();
+  const { addToast, removeToast } = useToasts();
+  const { importWords, undoImport } = useImportWords({
+    onError,
+    onSuccess() {
+      const id = nanoid();
+
+      addToast({
+        id,
+        type: "warning",
+        autoClose: 10000,
+        text: t("toast.import.success", { count: 0 }),
+        action: (
+          <Button
+            className="rounded-md bg-gray-300 py-1 dark:bg-gray-900"
+            onClick={() => {
+              undoImport(words.data);
+              removeToast(id);
+            }}
+          >
+            Undo
+          </Button>
+        ),
+      });
+    },
+  });
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
+
+  function onError(e: string) {
+    addToast({
+      type: "error",
+      autoClose: false,
+      text: t("toast.import.error", { count: 0, error: e }),
+    });
+  }
 
   function triggerInputHandler(e: React.MouseEvent) {
     const fileInput = e.currentTarget.querySelector(
@@ -27,7 +63,7 @@ export default function ImportWords() {
 
     readFileAsync(file)
       .then(data => importWords(data))
-      .catch(console.error);
+      .catch((error: Error) => onError(error.message));
 
     setIsHeaderOpen(false);
   }

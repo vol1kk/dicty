@@ -1,12 +1,22 @@
 import { api } from "~/utils/api";
 
-export default function useToggleShareCode(
-  callback: (data: string | null) => void,
-) {
+type UseToggleShareCodeProps = {
+  onSuccess(code: string | null): void;
+  onError(e: string): void;
+};
+
+export default function useToggleShareCode({
+  onError,
+  onSuccess,
+}: UseToggleShareCodeProps) {
   const { mutate: toggleShareCodeMutation } =
     api.words.toggleShareCode.useMutation({
       onSuccess(res) {
-        callback(res.shareCode);
+        onSuccess(res.shareCode);
+      },
+
+      onError(e) {
+        onError(e.message);
       },
     });
 

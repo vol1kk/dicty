@@ -1,9 +1,13 @@
 import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
-import useSessionData from "~/store/useSessionData";
 import useLocalData from "~/store/useLocalData";
+import useSessionData from "~/store/useSessionData";
+import { type HookOptions } from "~/types/HookOptions";
 
-export default function useUpdateWord() {
+export default function useUpdateWord({
+  onError,
+  onSuccess,
+}: Partial<HookOptions>) {
   const utils = api.useContext();
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -12,7 +16,11 @@ export default function useUpdateWord() {
 
   const { mutate: updateWordMutation } = api.words.updateWord.useMutation({
     onSuccess() {
-      utils.words.getById.invalidate({ wordId: "" }).catch(console.error);
+      utils.words.getAll.invalidate().then(onSuccess).catch(console.error);
+    },
+
+    onError(e) {
+      if (onError) onError(e.message);
     },
   });
 

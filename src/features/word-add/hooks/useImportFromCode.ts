@@ -1,26 +1,15 @@
-import { useToasts } from "~/features/toast";
 import { api } from "~/utils/api";
+import { type HookOptions } from "~/types/HookOptions";
 
-export default function useImportFromCode(callback: () => void) {
+export default function useImportFromCode({ onError, onSuccess }: HookOptions) {
   const utils = api.useContext();
-  const { addToast } = useToasts();
 
   const { mutate } = api.words.importFromCode.useMutation({
     onSuccess() {
-      utils.words.invalidate().catch(console.error);
-      setTimeout(callback, 500);
-      addToast({
-        text: "Successfully imported the word!",
-        autoClose: 5000,
-        pauseOnBlur: true,
-        pauseOnHover: true,
-      });
+      utils.words.invalidate().then(onSuccess).catch(console.error);
     },
     onError(e) {
-      addToast({
-        type: "error",
-        text: `Something went wrong! Error: ${e.message}`,
-      });
+      onError(e.message);
     },
   });
 

@@ -45,5 +45,21 @@
   "form.word.button.delete": "Delete",
 
   "list.empty": "Your dictionary is empty!",
-  "list.not-found": "Couldn't find any words!"
+  "list.not-found": "Couldn't find any words!",
+
+  "toast.createWord.success": "Word's been successfully created!",
+  "toast.createWord.error": "Word cannot be created! Error: {{error}}",
+
+  "toast.update.success": "Word's been successfully updated!",
+  "toast.update.error": "Word cannot be updated! Error: {{error}}",
+
+  "toast.delete.success": "Word's been successfully deleted!",
+  "toast.delete.error": "Word cannot be deleted! Error: {{error}}",
+
+  "toast.toggleCode.error": "Unable to get share code! Error: {{error}}",
+
+  "toast.import.success_one": "Word's been successfully imported!",
+  "toast.import.success_other": "Dictionary's been successfully imported!",
+  "toast.import.error_one": "Word cannot be imported! Error: {{error}}",
+  "toast.import.error_other": "Dictionary cannot be imported! Error: {{error}}"
 }

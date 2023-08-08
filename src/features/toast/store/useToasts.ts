@@ -9,7 +9,6 @@ type UseToastsStoreProps = {
 };
 
 const DEFAULT_OPTIONS = {
-  id: nanoid(),
   action: null,
   type: "success",
   autoClose: 5000,
@@ -23,7 +22,7 @@ const useToasts = create<UseToastsStoreProps>()(set => ({
   toasts: [],
   addToast: (toast, prepend = true) =>
     set(state => {
-      const toastWithDefaults = { ...DEFAULT_OPTIONS, ...toast };
+      const toastWithDefaults = { ...DEFAULT_OPTIONS, id: nanoid(), ...toast };
 
       if (prepend) return { toasts: [toastWithDefaults, ...state.toasts] };
 

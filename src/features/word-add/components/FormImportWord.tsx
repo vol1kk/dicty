@@ -1,6 +1,7 @@
 import { useTranslation } from "next-i18next";
 import React, { forwardRef, type MutableRefObject } from "react";
 
+import { useToasts } from "~/features/toast";
 import Button from "~/components/Button/Button";
 import useSessionData from "~/store/useSessionData";
 import { useImportFromCode } from "~/features/word-add";
@@ -11,10 +12,26 @@ type FormCodeShareProps = {
 
 const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
   function FormImportWord({ closeHandler }, ref) {
+    const { addToast } = useToasts();
     const { t } = useTranslation();
     const isAuthed = useSessionData(state => state.isAuthed);
 
-    const importFromCode = useImportFromCode(closeHandler);
+    const importFromCode = useImportFromCode({
+      onSuccess() {
+        setTimeout(closeHandler, 500);
+        addToast({
+          text: t("toast.import.success", { count: 1 }),
+        });
+      },
+
+      onError(e: string) {
+        addToast({
+          type: "error",
+          autoClose: false,
+          text: t("toast.import.error", { count: 0, error: e }),
+        });
+      },
+    });
 
     function shareCodeFormHandler(e: React.FormEvent) {
       e.preventDefault();

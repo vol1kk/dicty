@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 
 import KeyIcon from "~/assets/key.svg";
 import CloseIcon from "~/assets/close.svg";
+import { useToasts } from "~/features/toast";
 import Button from "~/components/Button/Button";
 import { useToggleShareCode } from "~/features/words-list";
 
@@ -13,10 +14,23 @@ type WordShareProps = {
 
 export default function WordShare({ code, wordId }: WordShareProps) {
   const { t } = useTranslation();
+  const { addToast } = useToasts();
   const [shareCode, setShareCode] = useState(code);
   const formCodeRef = useRef<HTMLInputElement>(null);
 
-  const { toggleShareCodeMutation } = useToggleShareCode(setShareCode);
+  const { toggleShareCodeMutation } = useToggleShareCode({
+    onSuccess(code: string | null) {
+      setShareCode(code);
+    },
+
+    onError(e: string) {
+      addToast({
+        type: "error",
+        autoClose: false,
+        text: t("toast.toggleCode.error", { error: e }),
+      });
+    },
+  });
 
   function inputClickHandler(e: React.MouseEvent<HTMLInputElement>) {
     e.stopPropagation();

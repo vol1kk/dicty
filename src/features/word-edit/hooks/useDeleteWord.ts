@@ -1,8 +1,9 @@
 import { api } from "~/utils/api";
-import useSessionData from "~/store/useSessionData";
 import useLocalData from "~/store/useLocalData";
+import useSessionData from "~/store/useSessionData";
+import { type HookOptions } from "~/types/HookOptions";
 
-export default function useDeleteWord() {
+export default function useDeleteWord({ onError, onSuccess }: HookOptions) {
   const utils = api.useContext();
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -11,7 +12,11 @@ export default function useDeleteWord() {
 
   const { mutate: deleteWordMutation } = api.words.deleteWord.useMutation({
     onSuccess() {
-      utils.words.getById.invalidate({ wordId: "" }).catch(console.error);
+      utils.words.getAll.invalidate().then(onSuccess).catch(console.error);
+    },
+
+    onError(e) {
+      onError(e.message);
     },
   });
 

@@ -1,14 +1,16 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 
+import { useToasts } from "~/features/toast";
 import Accordion from "~/components/Accordion";
 import Button from "~/components/Button/Button";
 import FormWord from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
-import FormImportWord from "~/features/word-add/components/FormImportWord";
 import useSessionData from "~/store/useSessionData";
+import FormImportWord from "~/features/word-add/components/FormImportWord";
 
 export default function FormAddWord() {
+  const { addToast } = useToasts();
   const { t } = useTranslation("common");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const inputCodeRef = useRef<HTMLInputElement>(null);
@@ -19,7 +21,21 @@ export default function FormAddWord() {
     setIsFormOpen(false);
   }
 
-  const createWord = useCreateWord();
+  const createWord = useCreateWord({ onSuccess, onError });
+
+  function onSuccess() {
+    addToast({
+      text: t("toast.createWord.success"),
+    });
+  }
+
+  function onError(e: string) {
+    addToast({
+      type: "error",
+      text: t("toast.createWord.error", { error: e }),
+      autoClose: false,
+    });
+  }
 
   return (
     <div

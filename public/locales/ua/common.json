@@ -45,5 +45,21 @@
   "form.word.button.delete": "Видалити",
 
   "list.empty": "Ваш словник порожній!",
-  "list.not-found": "Жодного слова не було знайдено!"
+  "list.not-found": "Жодного слова не було знайдено!",
+
+  "toast.createWord.success": "Успішно створено слово!",
+  "toast.createWord.error": "Неможливо створити слово! Помилка: {{error}}",
+
+  "toast.update.success": "Успішно оновлено слово!",
+  "toast.update.error": "Неможливо оновити слово! Помилка: {{error}}",
+
+  "toast.delete.success": "Успішно видалено слово!",
+  "toast.delete.error": "Неможливо видалити слово! Помилка: {{error}}",
+
+  "toast.toggleCode.error": "Неможливо отримати код! Помилка: {{error}}",
+
+  "toast.import.success_one": "Успішно імпортовано слово!",
+  "toast.import.success_other": "Успішно імпортовано словник!",
+  "toast.import.error_one": "Неможливо імпортувати слово! Помилка: {{error}}",
+  "toast.import.error_other": "Неможливо імпортувати слово! Помилка: {{error}}"
 }
