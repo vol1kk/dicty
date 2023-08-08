@@ -34,7 +34,7 @@ export default function ImportWords() {
               removeToast(id);
             }}
           >
-            Undo
+            {t("toast.undo")}
           </ButtonUndo>
         ),
       });
