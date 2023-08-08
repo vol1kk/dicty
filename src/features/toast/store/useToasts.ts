@@ -10,6 +10,7 @@ type UseToastsStoreProps = {
 
 const DEFAULT_OPTIONS = {
   id: nanoid(),
+  action: null,
   type: "success",
   autoClose: 5000,
   text: "Success!",

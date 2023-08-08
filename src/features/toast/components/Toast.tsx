@@ -102,10 +102,14 @@ export default function Toast({ toast, position, closeToast }: ToastProps) {
         "group/toast relative max-w-fit overflow-hidden rounded-md bg-gray-300 px-7 py-6 outline-2 outline-offset-2 outline-primary transition-transform focus-visible:outline dark:bg-gray-800",
       )}
     >
-      <div className="flex items-center gap-4">
-        {Icon}
-        {toast.text}
+      <div className="grid gap-4">
+        <div className="flex items-center gap-4">
+          {Icon}
+          {toast.text}
+        </div>
+        {toast.action}
       </div>
+
       <button
         className="absolute right-0 top-0 mr-2 mt-2 opacity-0 transition-opacity group-hover/toast:opacity-100"
         onClick={handleToastDeletion}

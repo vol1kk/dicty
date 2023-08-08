@@ -1,3 +1,5 @@
+import type React from "react";
+
 export type ToastType = "success" | "error" | "warning";
 
 export type ToastPosition =
@@ -14,4 +16,5 @@ export interface IToast {
   pauseOnHover: boolean;
   position: ToastPosition;
   autoClose: false | number;
+  action: null | React.ReactElement;
 }
