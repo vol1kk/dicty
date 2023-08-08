@@ -6,6 +6,7 @@ import useLocalData from "~/store/useLocalData";
 
 export default function useImportWords() {
   const utils = api.useContext();
+  const localWords = useLocalData(state => state.words);
   const setLocalWords = useLocalData(state => state.setWords);
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -27,7 +28,7 @@ export default function useImportWords() {
       const wordsWithId = words.map(w =>
         modifyWordId(w, { appendWithId: true }),
       );
-      setLocalWords(wordsWithId);
+      setLocalWords([...localWords, ...wordsWithId]);
       localStorage.setItem("words", JSON.stringify(wordsWithId));
     }
   }
