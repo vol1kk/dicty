@@ -61,5 +61,7 @@
   "toast.import.success_one": "Word's been successfully imported!",
   "toast.import.success_other": "Dictionary's been successfully imported!",
   "toast.import.error_one": "Word cannot be imported! Error: {{error}}",
-  "toast.import.error_other": "Dictionary cannot be imported! Error: {{error}}"
+  "toast.import.error_other": "Dictionary cannot be imported! Error: {{error}}",
+
+  "toast.undo": "Undo"
 }
