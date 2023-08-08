@@ -3,7 +3,7 @@ import React, { forwardRef, type MutableRefObject } from "react";
 
 import Button from "~/components/Button/Button";
 import useSessionData from "~/store/useSessionData";
-import { useWordCode } from "~/features/word-add";
+import { useImportFromCode } from "~/features/word-add";
 
 type FormCodeShareProps = {
   closeHandler: () => void;
@@ -14,7 +14,7 @@ const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
     const { t } = useTranslation();
     const isAuthed = useSessionData(state => state.isAuthed);
 
-    const importFromCode = useWordCode(closeHandler);
+    const importFromCode = useImportFromCode(closeHandler);
 
     function shareCodeFormHandler(e: React.FormEvent) {
       e.preventDefault();
@@ -25,7 +25,7 @@ const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
     }
 
     return (
-      <form onSubmit={shareCodeFormHandler} className="grid gap-2 px-4 py-1">
+      <form onSubmit={shareCodeFormHandler} className="grid gap-2 px-4 py-4">
         <input
           ref={ref}
           className="rounded-md bg-gray-300 px-4 py-2 placeholder-[#757575] outline-1 outline-offset-2 outline-primary focus-visible:outline dark:bg-gray-900"

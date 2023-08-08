@@ -1,6 +1,6 @@
 import FormAddWord from "~/features/word-add/components/FormAddWord";
 import useCreateWord from "~/features/word-add/hooks/useCreateWord";
-import useWordCode from "~/features/word-add/hooks/useWordCode";
+import useImportFromCode from "~/features/word-add/hooks/useImportFromCode";
 
-export { useCreateWord, useWordCode };
+export { useCreateWord, useImportFromCode };
 export default FormAddWord;
