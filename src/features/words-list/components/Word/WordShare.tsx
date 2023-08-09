@@ -54,15 +54,9 @@ export default function WordShare({ code, wordId }: WordShareProps) {
       />
       <Button onClick={buttonClickHandler} className="[&>svg]:fill-primary">
         {shareCode ? (
-          <>
-            <span className="sr-only">{t("form.code.delete")}</span>
-            <CloseIcon />
-          </>
+          <CloseIcon aria-label={t("form.code.delete")} />
         ) : (
-          <>
-            <span className="sr-only">{t("form.code.generate")}</span>
-            <KeyIcon />
-          </>
+          <KeyIcon aria-label={t("form.code.generate")} />
         )}
       </Button>
     </div>
