@@ -2,9 +2,10 @@ import SpinnerIcon from "~/assets/spinner.svg";
 
 type SpinnerProps = {
   dimensions: number;
+  text: string;
 };
 
-export default function Spinner({ dimensions = 24 }: SpinnerProps) {
+export default function Spinner({ dimensions = 24, text }: SpinnerProps) {
   return (
     <div role="status">
       <SpinnerIcon
@@ -15,7 +16,7 @@ export default function Spinner({ dimensions = 24 }: SpinnerProps) {
       dark:text-gray-600"
       />
 
-      <span className="sr-only">Loading...</span>
+      <span className="sr-only">{text}</span>
     </div>
   );
 }

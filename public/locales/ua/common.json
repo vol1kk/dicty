@@ -63,5 +63,7 @@
   "toast.import.error_one": "Неможливо імпортувати слово! Помилка: {{error}}",
   "toast.import.error_other": "Неможливо імпортувати слово! Помилка: {{error}}",
 
-  "toast.undo": "Відмінити"
+  "toast.undo": "Відмінити",
+
+  "spinner.load": "Завантаження"
 }

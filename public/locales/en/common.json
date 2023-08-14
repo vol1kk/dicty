@@ -63,5 +63,7 @@
   "toast.import.error_one": "Word cannot be imported! Error: {{error}}",
   "toast.import.error_other": "Dictionary cannot be imported! Error: {{error}}",
 
-  "toast.undo": "Undo"
+  "toast.undo": "Undo",
+
+  "spinner.load": "Loading"
 }

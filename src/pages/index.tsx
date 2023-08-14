@@ -30,7 +30,7 @@ export default function Home() {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className="grid place-content-center">
-          <Spinner dimensions={64} />
+          <Spinner dimensions={64} text={`${t("spinner.load")}...`} />
         </main>
       </>
     );
