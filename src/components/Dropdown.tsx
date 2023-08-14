@@ -111,8 +111,8 @@ export default function Dropdown({
         role="listbox"
         tabIndex={-1}
         className={clsx(
-          isDropdownOpen ? "block" : "hidden",
-          "absolute left-0 z-10 mt-2 w-fit shadow-2xl",
+          isDropdownOpen ? "opacity-100" : "pointer-events-none opacity-0",
+          "absolute left-0 z-10 mt-2 w-fit shadow-2xl transition-opacity",
         )}
       >
         {content}
