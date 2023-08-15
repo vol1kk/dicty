@@ -21,21 +21,21 @@ export default function FormAddWord() {
     setIsFormOpen(false);
   }
 
-  const createWord = useCreateWord({ onSuccess, onError });
+  const createWord = useCreateWord({
+    onSuccess() {
+      addToast({
+        text: t("toast.createWord.success"),
+      });
+    },
 
-  function onSuccess() {
-    addToast({
-      text: t("toast.createWord.success"),
-    });
-  }
-
-  function onError(e: string) {
-    addToast({
-      type: "error",
-      text: t("toast.createWord.error", { error: e }),
-      autoClose: false,
-    });
-  }
+    onError(e: string) {
+      addToast({
+        type: "error",
+        text: t("toast.createWord.error", { error: e }),
+        autoClose: false,
+      });
+    },
+  });
 
   return (
     <div

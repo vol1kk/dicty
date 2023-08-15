@@ -1,6 +1,6 @@
-import SpinnerIcon from "~/assets/spinner.svg";
+import { SpinnerIcon } from "~/components/Icons";
 
-type SpinnerProps = {
+export type SpinnerProps = {
   dimensions: number;
   text: string;
 };
@@ -9,9 +9,9 @@ export default function Spinner({ dimensions = 24, text }: SpinnerProps) {
   return (
     <div role="status">
       <SpinnerIcon
-        width={dimensions}
-        heigth={dimensions}
         aria-hidden="true"
+        width={dimensions}
+        height={dimensions}
         className="inline animate-spin fill-primary text-gray-300 dark:fill-white
       dark:text-gray-600"
       />

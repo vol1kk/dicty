@@ -1,17 +1,20 @@
-import DictionaryIcon from "~/assets/dictionary.svg";
+import { DictionaryIcon } from "~/components/Icons";
 
-type NotFoundProps = {
+export type NotFoundProps = {
   dimensions: number;
   text: string;
 };
 
 export default function NotFound({ dimensions, text }: NotFoundProps) {
   return (
-    <div className="grid place-items-center gap-4">
+    <div
+      data-testid="notfound-container"
+      className="grid place-items-center gap-4"
+    >
       <div className="rounded-full bg-gray-100 p-6 dark:bg-gray-800 [&>svg]:fill-black dark:[&>svg]:fill-white">
-        <DictionaryIcon width={dimensions} height={dimensions} />
+        <DictionaryIcon height={dimensions} width={dimensions} />
       </div>
-      <h2>{text}</h2>
+      <h2 data-testid="notfound-text">{text}</h2>
     </div>
   );
 }

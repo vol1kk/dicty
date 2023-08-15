@@ -5,9 +5,9 @@ import { signIn, signOut } from "next-auth/react";
 
 import Modal from "~/components/Modal";
 import Overlay from "~/components/Overlay";
-import AccountIcon from "~/assets/account.svg";
 import Button from "~/components/Button/Button";
 import ChangeFont from "~/features/change-font";
+import { AccountIcon } from "~/components/Icons";
 import ChangeTheme from "~/features/change-theme";
 import useHeaderData from "~/store/useHeaderData";
 import useSessionData from "~/store/useSessionData";
@@ -19,6 +19,7 @@ export default function HeaderMenu() {
 
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
+  const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
 
   function authenticationHandler() {
     if (isAuthed) void signOut();
@@ -28,7 +29,8 @@ export default function HeaderMenu() {
 
   return (
     <Overlay
-      isOverlayActive={isHeaderOpen}
+      isOpen={isHeaderOpen}
+      setIsOpen={setIsHeaderOpen}
       className={clsx(
         !isHeaderOpen && "translate-x-full",
         "bg-gray-300 bg-opacity-80 transition-[transform,_visibility] duration-300 dark:bg-gray-800 dark:bg-opacity-90",
@@ -47,7 +49,7 @@ export default function HeaderMenu() {
           </li>
           <li>
             <Button onClick={authenticationHandler}>
-              <AccountIcon dimensions={24} />
+              <AccountIcon width={24} height={24} />
               {isAuthed ? t("header.logout") : t("header.login")}
             </Button>
           </li>

@@ -1,6 +1,6 @@
 import React from "react";
 
-type SwitchProps = {
+export type SwitchProps = {
   before?: boolean;
   isChecked: boolean;
   switchAction: string;

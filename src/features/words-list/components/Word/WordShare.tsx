@@ -1,10 +1,9 @@
 import React, { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 
-import KeyIcon from "~/assets/key.svg";
-import CloseIcon from "~/assets/close.svg";
 import { useToasts } from "~/features/toast";
 import Button from "~/components/Button/Button";
+import { CloseIcon, KeyIcon } from "~/components/Icons";
 import { useToggleShareCode } from "~/features/words-list";
 
 type WordShareProps = {

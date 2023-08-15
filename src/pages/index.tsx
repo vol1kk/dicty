@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { type GetStaticProps } from "next";
 import { useMemo, useState } from "react";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import useWords from "~/hooks/useWords";
@@ -13,6 +14,7 @@ import { filterData } from "~/features/search-words";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 
 export default function Home() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 

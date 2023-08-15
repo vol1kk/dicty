@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import ChevronIcon from "~/assets/chevron.svg";
+
 import Button from "~/components/Button/Button";
+import { ChevronIcon } from "~/components/Icons";
 
 type WordTitleProps = {
   word: string;
@@ -20,7 +21,7 @@ export default function WordTitle({
           <span className="max-w-[25ch] truncate pb-1">{word}</span>
           <ChevronIcon
             width={18}
-            heigth={18}
+            height={18}
             aria-hidden={true}
             className={clsx(
               "mt-1 transition-transform [&>path]:fill-gray-900",

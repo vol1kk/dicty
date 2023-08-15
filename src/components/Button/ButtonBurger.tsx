@@ -3,25 +3,24 @@ import React from "react";
 
 import Button, { type ButtonProps } from "~/components/Button/Button";
 
-type BurgerMenuButtonProps = {
-  ariaLabel?: string;
-  className?: string;
-  isBurgerMenuOpen: boolean;
-  openBurgerMenuHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
+export type BurgerButtonProps = {
+  isOpen: boolean;
+  ariaLabel: string;
+  openHandler: (e: React.MouseEvent<HTMLButtonElement>) => void;
 } & Omit<ButtonProps, "children">;
 
 export default function ButtonBurger({
-  ariaLabel,
+  isOpen,
   className,
-  isBurgerMenuOpen,
-  openBurgerMenuHandler,
+  ariaLabel,
+  openHandler,
   ...props
-}: BurgerMenuButtonProps) {
+}: BurgerButtonProps) {
   return (
     <Button
-      aria-label={ariaLabel ?? ""}
-      onClick={openBurgerMenuHandler}
-      aria-expanded={isBurgerMenuOpen}
+      aria-label={ariaLabel}
+      aria-expanded={isOpen}
+      onClick={openHandler}
       className={clsx(
         "group/burger relative flex h-6 w-6 items-center overflow-hidden [&>span]:w-full [&>span]:bg-gray-400 [&>span]:transition-transform [&>span]:duration-200 [&>span]:aria-expanded:bg-primary",
         className,

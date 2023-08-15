@@ -2,36 +2,33 @@ import clsx from "clsx";
 import { createPortal } from "react-dom";
 import React, { useEffect, useRef, useState } from "react";
 
-import useHeaderData from "~/store/useHeaderData";
-
-type OverlayProps = {
-  className: string;
+export type OverlayProps = {
+  className?: string;
   usePortal?: boolean;
-  isOverlayActive: boolean;
+  isOpen: boolean;
+  setIsOpen: (status: boolean) => void;
   children: React.ReactNode;
 };
 
 export default function Overlay({
   children,
   className,
-  isOverlayActive,
+  isOpen,
+  setIsOpen,
   usePortal = true,
 }: OverlayProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
-  const setIsMenuOpen = useHeaderData(state => state.setIsHeaderOpen);
   const [_document, setDocument] = useState<Document | null>(null);
 
-  useEffect(() => {
-    setDocument(document);
-  }, []);
+  useEffect(() => setDocument(document), []);
 
   useEffect(() => {
     const clickCloseHandler = () => {
-      if (isOverlayActive) setIsMenuOpen(false);
+      if (isOpen) setIsOpen(false);
     };
 
     const keyboardCloseHandler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsMenuOpen(false);
+      if (e.key === "Escape") setIsOpen(false);
 
       const focusableNodes = overlayRef.current?.querySelectorAll(
         "a, button, div[tabindex='0']",
@@ -67,7 +64,7 @@ export default function Overlay({
     };
 
     document.body.classList.toggle("overflow-hidden");
-    if (isOverlayActive) {
+    if (isOpen) {
       document.body.addEventListener("click", clickCloseHandler);
       document.body.addEventListener("keydown", keyboardCloseHandler);
     }
@@ -76,13 +73,15 @@ export default function Overlay({
       document.body.removeEventListener("click", clickCloseHandler);
       document.body.removeEventListener("keydown", keyboardCloseHandler);
     };
-  }, [isOverlayActive, setIsMenuOpen]);
+  }, [isOpen, setIsOpen]);
 
   const content = (
     <div
+      role="dialog"
       ref={overlayRef}
+      data-testid="overlay"
       className={clsx(
-        !isOverlayActive && "invisible",
+        !isOpen && "invisible",
         "fixed inset-0 z-10 text-black dark:text-gray-100",
         className,
       )}

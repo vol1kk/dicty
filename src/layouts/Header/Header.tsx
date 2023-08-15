@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
 import useHeaderData from "~/store/useHeaderData";
-import DictionaryIcon from "~/assets/dictionary.svg";
+import { DictionaryIcon } from "~/components/Icons";
 import HeaderMenu from "~/layouts/Header/HeaderMenu";
 import ButtonBurger from "~/components/Button/ButtonBurger";
 
@@ -23,8 +23,8 @@ export default function Header() {
       <nav className="relative z-20 grid grid-cols-[auto,_1fr] items-center">
         <ButtonBurger
           ariaLabel={t("header.openMenu")}
-          isBurgerMenuOpen={isHeaderOpen}
-          openBurgerMenuHandler={openMenuHandler}
+          isOpen={isHeaderOpen}
+          openHandler={openMenuHandler}
         />
         <Link
           href="/"

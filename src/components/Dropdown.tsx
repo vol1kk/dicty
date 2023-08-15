@@ -1,22 +1,22 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
-type DropdownProps = {
+export type DropdownProps = {
   tabIndex?: number;
   className?: string;
+  callback: (data: HTMLLIElement) => void;
   renderTitle: (isDropdownOpen: boolean) => React.ReactElement;
   renderContent: (
     dropdownItemHandler: (item: React.MouseEvent<HTMLLIElement>) => void,
   ) => React.ReactElement;
-  callback: (data: HTMLLIElement) => void;
 };
 
 export default function Dropdown({
-  tabIndex = 0,
+  callback,
   className,
   renderTitle,
+  tabIndex = 0,
   renderContent,
-  callback,
 }: DropdownProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const content = renderContent(dropdownItemHandler);
@@ -95,9 +95,10 @@ export default function Dropdown({
   }
 
   return (
-    <div className={className}>
+    <div data-testid="dropdown" className={className}>
       <div
         tabIndex={tabIndex}
+        data-testid="dropdown-title"
         aria-expanded={isDropdownOpen}
         onBlur={dropdownFocusLoseHandler}
         onKeyDown={dropdownKeyboardHandler}
@@ -109,6 +110,7 @@ export default function Dropdown({
 
       <div
         role="listbox"
+        data-testid="dropdown-content"
         tabIndex={-1}
         className={clsx(
           isDropdownOpen ? "opacity-100" : "pointer-events-none opacity-0",

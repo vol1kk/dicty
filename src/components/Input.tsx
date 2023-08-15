@@ -6,7 +6,6 @@ type InputProps = {
   id: string;
   classNameLabel?: string;
   before?: boolean;
-  labelCentered?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default function Input({
@@ -22,13 +21,13 @@ export default function Input({
     <label className={classNameLabel}>
       {before && children}
       <Field
+        id={id}
+        name={id}
+        placeholder={placeholder}
         className={clsx(
           "rounded-md bg-gray-300 p-2 placeholder-[#757575] outline-1 outline-offset-2 outline-primary focus-visible:outline dark:bg-gray-900",
           className,
         )}
-        placeholder={placeholder}
-        name={id}
-        id={id}
         {...props}
       />
       {!before && children}
