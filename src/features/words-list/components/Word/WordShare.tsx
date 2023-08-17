@@ -6,7 +6,7 @@ import Button from "~/components/Button/Button";
 import { CloseIcon, KeyIcon } from "~/components/Icons";
 import { useToggleShareCode } from "~/features/words-list";
 
-type WordShareProps = {
+export type WordShareProps = {
   code: string | null;
   wordId: string;
 };
@@ -39,12 +39,15 @@ export default function WordShare({ code, wordId }: WordShareProps) {
   const buttonClickHandler = () => toggleShareCodeMutation({ wordId });
 
   return (
-    <div className="mx-auto mb-1 flex w-fit rounded-md bg-gray-300 p-2 dark:bg-gray-900">
+    <div
+      data-testid="word-share"
+      className="mx-auto mb-1 flex w-fit rounded-md bg-gray-300 p-2 dark:bg-gray-900"
+    >
       <input
         type="text"
+        key={shareCode}
         readOnly={true}
         ref={formCodeRef}
-        key={shareCode ?? ""}
         onClick={inputClickHandler}
         tabIndex={shareCode ? 0 : -1}
         defaultValue={shareCode ?? ""}

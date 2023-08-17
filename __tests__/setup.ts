@@ -7,4 +7,8 @@ afterEach(function () {
   vi.restoreAllMocks();
 });
 
+vi.mock("next-i18next", () => ({
+  useTranslation: () => ({ t: (key: string) => key }),
+}));
+
 expect.extend(matchers);

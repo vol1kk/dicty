@@ -1,11 +1,9 @@
 import Head from "next/head";
 import { type GetStaticProps } from "next";
 import { useMemo, useState } from "react";
-import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import useWords from "~/hooks/useWords";
-import Spinner from "~/components/Spinner";
 import useDebounce from "~/hooks/useDebounce";
 import FormAddWord from "~/features/word-add";
 import SearchWords from "~/features/search-words";
@@ -14,28 +12,14 @@ import { filterData } from "~/features/search-words";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 
 export default function Home() {
-  const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 
   const { data: words, isLoading } = useWords();
-  const data = useMemo(
+  const filteredWords = useMemo(
     () => filterData(words, debouncedSearch),
     [words, debouncedSearch],
   );
-
-  if (isLoading)
-    return (
-      <>
-        <Head>
-          <title>Dicty | Loading </title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <main className="grid place-content-center">
-          <Spinner dimensions={64} text={`${t("spinner.load")}...`} />
-        </main>
-      </>
-    );
 
   return (
     <>
@@ -44,12 +28,10 @@ export default function Home() {
         <meta name="description" content="Create your own dictionary!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main data-testid="home-main">
         <SearchWords searchValue={search} setSearchValue={setSearch} />
-        <div className="mt-8">
-          <FormAddWord />
-          <WordsList data={data} />
-        </div>
+        <FormAddWord />
+        <WordsList data={filteredWords} isLoading={isLoading} />
       </main>
     </>
   );

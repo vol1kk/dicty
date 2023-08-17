@@ -1,9 +1,11 @@
 import React from "react";
-import WordTitle from "~/features/words-list/components/Word/WordTitle";
+
 import WordEdit from "~/features/words-list/components/Word/WordEdit";
-import WordCategory from "~/features/words-list/components/Word/WordCategory";
-import WordMeanings from "~/features/words-list/components/Word/WordMeanings";
+import WordTitle from "~/features/words-list/components/Word/WordTitle";
 import WordShare from "~/features/words-list/components/Word/WordShare";
+import WordMeanings from "~/features/words-list/components/Word/WordMeanings";
+import WordHeader from "~/features/words-list/components/Word/WordHeader";
+import WordCategories from "~/features/words-list/components/Word/WordCategories";
 
 type WordProps = {
   children: React.ReactNode;
@@ -14,8 +16,9 @@ export default function Word({ children, ...props }: WordProps) {
   return <div {...props}>{children}</div>;
 }
 
-Word.Title = WordTitle;
 Word.Edit = WordEdit;
-Word.Category = WordCategory;
-Word.Meaning = WordMeanings;
+Word.Title = WordTitle;
 Word.Share = WordShare;
+Word.Header = WordHeader;
+Word.Meanings = WordMeanings;
+Word.Categories = WordCategories;

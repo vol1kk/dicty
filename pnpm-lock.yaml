@@ -65,6 +65,9 @@ dependencies:
   next-i18next:
     specifier: ^14.0.0
     version: 14.0.0(i18next@23.3.0)(next@13.4.10)(react-i18next@13.0.2)(react@18.2.0)
+  next-router-mock:
+    specifier: ^0.9.9
+    version: 0.9.9(next@13.4.10)(react@18.2.0)
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -4900,6 +4903,16 @@ packages:
       next: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-i18next: 13.0.2(i18next@23.3.0)(react-dom@18.2.0)(react@18.2.0)
+    dev: false
+
+  /next-router-mock@0.9.9(next@13.4.10)(react@18.2.0):
+    resolution: {integrity: sha512-2o50zr+5pWj0zzcvBEWNHDlmWmlDExPdX5OuXKW2aCxV85XUA6MlELr0n0f0wtXj5dUVZ8qspHj6YwF7KZHrbA==}
+    peerDependencies:
+      next: '>=10.0.0'
+      react: '>=17.0.0'
+    dependencies:
+      next: 13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
     dev: false
 
   /next@13.4.10(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0):

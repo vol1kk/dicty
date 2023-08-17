@@ -14,7 +14,7 @@ export default function SearchWords({
   const { t } = useTranslation();
 
   return (
-    <div className="relative">
+    <div data-testid="search-words" className="relative mb-8">
       <input
         id="search"
         type="text"

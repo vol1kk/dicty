@@ -6,14 +6,14 @@ import { useToasts } from "~/features/toast";
 import Button from "~/components/Button/Button";
 import FormWord from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
-import { useDeleteWord, useUpdateWord } from "~/features/word-edit";
 import ButtonUndo from "~/components/Button/ButtonUndo";
+import { useDeleteWord, useUpdateWord } from "~/features/word-edit";
 
-type FormEditWord = {
+export type FormEditWordProps = {
   word: Word;
 };
 
-export default function FormEditWord({ word }: FormEditWord) {
+export default function FormEditWord({ word }: FormEditWordProps) {
   const { t } = useTranslation();
   const navigation = useRouter();
   const { addToast, removeToast } = useToasts();
