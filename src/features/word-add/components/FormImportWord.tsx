@@ -1,12 +1,13 @@
 import { useTranslation } from "next-i18next";
-import React, { forwardRef, type MutableRefObject } from "react";
+import React, { forwardRef, type MutableRefObject, type Ref } from "react";
 
 import { useToasts } from "~/features/toast";
 import Button from "~/components/Button/Button";
 import useSessionData from "~/store/useSessionData";
 import { useImportFromCode } from "~/features/word-add";
 
-type FormCodeShareProps = {
+export type FormCodeShareProps = {
+  ref: Ref<HTMLInputElement>;
   closeHandler: () => void;
 };
 
@@ -42,14 +43,20 @@ const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
     }
 
     return (
-      <form onSubmit={shareCodeFormHandler} className="grid gap-2 px-4 py-4">
+      <form
+        data-testid="form-import-from-code"
+        onSubmit={shareCodeFormHandler}
+        className="grid gap-2 px-4 py-4"
+      >
         <input
           ref={ref}
+          type="text"
+          data-testid="input-import-from-code"
           className="rounded-md bg-gray-300 px-4 py-2 placeholder-[#757575] outline-1 outline-offset-2 outline-primary focus-visible:outline dark:bg-gray-900"
           placeholder={t("form.code.import.placeholder")}
-          type="text"
         />
         <Button
+          data-testid="button-import-from-code"
           className="rounded-md bg-gray-300 p-2 !outline-1 dark:bg-gray-900"
           isSubmit={true}
         >

@@ -16,7 +16,10 @@ export default function Switch({
   before = false,
 }: SwitchProps) {
   return (
-    <label className="group flex cursor-pointer gap-2">
+    <label
+      data-testid="switch-container"
+      className="group flex cursor-pointer gap-2"
+    >
       <button
         role="switch"
         onClick={handleCheck}

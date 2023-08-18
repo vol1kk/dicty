@@ -4,14 +4,11 @@ import { useTranslation } from "next-i18next";
 
 import useWords from "~/hooks/useWords";
 import { useToasts } from "~/features/toast";
+import { ImportIcon } from "~/components/Icons";
 import Button from "~/components/Button/Button";
 import useHeaderData from "~/store/useHeaderData";
-import {
-  ImportIcon,
-  readFileAsync,
-  useImportWords,
-} from "~/features/import-export-words";
 import ButtonUndo from "~/components/Button/ButtonUndo";
+import { readFileAsync, useImportWords } from "~/features/import-export-words";
 
 export default function ImportWords() {
   const words = useWords();
@@ -69,14 +66,15 @@ export default function ImportWords() {
   }
 
   return (
-    <Button onClick={triggerInputHandler}>
+    <Button data-testid="import-container" onClick={triggerInputHandler}>
       <ImportIcon className="rotate-180" />
       {t("header.import")}
       <input
-        onChange={importWordsHandler}
+        type="file"
         className="hidden"
         aria-hidden={true}
-        type="file"
+        data-testid="input-import"
+        onChange={importWordsHandler}
       />
     </Button>
   );

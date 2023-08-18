@@ -4,9 +4,9 @@ import { useTranslation } from "next-i18next";
 import useWords from "~/hooks/useWords";
 import Button from "~/components/Button/Button";
 import modifyWordId from "~/utils/modifyWordId";
-import downloadData from "~/utils/downloadData";
+import { ImportIcon } from "~/components/Icons";
 import useHeaderData from "~/store/useHeaderData";
-import { ImportIcon } from "~/features/import-export-words";
+import { downloadData } from "~/features/import-export-words";
 
 export default function ExportWords() {
   const { t } = useTranslation();
@@ -24,7 +24,7 @@ export default function ExportWords() {
 
   return (
     <Button onClick={exportWordsHandler}>
-      <ImportIcon dimensions={24} />
+      <ImportIcon width={24} height={24} />
       {t("header.export")}
     </Button>
   );

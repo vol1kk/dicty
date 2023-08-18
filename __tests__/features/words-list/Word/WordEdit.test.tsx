@@ -1,7 +1,8 @@
 import mockRouter from "next-router-mock";
-import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
-import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
+
 import WordEdit, {
   type WordEditProps,
 } from "~/features/words-list/components/Word/WordEdit";
@@ -30,7 +31,7 @@ describe("WordEdit Tests", function () {
     expect(wordEditComponent).toHaveAttribute("href", "/edit/" + wordId);
   });
 
-  it("should redirect to proper page", () => {
+  it("should redirect to edit page", () => {
     const { wordEditComponent, wordId } = setup();
 
     fireEvent.click(wordEditComponent);

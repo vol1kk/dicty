@@ -95,6 +95,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
       renderButtons={(isValid, handleFormReset) => (
         <>
           <Button
+            data-testid="button-save"
             isSubmit={true}
             onClick={() => {
               if (isValid) setTimeout(handleFormReset, 500);
@@ -103,10 +104,17 @@ export default function FormEditWord({ word }: FormEditWordProps) {
           >
             {t("form.word.button.save")}
           </Button>
-          <Button onClick={() => void navigation.push("/")}>
+          <Button
+            data-testid="button-back"
+            onClick={() => void navigation.push("/")}
+          >
             {t("form.word.button.cancel")}
           </Button>
-          <Button onClick={deleteHandler} className="dark:hover:bg-red-500">
+          <Button
+            data-testid="button-delete"
+            onClick={deleteHandler}
+            className="dark:hover:bg-red-500"
+          >
             {t("form.word.button.delete")}
           </Button>
         </>

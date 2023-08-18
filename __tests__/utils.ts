@@ -1,3 +1,6 @@
+import { vi } from "vitest";
+
+import { type UseLocalDataProps } from "~/store/useLocalData";
 import { type Category, type Meaning, type Word } from "~/types/ApiTypes";
 
 function createMeaning(meaningExtenders?: Partial<Meaning>) {

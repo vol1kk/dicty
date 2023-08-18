@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { type Word } from "~/types/ApiTypes";
 
-type useLocalData = {
+export type UseLocalDataProps = {
   font: string;
   theme: string;
   words: Word[];
@@ -10,7 +10,7 @@ type useLocalData = {
   setWords: (words: Word[]) => void;
 };
 
-const useLocalData = create<useLocalData>()(set => ({
+const useLocalData = create<UseLocalDataProps>()(set => ({
   words: [],
   theme: "light",
   font: "Sans-Serif",

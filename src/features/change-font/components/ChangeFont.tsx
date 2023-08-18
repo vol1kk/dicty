@@ -4,21 +4,7 @@ import { useTranslation } from "next-i18next";
 import Dropdown from "~/components/Dropdown";
 import useLocalData from "~/store/useLocalData";
 import { ChevronIcon } from "~/components/Icons";
-
-const FONT_TYPES = [
-  {
-    name: "Sans-Serif",
-    className: "font-poppins",
-  },
-  {
-    name: "Serif",
-    className: "font-merriweather",
-  },
-  {
-    name: "Mono",
-    className: "font-inconsolata",
-  },
-] as const;
+import { FONT_TYPES } from "~/features/change-font";
 
 export default function ChangeFont() {
   const { t } = useTranslation();
@@ -52,7 +38,10 @@ export default function ChangeFont() {
         </div>
       )}
       renderContent={dropdownItemHandler => (
-        <ul className="rounded-md bg-white p-4 dark:bg-gray-900 [&>li]:leading-8">
+        <ul
+          data-testid="fonts-list"
+          className="rounded-md bg-white p-4 dark:bg-gray-900 [&>li]:leading-8"
+        >
           {FONT_TYPES.map(type => {
             const isFontSame = type.name.toLowerCase() === font.toLowerCase();
             return (
@@ -62,8 +51,9 @@ export default function ChangeFont() {
                 data-font={type.name}
                 aria-selected={isFontSame}
                 tabIndex={isFontSame ? 0 : -1}
-                className={`${type.className} cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary`}
+                data-testid={type.className.toLowerCase()}
                 onClick={e => dropdownItemHandler(e)}
+                className={`${type.className} cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary`}
               >
                 {type.name}
               </li>

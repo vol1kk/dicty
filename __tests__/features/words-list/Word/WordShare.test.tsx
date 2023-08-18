@@ -1,8 +1,9 @@
+import { expect, describe, it, vi } from "vitest";
 import { fireEvent, render, screen, within } from "@testing-library/react";
+
 import WordShare, {
   type WordShareProps,
 } from "~/features/words-list/components/Word/WordShare";
-import { expect, describe, it, vi } from "vitest";
 
 function setup(props?: Partial<WordShareProps>) {
   const wordId = props?.wordId || "word-1";

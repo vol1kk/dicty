@@ -4,17 +4,7 @@ import { useRouter } from "next/router";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
 import useHeaderData from "~/store/useHeaderData";
-
-const LANGUAGES = [
-  {
-    displayName: "English",
-    i18Name: "en",
-  },
-  {
-    displayName: "Українська",
-    i18Name: "ua",
-  },
-];
+import { LANGUAGES } from "~/features/change-language";
 
 export default function ChangeLanguage() {
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
@@ -49,7 +39,10 @@ export default function ChangeLanguage() {
         </div>
       )}
       renderContent={dropdownItemHandler => (
-        <ul className="rounded-md bg-white p-4 dark:bg-gray-900 [&>li]:leading-8">
+        <ul
+          data-testid="languages-list"
+          className="rounded-md bg-white p-4 dark:bg-gray-900 [&>li]:leading-8"
+        >
           {LANGUAGES.map(language => {
             const isLanguageSelected =
               language.i18Name.toLowerCase() === locale?.toLowerCase();
@@ -58,6 +51,7 @@ export default function ChangeLanguage() {
                 role="option"
                 key={language.i18Name}
                 data-lang={language.i18Name}
+                data-testid={"language-" + language.i18Name}
                 aria-selected={isLanguageSelected}
                 tabIndex={isLanguageSelected ? 0 : -1}
                 className="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary"

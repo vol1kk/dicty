@@ -62,7 +62,10 @@ export default function FormWord({
         const formButtons = renderButtons(isValid, handleFormReset);
 
         return (
-          <FormikForm className="rounded-md bg-gray-100 p-4 dark:bg-gray-800 [&>div]:mb-4">
+          <FormikForm
+            data-testid="word-form"
+            className="rounded-md bg-gray-100 p-4 dark:bg-gray-800 [&>div]:mb-4"
+          >
             <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
               <Input
                 id="name"
