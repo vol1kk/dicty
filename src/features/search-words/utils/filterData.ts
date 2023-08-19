@@ -1,9 +1,16 @@
-export default function filterData<T extends { name: string }>(
-  data: T[],
-  query: string,
-  matchThreshold = 0.35, // If query and word shares less than 35% of characters, return false
-  matchCharDiff = 3, // If query and word shares 35% of characters, but has too many random symbols, return false
-) {
+export type FilterDataProps<T extends { name: string }> = {
+  data: T[];
+  query: string;
+  matchThreshold?: number; // If query and word shares less than 35% of characters, return false
+  matchCharDiff?: number; // If query and word shares 35% of characters, but has too many random symbols, return false
+};
+
+export default function filterData<T extends { name: string }>({
+  data,
+  query,
+  matchThreshold = 0.35,
+  matchCharDiff = 3,
+}: FilterDataProps<T>) {
   // If query is empty, show all items
   if (query === "") return data;
 
@@ -15,11 +22,11 @@ export default function filterData<T extends { name: string }>(
 
   // If query doesn't match anything, then try finding item by similar characters
   const searchByCharacterOccurrences = data.reduce((data, i) => {
-    const characters = i.name.toLowerCase().split("");
+    const characters = [...new Set(i.name.toLowerCase())];
 
     const matchedCharacters = characters.filter(char => query.includes(char));
     const matchedPercent = matchedCharacters.length / i.name.length;
-    const charDiff = Math.abs(characters.length - query.length);
+    const charDiff = Math.abs(i.name.length - query.length);
 
     if (matchedPercent >= matchThreshold && charDiff <= matchCharDiff)
       data.push([matchedPercent, i]);
