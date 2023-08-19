@@ -23,7 +23,7 @@ export default function ExportWords() {
   }
 
   return (
-    <Button onClick={exportWordsHandler}>
+    <Button data-testid="export-words-container" onClick={exportWordsHandler}>
       <ImportIcon width={24} height={24} />
       {t("header.export")}
     </Button>

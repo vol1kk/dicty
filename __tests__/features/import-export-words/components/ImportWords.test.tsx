@@ -41,8 +41,6 @@ describe("ImportWords Tests", function () {
   it("should call mockImportWords with data user loaded", async () => {
     const { inputImport } = setup();
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const data = [createWord({ createdAt: new Date().toISOString() })];
     const dataFile = new File([JSON.stringify(data)], "words.json", {
       type: "application/json",

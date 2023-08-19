@@ -17,7 +17,7 @@ export default function Home() {
 
   const { data: words, isLoading } = useWords();
   const filteredWords = useMemo(
-    () => filterData(words, debouncedSearch),
+    () => filterData({ data: words, query: debouncedSearch }),
     [words, debouncedSearch],
   );
 

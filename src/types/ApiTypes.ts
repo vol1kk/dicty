@@ -3,6 +3,7 @@ import { z } from "zod";
 export const MeaningSchema = z.object({
   id: z.string(),
   definition: z.string(),
+  categoryId: z.string().nullable(),
   example: z.string().nullable(),
 });
 
@@ -17,7 +18,7 @@ export const WordSchema = z.object({
   id: z.string(),
   name: z.string(),
   transcription: z.string(),
-  createdAt: z.coerce.date().nullable(),
+  createdAt: z.coerce.date().or(z.string()),
   shareCode: z.string().nullable(),
   createdById: z.string().nullable(),
   categories: z.array(CategorySchema),

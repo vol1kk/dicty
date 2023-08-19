@@ -1,4 +1,5 @@
 import { vi, describe, expect, it } from "vitest";
+import userEvent from "@testing-library/user-event";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import Overlay, { type OverlayProps } from "~/components/Overlay";
@@ -13,7 +14,14 @@ function setup(props?: Partial<OverlayProps>) {
         usePortal={props?.usePortal}
         className={props?.className}
       >
-        Content
+        <ul onClick={e => e.stopPropagation()}>
+          <li>
+            <button data-testid="button-first">First Button</button>
+          </li>
+          <li>
+            <button data-testid="button-second">Second Button</button>
+          </li>
+        </ul>
       </Overlay>
     </>,
   );
@@ -21,7 +29,10 @@ function setup(props?: Partial<OverlayProps>) {
   const overlayWrapper = screen.getByTestId("overlay-wrapper");
   const overlay = screen.getByTestId("overlay");
 
-  return { data, overlay, overlayWrapper };
+  const firstButton = screen.getByTestId("button-first");
+  const secondButton = screen.getByTestId("button-second");
+
+  return { data, overlay, overlayWrapper, firstButton, secondButton };
 }
 
 describe("Overlay Tests", function () {
@@ -65,5 +76,28 @@ describe("Overlay Tests", function () {
     fireEvent.click(document.body);
     expect(mockSetIsOpen).toHaveBeenCalledTimes(2);
     expect(mockSetIsOpen).toHaveBeenCalledWith(false);
+  });
+
+  it("should focus elements on tab press", async () => {
+    const { secondButton, firstButton } = setup({
+      isOpen: true,
+    });
+
+    await userEvent.tab();
+    expect(firstButton).toHaveFocus();
+
+    await userEvent.tab();
+    expect(secondButton).toHaveFocus();
+  });
+
+  it("should focus prev element on shift+tab press", async () => {
+    const { secondButton, firstButton } = setup({
+      isOpen: true,
+    });
+    await userEvent.tab({ shift: true });
+    expect(secondButton).toHaveFocus();
+
+    await userEvent.tab({ shift: true });
+    expect(firstButton).toHaveFocus();
   });
 });

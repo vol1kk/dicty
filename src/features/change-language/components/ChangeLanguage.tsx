@@ -51,11 +51,11 @@ export default function ChangeLanguage() {
                 role="option"
                 key={language.i18Name}
                 data-lang={language.i18Name}
-                data-testid={"language-" + language.i18Name}
                 aria-selected={isLanguageSelected}
                 tabIndex={isLanguageSelected ? 0 : -1}
-                className="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary"
+                data-testid={"language-" + language.i18Name}
                 onClick={e => dropdownItemHandler(e)}
+                className="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary"
               >
                 {language.displayName}
               </li>

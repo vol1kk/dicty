@@ -1,36 +1,37 @@
-import { vi } from "vitest";
-
-import { type UseLocalDataProps } from "~/store/useLocalData";
 import { type Category, type Meaning, type Word } from "~/types/ApiTypes";
 
-function createMeaning(meaningExtenders?: Partial<Meaning>) {
+function createMeaning(meaningExtenders?: Partial<Meaning>, clearId = false) {
   return {
-    id: "meaning-1",
+    id: clearId ? "" : "meaning-1",
     definition: "Test Definition",
+    categoryId: clearId ? "" : "category-1",
     example: "Test Example",
     ...meaningExtenders,
   };
 }
 
-function createCategory(categoryExtenders?: Partial<Category>) {
+function createCategory(
+  categoryExtenders?: Partial<Category>,
+  clearId = false,
+) {
   return {
-    id: "category-1",
+    id: clearId ? "" : "category-1",
     name: "Test Category",
-    wordId: "word-1",
-    meanings: [createMeaning()],
+    wordId: clearId ? "" : "word-1",
+    meanings: [createMeaning(undefined, clearId)],
     ...categoryExtenders,
   };
 }
 
-function createWord(wordExtenders?: Partial<Word>) {
+function createWord(wordExtenders?: Partial<Word>, clearId = false) {
   return {
-    id: "word-1",
+    id: clearId ? "" : "word-1",
     name: "Test Word",
     transcription: "/test-transcription/",
     createdAt: new Date(),
     shareCode: null,
-    createdById: "user-1",
-    categories: [createCategory()],
+    createdById: clearId ? "" : "user-1",
+    categories: [createCategory(undefined, clearId)],
     ...wordExtenders,
   };
 }

@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  getIcon,
-  getTranslateDirection,
+  ToastIcon,
   type IToast,
   type ToastPosition,
+  getTranslateDirection,
 } from "~/features/toast";
 
 type ToastProps = {
@@ -14,8 +14,6 @@ type ToastProps = {
 };
 
 export default function Toast({ toast, position, closeToast }: ToastProps) {
-  const Icon = getIcon(toast.type, 28);
-
   const timeVisibleRef = useRef(0);
   const currentTimeRef = useRef(new Date());
   const toastRef = useRef<HTMLDivElement>(null);
@@ -104,7 +102,7 @@ export default function Toast({ toast, position, closeToast }: ToastProps) {
     >
       <div className="grid gap-4">
         <div className="flex items-center gap-4">
-          {Icon}
+          <ToastIcon type={toast.type} dimensions={28} />
           {toast.text}
         </div>
         {toast.action}
