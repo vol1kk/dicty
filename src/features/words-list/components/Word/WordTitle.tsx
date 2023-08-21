@@ -23,7 +23,11 @@ export default function WordTitle({ name, transcription }: WordTitleProps) {
           />
         </Button>
       </h2>
-      <h3 aria-hidden={true} className="text-lg text-primary">
+      <h3
+        aria-hidden={true}
+        className="text-lg text-primary"
+        onClick={e => e.stopPropagation()}
+      >
         {transcription}
       </h3>
     </div>
