@@ -1,10 +1,13 @@
 import { describe, it, vi, expect } from "vitest";
 import { useImportWords } from "~/features/import-export-words";
 import { renderHook } from "@testing-library/react";
-import { type UseLocalDataProps } from "~/store/useLocalData";
-import { type Word } from "~/types/ApiTypes";
 import * as useSessionDataModule from "~/store/useSessionData";
-import { createWord } from "../../../utils";
+import { createWord } from "#tests/utils";
+import {
+  mockedSetWords,
+  mockedUseImportMutation,
+  mockedUseUndoMutation,
+} from "#tests/setup";
 
 function setup() {
   const data = renderHook(() =>
@@ -19,41 +22,6 @@ function setup() {
     undoImport: data.result.current.undoImport,
   };
 }
-
-const mockedWords: Word[] = [];
-const mockedSetWords = vi.fn();
-vi.mock("~/store/useLocalData", () => ({
-  default: function <T extends keyof UseLocalDataProps>(
-    selector: (state: UseLocalDataProps) => T,
-  ) {
-    const state = {
-      words: mockedWords,
-      theme: "dark",
-      font: "Sans-Serif",
-      setFont: vi.fn(),
-      setTheme: vi.fn(),
-      setWords: mockedSetWords,
-    };
-
-    return selector(state);
-  },
-}));
-
-const mockedUseImportMutation = vi.fn();
-const mockedUseUndoMutation = vi.fn();
-vi.mock("~/utils/api", () => ({
-  api: {
-    useContext: vi.fn(),
-    words: {
-      importWords: {
-        useMutation: vi.fn(() => ({ mutate: mockedUseImportMutation })),
-      },
-      undoImportWords: {
-        useMutation: vi.fn(() => ({ mutate: mockedUseUndoMutation })),
-      },
-    },
-  },
-}));
 
 describe("useImportWords tests", function () {
   it("should call mockedUseImportMutation (api), when calling importWords with isAuthed=true", () => {

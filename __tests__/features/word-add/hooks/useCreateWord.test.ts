@@ -1,11 +1,10 @@
 import { describe, it, vi, expect } from "vitest";
-import { type UseLocalDataProps } from "~/store/useLocalData";
-import { type Word } from "~/types/ApiTypes";
 import * as useSessionDataModule from "~/store/useSessionData";
-import { createWord as createWordUtil } from "../../../utils";
 import { useCreateWord } from "~/features/word-add";
 import { renderHook } from "@testing-library/react";
 import modifyWordId from "~/utils/modifyWordId";
+import { mockedSetWords, mockedUseCreateWordMutation } from "#tests/setup";
+import { createWord as createWordUtil } from "#tests/utils";
 
 function setup() {
   const data = renderHook(() =>
@@ -20,38 +19,7 @@ function setup() {
   };
 }
 
-const mockedWords: Word[] = [];
-const mockedSetWords = vi.fn();
-vi.mock("~/store/useLocalData", () => ({
-  default: function <T extends keyof UseLocalDataProps>(
-    selector: (state: UseLocalDataProps) => T,
-  ) {
-    const state = {
-      words: mockedWords,
-      theme: "dark",
-      font: "Sans-Serif",
-      setFont: vi.fn(),
-      setTheme: vi.fn(),
-      setWords: mockedSetWords,
-    };
-
-    return selector(state);
-  },
-}));
-
-const mockedUseCreateWordMutation = vi.fn();
-vi.mock("~/utils/api", () => ({
-  api: {
-    useContext: vi.fn(),
-    words: {
-      createWord: {
-        useMutation: vi.fn(() => ({ mutate: mockedUseCreateWordMutation })),
-      },
-    },
-  },
-}));
-
-describe("useImportWords tests", function () {
+describe("useCreateWord tests", function () {
   it("should call mockedUseCreateWordMutation (api), when calling createWord with isAuthed=true", () => {
     vi.spyOn(useSessionDataModule, "default").mockReturnValue(true);
 

@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import ChangeFont from "~/features/change-font";
-import { type UseLocalDataProps } from "~/store/useLocalData";
+import { mockedSetFont } from "#tests/setup";
 
 function setup() {
   const data = render(<ChangeFont />);
@@ -26,24 +26,6 @@ function setup() {
 
   return { data, changeFontContainer, fontSans, fontSerif, fontMono };
 }
-
-const mockedSetFont = vi.fn();
-vi.mock("~/store/useLocalData", () => ({
-  default: function <T extends keyof UseLocalDataProps>(
-    selector: (state: UseLocalDataProps) => T,
-  ) {
-    const state = {
-      words: [],
-      theme: "dark",
-      font: "Sans-Serif",
-      setFont: mockedSetFont,
-      setTheme: vi.fn(),
-      setWords: vi.fn(),
-    };
-
-    return selector(state);
-  },
-}));
 
 describe("ChangeFont tests", function () {
   it("should render ChangeFont", () => {

@@ -1,9 +1,10 @@
+import { describe, expect, it } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+
+import { createMeaning } from "#tests/utils";
 import WordMeanings, {
   type WordMeaningsProps,
 } from "~/features/words-list/components/Word/WordMeanings";
-import { createMeaning } from "../../../utils";
-import { describe, expect, it } from "vitest";
 
 function setup(props?: Partial<WordMeaningsProps>) {
   const data = render(

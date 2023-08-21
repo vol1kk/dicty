@@ -1,6 +1,7 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import SearchWords from "~/features/search-words";
 import { describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+
+import SearchWords from "~/features/search-words";
 import { type SearchWordsProps } from "~/features/search-words/components/SearchWords";
 
 function setup(props?: Partial<SearchWordsProps>) {

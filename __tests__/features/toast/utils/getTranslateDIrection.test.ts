@@ -1,5 +1,6 @@
-import { getTranslateDirection, type ToastPosition } from "~/features/toast";
 import { describe, expect, it } from "vitest";
+
+import { getTranslateDirection, type ToastPosition } from "~/features/toast";
 
 function setup(position: ToastPosition) {
   const result = getTranslateDirection(position);

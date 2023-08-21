@@ -1,8 +1,9 @@
+import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import WordTitle, {
   type WordTitleProps,
 } from "~/features/words-list/components/Word/WordTitle";
-import { describe, expect, it } from "vitest";
 
 function setup(props?: Partial<WordTitleProps>) {
   const name = props?.name || "Test Word";

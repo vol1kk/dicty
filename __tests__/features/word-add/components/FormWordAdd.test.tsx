@@ -1,7 +1,7 @@
 import { describe, expect, vi, it } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-import { createWord } from "../../../utils";
+import { createWord } from "#tests/utils";
 import FormAddWord from "~/features/word-add";
 import * as useSessionModule from "~/store/useSessionData";
 import * as formUtilsModule from "~/features/shared/ui/Form/utils/formUtils";
@@ -79,11 +79,7 @@ describe("FormWordAdd Tests", function () {
 
   it("should call mockedUseCreateWord on create button click", async () => {
     const word = createWord();
-    vi.spyOn(formUtilsModule, "formTemplate", "get").mockReturnValue(
-      // eslint-disable-next-line
-      // @ts-ignore
-      word,
-    );
+    vi.spyOn(formUtilsModule, "formTemplate", "get").mockReturnValue(word);
 
     const { buttonCreateWord } = setup();
 

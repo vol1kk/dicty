@@ -4,7 +4,24 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import ChangeTheme from "~/features/change-theme";
 import * as useLocalDataModule from "~/store/useLocalData";
 
-function setup() {
+type ChangeThemeTest = {
+  initialTheme: "light" | "dark";
+};
+
+function setup(props?: Partial<ChangeThemeTest>) {
+  vi.spyOn(useLocalDataModule, "default").mockImplementation(selector => {
+    const state = {
+      theme: props?.initialTheme || "light",
+      words: [],
+      font: "Sans-Serif",
+      setFont: vi.fn(),
+      setTheme: mockedSetTheme,
+      setWords: vi.fn(),
+    };
+
+    return selector(state);
+  });
+
   const data = render(<ChangeTheme />);
 
   const changeThemeContainer = screen.getByTestId("switch-container");
@@ -22,21 +39,7 @@ describe("ChangeTheme tests", function () {
   });
 
   it("should change theme to light", () => {
-    const mockedSetTheme = vi.fn();
-    vi.spyOn(useLocalDataModule, "default").mockImplementation(selector => {
-      const state = {
-        words: [],
-        theme: "dark",
-        font: "Sans-Serif",
-        setFont: vi.fn(),
-        setTheme: mockedSetTheme,
-        setWords: vi.fn(),
-      };
-
-      return selector(state);
-    });
-
-    const { buttonChangeTheme } = setup();
+    const { buttonChangeTheme } = setup({ initialTheme: "dark" });
 
     fireEvent.click(buttonChangeTheme);
 
@@ -44,20 +47,7 @@ describe("ChangeTheme tests", function () {
   });
 
   it("should change theme to dark", () => {
-    vi.spyOn(useLocalDataModule, "default").mockImplementation(selector => {
-      const state = {
-        words: [],
-        theme: "light",
-        font: "Sans-Serif",
-        setFont: vi.fn(),
-        setTheme: mockedSetTheme,
-        setWords: vi.fn(),
-      };
-
-      return selector(state);
-    });
-
-    const { buttonChangeTheme } = setup();
+    const { buttonChangeTheme } = setup({ initialTheme: "light" });
 
     fireEvent.click(buttonChangeTheme);
 

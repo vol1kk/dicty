@@ -27,7 +27,6 @@ function setup(props?: Partial<WordShareProps>) {
 }
 
 const mockedUseToggleShareCode = vi.fn();
-
 vi.mock("~/features/words-list/hooks/useToggleShareCode", () => ({
   default: vi.fn(() => ({ toggleShareCodeMutation: mockedUseToggleShareCode })),
 }));

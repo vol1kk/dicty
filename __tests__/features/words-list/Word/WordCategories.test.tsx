@@ -1,9 +1,10 @@
+import { describe, it, expect } from "vitest";
 import { render, screen, within } from "@testing-library/react";
+
+import { createCategory } from "#tests/utils";
 import WordCategories, {
   type WordCategoryProps,
 } from "~/features/words-list/components/Word/WordCategories";
-import { createCategory } from "../../../utils";
-import { describe, it, expect } from "vitest";
 
 function setup(props?: Partial<WordCategoryProps>) {
   const data = render(

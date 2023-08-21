@@ -1,14 +1,13 @@
-import { createWord } from "../../../utils";
-import { readFileAsync } from "~/features/import-export-words";
 import { describe, expect, it } from "vitest";
+
+import { createWord } from "#tests/utils";
+import { readFileAsync } from "~/features/import-export-words";
 
 type ReadFileAsyncTestProps = {
   type: string;
 };
 
 function setup(props?: ReadFileAsyncTestProps) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   const data = [createWord({ createdAt: new Date().toISOString() })];
   const dataFile = new File([JSON.stringify(data)], "words.json", {
     type: props?.type || "application/json",

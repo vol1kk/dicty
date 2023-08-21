@@ -4,7 +4,7 @@ import { type useSession } from "next-auth/react";
 
 type StatusTypes = ReturnType<typeof useSession>["status"];
 
-type UseSessionDataProps = {
+export type UseSessionDataProps = {
   isAuthed: boolean;
   session: Session | null;
   status: StatusTypes | null;

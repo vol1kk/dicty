@@ -12,16 +12,6 @@ function setup() {
   return { data, exportContainer };
 }
 
-vi.mock("~/utils/api", () => ({
-  api: {
-    words: {
-      getAll: {
-        useQuery: vi.fn(() => ({ isLoading: false, data: [] })),
-      },
-    },
-  },
-}));
-
 vi.mock("~/features/import-export-words/utils/downloadData", () => ({
   default: vi.fn(),
 }));

@@ -1,7 +1,8 @@
-import { type ToastIconProps } from "~/features/toast/components/ToastIcon";
-import { render, screen, within } from "@testing-library/react";
-import { ToastIcon } from "~/features/toast";
 import { describe, expect, it } from "vitest";
+import { render, screen, within } from "@testing-library/react";
+
+import { ToastIcon } from "~/features/toast";
+import { type ToastIconProps } from "~/features/toast/components/ToastIcon";
 
 function setup(props?: Partial<ToastIconProps>) {
   const type = props?.type || "success";

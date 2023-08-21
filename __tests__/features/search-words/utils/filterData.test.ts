@@ -1,8 +1,9 @@
-import { type FilterDataProps } from "~/features/search-words/utils/filterData";
-import { filterData } from "~/features/search-words";
-import { createWord } from "../../../utils";
-import { type Word } from "~/types/ApiTypes";
 import { describe, it, expect } from "vitest";
+
+import { createWord } from "#tests/utils";
+import { type Word } from "~/types/ApiTypes";
+import { filterData } from "~/features/search-words";
+import { type FilterDataProps } from "~/features/search-words/utils/filterData";
 
 function setup(props?: Partial<FilterDataProps<Word>>) {
   const initialData = props?.data || [

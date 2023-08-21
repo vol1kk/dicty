@@ -1,7 +1,8 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { ImportWords } from "~/features/import-export-words";
 import { describe, expect, it, vi } from "vitest";
-import { createWord } from "../../../utils";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+
+import { createWord } from "#tests/utils";
+import { ImportWords } from "~/features/import-export-words";
 
 function setup() {
   const data = render(<ImportWords />);

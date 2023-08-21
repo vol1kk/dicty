@@ -1,14 +1,26 @@
+import { nanoid } from "nanoid";
 import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import * as useSessionModule from "~/store/useSessionData";
+import { type UseSessionDataProps } from "~/store/useSessionData";
 import FormImportWord, {
   type FormCodeShareProps,
 } from "~/features/word-add/components/FormImportWord";
-import { nanoid } from "nanoid";
 
-function setup(props?: Partial<FormCodeShareProps>) {
+function setup(props?: Partial<FormCodeShareProps & UseSessionDataProps>) {
+  vi.spyOn(useSessionModule, "default").mockImplementation(selector => {
+    const state = {
+      session: props?.session || null,
+      isAuthed: props?.isAuthed ?? false,
+      setSession: props?.setSession || vi.fn(),
+      status: props?.status || "unauthenticated",
+    };
+
+    return selector(state);
+  });
+
   const data = render(
     <FormImportWord
       ref={props?.ref || createRef<HTMLInputElement>()}
@@ -36,13 +48,10 @@ describe("FormImport Tests", function () {
   });
 
   it("should call mockedUseImportFromCode with specified code on import button click", async () => {
-    vi.spyOn(useSessionModule, "default").mockReturnValue(true);
-
-    const { inputImport, buttonImport } = setup();
+    const { inputImport, buttonImport } = setup({ isAuthed: true });
 
     const code = nanoid();
     fireEvent.change(inputImport, { target: { value: code } });
-
     fireEvent.click(buttonImport);
 
     await waitFor(() => {
@@ -51,9 +60,7 @@ describe("FormImport Tests", function () {
   });
 
   it("should not call mockedUseImportFromCode on import button click", async () => {
-    vi.spyOn(useSessionModule, "default").mockReturnValue(false);
-
-    const { buttonImport } = setup();
+    const { buttonImport } = setup({ isAuthed: false });
 
     fireEvent.click(buttonImport);
 

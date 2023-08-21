@@ -1,5 +1,6 @@
-import { type Word } from "~/types/ApiTypes";
 import { describe, it, expect } from "vitest";
+
+import { type Word } from "~/types/ApiTypes";
 import modifyWordId from "~/utils/modifyWordId";
 
 function setup() {

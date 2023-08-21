@@ -1,13 +1,24 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import { createWord } from "../../utils";
+import { createWord } from "#tests/utils";
 import { WordsList } from "~/features/words-list";
-import * as React from "react";
 import * as useSessionModule from "~/store/useSessionData";
+import { type UseSessionDataProps } from "~/store/useSessionData";
 import { type WordsListProps } from "~/features/words-list/components/WordsList";
 
-function setup(props?: Partial<WordsListProps>) {
+function setup(props?: Partial<WordsListProps & UseSessionDataProps>) {
+  vi.spyOn(useSessionModule, "default").mockImplementation(selector => {
+    const state = {
+      session: props?.session || null,
+      isAuthed: props?.isAuthed ?? false,
+      setSession: props?.setSession || vi.fn(),
+      status: props?.status || "unauthenticated",
+    };
+
+    return selector(state);
+  });
+
   const data = render(
     <WordsList
       data={props?.data || [createWord()]}
@@ -79,17 +90,13 @@ describe("WordsList Tests", function () {
   });
 
   it("should render word.share component when sessionData.isAuthed is true", () => {
-    vi.spyOn(useSessionModule, "default").mockReturnValue(true);
-
-    setup();
+    setup({ isAuthed: true });
 
     expect(screen.queryByTestId("word-share")).toBeInTheDocument();
   });
 
   it("should not render word.share component when sessionData.isAuthed is false", () => {
-    vi.spyOn(useSessionModule, "default").mockReturnValue(false);
-
-    setup();
+    setup({ isAuthed: false });
 
     expect(screen.queryByTestId("word-share")).not.toBeInTheDocument();
   });
