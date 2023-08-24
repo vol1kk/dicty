@@ -40,10 +40,11 @@ export default function FormWord({
 
   return (
     <Formik
-      validationSchema={formValidationSchema}
-      initialValues={initialValues}
       validateOnMount={true}
+      enableReinitialize={true}
       onSubmit={formSubmitHandler}
+      initialValues={{ ...initialValues }}
+      validationSchema={formValidationSchema}
     >
       {formHelpers => {
         const {
@@ -99,7 +100,7 @@ export default function FormWord({
               />
             </div>
             <FieldArray name="categories">
-              {(arrayHelpers: FieldArrayHelpers) => (
+              {(categoryHelpers: FieldArrayHelpers) => (
                 <div>
                   <h2 className="text-center">
                     {t("form.word.categories.label")}
@@ -109,8 +110,9 @@ export default function FormWord({
                       key={cIndex}
                       category={category}
                       categoryIndex={cIndex}
-                      push={arrayHelpers.push}
-                      remove={arrayHelpers.remove}
+                      push={categoryHelpers.push}
+                      move={categoryHelpers.move}
+                      remove={categoryHelpers.remove}
                       categoryErrors={errorCategories}
                       categoryTouched={touched.categories}
                       categoriesLength={values.categories.length}

@@ -34,6 +34,8 @@
   "form.word.category.add": "Додати Категорію",
   "form.word.category.remove": "Видалити Категорію",
   "form.word.category.edit": "Редагувати категорію",
+  "form.word.category.up": "Підняти вверх",
+  "form.word.category.down": "Опустити вниз",
   "form.word.category.meaning.add": "Додати Визначення",
   "form.word.category.meaning.remove": "Видалити Визначення",
 

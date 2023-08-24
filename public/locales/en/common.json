@@ -34,6 +34,8 @@
   "form.word.category.add": "Add Category",
   "form.word.category.remove": "Remove Category",
   "form.word.category.edit": "Edit Category",
+  "form.word.category.up": "Move Up",
+  "form.word.category.down": "Move Down",
   "form.word.category.meaning.add": "Add Meaning",
   "form.word.category.meaning.remove": "Remove Meaning",
 

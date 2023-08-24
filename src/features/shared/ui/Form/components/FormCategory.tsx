@@ -16,7 +16,7 @@ type FormCategoryProps = {
   category: Category;
   categoryErrors: FormikErrors<Category[]> | undefined;
   categoryTouched: FormikTouched<Category[]> | undefined;
-} & Pick<FieldArrayHelpers, "push" | "remove">;
+} & Pick<FieldArrayHelpers, "push" | "remove" | "move">;
 
 export default function FormCategory({
   category,
@@ -24,12 +24,13 @@ export default function FormCategory({
   categoryErrors,
   categoryTouched,
   categoriesLength,
+  move: moveCategory,
   push: pushCategory,
   remove: removeCategory,
 }: FormCategoryProps) {
   const { t } = useTranslation();
 
-  const pushMeaningRef = useRef(
+  const meaningsHelpersRef = useRef(
     {} as Pick<FieldArrayHelpers, "push" | "remove">,
   );
 
@@ -38,7 +39,7 @@ export default function FormCategory({
   }
 
   function removeMeaningHandler(i: number) {
-    if (category.meanings.length !== 1) pushMeaningRef.current.remove(i);
+    if (category.meanings.length !== 1) meaningsHelpersRef.current.remove(i);
 
     if (category.meanings.length === 1 && categoriesLength > 1)
       removeCategoryHandler(categoryIndex);
@@ -49,7 +50,11 @@ export default function FormCategory({
 
     if (action === "add-category") pushCategory(categoryTemplate);
     if (action === "remove-category") removeCategoryHandler(categoryIndex);
-    if (action === "add-meaning") pushMeaningRef.current?.push(meaningTemplate);
+    if (action === "move-down") moveCategory(categoryIndex, categoryIndex + 1);
+    if (action === "move-up") moveCategory(categoryIndex, categoryIndex - 1);
+
+    if (action === "add-meaning")
+      meaningsHelpersRef.current?.push(meaningTemplate);
 
     data.ariaSelected = "false";
     (data.parentElement?.firstElementChild as HTMLLIElement).ariaSelected =
@@ -83,13 +88,17 @@ export default function FormCategory({
           value={category.name}
           placeholder={t("form.word.category.placeholder")}
         >
-          <CategoryOptions callback={categoryCallback} />
+          <CategoryOptions
+            callback={categoryCallback}
+            currentCategory={categoryIndex}
+            categoriesLength={categoriesLength}
+          />
         </Input>
       </div>
       <FieldArray name={`categories.${categoryIndex}.meanings`}>
-        {(arrayHelpers: FieldArrayHelpers) => {
-          pushMeaningRef.current.push = arrayHelpers.push;
-          pushMeaningRef.current.remove = arrayHelpers.remove;
+        {(meaningsHelpers: FieldArrayHelpers) => {
+          meaningsHelpersRef.current.push = meaningsHelpers.push;
+          meaningsHelpersRef.current.remove = meaningsHelpers.remove;
 
           return (
             <>
