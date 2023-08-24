@@ -114,6 +114,7 @@ export const wordRouter = createTRPCRouter({
           data: {
             name: updatedWord.name,
             transcription: updatedWord.transcription,
+            synonyms: updatedWord.synonyms,
             categories: {
               upsert: updatedCategories,
               deleteMany: deleted.categories.map(m => ({ id: m })),
@@ -256,6 +257,7 @@ function createWord(data: Word, userId?: string) {
   return {
     name: data.name,
     shareCode: null,
+    synonyms: data.synonyms,
     categories: {
       create: data.categories.map(createCategory),
     },

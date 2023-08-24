@@ -62,15 +62,14 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
                     <Word.Meanings meanings={category.meanings} />
                   </Word.Category>
                 ))}
-                <Word.Category
-                  className="text-sm [&>h3]:text-base"
-                  categoryName="Synonyms"
-                >
-                  <Word.Synonyms
-                    words={data}
-                    synonyms={["Smart", "Wise", "Clever"]}
-                  />
-                </Word.Category>
+                {word.synonyms.length > 0 && (
+                  <Word.Category
+                    className="text-sm [&>h3]:text-base"
+                    categoryName="Synonyms"
+                  >
+                    <Word.Synonyms words={data} synonyms={word.synonyms} />
+                  </Word.Category>
+                )}
               </div>
               {isAuthed && (
                 <Word.Share wordId={word.id} code={word.shareCode} />

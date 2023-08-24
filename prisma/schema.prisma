@@ -27,9 +27,10 @@ model Word {
   id            String     @id @default(uuid())
   name          String
   transcription String
-  createdAt     DateTime   @default(now())
-  shareCode     String?    @unique
   categories    Category[]
+  synonyms      String[]
+  shareCode     String?    @unique
+  createdAt     DateTime   @default(now())
   createdById   String?
   createdBy     User?      @relation(fields: [createdById], references: [id], onDelete: Cascade)
 }

@@ -22,4 +22,5 @@ export const formTemplate: Word = {
   shareCode: null,
   transcription: "",
   categories: [categoryTemplate],
+  synonyms: [],
 };

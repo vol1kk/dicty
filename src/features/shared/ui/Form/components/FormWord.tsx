@@ -29,7 +29,14 @@ export default function FormWord({
   initialValues = formTemplate,
 }: FormProps) {
   const { t } = useTranslation();
-  const formSubmitHandler = (values: Word) => submitHandler(values);
+  const formSubmitHandler = (values: Word) => {
+    const transformedSynonyms = (values.synonyms as unknown as string)
+      .split(",")
+      .map(s => s.trim())
+      .filter(s => s !== "");
+
+    submitHandler({ ...values, synonyms: transformedSynonyms });
+  };
 
   return (
     <Formik
@@ -66,23 +73,30 @@ export default function FormWord({
             data-testid="word-form"
             className="rounded-md bg-gray-100 p-4 dark:bg-gray-800 [&>div]:mb-4"
           >
-            <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
-              <Input
-                id="name"
-                placeholder={t("form.word.name.placeholder")}
-                className={clsx(
-                  errors.name && touched.name && "border-2 border-red-500",
-                )}
-              >
-                <span>{t("form.word.name")}</span>
-              </Input>
+            <div>
+              <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
+                <Input
+                  id="name"
+                  placeholder={t("form.word.name.placeholder")}
+                  className={clsx(
+                    errors.name && touched.name && "border-2 border-red-500",
+                  )}
+                >
+                  <span>{t("form.word.name")}</span>
+                </Input>
 
+                <Input
+                  id="transcription"
+                  placeholder={t("form.word.transcription.placeholder")}
+                >
+                  <span>{t("form.word.transcription")}</span>
+                </Input>
+              </div>
               <Input
-                id="transcription"
-                placeholder={t("form.word.transcription.placeholder")}
-              >
-                <span>{t("form.word.transcription")}</span>
-              </Input>
+                id="synonyms"
+                placeholder="Synonyms"
+                className="mt-2 w-full"
+              />
             </div>
             <FieldArray name="categories">
               {(arrayHelpers: FieldArrayHelpers) => (
