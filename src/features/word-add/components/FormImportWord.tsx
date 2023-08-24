@@ -29,7 +29,7 @@ const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
         addToast({
           type: "error",
           autoClose: false,
-          text: t("toast.import.error", { count: 0, error: e }),
+          text: t("toast.import.error", { count: 1, error: e }),
         });
       },
     });
