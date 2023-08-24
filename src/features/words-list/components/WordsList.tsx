@@ -49,7 +49,22 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
               <Word.Edit wordId={word.id} />
             </Word.Header>
             <Accordion isOpen={isOpen === i}>
-              <Word.Categories categories={word.categories} />
+              <div className="mb-2">
+                {word.categories.map(category => (
+                  <Word.Category key={category.id} categoryName={category.name}>
+                    <Word.Meanings meanings={category.meanings} />
+                  </Word.Category>
+                ))}
+                <Word.Category
+                  className="text-sm [&>h3]:text-base"
+                  categoryName="Synonyms"
+                >
+                  <Word.Synonyms
+                    words={data}
+                    synonyms={["Smart", "Wise", "Clever"]}
+                  />
+                </Word.Category>
+              </div>
               {isAuthed && (
                 <Word.Share wordId={word.id} code={word.shareCode} />
               )}
