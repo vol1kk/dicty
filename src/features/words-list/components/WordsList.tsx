@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import { useTranslation } from "next-i18next";
 
 import Spinner from "~/components/Spinner";
@@ -15,7 +15,6 @@ export type WordsListProps = {
 
 export default function WordsList({ data, isLoading }: WordsListProps) {
   const { t } = useTranslation();
-  const [isOpen, setIsOpen] = useState(-1);
   const isAuthed = useSessionData(state => state.isAuthed);
 
   if (isLoading) {
@@ -31,24 +30,32 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
   if (data.length === 0)
     return <NotFound dimensions={64} text={t("list.empty")} />;
 
+  function toggleAriaExpanded(e: React.MouseEvent<HTMLSpanElement>) {
+    if (e.currentTarget.ariaExpanded === null)
+      e.currentTarget.ariaExpanded = "true";
+
+    e.currentTarget.ariaExpanded =
+      e.currentTarget.ariaExpanded === "true" ? "false" : "true";
+  }
+
   return (
     <ul data-testid="words-list" className="grid gap-4">
-      {data.map((word, i) => (
+      {data.map(word => (
         <li
           key={word.id}
           className="rounded-md bg-gray-100 p-4 dark:bg-gray-800"
         >
           <Word>
             <Word.Header
+              aria-expanded={false}
+              onClick={toggleAriaExpanded}
+              className="group/wordTitle peer"
               data-testid={`word-header-${word.id}`}
-              className="group/wordTitle"
-              aria-expanded={isOpen === i}
-              onClick={() => setIsOpen(curr => (curr === i ? -1 : i))}
             >
               <Word.Title name={word.name} transcription={word.transcription} />
               <Word.Edit wordId={word.id} />
             </Word.Header>
-            <Accordion isOpen={isOpen === i}>
+            <Accordion strategy={{ aria: true }}>
               <div className="mb-2">
                 {word.categories.map(category => (
                   <Word.Category key={category.id} categoryName={category.name}>

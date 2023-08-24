@@ -40,20 +40,20 @@ export default function FormAddWord() {
   return (
     <div
       data-testid="form-container"
-      className="group/accordionTitle mb-4 rounded-md bg-gray-100 dark:bg-gray-800"
+      className=" mb-4 rounded-md bg-gray-100 dark:bg-gray-800"
     >
       <Button
         data-testid="form-open"
         aria-expanded={isFormOpen}
         onClick={() => setIsFormOpen(p => !p)}
-        className="flex w-full items-center justify-center gap-4 rounded-md p-4 text-xl !outline-offset-0"
+        className="group/accordionTitle flex w-full items-center justify-center gap-4 rounded-md p-4 text-xl !outline-offset-0"
       >
         {t("form.word.button.add")}
         <span className="grid h-8 w-8 place-content-center rounded-full border-2 border-black text-2xl transition-transform group-aria-expanded/accordionTitle:rotate-45 group-aria-expanded/accordionTitle:border-primary  group-aria-expanded/accordionTitle:text-primary dark:border-white dark:group-aria-expanded/accordionTitle:border-white">
           +
         </span>
       </Button>
-      <Accordion isOpen={isFormOpen}>
+      <Accordion strategy={{ isOpen: isFormOpen }}>
         {isAuthed && (
           <>
             <FormImportWord
