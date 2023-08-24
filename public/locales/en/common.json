@@ -16,8 +16,8 @@
   "form.code.import": "Import",
   "form.code.import.placeholder": "Enter Code",
 
-  "form.code.generate": "Generate Word Code",
-  "form.code.delete": "Delete Word Code",
+  "form.code.generate": "Generate Share Code",
+  "form.code.delete": "Delete Share Code",
 
   "form.word.name": "Name",
   "form.word.name.placeholder": "Enter Name",
