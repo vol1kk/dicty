@@ -64,29 +64,36 @@ describe("WordsList Tests", function () {
     expect(notFoundComponent).toBeInTheDocument();
   });
 
+  // Probably very hacky way to check if ariaExpanded is set,
+  // because 'toHaveAttribute' didn't really work here
   it("should open/close accordions correctly", () => {
     setup({ data: [createWord(), createWord({ id: "word-2" })] });
     const firstHeader = screen.getByTestId("word-header-word-1");
     const secondHeader = screen.getByTestId("word-header-word-2");
 
     // Initial Status
-    expect(firstHeader).toHaveAttribute("aria-expanded", "false");
-    expect(secondHeader).toHaveAttribute("aria-expanded", "false");
+    expect(firstHeader.ariaExpanded).toEqual(undefined);
+    expect(secondHeader.ariaExpanded).toEqual(undefined);
 
     // Expand first word
     fireEvent.click(firstHeader);
-    expect(firstHeader).toHaveAttribute("aria-expanded", "true");
-    expect(secondHeader).toHaveAttribute("aria-expanded", "false");
+    expect(firstHeader.ariaExpanded).toEqual("true");
+    expect(secondHeader.ariaExpanded).toEqual(undefined);
 
-    // Expand second word & collapse first
+    // Expand second word
     fireEvent.click(secondHeader);
-    expect(firstHeader).toHaveAttribute("aria-expanded", "false");
-    expect(secondHeader).toHaveAttribute("aria-expanded", "true");
+    expect(firstHeader.ariaExpanded).toEqual("true");
+    expect(secondHeader.ariaExpanded).toEqual("true");
 
-    // Expand first word & collapse second
+    // Collapse first word
     fireEvent.click(firstHeader);
-    expect(firstHeader).toHaveAttribute("aria-expanded", "true");
-    expect(secondHeader).toHaveAttribute("aria-expanded", "false");
+    expect(firstHeader.ariaExpanded).toEqual("false");
+    expect(secondHeader.ariaExpanded).toEqual("true");
+
+    // Collapse second word
+    fireEvent.click(secondHeader);
+    expect(firstHeader.ariaExpanded).toEqual("false");
+    expect(secondHeader.ariaExpanded).toEqual("false");
   });
 
   it("should render word.share component when sessionData.isAuthed is true", () => {

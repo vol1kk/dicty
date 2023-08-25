@@ -2,38 +2,46 @@ import { describe, it, expect } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 
 import { createCategory } from "#tests/utils";
-import WordCategories, {
+import WordCategory, {
   type WordCategoryProps,
-} from "~/features/words-list/components/Word/WordCategories";
+} from "~/features/words-list/components/Word/WordCategory";
+import WordMeanings from "~/features/words-list/components/Word/WordMeanings";
 
 function setup(props?: Partial<WordCategoryProps>) {
+  const categoryName = props?.categoryName || "Test Category";
+
+  const category = createCategory();
   const data = render(
-    <WordCategories categories={props?.categories || [createCategory()]} />,
+    <WordCategory categoryName={category.name}>
+      <WordMeanings meanings={category.meanings} />
+    </WordCategory>,
   );
 
-  const categoriesContainer = screen.getByTestId("word-categories");
+  const categoryContainer = screen.getByTestId(
+    `category-${categoryName}-container`,
+  );
 
-  return { data, categoriesContainer };
+  return { data, categoryContainer };
 }
 
-describe("WordCategories tests", function () {
-  it("should render WordCategories component", () => {
-    const { categoriesContainer } = setup();
+describe("WordCategory tests", function () {
+  it("should render WordCategory component", () => {
+    const { categoryContainer } = setup();
 
-    expect(categoriesContainer).toBeInTheDocument();
+    expect(categoryContainer).toBeInTheDocument();
   });
 
   it("should render specified category name as text content", () => {
-    const { categoriesContainer } = setup();
+    const { categoryContainer } = setup();
 
-    expect(categoriesContainer).toHaveTextContent("Test Category");
+    expect(categoryContainer).toHaveTextContent("Test Category");
   });
 
   it("should render specified definition and example as text content", () => {
-    const { categoriesContainer } = setup();
+    const { categoryContainer } = setup();
 
     const meaningsContainer =
-      within(categoriesContainer).getByTestId("meaning-meaning-1");
+      within(categoryContainer).getByTestId("meaning-meaning-1");
 
     expect(meaningsContainer).toHaveTextContent("Test Definition");
     expect(meaningsContainer).toHaveTextContent("Test Example");
