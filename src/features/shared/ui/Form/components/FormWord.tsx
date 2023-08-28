@@ -29,7 +29,9 @@ export default function FormWord({
   initialValues = formTemplate,
 }: FormProps) {
   const { t } = useTranslation();
-  const formSubmitHandler = (values: Word) => {
+  const formSubmitHandler = (
+    values: Omit<Word, "synonyms"> & { synonyms: string },
+  ) => {
     const transformedSynonyms = (values.synonyms as unknown as string)
       .split(",")
       .map(s => s.trim())
@@ -38,12 +40,16 @@ export default function FormWord({
     submitHandler({ ...values, synonyms: transformedSynonyms });
   };
 
+  const modifiedInitialValues = {
+    ...initialValues,
+    synonyms: initialValues?.synonyms.join(", "),
+  };
   return (
     <Formik
       validateOnMount={true}
       enableReinitialize={true}
       onSubmit={formSubmitHandler}
-      initialValues={{ ...initialValues }}
+      initialValues={modifiedInitialValues}
       validationSchema={formValidationSchema}
     >
       {formHelpers => {
