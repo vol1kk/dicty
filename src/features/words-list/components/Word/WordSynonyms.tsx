@@ -2,7 +2,6 @@ import clsx from "clsx";
 import React from "react";
 
 import { type Word } from "~/types/ApiTypes";
-import { dom } from "@typescript-eslint/scope-manager/dist/lib/dom";
 
 type WordSynonymsProps = {
   words: Word[];

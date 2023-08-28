@@ -1,4 +1,4 @@
-import { type ToastPosition } from "~/features/toast/store/useToasts";
+import { type ToastPosition } from "~/features/toast";
 
 export default function getTranslateDirection(position: ToastPosition) {
   if (position === "bottom-left" || position === "top-left")

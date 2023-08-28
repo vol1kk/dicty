@@ -62,7 +62,7 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
                     <Word.Meanings meanings={category.meanings} />
                   </Word.Category>
                 ))}
-                {word.synonyms.length > 0 && (
+                {word.synonyms?.length > 0 && (
                   <Word.Category
                     className="text-sm [&>h3]:text-base"
                     categoryName="Synonyms"
