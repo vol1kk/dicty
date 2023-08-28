@@ -16,24 +16,21 @@ export type FormEditWordProps = {
 export default function FormEditWord({ word }: FormEditWordProps) {
   const { t } = useTranslation();
   const navigation = useRouter();
-  const { addToast, removeToast } = useToasts();
+  const { toasts, addToast, removeToast } = useToasts();
 
-  const undoDelete = useCreateWord({
-    onSuccess() {
-      removeToast("toast-" + word.id);
-    },
-  });
+  const undoDelete = useCreateWord();
 
-  const undoUpdate = useUpdateWord({
-    onSuccess() {
-      removeToast("toast-" + word.id);
-    },
-  });
+  const undoUpdate = useUpdateWord();
 
   const updateWord = useUpdateWord({
     onSuccess() {
+      const existingToast = toasts.find(t =>
+        t.id.startsWith("toast-" + word.id),
+      );
+      if (existingToast) removeToast(existingToast.id);
+
       addToast({
-        id: `toast-${word.id}`,
+        id: `toast-${word.id}-${+new Date()}`,
         type: "warning",
         autoClose: 10000,
         text: t("toast.update.success"),

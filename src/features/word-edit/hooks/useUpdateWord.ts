@@ -4,10 +4,7 @@ import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
 
-export default function useUpdateWord({
-  onError,
-  onSuccess,
-}: Partial<HookOptions>) {
+export default function useUpdateWord(props?: Partial<HookOptions>) {
   const utils = api.useContext();
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -15,12 +12,18 @@ export default function useUpdateWord({
   const setLocalWords = useLocalData(state => state.setWords);
 
   const { mutate: updateWordMutation } = api.words.updateWord.useMutation({
-    onSuccess() {
-      utils.words.getAll.invalidate().then(onSuccess).catch(console.error);
+    async onSuccess(res) {
+      utils.words.getAll
+        .invalidate()
+        .then(() => props?.onSuccess && props.onSuccess())
+        .catch(console.error);
+      await utils.words.getById
+        .invalidate({ wordId: res.id })
+        .then(() => console.log("invalidated by id"));
     },
 
     onError(e) {
-      if (onError) onError(e.message);
+      if (props?.onError) props.onError(e.message);
     },
   });
 

@@ -9,10 +9,7 @@ type UseCreateWordProps = {
   onError?(e: string): void;
 };
 
-export default function useCreateWord({
-  onError,
-  onSuccess,
-}: UseCreateWordProps) {
+export default function useCreateWord(props?: UseCreateWordProps) {
   const utils = api.useContext();
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -21,11 +18,13 @@ export default function useCreateWord({
 
   const { mutate } = api.words.createWord.useMutation({
     onSuccess() {
-      utils.words.invalidate().catch(console.error);
-      if (onSuccess) onSuccess();
+      utils.words
+        .invalidate()
+        .then(() => props?.onSuccess && props.onSuccess())
+        .catch(console.error);
     },
     onError(e) {
-      if (onError) onError(e.message);
+      if (props?.onError) props.onError(e.message);
     },
   });
 
