@@ -145,16 +145,18 @@ export const wordRouter = createTRPCRouter({
     .input(WordSchema.array())
     .mutation(({ ctx, input }) => {
       return ctx.prisma.$transaction(async tx => {
-        const words = input.map(w => ({
-          where: { id: w.id },
-          create: createWord(w),
-        }));
+        // Hacky way, since createMany doesn't return createdWords
+        const createdWords = input.map(w =>
+          tx.word.create({ data: createWord(w) }),
+        );
+        const awaitedWords = await Promise.all(createdWords);
+        const awaitedIds = awaitedWords.map(w => ({ id: w.id }));
 
         return tx.user.update({
           where: { id: ctx.authedUser.id },
           data: {
             words: {
-              connectOrCreate: words,
+              connect: awaitedIds,
             },
           },
         });
