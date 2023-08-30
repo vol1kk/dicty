@@ -209,7 +209,7 @@ export const wordRouter = createTRPCRouter({
   importFromCode: protectedProcedure
     .input(z.object({ code: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const existingWord = await ctx.prisma.word.findUnique({
+      const existingWord = await ctx.prisma.word.findFirst({
         where: { shareCode: input.code },
         include: { categories: { include: { meanings: true } } },
       });
