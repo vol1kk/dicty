@@ -12,14 +12,11 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
   const setLocalWords = useLocalData(state => state.setWords);
 
   const { mutate: updateWordMutation } = api.words.updateWord.useMutation({
-    async onSuccess(res) {
-      utils.words.getAll
-        .invalidate()
-        .then(() => props?.onSuccess && props.onSuccess())
-        .catch(console.error);
-      await utils.words.getById
-        .invalidate({ wordId: res.id })
-        .then(() => console.log("invalidated by id"));
+    onSuccess(res) {
+      if (props?.onSuccess) props.onSuccess();
+
+      utils.words.getAll.invalidate().catch(console.error);
+      utils.words.getById.invalidate({ wordId: res.id }).catch(console.error);
     },
 
     onError(e) {
