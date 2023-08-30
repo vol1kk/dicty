@@ -31,8 +31,11 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
       const updatedWords = localWords.map(prevWord =>
         prevWord.id === word.id ? word : prevWord,
       );
+
       setLocalWords(updatedWords);
       localStorage.setItem("words", JSON.stringify(updatedWords));
+
+      if (props?.onSuccess) props.onSuccess();
     }
   }
 

@@ -3,7 +3,7 @@ import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
 
-export default function useDeleteWord({ onError, onSuccess }: HookOptions) {
+export default function useDeleteWord(props?: Partial<HookOptions>) {
   const utils = api.useContext();
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -12,11 +12,12 @@ export default function useDeleteWord({ onError, onSuccess }: HookOptions) {
 
   const { mutate: deleteWordMutation } = api.words.deleteWord.useMutation({
     onSuccess() {
-      utils.words.getAll.invalidate().then(onSuccess).catch(console.error);
+      if (props?.onSuccess) props.onSuccess();
+      utils.words.getAll.invalidate().catch(console.error);
     },
 
     onError(e) {
-      onError(e.message);
+      if (props?.onError) props.onError(e.message);
     },
   });
 
@@ -25,9 +26,11 @@ export default function useDeleteWord({ onError, onSuccess }: HookOptions) {
 
     if (!isAuthed) {
       const filteredWords = localWords.filter(w => w.id !== id);
-      localStorage.setItem("words", JSON.stringify(filteredWords));
 
+      localStorage.setItem("words", JSON.stringify(filteredWords));
       setLocalWords(filteredWords);
+
+      if (props?.onSuccess) props.onSuccess();
     }
   }
 

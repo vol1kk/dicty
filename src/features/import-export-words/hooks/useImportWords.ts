@@ -5,7 +5,7 @@ import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
 
-export default function useImportWords({ onError, onSuccess }: HookOptions) {
+export default function useImportWords(props?: Partial<HookOptions>) {
   const utils = api.useContext();
   const localWords = useLocalData(state => state.words);
   const isAuthed = useSessionData(state => state.isAuthed);
@@ -13,11 +13,13 @@ export default function useImportWords({ onError, onSuccess }: HookOptions) {
 
   const { mutate: importWordsMutation } = api.words.importWords.useMutation({
     onSuccess() {
-      utils.words.invalidate().then(onSuccess).catch(console.log);
+      if (props?.onSuccess) props.onSuccess();
+
+      utils.words.invalidate().catch(console.log);
     },
 
     onError(e) {
-      onError(e.message);
+      if (props?.onError) props.onError(e.message);
     },
   });
 
@@ -28,7 +30,7 @@ export default function useImportWords({ onError, onSuccess }: HookOptions) {
       },
 
       onError(e) {
-        onError(e.message);
+        if (props?.onError) props.onError(e.message);
       },
     });
 
@@ -51,6 +53,8 @@ export default function useImportWords({ onError, onSuccess }: HookOptions) {
         "words",
         JSON.stringify([...localWords, ...wordsWithId]),
       );
+
+      if (props?.onSuccess) props.onSuccess();
     }
   }
 

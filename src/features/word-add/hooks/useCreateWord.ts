@@ -13,16 +13,15 @@ export default function useCreateWord(props?: UseCreateWordProps) {
   const utils = api.useContext();
   const isAuthed = useSessionData(state => state.isAuthed);
 
-  const localWords = useLocalData(state => state.words);
   const setLocalWords = useLocalData(state => state.setWords);
 
   const { mutate } = api.words.createWord.useMutation({
     onSuccess() {
-      utils.words
-        .invalidate()
-        .then(() => props?.onSuccess && props.onSuccess())
-        .catch(console.error);
+      if (props?.onSuccess) props.onSuccess();
+
+      utils.words.invalidate().catch(console.error);
     },
+
     onError(e) {
       if (props?.onError) props.onError(e.message);
     },
@@ -37,11 +36,18 @@ export default function useCreateWord(props?: UseCreateWordProps) {
         createdAt: new Date(),
       };
 
+      const _localWords = localStorage.getItem("words");
+      const _parsedLocalWords = _localWords
+        ? (JSON.parse(_localWords) as Word[])
+        : [];
+
       localStorage.setItem(
         "words",
-        JSON.stringify([wordWithId, ...localWords]),
+        JSON.stringify([wordWithId, ..._parsedLocalWords]),
       );
-      setLocalWords([wordWithId, ...localWords]);
+      setLocalWords([wordWithId, ..._parsedLocalWords]);
+
+      if (props?.onSuccess) props.onSuccess();
     }
   }
 
