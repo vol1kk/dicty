@@ -3,42 +3,42 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("MONGODB_URI")
 }
 
 model Meaning {
-  id         String    @id @default(uuid())
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   definition String
   example    String?
-  categoryId String?
+  categoryId String?   @db.ObjectId
   category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model Category {
-  id       String    @id @default(uuid())
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   meanings Meaning[]
-  wordId   String?
+  wordId   String?   @db.ObjectId
   word     Word?     @relation(fields: [wordId], references: [id], onDelete: Cascade)
 }
 
 model Word {
-  id            String     @id @default(uuid())
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   transcription String
   categories    Category[]
   synonyms      String[]
   shareCode     String?    @unique
   createdAt     DateTime   @default(now())
-  createdById   String?
+  createdById   String?    @db.ObjectId
   createdBy     User?      @relation(fields: [createdById], references: [id], onDelete: Cascade)
 }
 
 // Necessary for Next auth
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
   type              String
   provider          String
   providerAccountId String
@@ -55,15 +55,15 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -74,6 +74,7 @@ model User {
 }
 
 model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
   token      String   @unique
   expires    DateTime
