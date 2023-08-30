@@ -18,7 +18,11 @@ export default function FormEditWord({ word }: FormEditWordProps) {
   const navigation = useRouter();
   const { toasts, addToast, removeToast } = useToasts();
 
-  const undoDelete = useCreateWord();
+  const undoDelete = useCreateWord({
+    onSuccess() {
+      removeToast("toast-" + word.id);
+    },
+  });
 
   const undoUpdate = useUpdateWord();
 
