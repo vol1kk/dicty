@@ -101,7 +101,7 @@ export default function FormWord({
               </div>
               <Input
                 id="synonyms"
-                placeholder="Synonyms"
+                placeholder={t("form.word.synonyms")}
                 className="mt-2 w-full"
               />
             </div>

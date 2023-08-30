@@ -25,11 +25,12 @@
   "form.word.transcription": "Transcription",
   "form.word.transcription.placeholder": "Enter Transcription",
 
-
   "form.word.categories.label": "Categories",
   "form.word.category.placeholder": "Enter Category",
   "form.word.category.meaning.definition": "Enter Definition",
   "form.word.category.meaning.example": "Enter Example",
+
+  "form.word.synonyms": "Synonyms",
 
   "form.word.category.add": "Add Category",
   "form.word.category.remove": "Remove Category",

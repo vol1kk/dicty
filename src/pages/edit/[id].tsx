@@ -1,7 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import { type GetStaticPaths, type GetStaticProps } from "next";
+import {
+  type GetServerSideProps,
+  type GetStaticPaths,
+  type GetStaticProps,
+} from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Spinner from "~/components/Spinner";
@@ -46,14 +50,9 @@ export default function EditPage() {
   );
 }
 
-export const getStaticPaths: GetStaticPaths<{ id: string }> = () => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
-};
-
-export const getStaticProps: GetStaticProps<object> = async ({ locale }) => ({
+export const getServerSideProps: GetServerSideProps<object> = async ({
+  locale,
+}) => ({
   props: {
     ...(await serverSideTranslations(
       locale ?? "en",

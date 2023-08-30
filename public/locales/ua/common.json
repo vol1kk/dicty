@@ -25,11 +25,12 @@
   "form.word.transcription": "Транскрипція",
   "form.word.transcription.placeholder": "Введіть Транскрипцію",
 
-
   "form.word.categories.label": "Категорії",
   "form.word.category.placeholder": "Введіть Категорію",
   "form.word.category.meaning.definition": "Введіть Значення",
   "form.word.category.meaning.example": "Введь приклад",
+
+  "form.word.synonyms": "Синоніми",
 
   "form.word.category.add": "Додати Категорію",
   "form.word.category.remove": "Видалити Категорію",
