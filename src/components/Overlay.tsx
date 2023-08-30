@@ -63,8 +63,9 @@ export default function Overlay({
       nextFocusedElement?.focus();
     };
 
-    document.body.classList.toggle("overflow-hidden");
+    if (!isOpen) document.body.classList.remove("overflow-hidden");
     if (isOpen) {
+      document.body.classList.add("overflow-hidden");
       document.body.addEventListener("click", clickCloseHandler);
       document.body.addEventListener("keydown", keyboardCloseHandler);
     }
