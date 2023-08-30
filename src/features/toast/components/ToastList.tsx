@@ -2,7 +2,7 @@ import Toast from "~/features/toast/components/Toast";
 import { type ToastPosition, useToasts } from "~/features/toast";
 
 export default function ToastList() {
-  const { toasts, removeToast } = useToasts();
+  const { toasts, removeToast, updateToast } = useToasts();
 
   const positions = toasts.reduce((data, toast) => {
     if (!data[toast.position]) data[toast.position] = 0;
@@ -19,8 +19,9 @@ export default function ToastList() {
         <li key={toast.id} className="m-4">
           <Toast
             toast={toast}
-            closeToast={removeToast.bind(undefined, toast.id)}
             position={position}
+            updateToast={updateToast.bind(undefined, toast.id)}
+            closeToast={removeToast.bind(undefined, toast.id)}
           />
         </li>
       ))}

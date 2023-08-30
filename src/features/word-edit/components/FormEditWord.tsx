@@ -16,11 +16,11 @@ export type FormEditWordProps = {
 export default function FormEditWord({ word }: FormEditWordProps) {
   const { t } = useTranslation();
   const navigation = useRouter();
-  const { toasts, addToast, removeToast } = useToasts();
+  const { toasts, addToast, updateToast } = useToasts();
 
   const undoDelete = useCreateWord({
     onSuccess() {
-      removeToast("toast-" + word.id);
+      updateToast("toast-" + word.id, { isOpen: false });
     },
   });
 
@@ -31,7 +31,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
       const existingToast = toasts.find(t =>
         t.id.startsWith("toast-" + word.id),
       );
-      if (existingToast) removeToast(existingToast.id);
+      if (existingToast) updateToast(existingToast.id, { isOpen: false });
 
       addToast({
         id: `toast-${word.id}-${+new Date()}`,

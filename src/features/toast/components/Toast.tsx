@@ -10,6 +10,7 @@ import {
 type ToastProps = {
   toast: IToast;
   closeToast: () => void;
+  updateToast: (overrides: Partial<IToast>) => void;
   position: ToastPosition;
 };
 
@@ -26,7 +27,12 @@ export default function Toast({ toast, position, closeToast }: ToastProps) {
     setIsMounted(false);
 
     toastRef.current?.addEventListener("transitionend", closeToast);
-  }, [closeToast]);
+  }, []); // eslint-disable-line
+
+  useEffect(() => {
+    if (!toast.isOpen)
+      toastRef.current?.addEventListener("transitionend", closeToast);
+  }, [toast.isOpen]); // eslint-disable-line
 
   useEffect(() => {
     if (!isMounted) setIsMounted(true);
@@ -94,7 +100,9 @@ export default function Toast({ toast, position, closeToast }: ToastProps) {
       ref={toastRef}
       tabIndex={0}
       className={clsx(
-        isMounted ? "translate-[0%,_0%]" : getTranslateDirection(position),
+        isMounted && toast.isOpen
+          ? "translate-[0%,_0%]"
+          : getTranslateDirection(position),
         position.endsWith("-right") && "ml-auto",
         position.endsWith("-left") && "mr-auto",
         "group/toast relative max-w-fit overflow-hidden rounded-md bg-gray-300 px-7 py-6 shadow-2xl outline-2 outline-offset-2 outline-primary transition-transform focus-visible:outline dark:bg-gray-800",

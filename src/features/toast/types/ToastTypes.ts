@@ -12,6 +12,7 @@ export interface IToast {
   id: string;
   text: string;
   type: ToastType;
+  isOpen: boolean;
   pauseOnBlur: boolean;
   pauseOnHover: boolean;
   position: ToastPosition;

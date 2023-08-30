@@ -13,7 +13,7 @@ import { readFileAsync, useImportWords } from "~/features/import-export-words";
 export default function ImportWords() {
   const words = useWords();
   const { t } = useTranslation();
-  const { addToast, removeToast } = useToasts();
+  const { addToast, updateToast } = useToasts();
   const { importWords, undoImport } = useImportWords({
     onError,
     onSuccess() {
@@ -28,7 +28,7 @@ export default function ImportWords() {
           <ButtonUndo
             onClick={() => {
               undoImport(words.data);
-              removeToast(id);
+              updateToast(id, { isOpen: false });
             }}
           >
             {t("toast.undo")}
