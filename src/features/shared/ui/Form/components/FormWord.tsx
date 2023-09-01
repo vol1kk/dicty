@@ -87,6 +87,7 @@ export default function FormWord({
                   placeholder={t("form.word.name.placeholder")}
                   className={clsx(
                     errors.name && touched.name && "border-2 border-red-500",
+                    "w-full",
                   )}
                 >
                   <span>{t("form.word.name")}</span>
@@ -94,6 +95,7 @@ export default function FormWord({
 
                 <Input
                   id="transcription"
+                  className="w-full"
                   placeholder={t("form.word.transcription.placeholder")}
                 >
                   <span>{t("form.word.transcription")}</span>
