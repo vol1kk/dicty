@@ -5,6 +5,7 @@ import { type FormikErrors, type FormikTouched } from "formik";
 import Input from "~/components/Input";
 import Button from "~/components/Button/Button";
 import { type Meaning } from "~/types/ApiTypes";
+import { CloseIcon } from "~/components/Icons";
 
 type FormMeaningProps = {
   meaningIndex: number;
@@ -49,15 +50,15 @@ export default function FormMeaning({
         className="w-full"
       />
       <Button
+        aria-label={t("form.word.category.meaning.remove")}
         onClick={() => removeMeaning(meaningIndex)}
-        className="group/button rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
+        className="group rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
       >
-        <span className="sr-only">
-          {t("form.word.category.meaning.remove")}
-        </span>
-        <span className="group-hover/button:text-white" aria-hidden={true}>
-          X
-        </span>
+        <CloseIcon
+          aria-hidden={true}
+          width={16}
+          className="fill-black group-hover:fill-white dark:fill-white"
+        />
       </Button>
     </div>
   );

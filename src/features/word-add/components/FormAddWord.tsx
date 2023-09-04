@@ -8,6 +8,7 @@ import { useCreateWord } from "~/features/word-add";
 import useSessionData from "~/store/useSessionData";
 import FormWord, { formTemplate } from "~/features/shared/ui/Form";
 import FormImportWord from "~/features/word-add/components/FormImportWord";
+import { CloseIcon } from "~/components/Icons";
 
 export default function FormAddWord() {
   const { addToast } = useToasts();
@@ -49,8 +50,8 @@ export default function FormAddWord() {
         className="group/accordionTitle flex w-full items-center justify-center gap-4 rounded-md p-4 text-xl !outline-offset-0"
       >
         {t("form.word.button.add")}
-        <span className="grid h-8 w-8 place-content-center rounded-full border-2 border-black text-2xl transition-transform group-aria-expanded/accordionTitle:rotate-45 group-aria-expanded/accordionTitle:border-primary  group-aria-expanded/accordionTitle:text-primary dark:border-white dark:group-aria-expanded/accordionTitle:border-white">
-          +
+        <span className="rounded-full border-2 border-black p-1 group-aria-expanded/accordionTitle:border-primary dark:border-white dark:group-aria-expanded/accordionTitle:border-white">
+          <CloseIcon className="h-4 w-4 -rotate-45 fill-black transition-transform group-aria-expanded/accordionTitle:rotate-0 group-aria-expanded/accordionTitle:fill-primary dark:fill-white" />
         </span>
       </Button>
       <Accordion strategy={{ isOpen: isFormOpen }}>
