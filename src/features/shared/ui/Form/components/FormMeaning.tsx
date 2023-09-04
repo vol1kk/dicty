@@ -57,7 +57,7 @@ export default function FormMeaning({
         <CloseIcon
           aria-hidden={true}
           width={16}
-          className="fill-black group-hover:fill-white dark:fill-white"
+          className="mx-auto fill-black group-hover:fill-white dark:fill-white"
         />
       </Button>
     </div>
