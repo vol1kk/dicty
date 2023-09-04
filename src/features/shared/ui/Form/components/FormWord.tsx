@@ -86,7 +86,9 @@ export default function FormWord({
                   id="name"
                   placeholder={t("form.word.name.placeholder")}
                   className={clsx(
-                    errors.name && touched.name && "border-2 border-red-500",
+                    errors.name &&
+                      touched.name &&
+                      "outline-offset-4 ring-2 ring-red-500",
                     "w-full",
                   )}
                 >
@@ -110,7 +112,7 @@ export default function FormWord({
             <FieldArray name="categories">
               {(categoryHelpers: FieldArrayHelpers) => (
                 <div>
-                  <h2 className="text-center">
+                  <h2 className="mb-1 text-center">
                     {t("form.word.categories.label")}
                   </h2>
                   {values.categories.map((category, cIndex) => (
