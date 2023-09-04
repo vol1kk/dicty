@@ -113,7 +113,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
           <Button
             data-testid="button-delete"
             onClick={deleteHandler}
-            className="dark:hover:bg-red-500"
+            className="hover:bg-red-500 hover:text-white"
           >
             {t("form.word.button.delete")}
           </Button>
