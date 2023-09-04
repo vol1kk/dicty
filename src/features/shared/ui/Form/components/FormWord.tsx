@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { type ReactElement } from "react";
 import {
   Formik,
@@ -8,6 +7,7 @@ import {
 } from "formik";
 import { useTranslation } from "next-i18next";
 
+import cn from "~/utils/cn";
 import Input from "~/components/Input";
 import { type Category, type Word } from "~/types/ApiTypes";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
@@ -85,7 +85,7 @@ export default function FormWord({
                 <Input
                   id="name"
                   placeholder={t("form.word.name.placeholder")}
-                  className={clsx(
+                  className={cn(
                     errors.name &&
                       touched.name &&
                       "outline-offset-4 ring-2 ring-red-500",

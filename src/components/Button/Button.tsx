@@ -1,5 +1,6 @@
 import React from "react";
-import clsx from "clsx";
+
+import cn from "~/utils/cn";
 
 export type ButtonProps = {
   isSubmit?: boolean;
@@ -15,7 +16,7 @@ export default function Button({
   return (
     <button
       type={isSubmit ? "submit" : "button"}
-      className={clsx(
+      className={cn(
         `outline-2 outline-offset-2 outline-primary focus-visible:outline`,
         className,
       )}

@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+import cn from "~/utils/cn";
 import {
   ToastIcon,
   type IToast,
@@ -99,7 +100,7 @@ export default function Toast({ toast, position, closeToast }: ToastProps) {
     <div
       ref={toastRef}
       tabIndex={0}
-      className={clsx(
+      className={cn(
         isMounted && toast.isOpen
           ? "translate-[0%,_0%]"
           : getTranslateDirection(position),

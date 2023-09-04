@@ -57,7 +57,7 @@ const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
         />
         <Button
           data-testid="button-import-from-code"
-          className="rounded-md bg-gray-300 p-2 !outline-1 dark:bg-gray-900"
+          className="rounded-md bg-gray-300 p-2 outline-1 dark:bg-gray-900"
           isSubmit={true}
         >
           {t("form.code.import")}

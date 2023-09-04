@@ -1,6 +1,7 @@
-import clsx from "clsx";
 import { createPortal } from "react-dom";
 import React, { useEffect, useRef, useState } from "react";
+
+import cn from "~/utils/cn";
 
 export type OverlayProps = {
   className?: string;
@@ -81,7 +82,7 @@ export default function Overlay({
       role="dialog"
       ref={overlayRef}
       data-testid="overlay"
-      className={clsx(
+      className={cn(
         !isOpen && "invisible",
         "fixed inset-0 z-10 text-black dark:text-gray-100",
         className,

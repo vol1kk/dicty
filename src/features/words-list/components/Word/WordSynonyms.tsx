@@ -1,6 +1,6 @@
-import clsx from "clsx";
 import React from "react";
 
+import cn from "~/utils/cn";
 import { type Word } from "~/types/ApiTypes";
 
 type WordSynonymsProps = {
@@ -50,7 +50,7 @@ export default function WordSynonyms({ words, synonyms }: WordSynonymsProps) {
           <span
             key={synonym}
             onClick={getWordBySynonym.bind(undefined, existingWord?.id)}
-            className={clsx(
+            className={cn(
               existingWord &&
                 "cursor-pointer underline-offset-2 hover:underline",
               "rounded-md bg-primary bg-opacity-30 px-2 py-1 aria-expanded:text-red-600 dark:bg-opacity-50",

@@ -1,5 +1,4 @@
-import clsx from "clsx";
-
+import cn from "~/utils/cn";
 import { type ToastType } from "~/features/toast";
 import ErrorIcon from "~/components/Icons/ErrorIcon";
 import SuccessIcon from "~/components/Icons/SuccessIcon";
@@ -24,7 +23,7 @@ export default function ToastIcon({ type, dimensions }: ToastIconProps) {
   return (
     <div
       data-testid="toast-icon-container"
-      className={clsx(
+      className={cn(
         "relative isolate",
         type === "error" && "[&>svg]:fill-red-400",
         type === "warning" && "[&>svg]:fill-blue-400",

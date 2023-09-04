@@ -83,6 +83,9 @@ dependencies:
   superjson:
     specifier: 1.12.2
     version: 1.12.2
+  tailwind-merge:
+    specifier: ^1.14.0
+    version: 1.14.0
   vitest:
     specifier: ^0.34.1
     version: 0.34.1(jsdom@22.1.0)

@@ -1,6 +1,7 @@
-import { Field } from "formik";
-import clsx from "clsx";
 import React from "react";
+import { Field } from "formik";
+
+import cn from "~/utils/cn";
 
 type InputProps = {
   id: string;
@@ -24,7 +25,7 @@ export default function Input({
         id={id}
         name={id}
         placeholder={placeholder}
-        className={clsx(
+        className={cn(
           "rounded-md bg-gray-300 p-2 placeholder-[#757575] outline-1 outline-offset-2 outline-primary focus-visible:outline dark:bg-gray-900",
           className,
         )}

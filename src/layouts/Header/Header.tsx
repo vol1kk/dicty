@@ -1,8 +1,8 @@
-import clsx from "clsx";
 import React from "react";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
 
+import cn from "~/utils/cn";
 import useHeaderData from "~/store/useHeaderData";
 import { DictionaryIcon } from "~/components/Icons";
 import HeaderMenu from "~/layouts/Header/HeaderMenu";
@@ -34,7 +34,7 @@ export default function Header() {
             width={48}
             height={48}
             aria-label={t("header.icon")}
-            className={clsx(
+            className={cn(
               "delay-75",
               isHeaderOpen && "fill-black dark:fill-gray-100",
             )}

@@ -1,5 +1,5 @@
+import cn from "~/utils/cn";
 import { SpinnerIcon } from "~/components/Icons";
-import clsx from "clsx";
 
 export type SpinnerProps = {
   text: string;
@@ -20,7 +20,7 @@ export default function Spinner({
         aria-hidden="true"
         width={dimensions}
         height={dimensions}
-        className={clsx(
+        className={cn(
           "inline animate-spin fill-primary text-gray-300 dark:fill-white dark:text-gray-600",
           spinnerClassName,
         )}

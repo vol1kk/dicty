@@ -1,8 +1,8 @@
-import clsx from "clsx";
 import React from "react";
 import { useTranslation } from "next-i18next";
 import { signIn, signOut } from "next-auth/react";
 
+import cn from "~/utils/cn";
 import Modal from "~/components/Modal";
 import Overlay from "~/components/Overlay";
 import Button from "~/components/Button/Button";
@@ -31,7 +31,7 @@ export default function HeaderMenu() {
     <Overlay
       isOpen={isHeaderOpen}
       setIsOpen={setIsHeaderOpen}
-      className={clsx(
+      className={cn(
         !isHeaderOpen && "translate-x-full",
         "bg-gray-300 bg-opacity-80 transition-[transform,_visibility] duration-300 dark:bg-gray-800 dark:bg-opacity-90",
       )}

@@ -1,6 +1,6 @@
-import clsx from "clsx";
 import { useRouter } from "next/router";
 
+import cn from "~/utils/cn";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
 import useHeaderData from "~/store/useHeaderData";
@@ -29,9 +29,9 @@ export default function ChangeLanguage() {
             <ChevronIcon
               width={18}
               height={18}
-              className={clsx(
+              className={cn(
                 "transition-transform [&>path]:fill-gray-600",
-                isDropdownOpen && "rotate-90 [&>path]:!fill-primary",
+                isDropdownOpen && "rotate-90 [&>path]:fill-primary",
               )}
             />
           </span>

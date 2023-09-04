@@ -1,9 +1,9 @@
 import { useTranslation } from "next-i18next";
 
+import cn from "~/utils/cn";
 import Dropdown from "~/components/Dropdown";
 import Button from "~/components/Button/Button";
 import { DotsIcon } from "~/features/shared/ui/Form";
-import clsx from "clsx";
 
 type CategoryOptionsProps = {
   categoriesLength: number;
@@ -65,7 +65,7 @@ export default function CategoryOptions({
                 aria-selected={0 === index}
                 onClick={dropdownItemHandler}
                 data-action={options.action}
-                className={clsx(
+                className={cn(
                   "outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary",
                   options.className,
                 )}

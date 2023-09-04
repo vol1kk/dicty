@@ -1,5 +1,4 @@
-import clsx from "clsx";
-
+import cn from "~/utils/cn";
 import Button from "~/components/Button/Button";
 import { ChevronIcon } from "~/components/Icons";
 
@@ -17,7 +16,7 @@ export default function WordTitle({ name, transcription }: WordTitleProps) {
           <ChevronIcon
             height={20}
             aria-hidden={true}
-            className={clsx(
+            className={cn(
               "transition-transform group-aria-expanded/wordTitle:rotate-90 [&>path]:fill-gray-900",
             )}
           />

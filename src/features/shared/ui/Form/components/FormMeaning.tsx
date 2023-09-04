@@ -1,7 +1,7 @@
-import clsx from "clsx";
 import { useTranslation } from "next-i18next";
 import { type FormikErrors, type FormikTouched } from "formik";
 
+import cn from "~/utils/cn";
 import Input from "~/components/Input";
 import Button from "~/components/Button/Button";
 import { type Meaning } from "~/types/ApiTypes";
@@ -39,7 +39,7 @@ export default function FormMeaning({
         id={`categories.${categoryIndex}.meanings.${meaningIndex}.definition`}
         placeholder={t("form.word.category.meaning.definition")}
         value={meaning.definition}
-        className={clsx(hasErrorBorder && "border-2 border-red-500", "w-full")}
+        className={cn(hasErrorBorder && "border-2 border-red-500", "w-full")}
       />
 
       <Input

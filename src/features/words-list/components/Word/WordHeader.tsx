@@ -1,5 +1,6 @@
 import React, { type HTMLAttributes } from "react";
-import clsx from "clsx";
+
+import cn from "~/utils/cn";
 
 export default function WordHeader({
   className,
@@ -9,7 +10,7 @@ export default function WordHeader({
 }) {
   return (
     <div
-      className={clsx("flex items-center justify-between", className)}
+      className={cn("flex items-center justify-between", className)}
       {...props}
     >
       {props?.children}

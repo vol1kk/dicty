@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import React from "react";
+
+import cn from "~/utils/cn";
 
 export type AccordionProps = {
   strategy: { aria: true } | { aria?: false; isOpen: boolean };
@@ -10,7 +11,7 @@ export default function Accordion({ children, strategy }: AccordionProps) {
   return (
     <div
       data-testid="accordion"
-      className={clsx(
+      className={cn(
         `grid transition-[grid-template-rows]`,
         strategy?.aria &&
           `invisible grid-rows-[0fr] peer-aria-expanded:visible peer-aria-expanded:grid-rows-[1fr]`,

@@ -47,7 +47,7 @@ export default function FormAddWord() {
         data-testid="form-open"
         aria-expanded={isFormOpen}
         onClick={() => setIsFormOpen(p => !p)}
-        className="group/accordionTitle flex w-full items-center justify-center gap-4 rounded-md p-4 text-xl !outline-offset-0"
+        className="group/accordionTitle flex w-full items-center justify-center gap-4 rounded-md p-4 text-xl outline-offset-0"
       >
         {t("form.word.button.add")}
         <span className="rounded-full border-2 border-black p-1 group-aria-expanded/accordionTitle:border-primary dark:border-white dark:group-aria-expanded/accordionTitle:border-white">
