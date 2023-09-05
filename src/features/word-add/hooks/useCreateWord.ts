@@ -1,9 +1,10 @@
+import { getQueryKey } from "@trpc/react-query";
+
 import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
 import modifyWordId from "~/utils/modifyWordId";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
-import { getQueryKey } from "@trpc/react-query";
 
 type UseCreateWordProps = {
   onSuccess?(): void;
@@ -31,9 +32,7 @@ export default function useCreateWord(props?: UseCreateWordProps) {
       modifiedWord.createdAt = new Date();
 
       const previousData = utils.words.getAll.getData();
-
       if (previousData) {
-        console.log(modifiedWord);
         const optimisticData = [modifiedWord, ...previousData];
         utils.words.getAll.setData(void queryKey, optimisticData);
       }

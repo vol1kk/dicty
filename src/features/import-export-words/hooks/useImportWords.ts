@@ -4,33 +4,78 @@ import modifyWordId from "~/utils/modifyWordId";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
+import { getQueryKey } from "@trpc/react-query";
+
+type WordCreatedAtFixed = Omit<Word, "createdAt"> & {
+  createdAt: Date;
+};
 
 export default function useImportWords(props?: Partial<HookOptions>) {
   const utils = api.useContext();
+  const queryKey = getQueryKey(api.words.getAll);
+
   const localWords = useLocalData(state => state.words);
   const isAuthed = useSessionData(state => state.isAuthed);
   const setLocalWords = useLocalData(state => state.setWords);
 
   const { mutate: importWordsMutation } = api.words.importWords.useMutation({
+    async onMutate(words) {
+      await utils.words.getAll.cancel();
+
+      const modifiedWord = words.map(word =>
+        modifyWordId(word, {
+          appendWithId: true,
+        }),
+      ) as WordCreatedAtFixed[];
+
+      const previousData = utils.words.getAll.getData();
+      if (previousData) {
+        const optimisticData = [...modifiedWord, ...previousData];
+        utils.words.getAll.setData(void queryKey, optimisticData);
+      }
+
+      return { previousData };
+    },
+
     onSuccess() {
       if (props?.onSuccess) props.onSuccess();
 
-      utils.words.invalidate().catch(console.log);
+      utils.words.getAll.invalidate().catch(console.log);
     },
 
-    onError(e) {
+    onError(e, _, context) {
       if (props?.onError) props.onError(e.message);
+
+      if (context?.previousData)
+        utils.words.getAll.setData(void queryKey, context.previousData);
     },
   });
 
   const { mutate: undoImportWordsMutation } =
     api.words.undoImportWords.useMutation({
-      onSuccess() {
-        utils.words.invalidate().catch(console.log);
+      async onMutate(words) {
+        await utils.words.getAll.cancel();
+
+        const previousData = utils.words.getAll.getData();
+        if (previousData) {
+          utils.words.getAll.setData(
+            void queryKey,
+            words as WordCreatedAtFixed[],
+          );
+        }
+
+        return { previousData };
       },
 
-      onError(e) {
+      onSuccess() {
+        utils.words.getAll.invalidate().catch(console.log);
+      },
+
+      onError(e, _, context) {
         if (props?.onError) props.onError(e.message);
+
+        if (context?.previousData)
+          utils.words.getAll.setData(void queryKey, context.previousData);
       },
     });
 
