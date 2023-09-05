@@ -39,7 +39,10 @@ export default function FormMeaning({
         id={`categories.${categoryIndex}.meanings.${meaningIndex}.definition`}
         placeholder={t("form.word.category.meaning.definition")}
         value={meaning.definition}
-        className={cn(hasErrorBorder && "border-2 border-red-500", "w-full")}
+        className={cn(
+          hasErrorBorder && "outline-offset-4 ring-2 ring-red-500",
+          "w-full",
+        )}
       />
 
       <Input
