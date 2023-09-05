@@ -81,8 +81,10 @@ export default function FormAddWord() {
             return (
               <>
                 <Button
-                  data-testid="button-word-create"
                   isSubmit={true}
+                  disabled={!isValid}
+                  data-testid="button-word-create"
+                  className="hover:bg-green-500 hover:text-white disabled:cursor-no-drop disabled:!bg-opacity-70 dark:hover:bg-green-600"
                   onClick={() => {
                     if (isValid) setTimeout(handleFormResetWrapper, 500);
                   }}
@@ -91,6 +93,7 @@ export default function FormAddWord() {
                 </Button>
                 <Button
                   data-testid="button-form-close"
+                  className="hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500"
                   onClick={handleFormResetWrapper}
                 >
                   {t("form.word.button.close")}

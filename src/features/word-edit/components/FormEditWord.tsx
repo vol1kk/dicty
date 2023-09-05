@@ -96,16 +96,18 @@ export default function FormEditWord({ word }: FormEditWordProps) {
         <>
           <Button
             data-testid="button-save"
+            disabled={!isValid}
             isSubmit={true}
             onClick={() => {
               if (isValid) setTimeout(handleFormReset, 500);
             }}
-            className="rounded-md bg-gray-300 dark:bg-gray-900"
+            className="hover:bg-green-500 hover:text-white disabled:cursor-no-drop dark:hover:bg-green-600"
           >
             {t("form.word.button.save")}
           </Button>
           <Button
             data-testid="button-back"
+            className="hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500"
             onClick={() => void navigation.push("/")}
           >
             {t("form.word.button.cancel")}
@@ -113,7 +115,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
           <Button
             data-testid="button-delete"
             onClick={deleteHandler}
-            className="hover:bg-red-500 hover:text-white"
+            className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
           >
             {t("form.word.button.delete")}
           </Button>
