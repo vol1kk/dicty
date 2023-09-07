@@ -18,7 +18,7 @@ export const formTemplate: Word = {
   id: "",
   createdById: "",
   name: "",
-  createdAt: "",
+  createdAt: null,
   shareCode: null,
   transcription: "",
   categories: [categoryTemplate],

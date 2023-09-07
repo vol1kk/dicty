@@ -11,10 +11,6 @@ type UseCreateWordProps = {
   onError?(e: string): void;
 };
 
-type WordCreatedAtFixed = Omit<Word, "createdAt"> & {
-  createdAt: Date;
-};
-
 export default function useCreateWord(props?: UseCreateWordProps) {
   const utils = api.useContext();
   const queryKey = getQueryKey(api.words.getAll);
@@ -28,7 +24,7 @@ export default function useCreateWord(props?: UseCreateWordProps) {
 
       const modifiedWord = modifyWordId(word, {
         appendWithId: true,
-      }) as WordCreatedAtFixed;
+      });
       modifiedWord.createdAt = new Date();
 
       const previousData = utils.words.getAll.getData();

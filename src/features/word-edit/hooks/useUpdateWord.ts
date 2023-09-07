@@ -6,10 +6,6 @@ import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
 
-type WordCreatedAtFixed = Omit<Word, "createdAt"> & {
-  createdAt: Date;
-};
-
 export default function useUpdateWord(props?: Partial<HookOptions>) {
   const utils = api.useContext();
   const queryKey = getQueryKey(api.words.getAll);
@@ -27,7 +23,7 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
       if (previousData) {
         const optimisticData = previousData.map(w =>
           w.id == word.id ? word : w,
-        ) as WordCreatedAtFixed[];
+        );
 
         utils.words.getAll.setData(void queryKey, optimisticData);
       }

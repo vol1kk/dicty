@@ -1,14 +1,11 @@
+import { getQueryKey } from "@trpc/react-query";
+
 import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
 import modifyWordId from "~/utils/modifyWordId";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
-import { getQueryKey } from "@trpc/react-query";
-
-type WordCreatedAtFixed = Omit<Word, "createdAt"> & {
-  createdAt: Date;
-};
 
 export default function useImportWords(props?: Partial<HookOptions>) {
   const utils = api.useContext();
@@ -26,7 +23,7 @@ export default function useImportWords(props?: Partial<HookOptions>) {
         modifyWordId(word, {
           appendWithId: true,
         }),
-      ) as WordCreatedAtFixed[];
+      );
 
       const previousData = utils.words.getAll.getData();
       if (previousData) {
@@ -58,10 +55,7 @@ export default function useImportWords(props?: Partial<HookOptions>) {
 
         const previousData = utils.words.getAll.getData();
         if (previousData) {
-          utils.words.getAll.setData(
-            void queryKey,
-            words as WordCreatedAtFixed[],
-          );
+          utils.words.getAll.setData(void queryKey, words);
         }
 
         return { previousData };
