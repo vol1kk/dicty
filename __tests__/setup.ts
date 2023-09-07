@@ -35,7 +35,6 @@ export const mockedUseUndoMutation = vi.fn();
 export const mockedUseCreateWordMutation = vi.fn();
 export const mockedAuthedWords: Word[] = [createWord({ name: "Authed Word" })];
 vi.mock("~/utils/api", () => ({
-  useContext: vi.fn(),
   api: {
     useContext: vi.fn(),
     words: {
@@ -58,5 +57,8 @@ vi.mock("~/utils/api", () => ({
 vi.mock("next-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
+
+export const mockedGetQueryKey = vi.fn();
+vi.mock("@trpc/react-query", () => ({ getQueryKey: mockedGetQueryKey }));
 
 expect.extend(matchers);
