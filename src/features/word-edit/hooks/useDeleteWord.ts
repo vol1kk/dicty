@@ -27,8 +27,9 @@ export default function useDeleteWord(props?: Partial<HookOptions>) {
       return { previousData };
     },
 
-    onSuccess() {
-      if (props?.onSuccess) props.onSuccess();
+    onSuccess: props?.onSuccess,
+
+    onSettled() {
       utils.words.getAll.invalidate().catch(console.error);
     },
 

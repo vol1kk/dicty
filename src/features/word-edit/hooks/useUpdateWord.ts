@@ -31,11 +31,10 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
       return { previousData };
     },
 
-    onSuccess(res) {
-      if (props?.onSuccess) props.onSuccess();
+    onSuccess: props?.onSuccess,
 
+    onSettled() {
       utils.words.getAll.invalidate().catch(console.error);
-      utils.words.getById.invalidate({ wordId: res.id }).catch(console.error);
     },
 
     onError(e, _, context) {

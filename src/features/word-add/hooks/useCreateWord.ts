@@ -5,13 +5,9 @@ import { type Word } from "~/types/ApiTypes";
 import modifyWordId from "~/utils/modifyWordId";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
+import { type HookOptions } from "~/types/HookOptions";
 
-type UseCreateWordProps = {
-  onSuccess?(): void;
-  onError?(e: string): void;
-};
-
-export default function useCreateWord(props?: UseCreateWordProps) {
+export default function useCreateWord(props?: Partial<HookOptions>) {
   const utils = api.useContext();
   const queryKey = getQueryKey(api.words.getAll);
   const isAuthed = useSessionData(state => state.isAuthed);
@@ -36,9 +32,9 @@ export default function useCreateWord(props?: UseCreateWordProps) {
       return { previousData };
     },
 
-    onSuccess() {
-      if (props?.onSuccess) props.onSuccess();
+    onSuccess: props?.onSuccess,
 
+    onSettled() {
       utils.words.invalidate().catch(console.error);
     },
 
