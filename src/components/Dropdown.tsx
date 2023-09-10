@@ -4,6 +4,7 @@ import cn from "~/utils/cn";
 export type DropdownProps = {
   tabIndex?: number;
   className?: string;
+  classNameContent?: string;
   callback: (data: HTMLLIElement) => void;
   renderTitle: (isDropdownOpen: boolean) => React.ReactElement;
   renderContent: (
@@ -17,6 +18,7 @@ export default function Dropdown({
   renderTitle,
   tabIndex = 0,
   renderContent,
+  classNameContent,
 }: DropdownProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const content = renderContent(dropdownItemHandler);
@@ -113,8 +115,9 @@ export default function Dropdown({
         data-testid="dropdown-content"
         tabIndex={-1}
         className={cn(
+          "absolute z-10 mt-2 w-fit shadow-2xl transition-opacity",
           isDropdownOpen ? "opacity-100" : "pointer-events-none opacity-0",
-          "absolute left-0 z-10 mt-2 w-fit shadow-2xl transition-opacity",
+          classNameContent || "left-0",
         )}
       >
         {content}
