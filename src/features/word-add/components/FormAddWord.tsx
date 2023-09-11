@@ -93,7 +93,7 @@ export default function FormAddWord() {
                 </Button>
                 <Button
                   data-testid="button-form-close"
-                  className="hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500"
+                  className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
                   onClick={handleFormResetWrapper}
                 >
                   {t("form.word.button.close")}

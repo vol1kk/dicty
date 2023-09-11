@@ -7,7 +7,7 @@ export type SearchWordsProps = {
   setSearchValue: Dispatch<SetStateAction<string>>;
 };
 
-export default function SearchWords({
+export default function FilterByWord({
   searchValue,
   setSearchValue,
 }: SearchWordsProps) {

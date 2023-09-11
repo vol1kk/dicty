@@ -55,7 +55,7 @@ export default function FormMeaning({
       <Button
         aria-label={t("form.word.category.meaning.remove")}
         onClick={() => removeMeaning(meaningIndex)}
-        className="group rounded-md bg-primary bg-opacity-30 px-4 hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
+        className="group rounded-md bg-primary bg-opacity-30 px-4 transition-colors hover:bg-red-500 dark:bg-gray-900 dark:hover:bg-red-500 mobile:py-2"
       >
         <CloseIcon
           aria-hidden={true}

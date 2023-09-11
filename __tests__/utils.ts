@@ -29,6 +29,7 @@ function createWord(wordExtenders?: Partial<Word>, clearId = false) {
     name: "Test Word",
     transcription: "/test-transcription/",
     synonyms: [],
+    language: null,
     createdAt: new Date(),
     shareCode: null,
     createdById: clearId ? "" : "user-1",

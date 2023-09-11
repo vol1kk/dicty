@@ -1,15 +1,15 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-import SearchWords from "~/features/search-words";
-import { type SearchWordsProps } from "~/features/search-words/components/SearchWords";
+import { FilterByWord } from "~/features/sort-words";
+import { type SearchWordsProps } from "~/features/sort-words/components/FilterByWord";
 
 function setup(props?: Partial<SearchWordsProps>) {
   const mockedSetSearchValue = props?.setSearchValue || vi.fn();
   const mockedSearchValue = props?.searchValue || "";
 
   const data = render(
-    <SearchWords
+    <FilterByWord
       searchValue={mockedSearchValue}
       setSearchValue={mockedSetSearchValue}
     />,

@@ -11,6 +11,12 @@
 
   "searchWords": "Знайти слово...",
 
+  "words.sort.by_lang.default": "Мова",
+  "words.sort.by_lang.all": "Всі",
+
+  "words.sort.byDate.newest": "Найновіші",
+  "words.sort.byDate.oldest": "Найстаріші",
+
   "form.or": "Або",
 
   "form.code.import": "Імпортувати",

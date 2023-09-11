@@ -32,7 +32,7 @@ export default function FormWord({
   const formSubmitHandler = (
     values: Omit<Word, "synonyms"> & { synonyms: string },
   ) => {
-    const transformedSynonyms = (values.synonyms as unknown as string)
+    const transformedSynonyms = values.synonyms
       .split(",")
       .map(s => s.trim())
       .filter(s => s !== "");
@@ -42,6 +42,7 @@ export default function FormWord({
 
   const modifiedInitialValues = {
     ...initialValues,
+    language: initialValues?.language || "",
     synonyms: initialValues?.synonyms.join(", "),
   };
   return (
@@ -103,11 +104,15 @@ export default function FormWord({
                   <span>{t("form.word.transcription")}</span>
                 </Input>
               </div>
-              <Input
-                id="synonyms"
-                placeholder={t("form.word.synonyms")}
-                className="mt-2 w-full"
-              />
+              <div className="mt-2 flex gap-2 mobile:flex-col">
+                <Input
+                  id="synonyms"
+                  className="w-full"
+                  classNameLabel="grow"
+                  placeholder={t("form.word.synonyms")}
+                />
+                <Input id="language" placeholder="Language" />
+              </div>
             </div>
             <FieldArray name="categories">
               {(categoryHelpers: FieldArrayHelpers) => (
@@ -131,7 +136,7 @@ export default function FormWord({
                 </div>
               )}
             </FieldArray>
-            <div className="flex flex-wrap gap-4 [&>button:first-child]:flex-grow-[6] [&>button:nth-child(2)]:flex-grow-[2] [&>button]:flex-grow [&>button]:rounded-md [&>button]:bg-gray-300 [&>button]:px-4 [&>button]:py-2 [&>button]:dark:bg-gray-900">
+            <div className="flex flex-wrap gap-4 [&>button:first-child]:flex-grow-[6] [&>button:nth-child(2)]:flex-grow-[2] [&>button]:flex-grow [&>button]:rounded-md [&>button]:bg-gray-300 [&>button]:px-4 [&>button]:py-2 [&>button]:transition-colors [&>button]:dark:bg-gray-900">
               {formButtons}
             </div>
           </FormikForm>

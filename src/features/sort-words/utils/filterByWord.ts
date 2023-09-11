@@ -1,16 +1,16 @@
-export type FilterDataProps<T extends { name: string }> = {
+export type FilterByWordProps<T extends { name: string }> = {
   data: T[];
   query: string;
   matchThreshold?: number; // If query and word shares less than 35% of characters, return false
   matchCharDiff?: number; // If query and word shares 35% of characters, but has too many random symbols, return false
 };
 
-export default function filterData<T extends { name: string }>({
+export default function filterByWord<T extends { name: string }>({
   data,
   query,
   matchThreshold = 0.35,
   matchCharDiff = 3,
-}: FilterDataProps<T>) {
+}: FilterByWordProps<T>) {
   // If query is empty, show all items
   if (query === "") return data;
 

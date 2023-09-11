@@ -11,6 +11,12 @@
 
   "searchWords": "Search for your word...",
 
+  "words.sort.by_lang.default": "Language",
+  "words.sort.by_lang.all": "All",
+
+  "words.sort.byDate.newest": "Newest",
+  "words.sort.byDate.oldest": "Oldest",
+
   "form.or": "Or",
 
   "form.code.import": "Import",

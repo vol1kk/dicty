@@ -4,6 +4,7 @@ import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
+import parseLocalWord from "~/utils/parseLocalWords";
 
 export default function useWords() {
   const isAuthed = useSessionData(state => state.isAuthed);
@@ -18,7 +19,11 @@ export default function useWords() {
 
   useEffect(() => {
     const localData = localStorage.getItem("words");
-    if (localData) setLocalWords(JSON.parse(localData) as Word[]);
+    if (localData) {
+      const parsedWords = (JSON.parse(localData) as Word[]).map(parseLocalWord);
+
+      setLocalWords(parsedWords);
+    }
   }, [setLocalWords]);
 
   return {

@@ -29,6 +29,7 @@ model Word {
   transcription String
   categories    Category[]
   synonyms      String[]
+  language      String?
   shareCode     String?
   createdAt     DateTime?  @default(now())
   createdById   String?    @db.ObjectId

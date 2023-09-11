@@ -2,10 +2,10 @@ import { describe, it, expect } from "vitest";
 
 import { createWord } from "#tests/utils";
 import { type Word } from "~/types/ApiTypes";
-import { filterData } from "~/features/search-words";
-import { type FilterDataProps } from "~/features/search-words/utils/filterData";
+import { filterByWord } from "~/features/sort-words";
+import { type FilterByWordProps } from "~/features/sort-words/utils/filterByWord";
 
-function setup(props?: Partial<FilterDataProps<Word>>) {
+function setup(props?: Partial<FilterByWordProps<Word>>) {
   const initialData = props?.data || [
     createWord({ name: "Live" }),
     createWord({ name: "Lie" }),
@@ -17,7 +17,7 @@ function setup(props?: Partial<FilterDataProps<Word>>) {
   const matchCharDiff = props?.matchCharDiff ?? 3;
   const matchThreshold = props?.matchThreshold ?? 0.35;
 
-  const result = filterData({
+  const result = filterByWord({
     query,
     matchCharDiff,
     matchThreshold,
@@ -27,7 +27,7 @@ function setup(props?: Partial<FilterDataProps<Word>>) {
   return { initialData, result, query, matchCharDiff, matchThreshold };
 }
 
-describe("filterData tests", function () {
+describe("filterByWord tests", function () {
   it("should return all words", () => {
     const { initialData, result } = setup({ query: "" });
 
