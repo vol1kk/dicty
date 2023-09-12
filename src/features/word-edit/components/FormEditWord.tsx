@@ -1,13 +1,20 @@
+import { useRef } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
 import { type Word } from "~/types/ApiTypes";
-import { useToasts } from "~/features/toast";
 import Button from "~/components/Button/Button";
 import FormWord from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
 import ButtonUndo from "~/components/Button/ButtonUndo";
 import { useDeleteWord, useUpdateWord } from "~/features/word-edit";
+import {
+  useToasts,
+  toastDelete,
+  toastUpdate,
+  toastsCounter,
+  incrementToastsCounter,
+} from "~/features/toast";
 
 export type FormEditWordProps = {
   word: Word;
@@ -18,22 +25,43 @@ export default function FormEditWord({ word }: FormEditWordProps) {
   const navigation = useRouter();
   const { addToast, updateToast } = useToasts();
 
+  const previousToast = useRef(toastsCounter[word.id] || 0);
+
+  const closeToastOnSuccess = (id: string) =>
+    updateToast(id, {
+      isOpen: false,
+    });
+
   const undoDelete = useCreateWord({
-    onSuccess() {
-      updateToast("toast-" + word.id, { isOpen: false });
-    },
+    onSuccess: closeToastOnSuccess.bind(undefined, `${toastDelete}-${word.id}`),
   });
 
   const undoUpdate = useUpdateWord({
     onSuccess() {
-      updateToast("toast-" + word.id, { isOpen: false });
+      if (previousToast.current)
+        closeToastOnSuccess(
+          `${toastUpdate}-${word.id}-${previousToast.current}`,
+        );
     },
   });
 
   const updateWord = useUpdateWord({
     onSuccess() {
+      // If previous toast exists, delete it
+      if (previousToast)
+        closeToastOnSuccess(
+          `${toastUpdate}-${word.id}-${previousToast.current}`,
+        );
+
+      // Increment by 1 to have unique key
+      const nextToast = incrementToastsCounter(
+        word.id,
+        previousToast,
+        toastsCounter,
+      );
+
       addToast({
-        id: `toast-${word.id}`,
+        id: `${toastUpdate}-${word.id}-${nextToast}`,
         type: "warning",
         autoClose: 10000,
         text: t("toast.update.success"),
@@ -57,12 +85,12 @@ export default function FormEditWord({ word }: FormEditWordProps) {
   const deleteWord = useDeleteWord({
     onSuccess() {
       addToast({
-        id: `toast-` + word.id,
+        id: `${toastDelete}-${word.id}`,
         type: "warning",
         autoClose: 10000,
         text: t("toast.delete.success"),
         action: (
-          <ButtonUndo onClick={() => undoDelete(word)}>
+          <ButtonUndo onClick={undoDelete.bind(undefined, word)}>
             {t("toast.undo")}
           </ButtonUndo>
         ),
@@ -83,8 +111,8 @@ export default function FormEditWord({ word }: FormEditWordProps) {
     navigation.replace("/").catch(console.error);
   }
 
-  function deleteHandler() {
-    deleteWord(word.id);
+  function deleteHandler(id: string) {
+    deleteWord(id);
     navigation.replace("/").catch(console.error);
   }
 
@@ -114,7 +142,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
           </Button>
           <Button
             data-testid="button-delete"
-            onClick={deleteHandler}
+            onClick={deleteHandler.bind(undefined, word.id)}
             className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
           >
             {t("form.word.button.delete")}
