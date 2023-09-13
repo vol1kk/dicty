@@ -42,7 +42,7 @@ describe("ImportWords Tests", function () {
   it("should call mockImportWords with data user loaded", async () => {
     const { inputImport } = setup();
 
-    const data = [createWord({ createdAt: new Date().toISOString() })];
+    const data = [createWord({ createdAt: new Date() })];
     const dataFile = new File([JSON.stringify(data)], "words.json", {
       type: "application/json",
     });

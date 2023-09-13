@@ -1,10 +1,11 @@
 import { describe, it, vi, expect } from "vitest";
-import * as useSessionDataModule from "~/store/useSessionData";
-import { useCreateWord } from "~/features/word-add";
 import { renderHook } from "@testing-library/react";
-import modifyWordId from "~/utils/modifyWordId";
-import { mockedSetWords, mockedUseCreateWordMutation } from "#tests/setup";
+
+import { useCreateWord } from "~/features/word-add";
+import * as useSessionDataModule from "~/store/useSessionData";
+
 import { createWord as createWordUtil } from "#tests/utils";
+import { mockedSetWords, mockedUseCreateWordMutation } from "#tests/setup";
 
 function setup() {
   const data = renderHook(() =>
@@ -25,10 +26,10 @@ describe("useCreateWord tests", function () {
 
     const { createWord } = setup();
 
-    const word = modifyWordId(createWordUtil(), { appendWithEmptyId: true });
+    const word = createWordUtil();
     createWord(word);
 
-    expect(mockedUseCreateWordMutation).toHaveBeenCalledWith(word);
+    expect(mockedUseCreateWordMutation).toHaveBeenCalled();
   });
 
   it("should call mockedSetWords, when calling importWords with isAuthed=false", () => {

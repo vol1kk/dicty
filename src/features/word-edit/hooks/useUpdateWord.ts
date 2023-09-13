@@ -11,7 +11,6 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
   const queryKey = getQueryKey(api.words.getAll);
   const isAuthed = useSessionData(state => state.isAuthed);
 
-  const localWords = useLocalData(state => state.words);
   const setLocalWords = useLocalData(state => state.setWords);
 
   const { mutate: updateWordMutation } = api.words.updateWord.useMutation({
@@ -49,12 +48,15 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
     if (isAuthed) updateWordMutation(word);
 
     if (!isAuthed) {
-      const updatedWords = localWords.map(prevWord =>
-        prevWord.id === word.id ? word : prevWord,
-      );
+      setLocalWords(words => {
+        const updatedWords = words.map(prevWord =>
+          prevWord.id === word.id ? word : prevWord,
+        );
 
-      setLocalWords(updatedWords);
-      localStorage.setItem("words", JSON.stringify(updatedWords));
+        localStorage.setItem("words", JSON.stringify(updatedWords));
+
+        return updatedWords;
+      });
 
       if (props?.onSuccess) props.onSuccess();
     }

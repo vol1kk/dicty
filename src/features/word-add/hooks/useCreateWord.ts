@@ -18,14 +18,9 @@ export default function useCreateWord(props?: Partial<HookOptions>) {
     async onMutate(word) {
       await utils.words.getAll.cancel();
 
-      const modifiedWord = modifyWordId(word, {
-        appendWithId: true,
-      });
-      modifiedWord.createdAt = new Date();
-
       const previousData = utils.words.getAll.getData();
       if (previousData) {
-        const optimisticData = [modifiedWord, ...previousData];
+        const optimisticData = [word, ...previousData];
         utils.words.getAll.setData(void queryKey, optimisticData);
       }
 
@@ -46,24 +41,18 @@ export default function useCreateWord(props?: Partial<HookOptions>) {
   });
 
   function createWord(word: Word) {
-    if (isAuthed) mutate(modifyWordId(word, { appendWithEmptyId: true }));
+    const modifiedWord = modifyWordId(word, { appendWithId: true });
+    modifiedWord.createdAt = new Date();
+
+    if (isAuthed) mutate(modifiedWord);
 
     if (!isAuthed) {
-      const wordWithId = {
-        ...modifyWordId(word, { appendWithId: true }),
-        createdAt: new Date(),
-      };
+      setLocalWords(words => {
+        const newState = [modifiedWord, ...words];
+        localStorage.setItem("words", JSON.stringify(newState));
 
-      const _localWords = localStorage.getItem("words");
-      const _parsedLocalWords = _localWords
-        ? (JSON.parse(_localWords) as Word[])
-        : [];
-
-      localStorage.setItem(
-        "words",
-        JSON.stringify([wordWithId, ..._parsedLocalWords]),
-      );
-      setLocalWords([wordWithId, ..._parsedLocalWords]);
+        return newState;
+      });
 
       if (props?.onSuccess) props.onSuccess();
     }

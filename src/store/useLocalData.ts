@@ -7,7 +7,7 @@ export type UseLocalDataProps = {
   words: Word[];
   setFont: (name: string) => void;
   setTheme: (theme: string) => void;
-  setWords: (words: Word[]) => void;
+  setWords: (data: Word[] | ((word: Word[]) => Word[])) => void;
 };
 
 const useLocalData = create<UseLocalDataProps>()(set => ({
@@ -16,7 +16,12 @@ const useLocalData = create<UseLocalDataProps>()(set => ({
   font: "Sans-Serif",
   setFont: name => set(() => ({ font: name })),
   setTheme: theme => set(() => ({ theme: theme })),
-  setWords: words => set(() => ({ words })),
+  setWords: data =>
+    set(state => {
+      if (Array.isArray(data)) return { words: data };
+
+      return { words: data(state.words) };
+    }),
 }));
 
 export default useLocalData;

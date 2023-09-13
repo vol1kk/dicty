@@ -11,40 +11,18 @@ export default function useImportWords(props?: Partial<HookOptions>) {
   const utils = api.useContext();
   const queryKey = getQueryKey(api.words.getAll);
 
-  const localWords = useLocalData(state => state.words);
   const isAuthed = useSessionData(state => state.isAuthed);
   const setLocalWords = useLocalData(state => state.setWords);
 
   const { mutate: importWordsMutation } = api.words.importWords.useMutation({
-    async onMutate(words) {
-      await utils.words.getAll.cancel();
-
-      const modifiedWord = words.map(word =>
-        modifyWordId(word, {
-          appendWithId: true,
-        }),
-      );
-
-      const previousData = utils.words.getAll.getData();
-      if (previousData) {
-        const optimisticData = [...modifiedWord, ...previousData];
-        utils.words.getAll.setData(void queryKey, optimisticData);
-      }
-
-      return { previousData };
-    },
-
     onSuccess() {
       if (props?.onSuccess) props.onSuccess();
 
       utils.words.getAll.invalidate().catch(console.log);
     },
 
-    onError(e, _, context) {
+    onError(e) {
       if (props?.onError) props.onError(e.message);
-
-      if (context?.previousData)
-        utils.words.getAll.setData(void queryKey, context.previousData);
     },
   });
 
@@ -53,11 +31,9 @@ export default function useImportWords(props?: Partial<HookOptions>) {
       async onMutate(words) {
         await utils.words.getAll.cancel();
 
-        const previousData = utils.words.getAll.getData();
-        if (previousData) {
-          utils.words.getAll.setData(void queryKey, words);
-        }
+        utils.words.getAll.setData(void queryKey, words);
 
+        const previousData = utils.words.getAll.getData();
         return { previousData };
       },
 
@@ -74,45 +50,30 @@ export default function useImportWords(props?: Partial<HookOptions>) {
     });
 
   function importWords(words: Word[]) {
-    if (isAuthed) {
-      const wordsWithEmptyIds = words.map(w =>
-        modifyWordId(w, { appendWithEmptyId: true }),
-      );
+    const modifiedWords = words.map(w =>
+      modifyWordId(w, { appendWithId: true }),
+    );
 
-      importWordsMutation(wordsWithEmptyIds);
-    }
+    if (isAuthed) importWordsMutation(modifiedWords);
 
     if (!isAuthed) {
-      const wordsWithId = words.map(w =>
-        modifyWordId(w, { appendWithId: true }),
-      );
+      setLocalWords(data => {
+        const newState = [...data, ...modifiedWords];
+        localStorage.setItem("words", JSON.stringify(newState));
 
-      setLocalWords([...localWords, ...wordsWithId]);
-      localStorage.setItem(
-        "words",
-        JSON.stringify([...localWords, ...wordsWithId]),
-      );
+        return newState;
+      });
 
       if (props?.onSuccess) props.onSuccess();
     }
   }
 
   function undoImport(words: Word[]) {
-    if (isAuthed) {
-      const wordsWithEmptyIds = words.map(w =>
-        modifyWordId(w, { appendWithEmptyId: true }),
-      );
-
-      undoImportWordsMutation(wordsWithEmptyIds);
-    }
+    if (isAuthed) undoImportWordsMutation(words);
 
     if (!isAuthed) {
-      const wordsWithId = words.map(w =>
-        modifyWordId(w, { appendWithId: true }),
-      );
-
-      setLocalWords(wordsWithId);
-      localStorage.setItem("words", JSON.stringify(wordsWithId));
+      setLocalWords(words);
+      localStorage.setItem("words", JSON.stringify(words));
     }
   }
 

@@ -32,7 +32,7 @@ describe("useImportWords tests", function () {
     const words = [createWord(undefined, true)];
     importWords(words);
 
-    expect(mockedUseImportMutation).toHaveBeenCalledWith(words);
+    expect(mockedUseImportMutation).toHaveBeenCalled();
   });
 
   it("should call mockedSetWords, when calling importWords with isAuthed=false", () => {

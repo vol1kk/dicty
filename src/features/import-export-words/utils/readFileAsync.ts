@@ -1,4 +1,5 @@
 import { type Word, WordSchema } from "~/types/ApiTypes";
+import parseLocalWord from "~/utils/parseLocalWords";
 
 export default function readFileAsync(file: File): Promise<Word[]> {
   return new Promise((resolve, reject) => {
@@ -11,7 +12,7 @@ export default function readFileAsync(file: File): Promise<Word[]> {
       const data = e.target?.result;
 
       if (typeof data === "string") {
-        const parsedWords = JSON.parse(data) as Word[];
+        const parsedWords = (JSON.parse(data) as Word[]).map(parseLocalWord);
 
         const validatedWords = parsedWords.map(w => WordSchema.safeParse(w));
         const isValid = validatedWords.every(res => res.success);
