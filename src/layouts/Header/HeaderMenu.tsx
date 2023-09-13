@@ -33,7 +33,7 @@ export default function HeaderMenu() {
       setIsOpen={setIsHeaderOpen}
       className={cn(
         !isHeaderOpen && "translate-x-full",
-        "bg-gray-300 bg-opacity-80 transition-[transform,_visibility] duration-300 dark:bg-gray-800 dark:bg-opacity-90",
+        "bg-gray-300 bg-opacity-50 backdrop-blur-md transition-[transform,_visibility] duration-300 dark:bg-gray-800 dark:bg-opacity-50",
       )}
     >
       <Modal>

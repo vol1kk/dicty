@@ -28,7 +28,7 @@ export default function ButtonBurger({
       {...props}
     >
       <span className="absolute top-0 h-[2px] group-aria-expanded/burger:top-1/2 group-aria-expanded/burger:rotate-45" />
-      <span className="absolute h-[2px] group-aria-expanded/burger:translate-x-full" />
+      <span className="absolute h-[2px] group-aria-expanded/burger:translate-x-[105%]" />
       <span className="absolute bottom-0 h-[2px] group-aria-expanded/burger:top-1/2 group-aria-expanded/burger:-rotate-45" />
     </Button>
   );

@@ -51,7 +51,7 @@ export default function Home() {
       <main data-testid="home-main">
         <FilterByWord searchValue={search} setSearchValue={setSearch} />
         {availableLanguages?.length > 0 && (
-          <div className="relative mb-2.5 flex justify-between">
+          <div className="relative mb-2.5 flex justify-between mobile:flex-col mobile:gap-2 [&>*]:min-w-[150px]">
             <SortByDate
               currentOrderByDate={orderByDate}
               setOrderByDate={setOrderByDate}

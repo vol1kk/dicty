@@ -115,7 +115,7 @@ export default function Dropdown({
         data-testid="dropdown-content"
         tabIndex={-1}
         className={cn(
-          "absolute z-10 mt-2 w-fit shadow-2xl transition-opacity",
+          "absolute z-10 mt-2 w-fit transition-opacity",
           isDropdownOpen ? "opacity-100" : "pointer-events-none opacity-0",
           classNameContent || "left-0",
         )}
