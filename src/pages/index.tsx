@@ -28,7 +28,7 @@ export default function Home() {
   const { data: words, isLoading } = useWords();
 
   const availableLanguages = [
-    ...new Set(words.filter(w => w.language).map(w => w.language)),
+    ...new Set(words.map(w => w.language)),
   ] as string[];
 
   const filteredWords = useMemo(() => {
@@ -50,16 +50,16 @@ export default function Home() {
       </Head>
       <main data-testid="home-main">
         <FilterByWord searchValue={search} setSearchValue={setSearch} />
-        {!isLoading && (
+        {availableLanguages?.length > 0 && (
           <div className="relative mb-2.5 flex justify-between">
             <SortByDate
               currentOrderByDate={orderByDate}
               setOrderByDate={setOrderByDate}
             />
-            {availableLanguages?.length > 0 && (
+            {availableLanguages?.length > 1 && (
               <FilterByLang
                 currentLang={lang}
-                availableLanguages={availableLanguages}
+                availableLanguages={availableLanguages.filter(w => w)}
                 setLang={setLang}
               />
             )}
