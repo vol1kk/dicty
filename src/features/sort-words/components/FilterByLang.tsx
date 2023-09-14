@@ -29,7 +29,7 @@ export default function FilterByLang({
       className="rounded-md bg-primary bg-opacity-30 px-4 py-2 dark:bg-opacity-60"
       callback={filterByLangCallback}
       renderTitle={isDropdownOpen => (
-        <div className="relative flex cursor-pointer items-center justify-center pl-2">
+        <div className="relative flex cursor-pointer items-center justify-center pl-4 mobile:py-1">
           <ChevronIcon
             width={14}
             height={14}
@@ -38,7 +38,7 @@ export default function FilterByLang({
               isDropdownOpen && "rotate-90 [&>path]:fill-primary",
             )}
           />
-          <span className="ml-2">
+          <span>
             {capitalize(t(currentLang || "words.sort.by_lang.default"))}
           </span>
         </div>
