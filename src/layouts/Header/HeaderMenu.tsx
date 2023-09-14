@@ -28,7 +28,7 @@ export default function HeaderMenu() {
   }
 
   const buttonClasses =
-    "hover:scale-105 hover:bg-opacity-100 dark:hover:bg-opacity-100 flex h-28 w-full items-center justify-center gap-4 rounded-md bg-gray-400 bg-opacity-60 px-2 transition-[opacity,_transform] dark:bg-gray-900 dark:bg-opacity-60 mobile:h-20";
+    "hover:scale-105 hover:bg-opacity-100 dark:hover:bg-opacity-100 flex h-28 w-full items-center justify-center gap-2 rounded-md bg-gray-400 bg-opacity-60 px-2 transition-[opacity,_transform] dark:bg-gray-900 dark:bg-opacity-60 mobile:h-20";
 
   return (
     <Overlay
@@ -43,7 +43,7 @@ export default function HeaderMenu() {
         <nav>
           <ul
             onClick={e => e.stopPropagation()}
-            className="grid grid-cols-2 gap-4 p-4 text-3xl mobile:mt-4 mobile:grid-cols-1 [&>li>button>svg]:fill-black dark:[&>li>button>svg]:fill-white"
+            className="grid grid-cols-2 gap-4 p-4 text-3xl mobile-header:mt-4 mobile-header:grid-cols-1 [&>li>button>svg]:fill-black dark:[&>li>button>svg]:fill-white"
           >
             <li>
               <ImportWords className={buttonClasses} />
@@ -51,7 +51,7 @@ export default function HeaderMenu() {
             <li>
               <ExportWords className={buttonClasses} />
             </li>
-            <li className="col-span-2 mobile:col-span-1">
+            <li className="col-span-2 mobile-header:col-span-1">
               <Button className={buttonClasses} onClick={authenticationHandler}>
                 <AccountIcon width={24} height={24} />
                 {isAuthed ? t("header.logout") : t("header.login")}
@@ -63,7 +63,7 @@ export default function HeaderMenu() {
             <li>
               <ChangeLanguage />
             </li>
-            <li className="col-span-2 place-self-center mobile:col-span-1">
+            <li className="col-span-2 place-self-center mobile-header:col-span-1">
               <ChangeTheme />
             </li>
           </ul>
