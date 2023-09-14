@@ -24,7 +24,7 @@ export default function ChangeLanguage() {
     <Dropdown
       callback={languageCallback}
       className="relative"
-      classNameContent="-translate-x-1/2 right-1/2 left-1/2"
+      classNameContent="-translate-x-1/2 right-1/2 left-1/2 mobile:w-full"
       renderTitle={isDropdownOpen => (
         <div className="flex min-w-[120px] cursor-pointer items-center justify-center gap-4">
           <ChevronIcon
@@ -55,7 +55,7 @@ export default function ChangeLanguage() {
                 tabIndex={isLanguageSelected ? 0 : -1}
                 data-testid={"language-" + language.i18Name}
                 onClick={e => dropdownItemHandler(e)}
-                className="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary"
+                className="cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile:text-center"
               >
                 {language.displayName}
               </li>
