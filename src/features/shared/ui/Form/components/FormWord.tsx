@@ -37,7 +37,11 @@ export default function FormWord({
       .map(s => s.trim())
       .filter(s => s !== "");
 
-    submitHandler({ ...values, synonyms: transformedSynonyms });
+    submitHandler({
+      ...values,
+      synonyms: transformedSynonyms,
+      language: values.language?.toLowerCase() || null,
+    });
   };
 
   const modifiedInitialValues = {

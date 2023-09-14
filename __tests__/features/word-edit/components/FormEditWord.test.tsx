@@ -8,8 +8,7 @@ import FormEditWord from "~/features/word-edit";
 import { type FormEditWordProps } from "~/features/word-edit/components/FormEditWord";
 
 function setup(props?: Partial<FormEditWordProps>) {
-  // Because word.language is changed to "" inside Form, we should set default value ""
-  const word = props?.word || createWord({ language: "" });
+  const word = props?.word || createWord();
   const data = render(<FormEditWord word={word} />, {
     wrapper: MemoryRouterProvider,
   });

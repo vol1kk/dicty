@@ -78,7 +78,7 @@ describe("FormWordAdd Tests", function () {
   });
 
   it("should call mockedUseCreateWord on create button click", async () => {
-    const word = createWord({ language: "" });
+    const word = createWord();
     vi.spyOn(formUtilsModule, "formTemplate", "get").mockReturnValue(word);
 
     const { buttonCreateWord } = setup();

@@ -28,7 +28,7 @@ export default function Home() {
   const { data: words, isLoading } = useWords();
 
   const availableLanguages = [
-    ...new Set(words.map(w => w.language)),
+    ...new Set(words.map(w => w.language?.toLowerCase())),
   ] as string[];
 
   const filteredWords = useMemo(() => {
