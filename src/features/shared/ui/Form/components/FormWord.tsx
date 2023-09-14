@@ -82,7 +82,7 @@ export default function FormWord({
             className="rounded-md bg-gray-100 p-4 dark:bg-gray-800 [&>div]:mb-4"
           >
             <div>
-              <div className="flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
+              <div className="mb-4 flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
                 <Input
                   id="name"
                   placeholder={t("form.word.name.placeholder")}
@@ -104,14 +104,19 @@ export default function FormWord({
                   <span>{t("form.word.transcription")}</span>
                 </Input>
               </div>
-              <div className="mt-2 flex gap-2 mobile:flex-col">
+              <div className="flex flex-wrap gap-2">
                 <Input
                   id="synonyms"
                   className="w-full"
-                  classNameLabel="grow"
+                  classNameLabel="grow-[6]"
                   placeholder={t("form.word.synonyms")}
                 />
-                <Input id="language" placeholder="Language" />
+                <Input
+                  id="language"
+                  className="w-full"
+                  classNameLabel="grow"
+                  placeholder={t("words.sort.by_lang.default")}
+                />
               </div>
             </div>
             <FieldArray name="categories">
