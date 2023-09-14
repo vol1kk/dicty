@@ -9,7 +9,7 @@
   "header.changeFont": "Змінити шрифт",
   "header.changeTheme": "Перемкнути Темну Тему",
 
-  "searchWords": "Знайти слово...",
+  "word.sort.by_query": "Знайти слово...",
 
   "words.sort.by_lang.default": "Мова",
   "words.sort.by_lang.all": "Всі",
@@ -23,7 +23,7 @@
   "form.code.import.placeholder": "Введіть код",
 
   "form.code.generate": "Поділитись словом",
-  "form.code.delete": "Видалити код",
+  "form.code.delete": "Видалити код для шейрингу",
 
   "form.word.name": "Назва",
   "form.word.name.placeholder": "Введіть Назву",

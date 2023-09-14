@@ -9,7 +9,7 @@
   "header.changeFont": "Change Font",
   "header.theme": "Toggle Dark Theme",
 
-  "searchWords": "Search for your word...",
+  "word.sort.by_query": "Search for your word...",
 
   "words.sort.by_lang.default": "Language",
   "words.sort.by_lang.all": "All",
@@ -22,8 +22,8 @@
   "form.code.import": "Import",
   "form.code.import.placeholder": "Enter Code",
 
-  "form.code.generate": "Generate Share Code",
-  "form.code.delete": "Delete Share Code",
+  "form.code.generate": "Share Word",
+  "form.code.delete": "Delete Sharing Code",
 
   "form.word.name": "Name",
   "form.word.name.placeholder": "Enter Name",
