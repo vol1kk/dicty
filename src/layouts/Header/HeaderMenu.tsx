@@ -27,6 +27,9 @@ export default function HeaderMenu() {
     if (!isAuthed) void signIn();
   }
 
+  const buttonClasses =
+    "hover:scale-105 hover:bg-opacity-100 dark:hover:bg-opacity-100 flex h-28 w-full items-center justify-center gap-4 rounded-md bg-gray-400 bg-opacity-60 px-2 transition-[opacity,_transform] dark:bg-gray-900 dark:bg-opacity-60 mobile:h-20";
+
   return (
     <Overlay
       isOpen={isHeaderOpen}
@@ -36,33 +39,35 @@ export default function HeaderMenu() {
         "bg-gray-300 bg-opacity-50 backdrop-blur-md transition-[transform,_visibility] duration-300 dark:bg-gray-800 dark:bg-opacity-50",
       )}
     >
-      <Modal>
-        <ul
-          onClick={e => e.stopPropagation()}
-          className="grid gap-6 p-2 text-3xl [&>li>button>svg]:fill-black dark:[&>li>button>svg]:fill-white [&>li>button]:flex [&>li>button]:items-center [&>li>button]:gap-4 [&>li>button]:rounded-md"
-        >
-          <li>
-            <ImportWords />
-          </li>
-          <li>
-            <ExportWords />
-          </li>
-          <li>
-            <Button onClick={authenticationHandler}>
-              <AccountIcon width={24} height={24} />
-              {isAuthed ? t("header.logout") : t("header.login")}
-            </Button>
-          </li>
-          <li>
-            <ChangeFont />
-          </li>
-          <li>
-            <ChangeLanguage />
-          </li>
-          <li className="place-self-center">
-            <ChangeTheme />
-          </li>
-        </ul>
+      <Modal className="grid h-full w-full place-content-center text-2xl">
+        <nav>
+          <ul
+            onClick={e => e.stopPropagation()}
+            className="grid grid-cols-2 gap-4 p-4 text-3xl mobile:mt-4 mobile:grid-cols-1 [&>li>button>svg]:fill-black dark:[&>li>button>svg]:fill-white"
+          >
+            <li>
+              <ImportWords className={buttonClasses} />
+            </li>
+            <li>
+              <ExportWords className={buttonClasses} />
+            </li>
+            <li className="col-span-2 mobile:col-span-1">
+              <Button className={buttonClasses} onClick={authenticationHandler}>
+                <AccountIcon width={24} height={24} />
+                {isAuthed ? t("header.logout") : t("header.login")}
+              </Button>
+            </li>
+            <li>
+              <ChangeFont />
+            </li>
+            <li>
+              <ChangeLanguage />
+            </li>
+            <li className="col-span-2 place-self-center mobile:col-span-1">
+              <ChangeTheme />
+            </li>
+          </ul>
+        </nav>
       </Modal>
     </Overlay>
   );

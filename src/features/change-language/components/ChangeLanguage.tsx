@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
 import cn from "~/utils/cn";
-import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
 import useHeaderData from "~/store/useHeaderData";
 import { LANGUAGES } from "~/features/change-language";
+import Dropdown from "~/components/Dropdown";
 
 export default function ChangeLanguage() {
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
@@ -22,26 +22,26 @@ export default function ChangeLanguage() {
 
   return (
     <Dropdown
+      callback={languageCallback}
+      className="relative"
+      classNameContent="-translate-x-1/2 right-1/2 left-1/2"
       renderTitle={isDropdownOpen => (
-        <div className="relative flex min-w-[120px] cursor-pointer items-center gap-4">
-          <span className="sr-only">Change font</span>
-          <span>
-            <ChevronIcon
-              width={18}
-              height={18}
-              className={cn(
-                "transition-transform [&>path]:fill-gray-600",
-                isDropdownOpen && "rotate-90 [&>path]:fill-primary",
-              )}
-            />
-          </span>
+        <div className="flex min-w-[120px] cursor-pointer items-center justify-center gap-4">
+          <ChevronIcon
+            width={18}
+            height={18}
+            className={cn(
+              "transition-transform [&>path]:fill-gray-600",
+              isDropdownOpen && "rotate-90 [&>path]:fill-primary",
+            )}
+          />
           <span>{languageDisplayName}</span>
         </div>
       )}
       renderContent={dropdownItemHandler => (
         <ul
           data-testid="languages-list"
-          className="rounded-md bg-white p-4 dark:bg-gray-900 [&>li]:leading-8"
+          className="rounded-md bg-white p-4 shadow-3xl dark:bg-gray-900 [&>li]:leading-8"
         >
           {LANGUAGES.map(language => {
             const isLanguageSelected =
@@ -63,7 +63,6 @@ export default function ChangeLanguage() {
           })}
         </ul>
       )}
-      callback={languageCallback}
     />
   );
 }

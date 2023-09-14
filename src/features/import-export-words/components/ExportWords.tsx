@@ -8,7 +8,11 @@ import { ImportIcon } from "~/components/Icons";
 import useHeaderData from "~/store/useHeaderData";
 import { downloadData } from "~/features/import-export-words";
 
-export default function ExportWords() {
+type ExportWordsProps = {
+  className?: string;
+};
+
+export default function ExportWords({ className }: ExportWordsProps) {
   const { t } = useTranslation();
   const { data: words } = useWords();
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
@@ -23,7 +27,11 @@ export default function ExportWords() {
   }
 
   return (
-    <Button data-testid="export-words-container" onClick={exportWordsHandler}>
+    <Button
+      className={className}
+      onClick={exportWordsHandler}
+      data-testid="export-words-container"
+    >
       <ImportIcon width={24} height={24} />
       {t("header.export")}
     </Button>

@@ -10,7 +10,11 @@ import useHeaderData from "~/store/useHeaderData";
 import ButtonUndo from "~/components/Button/ButtonUndo";
 import { readFileAsync, useImportWords } from "~/features/import-export-words";
 
-export default function ImportWords() {
+type ImportWordsProps = {
+  className?: string;
+};
+
+export default function ImportWords({ className }: ImportWordsProps) {
   const words = useWords();
   const { t } = useTranslation();
   const { addToast, updateToast } = useToasts();
@@ -66,7 +70,11 @@ export default function ImportWords() {
   }
 
   return (
-    <Button data-testid="import-container" onClick={triggerInputHandler}>
+    <Button
+      className={className}
+      onClick={triggerInputHandler}
+      data-testid="import-container"
+    >
       <ImportIcon className="rotate-180" />
       {t("header.import")}
       <input
