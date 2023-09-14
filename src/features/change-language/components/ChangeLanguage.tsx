@@ -24,7 +24,7 @@ export default function ChangeLanguage() {
     <Dropdown
       callback={languageCallback}
       className="relative"
-      classNameContent="-translate-x-1/2 right-1/2 left-1/2 mobile:w-full"
+      classNameContent="-translate-x-1/2 right-1/2 left-1/2"
       renderTitle={isDropdownOpen => (
         <div className="flex min-w-[120px] cursor-pointer items-center justify-center gap-4">
           <ChevronIcon
