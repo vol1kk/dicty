@@ -22,9 +22,8 @@ export type FormEditWordProps = {
 
 export default function FormEditWord({ word }: FormEditWordProps) {
   const { t } = useTranslation();
-  const navigation = useRouter();
   const { addToast, updateToast } = useToasts();
-
+  const navigation = useRouter();
   const previousToast = useRef(toastsCounter[word.id] || 0);
 
   const closeToastOnSuccess = (id: string) =>
@@ -108,12 +107,12 @@ export default function FormEditWord({ word }: FormEditWordProps) {
 
   function submitHandler(data: Word) {
     updateWord(data);
-    navigation.replace("/").catch(console.error);
+    void navigation.back();
   }
 
   function deleteHandler(id: string) {
     deleteWord(id);
-    navigation.replace("/").catch(console.error);
+    void navigation.replace("/");
   }
 
   return (
@@ -136,7 +135,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
           <Button
             data-testid="button-back"
             className="hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500"
-            onClick={() => void navigation.push("/")}
+            onClick={() => void navigation.back()}
           >
             {t("form.word.button.cancel")}
           </Button>

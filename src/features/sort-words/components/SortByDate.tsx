@@ -5,6 +5,8 @@ import cn from "~/utils/cn";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
 import { SortNewest, SortOldest, SortValues } from "~/features/sort-words";
+import { useRouter } from "next/router";
+import setQueryParams from "~/utils/setQueryParams";
 
 export type SortByDateType = "newest" | "oldest";
 
@@ -17,10 +19,14 @@ export default function SortByDate({
   currentOrderByDate,
   setOrderByDate,
 }: SortWordsProps) {
+  const router = useRouter();
   const { t } = useTranslation();
 
   function sortByDateCallback(data: HTMLLIElement) {
-    setOrderByDate(data.dataset.orderby as SortByDateType);
+    const orderByDate = data.dataset.orderby as SortByDateType;
+
+    setOrderByDate(orderByDate);
+    setQueryParams(router, "order", orderByDate);
   }
 
   return (

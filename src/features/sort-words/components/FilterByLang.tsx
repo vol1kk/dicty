@@ -5,6 +5,8 @@ import cn from "~/utils/cn";
 import capitalize from "~/utils/capitalize";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
+import { useRouter } from "next/router";
+import setQueryParams from "~/utils/setQueryParams";
 
 type SortWordsProps = {
   currentLang: null | string;
@@ -17,10 +19,14 @@ export default function FilterByLang({
   currentLang,
   availableLanguages,
 }: SortWordsProps) {
+  const router = useRouter();
   const { t } = useTranslation();
 
   function filterByLangCallback(data: HTMLLIElement) {
-    setLang(data.dataset.lang as string);
+    const dataLang = data.dataset.lang as string;
+
+    setLang(dataLang);
+    setQueryParams(router, "lang", dataLang);
   }
 
   return (
@@ -48,7 +54,7 @@ export default function FilterByLang({
           data-testid="word-filterbylang-list"
           className="mt-3 rounded-md bg-white p-3 shadow-3xl dark:bg-gray-900 [&>li]:leading-8"
         >
-          {["words.sort.by_lang.all", ...availableLanguages].map(lang => {
+          {["all", ...availableLanguages].map(lang => {
             const isSameLang =
               lang.toLowerCase() === currentLang?.toLowerCase();
 
@@ -62,7 +68,9 @@ export default function FilterByLang({
                 onClick={e => dropdownItemHandler(e)}
                 className={`cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile:text-center`}
               >
-                {capitalize(t(lang))}
+                {capitalize(
+                  t(lang === "all" ? "words.sort.by_lang.all" : lang),
+                )}
               </li>
             );
           })}

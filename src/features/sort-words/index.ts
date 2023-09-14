@@ -1,10 +1,15 @@
 import sortByDate from "~/features/sort-words/utils/sortByDate";
 import SortByDate from "~/features/sort-words/components/SortByDate";
 import { type SortByDateType } from "~/features/sort-words/components/SortByDate";
-import FilterByLang from "~/features/sort-words/components/FilterByLang";
+
 import filterByLang from "~/features/sort-words/utils/filterByLang";
-import FilterByWord from "~/features/sort-words/components/FilterByWord";
+import FilterByLang from "~/features/sort-words/components/FilterByLang";
+
 import filterByWord from "~/features/sort-words/utils/filterByWord";
+import FilterByWord from "~/features/sort-words/components/FilterByWord";
+
+import useSortingParams from "~/features/sort-words/hooks/useSortingParams";
+
 import {
   SortNewest,
   SortOldest,
@@ -22,4 +27,5 @@ export {
   filterByLang,
   FilterByWord,
   filterByWord,
+  useSortingParams,
 };

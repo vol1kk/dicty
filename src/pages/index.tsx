@@ -1,6 +1,6 @@
 import Head from "next/head";
-import { type GetStaticProps } from "next";
 import { useMemo, useState } from "react";
+import { type GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import useWords from "~/hooks/useWords";
@@ -9,21 +9,23 @@ import FormAddWord from "~/features/word-add";
 import { WordsList } from "~/features/words-list";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 import {
+  useSortingParams,
   FilterByLang,
   filterByLang,
   FilterByWord,
   filterByWord,
   SortByDate,
   sortByDate,
-  type SortByDateType,
 } from "~/features/sort-words";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 
-  const [orderByDate, setOrderByDate] = useState<SortByDateType>("newest");
-  const [lang, setLang] = useState<null | string>(null);
+  const {
+    lang: [lang, setLang],
+    date: [orderByDate, setOrderByDate],
+  } = useSortingParams();
 
   const { data: words, isLoading } = useWords();
 
