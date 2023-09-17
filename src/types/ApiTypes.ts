@@ -22,6 +22,9 @@ export const WordSchema = z.object({
   language: z.string().nullable(),
   createdAt: z.coerce.date().nullable(),
   shareCode: z.string().nullable(),
+  easinessFactor: z.number(),
+  repetitions: z.number(),
+  interval: z.coerce.date(),
   createdById: z.string().nullable(),
   categories: z.array(CategorySchema),
 });

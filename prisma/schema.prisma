@@ -24,16 +24,19 @@ model Category {
 }
 
 model Word {
-  id            String     @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  transcription String
-  categories    Category[]
-  synonyms      String[]
-  language      String?
-  shareCode     String?
-  createdAt     DateTime?  @default(now())
-  createdById   String?    @db.ObjectId
-  createdBy     User?      @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  transcription  String
+  categories     Category[]
+  synonyms       String[]
+  language       String?
+  shareCode      String?
+  easinessFactor Float      @default(2.5)
+  repetitions    Int        @default(0)
+  interval       DateTime   @default(now())
+  createdAt      DateTime?  @default(now())
+  createdById    String?    @db.ObjectId
+  createdBy      User?      @relation(fields: [createdById], references: [id], onDelete: Cascade)
 }
 
 // Necessary for Next auth

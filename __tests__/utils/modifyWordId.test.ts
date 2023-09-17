@@ -10,7 +10,11 @@ function setup() {
     transcription: "Test.Transcription",
     synonyms: [],
     shareCode: null,
-    createdAt: "2023-08-18T18:54:49.722Z",
+    createdAt: new Date(),
+    language: null,
+    easinessFactor: 2.5,
+    interval: new Date(),
+    repetitions: 0,
     createdById: "0be0039f-a766-4e3a-a545-72e76d678885",
     categories: [
       {
@@ -35,7 +39,11 @@ function setup() {
     transcription: "Test.Transcription",
     synonyms: [],
     shareCode: null,
-    createdAt: "2023-08-18T18:54:49.722Z",
+    createdAt: new Date(),
+    language: null,
+    easinessFactor: 2.5,
+    interval: new Date(),
+    repetitions: 0,
     createdById: "",
     categories: [
       {

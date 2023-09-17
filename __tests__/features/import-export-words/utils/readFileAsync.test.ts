@@ -8,7 +8,7 @@ type ReadFileAsyncTestProps = {
 };
 
 function setup(props?: ReadFileAsyncTestProps) {
-  const data = [createWord({ createdAt: new Date() })];
+  const data = [createWord()];
   const dataFile = new File([JSON.stringify(data)], "words.json", {
     type: props?.type || "application/json",
   });

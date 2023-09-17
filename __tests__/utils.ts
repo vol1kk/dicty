@@ -23,13 +23,16 @@ function createCategory(
   };
 }
 
-function createWord(wordExtenders?: Partial<Word>, clearId = false) {
+function createWord(wordExtenders?: Partial<Word>, clearId = false): Word {
   return {
     id: clearId ? "" : "word-1",
     name: "Test Word",
     transcription: "/test-transcription/",
     synonyms: [],
     language: null,
+    easinessFactor: 2.5,
+    repetitions: 0,
+    interval: new Date(),
     createdAt: new Date(),
     shareCode: null,
     createdById: clearId ? "" : "user-1",
