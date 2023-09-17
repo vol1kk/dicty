@@ -10,12 +10,15 @@ import {
   WordSchema,
 } from "~/types/ApiTypes";
 
+// Prior to using MongoDB, we could pass any nonsensical id, and it'd work,
+// however, MongoDB wants exactly ObjectId-ish value
+const NonExistentId = "000000000000000000000000";
+
 export const wordRouter = createTRPCRouter({
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.word.findMany({
       where: { createdById: ctx.authedUser.id },
       include: { categories: { include: { meanings: true } } },
-      orderBy: { createdAt: "desc" },
     });
   }),
 
@@ -75,7 +78,7 @@ export const wordRouter = createTRPCRouter({
             where: {
               id:
                 existingMeaning?.id === undefined
-                  ? "NOT_FOUND"
+                  ? NonExistentId
                   : existingMeaning.id,
             },
             update: {
@@ -92,7 +95,7 @@ export const wordRouter = createTRPCRouter({
           where: {
             id:
               existingCategory?.id === undefined
-                ? "NOT_FOUND"
+                ? NonExistentId
                 : existingCategory.id,
           },
           update: {

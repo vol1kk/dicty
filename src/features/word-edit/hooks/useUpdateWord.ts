@@ -5,6 +5,7 @@ import { type Word } from "~/types/ApiTypes";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
+import modifyWordId from "~/utils/modifyWordId";
 
 export default function useUpdateWord(props?: Partial<HookOptions>) {
   const utils = api.useContext();
@@ -45,12 +46,14 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
   });
 
   function updateWord(word: Word) {
-    if (isAuthed) updateWordMutation(word);
+    const modifiedWord = modifyWordId(word, { appendWithId: true });
+
+    if (isAuthed) updateWordMutation(modifiedWord);
 
     if (!isAuthed) {
       setLocalWords(words => {
         const updatedWords = words.map(prevWord =>
-          prevWord.id === word.id ? word : prevWord,
+          prevWord.id === modifiedWord.id ? modifiedWord : prevWord,
         );
 
         localStorage.setItem("words", JSON.stringify(updatedWords));
