@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 import { signIn, signOut } from "next-auth/react";
 
 import cn from "~/utils/cn";
+import { env } from "~/env.mjs";
 import Modal from "~/components/Modal";
 import Overlay from "~/components/Overlay";
 import Button from "~/components/Button/Button";
@@ -16,6 +17,8 @@ import { ExportWords, ImportWords } from "~/features/import-export-words";
 
 export default function HeaderMenu() {
   const { t } = useTranslation();
+
+  const isAuthEnabled = env.NEXT_PUBLIC_AUTH_ENABLED;
 
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
@@ -43,7 +46,7 @@ export default function HeaderMenu() {
         <nav>
           <ul
             onClick={e => e.stopPropagation()}
-            className="grid grid-cols-2 gap-4 p-4 text-3xl mobile-header:mt-4 mobile-header:grid-cols-1 [&>li>button>svg]:fill-black dark:[&>li>button>svg]:fill-white"
+            className="grid grid-cols-2 gap-4 p-4 text-3xl mobile-header:mt-4 mobile-header:grid-cols-1 [&>li>*>svg]:fill-black dark:[&>li>button>svg]:fill-white"
           >
             <li>
               <ImportWords className={buttonClasses} />
@@ -51,12 +54,17 @@ export default function HeaderMenu() {
             <li>
               <ExportWords className={buttonClasses} />
             </li>
-            <li className="col-span-2 mobile-header:col-span-1">
-              <Button className={buttonClasses} onClick={authenticationHandler}>
-                <AccountIcon width={24} height={24} />
-                {isAuthed ? t("header.logout") : t("header.login")}
-              </Button>
-            </li>
+            {isAuthEnabled && (
+              <li className="col-span-2 mobile-header:col-span-1">
+                <Button
+                  className={buttonClasses}
+                  onClick={authenticationHandler}
+                >
+                  <AccountIcon width={24} height={24} />
+                  {isAuthed ? t("header.logout") : t("header.login")}
+                </Button>
+              </li>
+            )}
             <li>
               <ChangeFont />
             </li>
