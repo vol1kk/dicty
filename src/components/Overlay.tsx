@@ -1,7 +1,8 @@
 import { createPortal } from "react-dom";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import cn from "~/utils/cn";
+import useDocument from "~/hooks/useDocument";
 
 export type OverlayProps = {
   className?: string;
@@ -18,10 +19,8 @@ export default function Overlay({
   setIsOpen,
   usePortal = true,
 }: OverlayProps) {
+  const _document = useDocument();
   const overlayRef = useRef<HTMLDivElement>(null);
-  const [_document, setDocument] = useState<Document | null>(null);
-
-  useEffect(() => setDocument(document), []);
 
   useEffect(() => {
     const clickCloseHandler = () => {
@@ -92,7 +91,7 @@ export default function Overlay({
     </div>
   );
 
-  if (_document && usePortal)
+  if (usePortal && _document)
     return createPortal(
       content,
       _document.getElementById("overlay") as HTMLDivElement,
