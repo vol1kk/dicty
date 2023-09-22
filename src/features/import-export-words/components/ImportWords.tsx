@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import React from "react";
 import { useTranslation } from "next-i18next";
 
+import { useRouter } from "next/router";
 import useWords from "~/hooks/useWords";
 import { useToasts } from "~/features/toast";
 import { ImportIcon } from "~/components/Icons";
@@ -15,9 +16,17 @@ type ImportWordsProps = {
 };
 
 export default function ImportWords({ className }: ImportWordsProps) {
-  const words = useWords();
+  const router = useRouter();
   const { t } = useTranslation();
   const { addToast, updateToast } = useToasts();
+
+  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
+  const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
+
+  const words = useWords({
+    enabled: router.pathname === "/" ? true : isHeaderOpen,
+  });
+
   const { importWords, undoImport } = useImportWords({
     onError,
     onSuccess() {
@@ -41,7 +50,6 @@ export default function ImportWords({ className }: ImportWordsProps) {
       });
     },
   });
-  const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
 
   function onError(e: string) {
     addToast({

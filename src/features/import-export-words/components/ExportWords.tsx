@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "next-i18next";
 
+import { useRouter } from "next/router";
 import useWords from "~/hooks/useWords";
 import Button from "~/components/Button/Button";
 import modifyWordId from "~/utils/modifyWordId";
@@ -13,9 +14,15 @@ type ExportWordsProps = {
 };
 
 export default function ExportWords({ className }: ExportWordsProps) {
+  const router = useRouter();
   const { t } = useTranslation();
-  const { data: words } = useWords();
+
+  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
+
+  const { data: words } = useWords({
+    enabled: router.pathname === "/" ? true : isHeaderOpen,
+  });
 
   function exportWordsHandler() {
     const modifiedWords = words.map(w =>

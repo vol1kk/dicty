@@ -2,10 +2,11 @@ import { describe, it, vi, expect } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { ExportWords } from "~/features/import-export-words";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 import * as downloadDataModule from "~/features/import-export-words/utils/downloadData";
 
 function setup() {
-  const data = render(<ExportWords />);
+  const data = render(<ExportWords />, { wrapper: MemoryRouterProvider });
 
   const exportContainer = screen.getByTestId("export-words-container");
 
