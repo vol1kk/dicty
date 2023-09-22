@@ -83,7 +83,7 @@ export default function Overlay({
       data-testid="overlay"
       className={cn(
         !isOpen && "invisible",
-        "fixed inset-0 z-10 text-black dark:text-gray-100",
+        "fixed inset-0 z-10 overflow-y-auto text-black dark:text-gray-100",
         className,
       )}
     >

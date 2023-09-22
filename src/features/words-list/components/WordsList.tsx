@@ -41,10 +41,7 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
   return (
     <ul data-testid="words-list" className="grid gap-4">
       {data.map(word => (
-        <li
-          key={word.id}
-          className="rounded-md bg-gray-100 p-4 dark:bg-gray-800"
-        >
+        <li key={word.id}>
           <Word>
             <Word.Header
               aria-expanded={false}

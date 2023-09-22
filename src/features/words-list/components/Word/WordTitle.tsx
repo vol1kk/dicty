@@ -4,15 +4,24 @@ import { ChevronIcon } from "~/components/Icons";
 
 export type WordTitleProps = {
   name: string;
+  classNameHeader?: string;
+  classNameTranscription?: string;
   transcription: string;
 };
 
-export default function WordTitle({ name, transcription }: WordTitleProps) {
+export default function WordTitle({
+  name,
+  transcription,
+  classNameHeader,
+  classNameTranscription,
+}: WordTitleProps) {
   return (
     <div data-testid="word-title">
-      <h2 className="text-4xl font-bold">
+      <h2 className={cn("text-4xl font-bold", classNameHeader)}>
         <Button className="flex items-center gap-2 rounded-md">
-          <span className="max-w-[25ch] truncate pb-1">{name}</span>
+          <span className="max-w-[25ch] truncate pb-1 mobile-small:max-w-[5ch]">
+            {name}
+          </span>
           <ChevronIcon
             height={20}
             aria-hidden={true}
@@ -24,7 +33,10 @@ export default function WordTitle({ name, transcription }: WordTitleProps) {
       </h2>
       <h3
         aria-hidden={true}
-        className="text-lg text-primary"
+        className={cn(
+          "text-lg text-primary mobile:text-center",
+          classNameTranscription,
+        )}
         onClick={e => e.stopPropagation()}
       >
         {transcription}

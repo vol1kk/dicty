@@ -12,7 +12,7 @@ export default function WordEdit({ wordId }: WordEditProps) {
       data-testid="word-edit"
       href={"/edit/" + wordId}
       onClick={e => e.stopPropagation()}
-      className="group rounded-full bg-primary bg-opacity-30 p-4 outline-2 outline-offset-2 outline-primary transition-transform hover:scale-105 focus-visible:outline dark:bg-gray-900 [&>svg]:fill-primary dark:[&>svg]:fill-[#757575]"
+      className="group flex justify-center rounded-full bg-primary bg-opacity-30 p-4 outline-2 outline-offset-2 outline-primary transition-transform hover:scale-105 focus-visible:outline dark:bg-gray-900 mobile:w-full mobile:rounded-md mobile:p-2.5 [&>svg]:fill-primary dark:[&>svg]:fill-[#757575]"
     >
       <span className="sr-only">Edit word</span>
       <EditIcon

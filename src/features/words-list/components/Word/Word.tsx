@@ -7,6 +7,7 @@ import WordHeader from "~/features/words-list/components/Word/WordHeader";
 import WordCategory from "~/features/words-list/components/Word/WordCategory";
 import WordMeanings from "~/features/words-list/components/Word/WordMeanings";
 import WordSynonyms from "~/features/words-list/components/Word/WordSynonyms";
+import cn from "~/utils/cn";
 
 type WordProps = {
   className?: string;
@@ -14,8 +15,18 @@ type WordProps = {
   onClick?: (e: React.MouseEvent) => void;
 };
 
-export default function Word({ children, ...props }: WordProps) {
-  return <div {...props}>{children}</div>;
+export default function Word({ children, className, ...props }: WordProps) {
+  return (
+    <div
+      className={cn(
+        "break-words rounded-md bg-gray-100 p-4 dark:bg-gray-800",
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
 }
 
 Word.Edit = WordEdit;

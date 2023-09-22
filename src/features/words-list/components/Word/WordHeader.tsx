@@ -10,7 +10,10 @@ export default function WordHeader({
 }) {
   return (
     <div
-      className={cn("flex items-center justify-between", className)}
+      className={cn(
+        "flex items-center justify-between mobile:mb-2 mobile:flex-col",
+        className,
+      )}
       {...props}
     >
       {props?.children}

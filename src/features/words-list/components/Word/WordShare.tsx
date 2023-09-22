@@ -52,7 +52,7 @@ export default function WordShare({ code, wordId }: WordShareProps) {
         tabIndex={shareCode ? 0 : -1}
         defaultValue={shareCode ?? ""}
         placeholder={t("form.code.generate")}
-        className="mr-2 max-w-[18ch] border-r-[1px] border-r-[#adb2b8] bg-transparent pr-2 outline-0"
+        className="mr-2 w-full max-w-[18ch] border-r-[1px] border-r-[#adb2b8] bg-transparent pr-2 outline-0"
       />
       <Button onClick={buttonClickHandler} className="[&>svg]:fill-primary">
         {shareCode ? (

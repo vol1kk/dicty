@@ -16,7 +16,8 @@ const config = {
       },
       screens: {
         mobile: { max: "425px" },
-        "mobile-header": { max: "525px" },
+        "mobile-header": { max: "600px" },
+        "mobile-small": { max: "300px" },
       },
       boxShadow: {
         "3xl": "0 25px 60px 15px rgba(0, 0, 0, 0.25)",
