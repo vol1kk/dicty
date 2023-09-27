@@ -15,6 +15,8 @@ export default function useDeleteWord(props?: Partial<HookOptions>) {
 
   const { mutate: deleteWordMutation } = api.words.deleteWord.useMutation({
     async onMutate(word) {
+      if (props?.onSuccess) props?.onSuccess();
+
       await utils.words.getAll.cancel();
 
       const previousData = utils.words.getAll.getData();
@@ -26,8 +28,6 @@ export default function useDeleteWord(props?: Partial<HookOptions>) {
 
       return { previousData };
     },
-
-    onSuccess: props?.onSuccess,
 
     onSettled() {
       utils.words.getAll.invalidate().catch(console.error);

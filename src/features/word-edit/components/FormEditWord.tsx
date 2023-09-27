@@ -22,9 +22,10 @@ export type FormEditWordProps = {
 
 export default function FormEditWord({ word }: FormEditWordProps) {
   const { t } = useTranslation();
-  const { addToast, updateToast } = useToasts();
   const navigation = useRouter();
-  const previousToast = useRef(toastsCounter[word.id] || 0);
+
+  const prevToast = useRef(toastsCounter[word.id] || 0);
+  const { toasts, addToast, updateToast, removeToast } = useToasts();
 
   const closeToastOnSuccess = (id: string) =>
     updateToast(id, {
@@ -36,26 +37,22 @@ export default function FormEditWord({ word }: FormEditWordProps) {
   });
 
   const undoUpdate = useUpdateWord({
-    onSuccess() {
-      if (previousToast.current)
-        closeToastOnSuccess(
-          `${toastUpdate}-${word.id}-${previousToast.current}`,
-        );
-    },
+    onSuccess: closeToastOnSuccess.bind(
+      undefined,
+      `${toastUpdate}-${word.id}-${prevToast.current}`,
+    ),
   });
 
   const updateWord = useUpdateWord({
     onSuccess() {
       // If previous toast exists, delete it
-      if (previousToast)
-        closeToastOnSuccess(
-          `${toastUpdate}-${word.id}-${previousToast.current}`,
-        );
+      if (prevToast)
+        closeToastOnSuccess(`${toastUpdate}-${word.id}-${prevToast.current}`);
 
       // Increment by 1 to have unique key
       const nextToast = incrementToastsCounter(
         word.id,
-        previousToast,
+        prevToast,
         toastsCounter,
       );
 
@@ -73,6 +70,12 @@ export default function FormEditWord({ word }: FormEditWordProps) {
     },
 
     onError(e: string) {
+      const optimisticToast = toasts.find(
+        t => t.id === `${toastDelete}-${word.id}`,
+      );
+
+      if (optimisticToast) removeToast(optimisticToast.id);
+
       addToast({
         type: "error",
         autoClose: false,
@@ -97,6 +100,12 @@ export default function FormEditWord({ word }: FormEditWordProps) {
     },
 
     onError(e: string) {
+      const optimisticToast = toasts.find(
+        t => t.id === `${toastDelete}-${word.id}`,
+      );
+
+      if (optimisticToast) removeToast(optimisticToast.id);
+
       addToast({
         type: "error",
         autoClose: false,

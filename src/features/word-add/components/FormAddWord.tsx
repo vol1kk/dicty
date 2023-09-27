@@ -4,11 +4,11 @@ import { useTranslation } from "next-i18next";
 import { useToasts } from "~/features/toast";
 import Accordion from "~/components/Accordion";
 import Button from "~/components/Button/Button";
+import { CloseIcon } from "~/components/Icons";
 import { useCreateWord } from "~/features/word-add";
 import useSessionData from "~/store/useSessionData";
 import FormWord, { formTemplate } from "~/features/shared/ui/Form";
 import FormImportWord from "~/features/word-add/components/FormImportWord";
-import { CloseIcon } from "~/components/Icons";
 
 export default function FormAddWord() {
   const { addToast } = useToasts();
@@ -29,7 +29,9 @@ export default function FormAddWord() {
       });
     },
 
-    onError(e: string) {
+    onError(e) {
+      // TODO: Get ID to remove optimistic toast
+
       addToast({
         type: "error",
         text: t("toast.createWord.error", { error: e }),

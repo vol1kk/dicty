@@ -16,6 +16,8 @@ export default function useCreateWord(props?: Partial<HookOptions>) {
 
   const { mutate } = api.words.createWord.useMutation({
     async onMutate(word) {
+      if (props?.onSuccess) props?.onSuccess();
+
       await utils.words.getAll.cancel();
 
       const previousData = utils.words.getAll.getData();
@@ -26,8 +28,6 @@ export default function useCreateWord(props?: Partial<HookOptions>) {
 
       return { previousData };
     },
-
-    onSuccess: props?.onSuccess,
 
     onSettled() {
       utils.words.invalidate().catch(console.error);
