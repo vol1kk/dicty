@@ -1,5 +1,5 @@
+import parseLocalWord from "~/utils/parseDate";
 import { type Word, WordSchema } from "~/types/ApiTypes";
-import parseLocalWord from "~/utils/parseLocalWords";
 
 export default function readFileAsync(file: File): Promise<Word[]> {
   return new Promise((resolve, reject) => {

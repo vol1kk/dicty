@@ -8,12 +8,13 @@ import Modal from "~/components/Modal";
 import Overlay from "~/components/Overlay";
 import Button from "~/components/Button/Button";
 import ChangeFont from "~/features/change-font";
-import { AccountIcon } from "~/components/Icons";
+import { AccountIcon, QuizIcon } from "~/components/Icons";
 import ChangeTheme from "~/features/change-theme";
 import useHeaderData from "~/store/useHeaderData";
 import useSessionData from "~/store/useSessionData";
 import ChangeLanguage from "~/features/change-language";
 import { ExportWords, ImportWords } from "~/features/import-export-words";
+import Link from "next/link";
 
 export default function HeaderMenu() {
   const { t } = useTranslation();
@@ -31,7 +32,7 @@ export default function HeaderMenu() {
   }
 
   const buttonClasses =
-    "hover:scale-105 hover:bg-opacity-100 dark:hover:bg-opacity-100 flex h-28 w-full items-center justify-center gap-2 rounded-md bg-gray-400 bg-opacity-60 px-2 transition-[opacity,_transform] dark:bg-gray-900 dark:bg-opacity-60 mobile:h-20";
+    "hover:scale-105 hover:bg-opacity-100 dark:hover:bg-opacity-100 flex min-w-[170px] h-28 w-full items-center justify-center gap-2 rounded-md bg-gray-400 bg-opacity-60 px-2 transition-[opacity,_transform] dark:bg-gray-900 dark:bg-opacity-60 mobile-header:h-20";
 
   return (
     <Overlay
@@ -46,13 +47,23 @@ export default function HeaderMenu() {
         <nav>
           <ul
             onClick={e => e.stopPropagation()}
-            className="grid grid-cols-2 gap-4 p-4 text-3xl mobile-header:mt-4 mobile-header:grid-cols-1 [&>li>*>svg]:fill-black dark:[&>li>button>svg]:fill-white"
+            className="grid grid-cols-2 gap-4 p-4 text-3xl mobile-header:mt-4 mobile-header:grid-cols-1 [&_svg]:fill-black dark:[&_svg]:fill-white"
           >
             <li>
               <ImportWords className={buttonClasses} />
             </li>
             <li>
               <ExportWords className={buttonClasses} />
+            </li>
+            <li className="col-span-2 mobile-header:col-span-1">
+              <Link
+                className={buttonClasses}
+                href="/quiz"
+                onClick={() => setIsHeaderOpen(false)}
+              >
+                <QuizIcon width={24} height={24} />
+                Quiz
+              </Link>
             </li>
             {isAuthEnabled && (
               <li className="col-span-2 mobile-header:col-span-1">

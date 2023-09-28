@@ -9,6 +9,14 @@
   "header.changeFont": "Change Font",
   "header.theme": "Toggle Dark Theme",
 
+  "quiz.next": "Next",
+  "quiz.finish": "Finish",
+
+  "quality.options": "Rate knowledge of this word",
+  "quality.bad": "Bad",
+  "quality.moderate": "Moderate",
+  "quality.good": "Good",
+
   "word.sort.by_query": "Search for your word...",
 
   "words.sort.by_lang.default": "Language",

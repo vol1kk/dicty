@@ -15,6 +15,16 @@ import {
 const NonExistentId = "000000000000000000000000";
 
 export const wordRouter = createTRPCRouter({
+  getWordsToRevise: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.word.findMany({
+      where: {
+        createdById: ctx.authedUser.id,
+        interval: { lte: new Date() },
+      },
+      include: { categories: { include: { meanings: true } } },
+    });
+  }),
+
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.word.findMany({
       where: { createdById: ctx.authedUser.id },
@@ -119,6 +129,9 @@ export const wordRouter = createTRPCRouter({
             transcription: updatedWord.transcription,
             language: updatedWord.language,
             synonyms: updatedWord.synonyms,
+            interval: updatedWord.interval,
+            repetitions: updatedWord.repetitions,
+            easinessFactor: updatedWord.easinessFactor,
             categories: {
               upsert: updatedCategories,
               deleteMany: deleted.categories.map(m => ({ id: m })),

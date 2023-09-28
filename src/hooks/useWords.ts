@@ -2,9 +2,9 @@ import { useEffect } from "react";
 
 import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
+import parseLocalWord from "~/utils/parseDate";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
-import parseLocalWord from "~/utils/parseLocalWords";
 
 type UseWordProps = {
   enabled?: boolean;
