@@ -1,3 +1,8 @@
+export type SuperMemoValues = {
+  easinessFactor: number;
+  repetitions: number;
+};
+
 export class SuperMemo {
   private static calculateEasinessFactor(
     currentEasinessFactor: number,
@@ -29,7 +34,7 @@ export class SuperMemo {
     data: T[],
   ): T | undefined {
     const sortedByDate = data.sort(
-      (a, b) => a.interval.getTime() - b.interval.getTime(),
+      (a, b) => new Date(a.interval).getTime() - new Date(b.interval).getTime(),
     );
     return sortedByDate.at(0);
   }

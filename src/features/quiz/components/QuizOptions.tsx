@@ -1,63 +1,62 @@
-import {
-  parseQuality,
-  Qualities,
-  type QualityValues,
-  setRevisedWords,
-  SuperMemo,
-} from "~/features/quiz";
-import React, { type MouseEvent, type SetStateAction } from "react";
-import Button, { type ButtonProps } from "~/components/Button/Button";
-import cn from "~/utils/cn";
-import { useUpdateWord } from "~/features/word-edit";
-import { useTranslation } from "next-i18next";
-import { type Word } from "~/types/ApiTypes";
+import React from "react";
 import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+
+import { type Word } from "~/types/ApiTypes";
+import { Button } from "~/components/Button";
+import { useUpdateWord } from "~/features/word-edit";
+import {
+  Qualities,
+  getRevisedWord,
+  setRevisedWords,
+  type QualityValues,
+} from "~/features/quiz";
 
 type QuizOptionsProps = {
+  words: Word[];
   isClicked: boolean;
   selectedWord: Word;
-  revisedWordsIds: string[];
-  setRevisedWordsIds: React.Dispatch<SetStateAction<string[]>>;
-  isLastWord: boolean;
-  setIsClicked: React.Dispatch<SetStateAction<boolean>>;
+  setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  setRevisedIds: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default function QuizOptions({
+  words,
   isClicked,
-  isLastWord,
   selectedWord,
-  setRevisedWordsIds,
-  revisedWordsIds,
+  setRevisedIds,
   setIsClicked,
 }: QuizOptionsProps) {
   const router = useRouter();
   const { t } = useTranslation();
+
   const updateWord = useUpdateWord();
 
+  const isLastWord = words.length === 1;
+
   const handleNext = function getNext() {
+    if (isLastWord) void router.replace("/quiz");
+
     if (!isLastWord) {
       setIsClicked(false);
-      if (!revisedWordsIds.includes(selectedWord.id))
-        setRevisedWordsIds(prev => [...prev, selectedWord.id]);
-    } else void router.replace("/");
+      setRevisedIds(revisedIds =>
+        revisedIds.includes(selectedWord.id)
+          ? revisedIds
+          : [...revisedIds, selectedWord.id],
+      );
+    }
   };
 
-  const handleQualitySelect = function handleQualitySelect(
-    e: MouseEvent<HTMLButtonElement>,
-  ) {
-    setIsClicked(true);
+  const handleQualitySelect: React.MouseEventHandler<HTMLButtonElement> =
+    function handleQualitySelect(e) {
+      setIsClicked(true);
 
-    const quality = e.currentTarget.dataset.quality as QualityValues;
-    const revisingData = SuperMemo.getUpdatedValues(
-      selectedWord.easinessFactor,
-      selectedWord.repetitions,
-      parseQuality(quality),
-    );
-    const updatedWord = { ...selectedWord, ...revisingData };
+      const quality = e.currentTarget.dataset.quality as QualityValues;
+      const updatedWord = getRevisedWord(selectedWord, quality);
 
-    updateWord(updatedWord);
-    setRevisedWords(updatedWord, quality);
-  };
+      updateWord(updatedWord);
+      setRevisedWords(updatedWord, quality);
+    };
 
   return (
     <section className="flex flex-col gap-4">
@@ -68,36 +67,22 @@ export default function QuizOptions({
         <div className="grid auto-cols-fr grid-flow-col gap-4 mobile:grid-flow-row">
           {!isClicked ? (
             Qualities.map(quality => (
-              <CustomButton
-                className="uppercase tracking-widest"
+              <Button
+                className="p-4 uppercase tracking-widest transition-transform hover:scale-105"
                 key={quality.dataset}
                 data-quality={quality.dataset}
                 onClick={handleQualitySelect}
               >
                 {t(quality.name)}
-              </CustomButton>
+              </Button>
             ))
           ) : (
-            <CustomButton onClick={handleNext}>
+            <Button className="p-4" onClick={handleNext}>
               {isLastWord ? t("quiz.finish") : t("quiz.next")}
-            </CustomButton>
+            </Button>
           )}
         </div>
       </div>
     </section>
-  );
-}
-
-function CustomButton({ children, className, ...props }: ButtonProps) {
-  return (
-    <Button
-      className={cn(
-        "rounded-md bg-gray-300 p-4 transition-transform hover:scale-105 dark:bg-gray-800",
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </Button>
   );
 }

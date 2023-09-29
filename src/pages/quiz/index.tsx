@@ -1,48 +1,33 @@
+import React, { useEffect } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { type GetStaticProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { useEffect, useMemo, useState } from "react";
 
 import Spinner from "~/components/Spinner";
 import NotFound from "~/components/NotFound";
-import { type Word as IWord } from "~/types/ApiTypes";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
-import { SuperMemo, useWordsToRevise } from "~/features/quiz";
-import QuizWord from "~/features/quiz/components/QuizWord";
-import QuizOptions from "~/features/quiz/components/QuizOptions";
+import { useWordsToRevise } from "~/features/quiz";
+import useRevisedWords, {
+  type RevisedWord,
+} from "~/features/quiz/store/useRevisedWords";
 
 export default function QuizPage() {
   const { data: words, isLoading } = useWordsToRevise();
-
-  // probably in quiz/start
-  const [isClicked, setIsClicked] = useState(false);
-
-  // probably in quiz/ and show loading spinner inside a button
-  const [isCompletelyLoaded, setIsCompletelyLoaded] = useState(false);
-
-  // probably in quiz/start
-  const [revisedWordsIds, setRevisedWordsIds] = useState<string[]>([]);
-  const unrevisedWords = useMemo(
-    () => words.filter(w => !revisedWordsIds.includes(w.id)),
-    [words, revisedWordsIds],
-  );
-
-  const [selectedWord, setSelectedWord] = useState<IWord | null | undefined>(
-    null,
-  );
+  const setRevisedWords = useRevisedWords(state => state.setRevisedWords);
 
   useEffect(() => {
-    if (!isLoading) {
-      const initialSelectedWord =
-        SuperMemo.retrieveShortestInterval(unrevisedWords);
+    const localData = localStorage.getItem("revisedWords");
+    const currentDate = new Date().toISOString();
 
-      setSelectedWord(initialSelectedWord);
-      if (initialSelectedWord || initialSelectedWord === undefined)
-        setIsCompletelyLoaded(true);
+    if (localData) {
+      const parsedData = JSON.parse(localData) as Record<string, RevisedWord[]>;
+      const revisedToday = parsedData[currentDate];
+      if (revisedToday) setRevisedWords(revisedToday);
     }
-  }, [unrevisedWords, isLoading]);
+  }, [setRevisedWords]);
 
-  if (!isCompletelyLoaded)
+  if (isLoading)
     return (
       <main className="grid place-content-center">
         <Spinner text={"Loading"} dimensions={64} />
@@ -56,13 +41,6 @@ export default function QuizPage() {
       </main>
     );
 
-  if (!selectedWord)
-    return (
-      <main className="grid place-content-center">
-        <NotFound dimensions={64} text="Couldn't find the word!" />
-      </main>
-    );
-
   return (
     <>
       <Head>
@@ -71,15 +49,15 @@ export default function QuizPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <QuizWord word={selectedWord} isClicked={isClicked} />
-        <QuizOptions
-          isClicked={isClicked}
-          selectedWord={selectedWord}
-          setIsClicked={setIsClicked}
-          revisedWordsIds={revisedWordsIds}
-          setRevisedWordsIds={setRevisedWordsIds}
-          isLastWord={unrevisedWords.length === 1}
-        />
+        <Link
+          as="/quiz"
+          href={{
+            pathname: "/quiz/start",
+            query: { words: JSON.stringify(words) },
+          }}
+        >
+          Test
+        </Link>
       </main>
     </>
   );

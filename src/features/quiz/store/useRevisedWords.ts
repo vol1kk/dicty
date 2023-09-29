@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import { type Word } from "~/types/ApiTypes";
-import { parseQuality, type QualityValues, SuperMemo } from "~/features/quiz";
+import { type QualityValues } from "~/features/quiz";
 
 type UseRevisedWordsProps = {
   revisedWords: RevisedWord[];
@@ -13,25 +13,18 @@ const useRevisedWords = create<UseRevisedWordsProps>()(set => ({
   setRevisedWords: words => set({ revisedWords: words }),
 }));
 
-export type RevisedWord = Pick<
-  Word,
-  "id" | "name" | "easinessFactor" | "repetitions" | "interval"
-> & { quality: QualityValues };
+export type RevisedWord = Pick<Word, "id" | "name" | "interval"> & {
+  quality: QualityValues;
+};
 
 export function setRevisedWords(word: Word, quality: QualityValues) {
   const localStorageKey = "revisedWords";
 
-  const revisingData = SuperMemo.getUpdatedValues(
-    word.easinessFactor,
-    word.repetitions,
-    parseQuality(quality),
-  );
-
   const transformedWord: RevisedWord = {
     id: word.id,
     name: word.name,
+    interval: word.interval,
     quality,
-    ...revisingData,
   };
 
   const localData = localStorage.getItem(localStorageKey);
