@@ -35,6 +35,7 @@ export default function ExportWords({ className }: ExportWordsProps) {
 
   return (
     <Button
+      variant="darker"
       className={className}
       onClick={exportWordsHandler}
       data-testid="export-words-container"

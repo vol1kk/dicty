@@ -18,7 +18,7 @@ export default function WordTitle({
   return (
     <div data-testid="word-title">
       <h2 className={cn("text-4xl font-bold", classNameHeader)}>
-        <Button className="flex items-center gap-2 rounded-md">
+        <Button className="flex items-center gap-2">
           <span className="max-w-[25ch] truncate pb-1 mobile-small:max-w-[5ch]">
             {name}
           </span>

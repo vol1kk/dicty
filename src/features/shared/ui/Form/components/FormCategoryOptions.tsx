@@ -47,7 +47,7 @@ export default function CategoryOptions({
       className="relative p-2"
       tabIndex={-1}
       renderTitle={() => (
-        <Button className="rounded-full bg-primary bg-opacity-30 p-2 dark:bg-gray-800">
+        <Button className="rounded-full bg-primary bg-opacity-30 p-2">
           <span className="sr-only">{t("form.word.category.edit")}</span>
           <DotsIcon className="h-[16px] w-[16px] fill-primary dark:fill-white" />
         </Button>

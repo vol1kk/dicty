@@ -54,7 +54,10 @@ export default function WordShare({ code, wordId }: WordShareProps) {
         placeholder={t("form.code.generate")}
         className="mr-2 w-full max-w-[18ch] border-r-[1px] border-r-[#adb2b8] bg-transparent pr-2 outline-0"
       />
-      <Button onClick={buttonClickHandler} className="[&>svg]:fill-primary">
+      <Button
+        onClick={buttonClickHandler}
+        className="bg-transparent dark:bg-transparent [&>svg]:fill-primary"
+      >
         {shareCode ? (
           <CloseIcon aria-label={t("form.code.delete")} />
         ) : (

@@ -83,6 +83,7 @@ export default function FormAddWord() {
             return (
               <>
                 <Button
+                  variant="darker"
                   isSubmit={true}
                   disabled={!isValid}
                   data-testid="button-word-create"
@@ -94,6 +95,7 @@ export default function FormAddWord() {
                   {t("form.word.button.add")}
                 </Button>
                 <Button
+                  variant="darker"
                   data-testid="button-form-close"
                   className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
                   onClick={handleFormResetWrapper}

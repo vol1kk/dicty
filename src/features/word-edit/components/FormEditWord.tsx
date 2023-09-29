@@ -131,6 +131,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
       renderButtons={(isValid, handleFormReset) => (
         <>
           <Button
+            variant="darker"
             data-testid="button-save"
             disabled={!isValid}
             isSubmit={true}
@@ -142,6 +143,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
             {t("form.word.button.save")}
           </Button>
           <Button
+            variant="darker"
             data-testid="button-back"
             className="hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500"
             onClick={() => void navigation.back()}
@@ -149,6 +151,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
             {t("form.word.button.cancel")}
           </Button>
           <Button
+            variant="darker"
             data-testid="button-delete"
             onClick={deleteHandler.bind(undefined, word.id)}
             className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"

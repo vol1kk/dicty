@@ -145,7 +145,7 @@ export default function FormWord({
                 </div>
               )}
             </FieldArray>
-            <div className="flex flex-wrap gap-4 [&>button:first-child]:flex-grow-[6] [&>button:nth-child(2)]:flex-grow-[2] [&>button]:flex-grow [&>button]:rounded-md [&>button]:bg-gray-300 [&>button]:px-4 [&>button]:py-2 [&>button]:transition-colors [&>button]:dark:bg-gray-900">
+            <div className="flex flex-wrap gap-4 [&>button:first-child]:flex-grow-[6] [&>button:nth-child(2)]:flex-grow-[2] [&>button]:flex-grow [&>button]:px-4 [&>button]:py-2 [&>button]:transition-colors">
               {formButtons}
             </div>
           </FormikForm>

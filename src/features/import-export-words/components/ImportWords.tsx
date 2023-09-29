@@ -79,6 +79,7 @@ export default function ImportWords({ className }: ImportWordsProps) {
 
   return (
     <Button
+      variant="darker"
       className={className}
       onClick={triggerInputHandler}
       data-testid="import-container"

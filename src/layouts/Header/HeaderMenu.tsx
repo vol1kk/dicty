@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { signIn, signOut } from "next-auth/react";
 
@@ -8,16 +9,16 @@ import Modal from "~/components/Modal";
 import Overlay from "~/components/Overlay";
 import Button from "~/components/Button/Button";
 import ChangeFont from "~/features/change-font";
-import { AccountIcon, QuizIcon } from "~/components/Icons";
 import ChangeTheme from "~/features/change-theme";
 import useHeaderData from "~/store/useHeaderData";
 import useSessionData from "~/store/useSessionData";
 import ChangeLanguage from "~/features/change-language";
+import { AccountIcon, QuizIcon } from "~/components/Icons";
 import { ExportWords, ImportWords } from "~/features/import-export-words";
-import Link from "next/link";
 
 export default function HeaderMenu() {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const isAuthEnabled = env.NEXT_PUBLIC_AUTH_ENABLED;
 
@@ -31,8 +32,13 @@ export default function HeaderMenu() {
     if (!isAuthed) void signIn();
   }
 
+  function quizHandler() {
+    void router.push("/quiz");
+    setIsHeaderOpen(false);
+  }
+
   const buttonClasses =
-    "hover:scale-105 hover:bg-opacity-100 dark:hover:bg-opacity-100 flex min-w-[170px] h-28 w-full items-center justify-center gap-2 rounded-md bg-gray-400 bg-opacity-60 px-2 transition-[opacity,_transform] dark:bg-gray-900 dark:bg-opacity-60 mobile-header:h-20";
+    "hover:scale-105 hover:bg-opacity-100 dark:hover:bg-opacity-100 flex min-w-[170px] h-28 w-full items-center justify-center gap-2 bg-gray-400 bg-opacity-60 px-2 transition-[opacity,_transform] dark:bg-opacity-60 mobile-header:h-20";
 
   return (
     <Overlay
@@ -56,18 +62,19 @@ export default function HeaderMenu() {
               <ExportWords className={buttonClasses} />
             </li>
             <li className="col-span-2 mobile-header:col-span-1">
-              <Link
+              <Button
+                variant="darker"
+                onClick={quizHandler}
                 className={buttonClasses}
-                href="/quiz"
-                onClick={() => setIsHeaderOpen(false)}
               >
                 <QuizIcon width={24} height={24} />
                 Quiz
-              </Link>
+              </Button>
             </li>
             {isAuthEnabled && (
               <li className="col-span-2 mobile-header:col-span-1">
                 <Button
+                  variant="darker"
                   className={buttonClasses}
                   onClick={authenticationHandler}
                 >
