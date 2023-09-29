@@ -27,10 +27,16 @@ export default function RootLayout({ children }: LayoutProps) {
   const getFont = FONTS.get(font) ?? "font-poppins";
   const sessionData = useSession();
 
+  // Initial theme & font values
   useEffect(() => {
     if (once) {
-      const localTheme = localStorage.getItem("theme") ?? "light";
-      const localFont = localStorage.getItem("font") ?? "Serif";
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      const localTheme =
+        localStorage.getItem("theme") ?? prefersDark ? "dark" : "light";
+
+      const localFont = localStorage.getItem("font") ?? "Sans-Serif";
 
       setFont(localFont);
       setTheme(localTheme);
@@ -39,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps) {
     }
   }, [setFont, setTheme]);
 
+  // Change Theme
   useEffect(() => {
     if (isDarkTheme) {
       document.documentElement.classList.add("dark", "bg-gray-900");
@@ -47,6 +54,7 @@ export default function RootLayout({ children }: LayoutProps) {
     }
   }, [isDarkTheme]);
 
+  // Setting token & session for custom store
   useEffect(() => {
     if (sessionData.data?.user) {
       setToken(sessionData.data.user.accessToken);
