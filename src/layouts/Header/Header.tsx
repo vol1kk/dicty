@@ -19,7 +19,7 @@ export default function Header() {
   }
 
   return (
-    <header className="mb-10">
+    <header className="mb-8">
       <nav className="relative z-20 grid grid-cols-[auto,_1fr] items-center">
         <ButtonBurger
           ariaLabel={t("header.openMenu")}
@@ -28,7 +28,7 @@ export default function Header() {
         />
         <Link
           href="/"
-          className="place-self-center rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline [&>svg]:fill-black dark:[&>svg]:fill-white"
+          className="mr-[24px] place-self-center rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline [&>svg]:fill-black dark:[&>svg]:fill-white"
         >
           <DictionaryIcon
             width={48}
