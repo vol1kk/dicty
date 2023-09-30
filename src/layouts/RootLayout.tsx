@@ -30,13 +30,13 @@ export default function RootLayout({ children }: LayoutProps) {
   // Initial theme & font values
   useEffect(() => {
     if (once) {
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-      const localTheme =
-        localStorage.getItem("theme") ?? prefersDark ? "dark" : "light";
+      const defaultTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
 
-      const localFont = localStorage.getItem("font") ?? "Sans-Serif";
+      const localTheme = localStorage.getItem("theme") || defaultTheme;
+      const localFont = localStorage.getItem("font") || "Sans-Serif";
 
       setFont(localFont);
       setTheme(localTheme);
