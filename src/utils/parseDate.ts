@@ -1,5 +1,5 @@
 export default function parseDate<
-  T extends { createdAt: unknown; interval: unknown },
+  T extends { createdAt?: unknown; interval?: unknown },
 >(data: T) {
   const createdAt = data.createdAt;
   const interval = data.interval;

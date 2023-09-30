@@ -21,8 +21,8 @@ export class SuperMemo {
     let intervalDays: number;
 
     if (repetitions === 1) intervalDays = 1;
-    if (repetitions === 2) intervalDays = 3; // reduced from 6
-    intervalDays = Math.round(repetitions * easinessFactor);
+    else if (repetitions === 2) intervalDays = 3; // reduced from 6
+    else intervalDays = Math.round(repetitions * easinessFactor);
 
     const newIntervalDate = new Date();
     newIntervalDate.setDate(newIntervalDate.getDate() + intervalDays);

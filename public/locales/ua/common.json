@@ -9,12 +9,18 @@
   "header.changeFont": "Змінити шрифт",
   "header.changeTheme": "Перемкнути Темну Тему",
 
+  "revisions.name": "Ревізії",
+  "revisions.start": "Почати Ревізію",
+  "revisions.word":  "Слово",
+  "revisions.prev_rating":  "Попередній рейтинг",
+  "revisions.next_revision":  "Наступна ревізія",
+
   "quiz.next": "Наступне",
   "quiz.finish": "Завершити",
 
   "quality.options": "Як гарно ви знаєте слово?",
   "quality.bad": "Погано",
-  "quality.moderate": "Трішки",
+  "quality.moderate": "Помірно",
   "quality.good": "Добре",
 
   "word.sort.by_query": "Знайти слово...",

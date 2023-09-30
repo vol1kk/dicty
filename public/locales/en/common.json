@@ -9,6 +9,12 @@
   "header.changeFont": "Change Font",
   "header.theme": "Toggle Dark Theme",
 
+  "revisions.name": "Revisions",
+  "revisions.start": "Start Revising",
+  "revisions.word":  "Word",
+  "revisions.prev_rating":  "Previous Rating",
+  "revisions.next_revision":  "Next Revision",
+
   "quiz.next": "Next",
   "quiz.finish": "Finish",
 
