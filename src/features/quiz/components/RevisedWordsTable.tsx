@@ -23,8 +23,20 @@ export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
   useEffect(() => {
     const localData = localStorage.getItem("revisedWords");
 
-    if (localData)
-      setRevisedWords(JSON.parse(localData) as Record<string, RevisedWord[]>);
+    if (localData) {
+      const parsedData = JSON.parse(localData) as Record<string, RevisedWord[]>;
+      const parsedDates = Object.keys(parsedData);
+
+      const today = new Date().toLocaleDateString("en-us");
+      const revisedWordsTodayInd = parsedDates.findIndex(d => d === today);
+
+      setDateKeyInd(
+        revisedWordsTodayInd !== 1
+          ? revisedWordsTodayInd
+          : parsedDates.length - 1,
+      );
+      setRevisedWords(parsedData);
+    }
   }, [setRevisedWords]);
 
   const selectedDate = revisionDates[dateKeyInd];
@@ -36,7 +48,7 @@ export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
   const selectedRevision = revisedWords[selectedDate]?.map(parseDate);
 
   return (
-    <table className="w-full table-fixed [&_th]:p-2 [&_tr]:text-center">
+    <table className="w-full table-fixed border-separate border-spacing-0 [&_tr>*]:p-2 [&_tr]:text-center">
       <caption className="mb-2 text-3xl">
         <div className="grid grid-cols-[1fr,_1fr,_1fr] place-items-center gap-4 [&_button:hover>_svg]:dark:fill-primary [&_button:hover]:scale-110 [&_button]:rounded-full [&_button]:bg-primary [&_button]:bg-opacity-30 [&_button]:p-4 [&_button]:transition-transform [&_svg]:fill-primary [&_svg]:dark:fill-gray-600">
           {dateKeyInd >= 1 && (
@@ -65,14 +77,14 @@ export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
           )}
         </div>
       </caption>
-      <thead className="rounded-md first:[&_th]:rounded-l-md last:[&_th]:rounded-r-md [&_tr]:bg-gray-200 dark:[&_tr]:bg-gray-800">
+      <thead className="rounded-md first:[&_th]:rounded-l-md last:[&_th]:rounded-r-md [&_tr]:bg-gray-300 dark:[&_tr]:bg-gray-800">
         <tr>
           <th>{t("revisions.word")}</th>
           <th>{t("revisions.prev_rating")}</th>
           <th>{t("revisions.next_revision")}</th>
         </tr>
       </thead>
-      <tbody className="[&_tr]:border-b-[1px] [&_tr]:border-b-gray-300 last:[&_tr]:border-b-0 even:[&_tr]:bg-gray-200 dark:[&_tr]:border-b-gray-700 dark:even:[&_tr]:bg-gray-800">
+      <tbody className="even:[&>tr]:bg-gray-300 dark:even:[&>tr]:bg-gray-800 last:[&_td]:rounded-r-md [&_th]:rounded-l-md">
         {selectedRevision?.map(w => (
           <tr key={w.id}>
             <th scope="row" className="text-left">
