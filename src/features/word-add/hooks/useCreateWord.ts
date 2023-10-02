@@ -1,5 +1,3 @@
-import { getQueryKey } from "@trpc/react-query";
-
 import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
 import modifyWordId from "~/utils/modifyWordId";
@@ -9,7 +7,6 @@ import { type HookOptions } from "~/types/HookOptions";
 
 export default function useCreateWord(props?: Partial<HookOptions>) {
   const utils = api.useContext();
-  const queryKey = getQueryKey(api.words.getAll);
   const isAuthed = useSessionData(state => state.isAuthed);
 
   const setLocalWords = useLocalData(state => state.setWords);
@@ -21,12 +18,14 @@ export default function useCreateWord(props?: Partial<HookOptions>) {
       await utils.words.getAll.cancel();
 
       const previousData = utils.words.getAll.getData();
+      const dictionary = word.dictionary ? word.dictionary : null;
+
       if (previousData) {
         const optimisticData = [word, ...previousData];
-        utils.words.getAll.setData(void queryKey, optimisticData);
+        utils.words.getAll.setData(dictionary, optimisticData);
       }
 
-      return { previousData };
+      return { previousData, dictionary };
     },
 
     onSettled() {
@@ -35,8 +34,8 @@ export default function useCreateWord(props?: Partial<HookOptions>) {
 
     onError(e, _, context) {
       if (props?.onError) props.onError(e.message);
-      if (context?.previousData)
-        utils.words.getAll.setData(void queryKey, context.previousData);
+      if (context)
+        utils.words.getAll.setData(context.dictionary, context.previousData);
     },
   });
 

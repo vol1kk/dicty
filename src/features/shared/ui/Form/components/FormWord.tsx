@@ -114,7 +114,7 @@ export default function FormWord({
                 <Input
                   id="dictionary"
                   className="w-full"
-                  placeholder={t("words.sort.by_dict.default")}
+                  placeholder={t("words.sort.by_dict.default", { count: 1 })}
                 />
                 <Input
                   id="language"

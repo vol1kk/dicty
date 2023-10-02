@@ -1,5 +1,3 @@
-import { getQueryKey } from "@trpc/react-query";
-
 import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
 import modifyWordId from "~/utils/modifyWordId";
@@ -9,7 +7,6 @@ import { type HookOptions } from "~/types/HookOptions";
 
 export default function useImportWords(props?: Partial<HookOptions>) {
   const utils = api.useContext();
-  const queryKey = getQueryKey(api.words.getAll);
 
   const isAuthed = useSessionData(state => state.isAuthed);
   const setLocalWords = useLocalData(state => state.setWords);
@@ -31,7 +28,7 @@ export default function useImportWords(props?: Partial<HookOptions>) {
       async onMutate(words) {
         await utils.words.getAll.cancel();
 
-        utils.words.getAll.setData(void queryKey, words);
+        utils.words.getAll.setData(null, words);
 
         const previousData = utils.words.getAll.getData();
         return { previousData };
@@ -45,7 +42,7 @@ export default function useImportWords(props?: Partial<HookOptions>) {
         if (props?.onError) props.onError(e.message);
 
         if (context?.previousData)
-          utils.words.getAll.setData(void queryKey, context.previousData);
+          utils.words.getAll.setData(null, context.previousData);
       },
     });
 
