@@ -1,15 +1,16 @@
+import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React from "react";
 import { type GetStaticProps } from "next";
+import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import cn from "~/utils/cn";
 import Spinner from "~/components/Spinner";
 import { Button } from "~/components/Button";
 import { useWordsToRevise } from "~/features/quiz";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 import RevisedWordsTable from "~/features/quiz/components/RevisedWordsTable";
-import { useTranslation } from "next-i18next";
 
 export default function QuizPage() {
   const { t } = useTranslation();
@@ -41,12 +42,17 @@ export default function QuizPage() {
         </section>
         <section className="flex justify-center">
           <Button
-            className="w-full p-4 font-bold uppercase tracking-wide disabled:cursor-no-drop"
+            className={cn(
+              words.length === 0 && "text-green-500",
+              "w-full bg-gray-300 p-4 font-bold uppercase tracking-wide disabled:cursor-no-drop",
+            )}
             disabled={isLoading || words.length === 0}
             onClick={startRevision}
           >
             {isLoading ? (
-              <Spinner text="Loading" dimensions={16} />
+              <Spinner text="Loading" dimensions={23} />
+            ) : words.length === 0 ? (
+              t("revisions.all_revised")
             ) : (
               t("revisions.start")
             )}

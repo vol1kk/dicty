@@ -68,7 +68,7 @@ export default function HeaderMenu() {
                 className={buttonClasses}
               >
                 <QuizIcon width={24} height={24} />
-                Quiz
+                {t("revisions.name", { count: 1 })}
               </Button>
             </li>
             {isAuthEnabled && (

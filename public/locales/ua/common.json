@@ -7,18 +7,22 @@
   "header.logout": "Вийти",
 
   "header.changeFont": "Змінити шрифт",
-  "header.changeTheme": "Перемкнути Темну Тему",
+  "header.changeTheme": "Перемкнути темну тему",
 
-  "revisions.name": "Ревізії",
-  "revisions.start": "Почати Ревізію",
+  "revisions.name_one": "Ревізія",
+  "revisions.name_other": "Ревізії",
+  "revisions.start": "Почати ревізію",
+  "revisions.not_found": "Не знайдено історію переглянутих слів",
+  "revisions.all_revised": "Всі слова переглянуті",
   "revisions.word":  "Слово",
   "revisions.prev_rating":  "Попередній рейтинг",
   "revisions.next_revision":  "Наступна ревізія",
 
+  "revisions.rated": "Успішно оцінено",
   "quiz.next": "Наступне",
   "quiz.finish": "Завершити",
 
-  "quality.options": "Як гарно ви знаєте слово?",
+  "quality.options": "Оцініть знання слова",
   "quality.bad": "Погано",
   "quality.moderate": "Помірно",
   "quality.good": "Добре",
@@ -40,25 +44,25 @@
   "form.code.delete": "Видалити код для шейрингу",
 
   "form.word.name": "Назва",
-  "form.word.name.placeholder": "Введіть Назву",
+  "form.word.name.placeholder": "Введіть назву",
 
   "form.word.transcription": "Транскрипція",
-  "form.word.transcription.placeholder": "Введіть Транскрипцію",
+  "form.word.transcription.placeholder": "Введіть транскрипцію",
 
   "form.word.categories.label": "Категорії",
-  "form.word.category.placeholder": "Введіть Категорію",
-  "form.word.category.meaning.definition": "Введіть Значення",
+  "form.word.category.placeholder": "Введіть категорію",
+  "form.word.category.meaning.definition": "Введіть значення",
   "form.word.category.meaning.example": "Введь приклад",
 
   "form.word.synonyms": "Синоніми",
 
-  "form.word.category.add": "Додати Категорію",
-  "form.word.category.remove": "Видалити Категорію",
+  "form.word.category.add": "Додати категорію",
+  "form.word.category.remove": "Видалити категорію",
   "form.word.category.edit": "Редагувати категорію",
   "form.word.category.up": "Підняти вверх",
   "form.word.category.down": "Опустити вниз",
-  "form.word.category.meaning.add": "Додати Визначення",
-  "form.word.category.meaning.remove": "Видалити Визначення",
+  "form.word.category.meaning.add": "Додати визначення",
+  "form.word.category.meaning.remove": "Видалити визначення",
 
   "form.word.button.add": "Створити Слово",
   "form.word.button.close": "Закрити",
@@ -67,8 +71,8 @@
   "form.word.button.cancel": "Відмінити",
   "form.word.button.delete": "Видалити",
 
-  "list.empty": "Ваш словник порожній!",
-  "list.not-found": "Жодного слова не було знайдено!",
+  "list.empty": "Ваш словник порожній",
+  "list.not-found": "Жодного слова не було знайдено",
 
   "toast.createWord.success": "Успішно створено слово!",
   "toast.createWord.error": "Неможливо створити слово! Помилка: {{error}}",

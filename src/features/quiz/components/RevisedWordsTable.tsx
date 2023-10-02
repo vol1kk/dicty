@@ -2,6 +2,7 @@ import { useTranslation } from "next-i18next";
 import React, { useEffect, useState } from "react";
 
 import parseDate from "~/utils/parseDate";
+import NotFound from "~/components/NotFound";
 import { Button } from "~/components/Button";
 import { ChevronIcon } from "~/components/Icons";
 import useRevisedWords, {
@@ -14,11 +15,12 @@ type RevisedWordsTableProps = {
 
 export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
   const { t } = useTranslation();
+
   const revisedWords = useRevisedWords(state => state.revisedWords);
   const setRevisedWords = useRevisedWords(state => state.setRevisedWords);
 
   const revisionDates = Object.keys(revisedWords);
-  const [dateKeyInd, setDateKeyInd] = useState(0);
+  const [revisionIndex, setRevisionInd] = useState(0);
 
   useEffect(() => {
     const localData = localStorage.getItem("revisedWords");
@@ -30,7 +32,7 @@ export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
       const today = new Date().toLocaleDateString("en-us");
       const revisedWordsTodayInd = parsedDates.findIndex(d => d === today);
 
-      setDateKeyInd(
+      setRevisionInd(
         revisedWordsTodayInd !== 1
           ? revisedWordsTodayInd
           : parsedDates.length - 1,
@@ -39,8 +41,9 @@ export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
     }
   }, [setRevisedWords]);
 
-  const selectedDate = revisionDates[dateKeyInd];
-  if (!selectedDate) return <main>test</main>;
+  const selectedDate = revisionDates[revisionIndex];
+  if (!selectedDate)
+    return <NotFound dimensions={36} text={t("revisions.not_found")} />;
 
   const selectedFormattedDate = new Intl.DateTimeFormat(locale, {
     dateStyle: "short",
@@ -51,11 +54,11 @@ export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
     <table className="w-full table-fixed border-separate border-spacing-0 [&_tr>*]:p-2 [&_tr]:text-center">
       <caption className="mb-2 text-3xl">
         <div className="grid grid-cols-[1fr,_1fr,_1fr] place-items-center gap-4 [&_button:hover>_svg]:dark:fill-primary [&_button:hover]:scale-110 [&_button]:rounded-full [&_button]:bg-primary [&_button]:bg-opacity-30 [&_button]:p-4 [&_button]:transition-transform [&_svg]:fill-primary [&_svg]:dark:fill-gray-600">
-          {dateKeyInd >= 1 && (
+          {revisionIndex >= 1 && (
             <Button
               aria-label="Previous Revision"
               className="place-self-end self-center"
-              onClick={() => setDateKeyInd(prev => prev - 1)}
+              onClick={() => setRevisionInd(prev => prev - 1)}
             >
               <ChevronIcon width={18} className="rotate-180" />
             </Button>
@@ -64,13 +67,13 @@ export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
             <span className="text-sm font-bold tracking-widest text-primary dark:text-gray-600">
               {selectedFormattedDate}
             </span>
-            {t("revisions.name")}
+            {t("revisions.name", { count: 0 })}
           </span>
-          {dateKeyInd < revisionDates.length - 1 && (
+          {revisionIndex < revisionDates.length - 1 && (
             <Button
               aria-label="Next Revision"
               className="place-self-start self-center"
-              onClick={() => setDateKeyInd(prev => prev + 1)}
+              onClick={() => setRevisionInd(prev => prev + 1)}
             >
               <ChevronIcon width={18} />
             </Button>

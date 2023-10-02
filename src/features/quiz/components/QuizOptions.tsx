@@ -34,7 +34,7 @@ export default function QuizOptions({
 
   const isLastWord = words.length === 1;
 
-  const handleNext = function getNext() {
+  function handleNext() {
     if (isLastWord) void router.replace("/quiz");
 
     if (!isLastWord) {
@@ -45,7 +45,7 @@ export default function QuizOptions({
           : [...revisedIds, selectedWord.id],
       );
     }
-  };
+  }
 
   const handleQualitySelect: React.MouseEventHandler<HTMLButtonElement> =
     function handleQualitySelect(e) {
@@ -61,14 +61,14 @@ export default function QuizOptions({
   return (
     <section className="flex flex-col gap-4">
       <div>
-        <h1 className="my-2 rounded-md bg-gray-800 py-2 text-center font-bold uppercase tracking-widest">
-          {isClicked ? "Successfully Rated" : t("quality.options")}
+        <h1 className="my-2 rounded-md bg-gray-200 py-2 text-center font-bold uppercase tracking-widest dark:bg-gray-800">
+          {isClicked ? t("revisions.rated") : t("quality.options")}
         </h1>
         <div className="grid auto-cols-fr grid-flow-col gap-4 mobile:grid-flow-row">
           {!isClicked ? (
             Qualities.map(quality => (
               <Button
-                className="p-4 uppercase tracking-widest transition-transform hover:scale-105"
+                className="bg-gray-200 p-4 uppercase tracking-widest transition-transform hover:scale-105"
                 key={quality.dataset}
                 data-quality={quality.dataset}
                 onClick={handleQualitySelect}
@@ -77,7 +77,7 @@ export default function QuizOptions({
               </Button>
             ))
           ) : (
-            <Button className="p-4" onClick={handleNext}>
+            <Button className="bg-gray-200 p-4" onClick={handleNext}>
               {isLastWord ? t("quiz.finish") : t("quiz.next")}
             </Button>
           )}
