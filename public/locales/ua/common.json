@@ -1,4 +1,6 @@
 {
+  "all": "Всі",
+
   "header.import": "Імпортувати",
   "header.export": "Експортувати",
   "header.openMenu": "Відкрити меню",
@@ -29,8 +31,11 @@
 
   "word.sort.by_query": "Знайти слово...",
 
-  "words.sort.by_lang.default": "Мова",
-  "words.sort.by_lang.all": "Всі",
+  "words.sort.by_dict.default_one": "Словник",
+  "words.sort.by_dict.default_other": "Словники",
+
+  "words.sort.by_lang.default_one": "Мова",
+  "words.sort.by_lang.default_other": "Мови",
 
   "words.sort.byDate.newest": "Найновіші",
   "words.sort.byDate.oldest": "Найстаріші",
@@ -52,7 +57,7 @@
   "form.word.categories.label": "Категорії",
   "form.word.category.placeholder": "Введіть категорію",
   "form.word.category.meaning.definition": "Введіть значення",
-  "form.word.category.meaning.example": "Введь приклад",
+  "form.word.category.meaning.example": "Введіть приклад",
 
   "form.word.synonyms": "Синоніми",
 

@@ -6,6 +6,7 @@ import { signIn, signOut } from "next-auth/react";
 import cn from "~/utils/cn";
 import { env } from "~/env.mjs";
 import Modal from "~/components/Modal";
+import useWords from "~/hooks/useWords";
 import Overlay from "~/components/Overlay";
 import Button from "~/components/Button/Button";
 import ChangeFont from "~/features/change-font";
@@ -13,6 +14,7 @@ import ChangeTheme from "~/features/change-theme";
 import useHeaderData from "~/store/useHeaderData";
 import useSessionData from "~/store/useSessionData";
 import ChangeLanguage from "~/features/change-language";
+import { useSortingParams } from "~/features/sort-words";
 import { AccountIcon, QuizIcon } from "~/components/Icons";
 import { ExportWords, ImportWords } from "~/features/import-export-words";
 
@@ -25,6 +27,23 @@ export default function HeaderMenu() {
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
+
+  const {
+    dictionary: [dicty],
+  } = useSortingParams();
+
+  // 1: If dicty isn't null, then not all words were fetched,
+  // hence, fetching all words on demand (if header is opened);
+  // 2: If pathname is "/", then it enabled by default,
+  // since useWords is used on main page;
+  // 3: In any other case fetching will take place when header is opened
+  const words = useWords(null, {
+    enabled: dicty
+      ? isHeaderOpen
+      : router.pathname === "/"
+      ? true
+      : isHeaderOpen,
+  });
 
   function authenticationHandler() {
     if (isAuthed) void signOut();
@@ -56,10 +75,10 @@ export default function HeaderMenu() {
             className="grid grid-cols-2 gap-4 p-4 text-3xl mobile-header:mt-4 mobile-header:grid-cols-1 [&_svg]:fill-black dark:[&_svg]:fill-white"
           >
             <li>
-              <ImportWords className={buttonClasses} />
+              <ImportWords words={words} className={buttonClasses} />
             </li>
             <li>
-              <ExportWords className={buttonClasses} />
+              <ExportWords words={words} className={buttonClasses} />
             </li>
             <li className="col-span-2 mobile-header:col-span-1">
               <Button

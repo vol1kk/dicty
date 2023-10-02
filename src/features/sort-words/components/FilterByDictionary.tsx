@@ -9,30 +9,30 @@ import { ChevronIcon } from "~/components/Icons";
 import setQueryParams from "~/utils/setQueryParams";
 
 type SortWordsProps = {
-  currentLang: null | string;
-  availableLanguages: string[];
-  setLang: React.Dispatch<SetStateAction<null | string>>;
+  currentDictionary: null | string;
+  availableDictionaries: string[];
+  setDictionary: React.Dispatch<SetStateAction<null | string>>;
 };
 
-export default function FilterByLang({
-  setLang,
-  currentLang,
-  availableLanguages,
+export default function FilterByDictionary({
+  setDictionary,
+  availableDictionaries,
+  currentDictionary,
 }: SortWordsProps) {
   const router = useRouter();
   const { t } = useTranslation();
 
   function filterByLangCallback(data: HTMLLIElement) {
-    const dataLang = data.dataset.lang as string;
-    const parsedLang = dataLang === "all" ? null : dataLang;
+    const dataDictionary = data.dataset.dict as string;
+    const parsedData = dataDictionary === "all" ? null : dataDictionary;
 
-    setLang(parsedLang);
-    setQueryParams(router, "lang", parsedLang);
+    setDictionary(parsedData);
+    setQueryParams(router, "dict", parsedData);
   }
 
   return (
     <Dropdown
-      classNameContent="right-1 mobile-header:w-full mobile-header:right-0 mobile-header:px-2"
+      classNameContent="left-1/2 -translate-x-1/2 mobile-header:w-full mobile-header:right-0 mobile-header:px-2"
       className="rounded-md bg-primary bg-opacity-30 px-4 py-2 dark:bg-opacity-60"
       callback={filterByLangCallback}
       renderTitle={isDropdownOpen => (
@@ -46,9 +46,9 @@ export default function FilterByLang({
             )}
           />
           <span>
-            {currentLang
-              ? capitalize(t(currentLang))
-              : t("all") + " " + t("words.sort.by_lang.default", { count: 0 })}
+            {currentDictionary
+              ? capitalize(currentDictionary)
+              : t("all") + " " + t("words.sort.by_dict.default", { count: 0 })}
           </span>
         </div>
       )}
@@ -57,21 +57,21 @@ export default function FilterByLang({
           data-testid="word-filterbylang-list"
           className="mt-3 rounded-md bg-white p-3 shadow-3xl dark:bg-gray-900 [&>li]:leading-8"
         >
-          {["all", ...availableLanguages].map(lang => {
+          {["all", ...availableDictionaries].map(dictionary => {
             const isSameLang =
-              lang.toLowerCase() === currentLang?.toLowerCase();
+              dictionary.toLowerCase() === currentDictionary?.toLowerCase();
 
             return (
               <li
                 role="option"
-                key={lang}
+                key={dictionary}
                 aria-selected={isSameLang}
-                data-lang={lang.toLowerCase()}
+                data-dict={dictionary.toLowerCase()}
                 tabIndex={isSameLang ? 0 : -1}
                 onClick={e => dropdownItemHandler(e)}
                 className={`cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile-header:text-center`}
               >
-                {capitalize(t(lang === "all" ? "all" : lang))}
+                {capitalize(t(dictionary === "all" ? "all" : dictionary))}
               </li>
             );
           })}

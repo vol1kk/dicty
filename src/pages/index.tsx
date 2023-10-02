@@ -9,7 +9,9 @@ import FormAddWord from "~/features/word-add";
 import { WordsList } from "~/features/words-list";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 import {
+  FilterByDictionary,
   useSortingParams,
+  useDictionaries,
   FilterByLang,
   filterByLang,
   FilterByWord,
@@ -25,9 +27,11 @@ export default function Home() {
   const {
     lang: [lang, setLang],
     date: [orderByDate, setOrderByDate],
+    dictionary: [dicty, setDicty],
   } = useSortingParams();
 
-  const { data: words, isLoading } = useWords();
+  const { data: words, isLoading } = useWords(dicty);
+  const { data: availableDictionaries } = useDictionaries();
 
   const availableLanguages = [
     ...new Set(words.map(w => w.language?.toLowerCase())),
@@ -52,21 +56,22 @@ export default function Home() {
       </Head>
       <main data-testid="home-main">
         <FilterByWord searchValue={search} setSearchValue={setSearch} />
-        {availableLanguages?.length > 0 && (
-          <div className="relative mb-2.5 flex justify-between mobile:flex-col mobile:gap-2 [&>*]:min-w-[150px]">
-            <SortByDate
-              currentOrderByDate={orderByDate}
-              setOrderByDate={setOrderByDate}
-            />
-            {availableLanguages?.length > 1 && (
-              <FilterByLang
-                currentLang={lang}
-                availableLanguages={availableLanguages.filter(w => w)}
-                setLang={setLang}
-              />
-            )}
-          </div>
-        )}
+        <div className="relative mb-2.5 grid auto-cols-fr grid-flow-col gap-x-6 gap-y-2 mobile-header:grid-flow-row">
+          <SortByDate
+            currentOrderByDate={orderByDate}
+            setOrderByDate={setOrderByDate}
+          />
+          <FilterByDictionary
+            currentDictionary={dicty}
+            setDictionary={setDicty}
+            availableDictionaries={availableDictionaries}
+          />
+          <FilterByLang
+            currentLang={lang}
+            setLang={setLang}
+            availableLanguages={availableLanguages.filter(w => w)}
+          />
+        </div>
         <FormAddWord />
         <WordsList data={filteredWords} isLoading={isLoading} />
       </main>

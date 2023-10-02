@@ -30,6 +30,7 @@ model Word {
   categories     Category[]
   synonyms       String[]
   language       String?
+  dictionary     String?
   shareCode      String?
   easinessFactor Float      @default(2.5)
   repetitions    Int        @default(0)

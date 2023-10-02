@@ -41,12 +41,14 @@ export default function FormWord({
       ...values,
       synonyms: transformedSynonyms,
       language: values.language?.toLowerCase() || null,
+      dictionary: values.dictionary?.toLowerCase() || null,
     });
   };
 
   const modifiedInitialValues = {
     ...initialValues,
     language: initialValues?.language || "",
+    dictionary: initialValues?.dictionary || "",
     synonyms: initialValues?.synonyms.join(", "),
   };
   return (
@@ -108,17 +110,15 @@ export default function FormWord({
                   <span>{t("form.word.transcription")}</span>
                 </Input>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 [&>label]:grow">
                 <Input
-                  id="synonyms"
+                  id="dictionary"
                   className="w-full"
-                  classNameLabel="grow-[6]"
-                  placeholder={t("form.word.synonyms")}
+                  placeholder={t("words.sort.by_dict.default")}
                 />
                 <Input
                   id="language"
                   className="w-full"
-                  classNameLabel="grow"
                   placeholder={t("words.sort.by_lang.default")}
                 />
               </div>
@@ -145,6 +145,11 @@ export default function FormWord({
                 </div>
               )}
             </FieldArray>
+            <Input
+              id="synonyms"
+              className="mb-8 w-full"
+              placeholder={t("form.word.synonyms")}
+            />
             <div className="flex flex-wrap gap-4 [&>button:first-child]:flex-grow-[6] [&>button:nth-child(2)]:flex-grow-[2] [&>button]:flex-grow [&>button]:px-4 [&>button]:py-2 [&>button]:transition-colors">
               {formButtons}
             </div>

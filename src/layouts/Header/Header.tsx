@@ -9,9 +9,10 @@ import HeaderMenu from "~/layouts/Header/HeaderMenu";
 import ButtonBurger from "~/components/Button/ButtonBurger";
 
 export default function Header() {
+  const { t } = useTranslation();
+
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
-  const { t } = useTranslation();
 
   function openMenuHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
@@ -34,10 +35,7 @@ export default function Header() {
             width={48}
             height={48}
             aria-label={t("header.icon")}
-            className={cn(
-              "delay-75",
-              isHeaderOpen && "fill-black dark:fill-gray-100",
-            )}
+            className={cn(isHeaderOpen && "fill-black dark:fill-gray-100")}
           />
         </Link>
       </nav>

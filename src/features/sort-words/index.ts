@@ -16,6 +16,9 @@ import {
   SortValues,
 } from "~/features/sort-words/lib/constants/SortTypes";
 
+import useDictionaries from "~/features/sort-words/hooks/useDictionaries";
+import FilterByDictionary from "~/features/sort-words/components/FilterByDictionary";
+
 export {
   SortNewest,
   SortOldest,
@@ -27,5 +30,7 @@ export {
   filterByLang,
   FilterByWord,
   filterByWord,
+  useDictionaries,
   useSortingParams,
+  FilterByDictionary,
 };

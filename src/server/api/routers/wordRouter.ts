@@ -25,12 +25,28 @@ export const wordRouter = createTRPCRouter({
     });
   }),
 
-  getAll: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.word.findMany({
-      where: { createdById: ctx.authedUser.id },
-      include: { categories: { include: { meanings: true } } },
+  getDictionaries: protectedProcedure.query(async ({ ctx }) => {
+    const dictionaries = await ctx.prisma.word.findMany({
+      where: {
+        dictionary: { not: null },
+      },
+      select: { dictionary: true },
+      distinct: ["dictionary"],
     });
+    return dictionaries.map(w => w.dictionary) as string[];
   }),
+
+  getAll: protectedProcedure
+    .input(z.string().nullable())
+    .query(({ input, ctx }) => {
+      return ctx.prisma.word.findMany({
+        where: {
+          createdById: ctx.authedUser.id,
+          ...(input && { dictionary: input }),
+        },
+        include: { categories: { include: { meanings: true } } },
+      });
+    }),
 
   getById: protectedProcedure
     .input(z.object({ wordId: z.string() }))
@@ -128,6 +144,7 @@ export const wordRouter = createTRPCRouter({
             name: updatedWord.name,
             transcription: updatedWord.transcription,
             language: updatedWord.language,
+            dictionary: updatedWord.dictionary,
             synonyms: updatedWord.synonyms,
             interval: updatedWord.interval,
             repetitions: updatedWord.repetitions,
@@ -278,6 +295,7 @@ function createWord(data: Word, userId?: string) {
     shareCode: null,
     synonyms: data.synonyms,
     language: data.language,
+    dictionary: data.dictionary,
     categories: {
       create: data.categories.map(createCategory),
     },

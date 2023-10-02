@@ -30,6 +30,7 @@ function createWord(wordExtenders?: Partial<Word>, clearId = false): Word {
     transcription: "/test-transcription/",
     synonyms: [],
     language: null,
+    dictionary: null,
     easinessFactor: 2.5,
     repetitions: 0,
     interval: new Date(),

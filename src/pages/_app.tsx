@@ -7,7 +7,7 @@ import { appWithTranslation } from "next-i18next";
 import "~/styles/globals.css";
 import { api } from "~/utils/api";
 import RootLayout from "~/layouts/RootLayout";
-import nextI18nConfig from "../../next-i18next.config.mjs";
+import nextI18nConfig from "~/../next-i18next.config.mjs";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

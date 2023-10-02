@@ -1,12 +1,22 @@
 import { describe, expect, it, vi } from "vitest";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  renderHook,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 
 import { createWord } from "#tests/utils";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 import { ImportWords } from "~/features/import-export-words";
+import useWords from "~/hooks/useWords";
 
 function setup() {
-  const data = render(<ImportWords />, { wrapper: MemoryRouterProvider });
+  const hookData = renderHook(() => useWords(null));
+  const data = render(<ImportWords words={hookData.result.current} />, {
+    wrapper: MemoryRouterProvider,
+  });
 
   const importContainer = screen.getByTestId("import-container");
   const inputImport = screen.getByTestId("input-import");

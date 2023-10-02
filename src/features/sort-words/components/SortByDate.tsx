@@ -1,12 +1,12 @@
+import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import React, { type SetStateAction } from "react";
 
 import cn from "~/utils/cn";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
-import { SortNewest, SortOldest, SortValues } from "~/features/sort-words";
-import { useRouter } from "next/router";
 import setQueryParams from "~/utils/setQueryParams";
+import { SortNewest, SortOldest, SortValues } from "~/features/sort-words";
 
 export type SortByDateType = "newest" | "oldest";
 
@@ -31,11 +31,11 @@ export default function SortByDate({
 
   return (
     <Dropdown
-      classNameContent="left-1 mobile:w-full mobile:left-0 mobile:px-2"
+      classNameContent="left-1 mobile-header:w-full mobile-header:left-0 mobile-header:px-2"
       className="rounded-md bg-primary bg-opacity-30 px-4 py-2 dark:bg-opacity-60"
       callback={sortByDateCallback}
       renderTitle={isDropdownOpen => (
-        <div className="relative flex cursor-pointer items-center justify-center pl-4 mobile:py-1">
+        <div className="relative flex cursor-pointer items-center justify-center pl-4 mobile-header:py-1">
           <ChevronIcon
             width={14}
             height={14}
@@ -68,7 +68,7 @@ export default function SortByDate({
                 aria-selected={isSameSortOrder}
                 tabIndex={isSameSortOrder ? 0 : -1}
                 onClick={e => dropdownItemHandler(e)}
-                className={`cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile:text-center`}
+                className={`cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile-header:text-center`}
               >
                 {t(type.name)}
               </li>

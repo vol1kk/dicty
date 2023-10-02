@@ -1,8 +1,7 @@
 import React from "react";
 import { useTranslation } from "next-i18next";
 
-import { useRouter } from "next/router";
-import useWords from "~/hooks/useWords";
+import type useWords from "~/hooks/useWords";
 import Button from "~/components/Button/Button";
 import modifyWordId from "~/utils/modifyWordId";
 import { ImportIcon } from "~/components/Icons";
@@ -11,21 +10,16 @@ import { downloadData } from "~/features/import-export-words";
 
 type ExportWordsProps = {
   className?: string;
+  words: ReturnType<typeof useWords>;
 };
 
-export default function ExportWords({ className }: ExportWordsProps) {
-  const router = useRouter();
+export default function ExportWords({ className, words }: ExportWordsProps) {
   const { t } = useTranslation();
 
-  const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
 
-  const { data: words } = useWords({
-    enabled: router.pathname === "/" ? true : isHeaderOpen,
-  });
-
   function exportWordsHandler() {
-    const modifiedWords = words.map(w =>
+    const modifiedWords = words.data.map(w =>
       modifyWordId(w, { appendWithEmptyId: true }),
     );
 

@@ -6,9 +6,12 @@ import cn from "~/utils/cn";
 import Input from "~/components/Input";
 import { type Category, type Meaning } from "~/types/ApiTypes";
 import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
-import FormMeaning from "~/features/shared/ui/Form/components/FormMeaning";
-import { categoryTemplate, meaningTemplate } from "~/features/shared/ui/Form";
-import CategoryOptions from "~/features/shared/ui/Form/components/FormCategoryOptions";
+import {
+  CategoryOptions,
+  categoryTemplate,
+  FormMeaning,
+  meaningTemplate,
+} from "~/features/shared/ui/Form";
 
 type FormCategoryProps = {
   categoryIndex: number;
@@ -71,11 +74,7 @@ export default function FormCategory({
     | undefined;
 
   return (
-    <div
-      role="list"
-      className="mb-8 [&>*]:mb-4"
-      key={`categories.${categoryIndex}`}
-    >
+    <div role="list" className="[&>*]:mb-4" key={`categories.${categoryIndex}`}>
       <div>
         <Input
           id={`categories.${categoryIndex}.name`}

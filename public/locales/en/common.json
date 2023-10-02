@@ -1,4 +1,6 @@
 {
+  "all": "All",
+
   "header.import": "Import",
   "header.export": "Export",
   "header.openMenu": "Open Menu",
@@ -29,8 +31,10 @@
 
   "word.sort.by_query": "Search for your word...",
 
+  "words.sort.by_dict.default_one": "Dictionary",
+  "words.sort.by_dict.default_other": "Dictionaries",
+
   "words.sort.by_lang.default": "Language",
-  "words.sort.by_lang.all": "All",
 
   "words.sort.byDate.newest": "Newest",
   "words.sort.byDate.oldest": "Oldest",
