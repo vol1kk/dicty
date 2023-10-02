@@ -23,7 +23,10 @@ export default function QuizWord({ word, isClicked }: QuizWordProps) {
           <Word.Category
             key={category.id}
             categoryName={category.name}
-            className={cn(!isClicked && "blur-sm")}
+            className={cn(
+              !isClicked && "blur-sm",
+              "transition-[filter] duration-200",
+            )}
           >
             <Word.Meanings meanings={category.meanings} />
           </Word.Category>

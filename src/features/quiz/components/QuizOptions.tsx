@@ -10,6 +10,7 @@ import {
   getRevisedWord,
   setRevisedWords,
   type QualityValues,
+  getQualityIcon,
 } from "~/features/quiz";
 
 type QuizOptionsProps = {
@@ -68,12 +69,15 @@ export default function QuizOptions({
           {!isClicked ? (
             Qualities.map(quality => (
               <Button
-                className="bg-gray-200 p-4 uppercase tracking-widest transition-transform hover:scale-105"
+                className="group flex items-center justify-center bg-gray-200 p-4 uppercase tracking-widest [&>*]:transition-[transform,_opacity]"
                 key={quality.dataset}
                 data-quality={quality.dataset}
                 onClick={handleQualitySelect}
               >
-                {t(quality.name)}
+                {getQualityIcon(quality.dataset)}
+                <span className="group-hover:translate-x-[10px]">
+                  {t(quality.name)}
+                </span>
               </Button>
             ))
           ) : (

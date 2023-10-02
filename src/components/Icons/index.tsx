@@ -2,6 +2,7 @@ import KeyIcon from "~/components/Icons/KeyIcon";
 import DotsIcon from "~/components/Icons/DotsIcon";
 import EditIcon from "~/components/Icons/EditIcon";
 import QuizIcon from "~/components/Icons/QuizIcon";
+import TickIcon from "~/components/Icons/TickIcon";
 import CloseIcon from "~/components/Icons/CloseIcon";
 import ErrorIcon from "~/components/Icons/ErrorIcon";
 import SearchIcon from "~/components/Icons/SearchIcon";
@@ -18,6 +19,7 @@ export {
   DotsIcon,
   EditIcon,
   QuizIcon,
+  TickIcon,
   CloseIcon,
   ErrorIcon,
   SearchIcon,

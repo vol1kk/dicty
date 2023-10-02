@@ -6,6 +6,7 @@ import { setRevisedWords } from "~/features/quiz/store/useRevisedWords";
 import Qualities, {
   type QualityValues,
 } from "~/features/quiz/constants/Qualities";
+import getQualityIcon from "~/features/quiz/utils/getQualityIcon";
 
 export {
   Qualities,
@@ -13,6 +14,7 @@ export {
   parseQuality,
   QualityValues,
   getRevisedWord,
+  getQualityIcon,
   setRevisedWords,
   useWordsToRevise,
 };
