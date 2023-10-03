@@ -1,6 +1,6 @@
 import React from "react";
 
-import Button, { type ButtonProps } from "~/components/Button/Button";
+import { Button, type ButtonProps } from "~/components/Button";
 
 export default function ButtonUndo({ children, ...props }: ButtonProps) {
   return (

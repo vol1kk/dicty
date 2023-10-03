@@ -1,10 +1,12 @@
 import { vi, describe, expect, it } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import Button, { type ButtonProps } from "~/components/Button/Button";
-import ButtonBurger, {
+import {
+  Button,
+  ButtonBurger,
+  type ButtonProps,
   type BurgerButtonProps,
-} from "~/components/Button/ButtonBurger";
+} from "~/components/Button";
 
 function setupButton(props?: Partial<ButtonProps>) {
   const data = render(

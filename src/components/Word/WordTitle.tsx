@@ -1,5 +1,5 @@
 import cn from "~/utils/cn";
-import Button from "~/components/Button/Button";
+import { Button } from "~/components/Button";
 import { ChevronIcon } from "~/components/Icons";
 
 export type WordTitleProps = {

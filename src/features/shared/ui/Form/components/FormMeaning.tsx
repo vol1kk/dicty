@@ -3,7 +3,7 @@ import { type FormikErrors, type FormikTouched } from "formik";
 
 import cn from "~/utils/cn";
 import Input from "~/components/Input";
-import Button from "~/components/Button/Button";
+import { Button } from "~/components/Button";
 import { type Meaning } from "~/types/ApiTypes";
 import { CloseIcon } from "~/components/Icons";
 

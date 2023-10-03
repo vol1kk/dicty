@@ -4,8 +4,8 @@ import { useTranslation } from "next-i18next";
 
 import type useWords from "~/hooks/useWords";
 import { useToasts } from "~/features/toast";
+import { Button } from "~/components/Button";
 import { ImportIcon } from "~/components/Icons";
-import Button from "~/components/Button/Button";
 import useHeaderData from "~/store/useHeaderData";
 import ButtonUndo from "~/components/Button/ButtonUndo";
 import { readFileAsync, useImportWords } from "~/features/import-export-words";

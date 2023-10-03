@@ -1,36 +1,43 @@
+import { nanoid } from "nanoid";
 import { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 
 import { useToasts } from "~/features/toast";
+import { Button } from "~/components/Button";
 import Accordion from "~/components/Accordion";
-import Button from "~/components/Button/Button";
 import { CloseIcon } from "~/components/Icons";
-import { useCreateWord } from "~/features/word-add";
 import useSessionData from "~/store/useSessionData";
-import FormWord, { formTemplate } from "~/features/shared/ui/Form";
+import { useCreateWord } from "~/features/word-add";
+import Form, { formTemplate } from "~/features/shared/ui/Form";
 import FormImportWord from "~/features/word-add/components/FormImportWord";
 
 export default function FormAddWord() {
-  const { addToast } = useToasts();
   const { t } = useTranslation("common");
+
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const inputCodeRef = useRef<HTMLInputElement>(null);
   const isAuthed = useSessionData(state => state.isAuthed);
+
+  const { addToast, removeToast } = useToasts();
+  const inputCodeRef = useRef<HTMLInputElement>(null);
 
   function formCloseHandler() {
     if (inputCodeRef.current) inputCodeRef.current.value = "";
     setIsFormOpen(false);
   }
 
+  let id: string;
   const createWord = useCreateWord({
     onSuccess() {
+      id = nanoid();
+
       addToast({
+        id,
         text: t("toast.createWord.success"),
       });
     },
 
     onError(e) {
-      // TODO: Get ID to remove optimistic toast
+      if (id) removeToast(id);
 
       addToast({
         type: "error",
@@ -71,7 +78,7 @@ export default function FormAddWord() {
             </div>
           </>
         )}
-        <FormWord
+        <Form
           initialValues={formTemplate}
           submitHandler={word => createWord(word)}
           renderButtons={(isValid, handleFormReset) => {

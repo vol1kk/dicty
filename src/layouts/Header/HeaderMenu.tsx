@@ -8,7 +8,7 @@ import { env } from "~/env.mjs";
 import Modal from "~/components/Modal";
 import useWords from "~/hooks/useWords";
 import Overlay from "~/components/Overlay";
-import Button from "~/components/Button/Button";
+import { Button } from "~/components/Button";
 import ChangeFont from "~/features/change-font";
 import ChangeTheme from "~/features/change-theme";
 import useHeaderData from "~/store/useHeaderData";

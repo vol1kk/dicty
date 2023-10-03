@@ -34,7 +34,8 @@
   "words.sort.by_dict.default_one": "Dictionary",
   "words.sort.by_dict.default_other": "Dictionaries",
 
-  "words.sort.by_lang.default": "Language",
+  "words.sort.by_lang.default_one": "Language",
+  "words.sort.by_lang.default_other": "Languages",
 
   "words.sort.byDate.newest": "Newest",
   "words.sort.byDate.oldest": "Oldest",

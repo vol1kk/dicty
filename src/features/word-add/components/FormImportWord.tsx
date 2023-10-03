@@ -2,7 +2,7 @@ import { useTranslation } from "next-i18next";
 import React, { forwardRef, type MutableRefObject, type Ref } from "react";
 
 import { useToasts } from "~/features/toast";
-import Button from "~/components/Button/Button";
+import { Button } from "~/components/Button";
 import useSessionData from "~/store/useSessionData";
 import { useImportFromCode } from "~/features/word-add";
 

@@ -35,7 +35,7 @@ export default function QuizStart({
   return (
     <>
       <Head>
-        <title>Dicty | Quiz</title>
+        <title>Dicty | Quiz ({selectedWord.name})</title>
         <meta name="description" content="Create your own dictionary!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

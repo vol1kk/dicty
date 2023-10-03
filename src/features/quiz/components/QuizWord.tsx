@@ -1,7 +1,7 @@
 import React from "react";
 import cn from "~/utils/cn";
-import { Word } from "~/features/words-list";
 
+import Word from "~/components/Word";
 import { type Word as IWord } from "~/types/ApiTypes";
 
 type QuizWordProps = {

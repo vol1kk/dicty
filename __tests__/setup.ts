@@ -58,6 +58,11 @@ vi.mock("next-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
 }));
 
+export const mockedUseToggleShareCode = vi.fn();
+vi.mock("~/features/word-edit/hooks/useToggleShareCode", () => ({
+  default: vi.fn(() => ({ toggleShareCodeMutation: mockedUseToggleShareCode })),
+}));
+
 export const mockedGetQueryKey = vi.fn();
 vi.mock("@trpc/react-query", () => ({ getQueryKey: mockedGetQueryKey }));
 

@@ -2,7 +2,7 @@ import { useTranslation } from "next-i18next";
 
 import cn from "~/utils/cn";
 import Dropdown from "~/components/Dropdown";
-import Button from "~/components/Button/Button";
+import { Button } from "~/components/Button";
 import { DotsIcon } from "~/features/shared/ui/Form";
 
 type CategoryOptionsProps = {

@@ -1,9 +1,8 @@
-import { expect, describe, it, vi } from "vitest";
+import { expect, describe, it } from "vitest";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 
-import WordShare, {
-  type WordShareProps,
-} from "~/features/words-list/components/Word/WordShare";
+import { mockedUseToggleShareCode } from "#tests/setup";
+import WordShare, { type WordShareProps } from "~/components/Word/WordShare";
 
 function setup(props?: Partial<WordShareProps>) {
   const wordId = props?.wordId || "word-1";
@@ -25,11 +24,6 @@ function setup(props?: Partial<WordShareProps>) {
     inputComponent,
   };
 }
-
-const mockedUseToggleShareCode = vi.fn();
-vi.mock("~/features/words-list/hooks/useToggleShareCode", () => ({
-  default: vi.fn(() => ({ toggleShareCodeMutation: mockedUseToggleShareCode })),
-}));
 
 describe("WordShare Tests", function () {
   it("should render WordShare component", () => {

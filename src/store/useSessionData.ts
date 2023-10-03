@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { type Session } from "next-auth";
-import { type useSession } from "next-auth/react";
+import { type SessionContextValue } from "next-auth/react";
 
-type StatusTypes = ReturnType<typeof useSession>["status"];
+type StatusTypes = SessionContextValue["status"];
 
 export type UseSessionDataProps = {
   isAuthed: boolean;
   session: Session | null;
   status: StatusTypes | null;
-  setSession: (sessionData: ReturnType<typeof useSession>) => void;
+  setSession: (sessionData: SessionContextValue) => void;
 };
 
 const useSessionData = create<UseSessionDataProps>()(set => {

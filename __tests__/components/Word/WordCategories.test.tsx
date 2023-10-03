@@ -4,8 +4,8 @@ import { render, screen, within } from "@testing-library/react";
 import { createCategory } from "#tests/utils";
 import WordCategory, {
   type WordCategoryProps,
-} from "~/features/words-list/components/Word/WordCategory";
-import WordMeanings from "~/features/words-list/components/Word/WordMeanings";
+} from "~/components/Word/WordCategory";
+import WordMeanings from "~/components/Word/WordMeanings";
 
 function setup(props?: Partial<WordCategoryProps>) {
   const categoryName = props?.categoryName || "Test Category";

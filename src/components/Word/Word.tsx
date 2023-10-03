@@ -1,12 +1,12 @@
 import React from "react";
 
-import WordEdit from "~/features/words-list/components/Word/WordEdit";
-import WordTitle from "~/features/words-list/components/Word/WordTitle";
-import WordShare from "~/features/words-list/components/Word/WordShare";
-import WordHeader from "~/features/words-list/components/Word/WordHeader";
-import WordCategory from "~/features/words-list/components/Word/WordCategory";
-import WordMeanings from "~/features/words-list/components/Word/WordMeanings";
-import WordSynonyms from "~/features/words-list/components/Word/WordSynonyms";
+import WordEdit from "~/components/Word/WordEdit";
+import WordTitle from "~/components/Word/WordTitle";
+import WordShare from "~/components/Word/WordShare";
+import WordHeader from "~/components/Word/WordHeader";
+import WordCategory from "~/components/Word/WordCategory";
+import WordMeanings from "~/components/Word/WordMeanings";
+import WordSynonyms from "~/components/Word/WordSynonyms";
 import cn from "~/utils/cn";
 
 type WordProps = {

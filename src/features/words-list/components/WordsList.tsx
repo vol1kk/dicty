@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "next-i18next";
 
+import Word from "~/components/Word";
 import Spinner from "~/components/Spinner";
-import { Word } from "~/features/words-list";
 import NotFound from "~/components/NotFound";
 import Accordion from "~/components/Accordion";
 import useSessionData from "~/store/useSessionData";

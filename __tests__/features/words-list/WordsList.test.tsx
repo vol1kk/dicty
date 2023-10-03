@@ -2,10 +2,9 @@ import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { createWord } from "#tests/utils";
-import { WordsList } from "~/features/words-list";
 import * as useSessionModule from "~/store/useSessionData";
 import { type UseSessionDataProps } from "~/store/useSessionData";
-import { type WordsListProps } from "~/features/words-list/components/WordsList";
+import WordsList, { type WordsListProps } from "~/features/words-list";
 
 function setup(props?: Partial<WordsListProps & UseSessionDataProps>) {
   vi.spyOn(useSessionModule, "default").mockImplementation(selector => {
@@ -32,10 +31,6 @@ function setup(props?: Partial<WordsListProps & UseSessionDataProps>) {
 
   return { data, wordsListComponent, notFoundComponent, spinnerComponent };
 }
-
-vi.mock("~/features/words-list/hooks/useToggleShareCode", () => ({
-  default: vi.fn(() => ({ toggleShareCodeMutation: vi.fn })),
-}));
 
 describe("WordsList Tests", function () {
   it("should render words", () => {

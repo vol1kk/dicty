@@ -1,6 +1,6 @@
 import { DotsIcon } from "~/components/Icons";
 import formValidationSchema from "./lib/validationSchema";
-import FormWord from "~/features/shared/ui/Form/components/FormWord";
+import Form from "~/features/shared/ui/Form/components/Form";
 import FormMeaning from "~/features/shared/ui/Form/components/FormMeaning";
 import CategoryOptions from "~/features/shared/ui/Form/components/FormCategoryOptions";
 import {
@@ -18,4 +18,4 @@ export {
   categoryTemplate,
   formValidationSchema,
 };
-export default FormWord;
+export default Form;

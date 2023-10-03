@@ -4,7 +4,7 @@ import { render, screen, within } from "@testing-library/react";
 import { createMeaning } from "#tests/utils";
 import WordMeanings, {
   type WordMeaningsProps,
-} from "~/features/words-list/components/Word/WordMeanings";
+} from "~/components/Word/WordMeanings";
 
 function setup(props?: Partial<WordMeaningsProps>) {
   const data = render(

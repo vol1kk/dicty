@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
 import { type Word } from "~/types/ApiTypes";
-import Button from "~/components/Button/Button";
-import FormWord from "~/features/shared/ui/Form";
+import { Button } from "~/components/Button";
+import Form from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
 import ButtonUndo from "~/components/Button/ButtonUndo";
 import { useDeleteWord, useUpdateWord } from "~/features/word-edit";
@@ -125,7 +125,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
   }
 
   return (
-    <FormWord
+    <Form
       initialValues={word}
       submitHandler={submitHandler}
       renderButtons={(isValid, handleFormReset) => (

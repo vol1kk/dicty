@@ -1,6 +1,8 @@
 import ButtonUndo from "~/components/Button/ButtonUndo";
-import ButtonBurger from "~/components/Button/ButtonBurger";
 import Button, { type ButtonProps } from "~/components/Button/Button";
+import ButtonBurger, {
+  type BurgerButtonProps,
+} from "~/components/Button/ButtonBurger";
 
-export type { ButtonProps };
+export type { ButtonProps, BurgerButtonProps };
 export { Button, ButtonUndo, ButtonBurger };

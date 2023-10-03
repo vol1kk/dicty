@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
 import cn from "~/utils/cn";
+import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
 import useHeaderData from "~/store/useHeaderData";
 import { LANGUAGES } from "~/features/change-language";
-import Dropdown from "~/components/Dropdown";
 
 export default function ChangeLanguage() {
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);

@@ -23,7 +23,7 @@ type FormProps = {
   ) => ReactElement;
 };
 
-export default function FormWord({
+export default function Form({
   renderButtons,
   submitHandler,
   initialValues = formTemplate,

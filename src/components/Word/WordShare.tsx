@@ -2,9 +2,9 @@ import React, { useRef, useState } from "react";
 import { useTranslation } from "next-i18next";
 
 import { useToasts } from "~/features/toast";
-import Button from "~/components/Button/Button";
+import { Button } from "~/components/Button";
 import { CloseIcon, KeyIcon } from "~/components/Icons";
-import { useToggleShareCode } from "~/features/words-list";
+import { useToggleShareCode } from "~/features/word-edit";
 
 export type WordShareProps = {
   code: string | null;

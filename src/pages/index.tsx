@@ -6,7 +6,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import useWords from "~/hooks/useWords";
 import useDebounce from "~/hooks/useDebounce";
 import FormAddWord from "~/features/word-add";
-import { WordsList } from "~/features/words-list";
+import WordsList from "~/features/words-list";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 import {
   FilterByDictionary,

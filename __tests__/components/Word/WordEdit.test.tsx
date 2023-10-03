@@ -3,9 +3,7 @@ import { describe, expect, it } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
-import WordEdit, {
-  type WordEditProps,
-} from "~/features/words-list/components/Word/WordEdit";
+import WordEdit, { type WordEditProps } from "~/components/Word/WordEdit";
 
 function setup(props?: Partial<WordEditProps>) {
   const wordId = props?.wordId || "word-1";

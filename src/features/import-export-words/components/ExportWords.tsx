@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "next-i18next";
 
 import type useWords from "~/hooks/useWords";
-import Button from "~/components/Button/Button";
+import { Button } from "~/components/Button";
 import modifyWordId from "~/utils/modifyWordId";
 import { ImportIcon } from "~/components/Icons";
 import useHeaderData from "~/store/useHeaderData";
