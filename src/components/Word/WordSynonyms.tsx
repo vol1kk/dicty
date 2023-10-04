@@ -3,7 +3,7 @@ import React from "react";
 import cn from "~/utils/cn";
 import { type Word } from "~/types/ApiTypes";
 
-type WordSynonymsProps = {
+export type WordSynonymsProps = {
   words: Word[];
   synonyms: string[];
 };
@@ -23,32 +23,31 @@ export default function WordSynonyms({ words, synonyms }: WordSynonymsProps) {
       `[data-testid='word-header-${id}']`,
     ) as HTMLDivElement;
     const parent = domElement.closest("li") as HTMLLIElement;
+    const offset = parent.getBoundingClientRect().y;
 
-    if (domElement.ariaExpanded === "true")
-      scrollBy(parent.getBoundingClientRect().y);
-
+    if (domElement.ariaExpanded === "true") scrollBy(offset);
     domElement.ariaExpanded = "true";
-
-    function transitionScrollListener() {
-      scrollBy(parent.getBoundingClientRect().y);
-
-      accordion.removeEventListener("transitionend", transitionScrollListener);
-    }
 
     const accordion = parent?.querySelector(
       "[data-testid='accordion']",
     ) as HTMLDivElement;
     accordion.addEventListener("transitionend", transitionScrollListener);
+
+    function transitionScrollListener() {
+      scrollBy(offset);
+      accordion.removeEventListener("transitionend", transitionScrollListener);
+    }
   }
 
   return (
-    <div className="mt-1 flex gap-2">
+    <div data-testid="word-synonyms" className="mt-1 flex gap-2">
       {synonyms.map(synonym => {
         const existingWord = words.find(w => w.name === synonym);
 
         return (
           <span
             key={synonym}
+            data-testid={"synonym-" + synonym.toLowerCase().replaceAll(" ", "")}
             onClick={getWordBySynonym.bind(undefined, existingWord?.id)}
             className={cn(
               existingWord &&

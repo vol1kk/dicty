@@ -8,17 +8,17 @@ import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
 import setQueryParams from "~/utils/setQueryParams";
 
-type SortWordsProps = {
+export type FilterByDictionaryProps = {
   currentDictionary: null | string;
   availableDictionaries: string[];
   setDictionary: React.Dispatch<SetStateAction<null | string>>;
 };
 
-export default function FilterByDictionary({
+export default function FilterByDictionaryProps({
   setDictionary,
   availableDictionaries,
   currentDictionary,
-}: SortWordsProps) {
+}: FilterByDictionaryProps) {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -66,8 +66,9 @@ export default function FilterByDictionary({
                 role="option"
                 key={dictionary}
                 aria-selected={isSameLang}
-                data-dict={dictionary.toLowerCase()}
                 tabIndex={isSameLang ? 0 : -1}
+                data-dict={dictionary.toLowerCase()}
+                data-testid={"dict-" + dictionary.toLowerCase()}
                 onClick={e => dropdownItemHandler(e)}
                 className={`cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile-header:text-center`}
               >

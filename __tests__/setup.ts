@@ -33,7 +33,10 @@ vi.mock("~/store/useLocalData", () => ({
 export const mockedUseImportMutation = vi.fn();
 export const mockedUseUndoMutation = vi.fn();
 export const mockedUseCreateWordMutation = vi.fn();
+export const mockedUseUpdateWordMutation = vi.fn();
+export const mockedUseDeleteWordMutation = vi.fn();
 export const mockedAuthedWords: Word[] = [createWord({ name: "Authed Word" })];
+export const mockedAuthedDictionaries = ["dictionary-1", "dictionary-2"];
 vi.mock("~/utils/api", () => ({
   api: {
     useContext: vi.fn(),
@@ -47,8 +50,20 @@ vi.mock("~/utils/api", () => ({
       createWord: {
         useMutation: vi.fn(() => ({ mutate: mockedUseCreateWordMutation })),
       },
+      updateWord: {
+        useMutation: vi.fn(() => ({ mutate: mockedUseUpdateWordMutation })),
+      },
+      deleteWord: {
+        useMutation: vi.fn(() => ({ mutate: mockedUseDeleteWordMutation })),
+      },
       getAll: {
         useQuery: vi.fn(() => ({ isLoading: false, data: mockedAuthedWords })),
+      },
+      getDictionaries: {
+        useQuery: vi.fn(() => ({
+          isLoading: false,
+          data: mockedAuthedDictionaries,
+        })),
       },
     },
   },

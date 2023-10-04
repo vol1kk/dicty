@@ -8,7 +8,7 @@ import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
 import setQueryParams from "~/utils/setQueryParams";
 
-type SortWordsProps = {
+export type FilterByLangProps = {
   currentLang: null | string;
   availableLanguages: string[];
   setLang: React.Dispatch<SetStateAction<null | string>>;
@@ -18,7 +18,7 @@ export default function FilterByLang({
   setLang,
   currentLang,
   availableLanguages,
-}: SortWordsProps) {
+}: FilterByLangProps) {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -68,6 +68,7 @@ export default function FilterByLang({
                 aria-selected={isSameLang}
                 data-lang={lang.toLowerCase()}
                 tabIndex={isSameLang ? 0 : -1}
+                data-testid={"lang-" + lang.toLowerCase()}
                 onClick={e => dropdownItemHandler(e)}
                 className={`cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile-header:text-center`}
               >

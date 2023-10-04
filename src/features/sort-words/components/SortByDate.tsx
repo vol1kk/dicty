@@ -10,7 +10,7 @@ import { SortNewest, SortOldest, SortValues } from "~/features/sort-words";
 
 export type SortByDateType = "newest" | "oldest";
 
-type SortWordsProps = {
+export type SortByDateProps = {
   currentOrderByDate: SortByDateType;
   setOrderByDate: React.Dispatch<SetStateAction<SortByDateType>>;
 };
@@ -18,7 +18,7 @@ type SortWordsProps = {
 export default function SortByDate({
   currentOrderByDate,
   setOrderByDate,
-}: SortWordsProps) {
+}: SortByDateProps) {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -66,6 +66,7 @@ export default function SortByDate({
                 key={type.name}
                 data-orderby={type.order}
                 aria-selected={isSameSortOrder}
+                data-testid={"order-" + type.order}
                 tabIndex={isSameSortOrder ? 0 : -1}
                 onClick={e => dropdownItemHandler(e)}
                 className={`cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile-header:text-center`}

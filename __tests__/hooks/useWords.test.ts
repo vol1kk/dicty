@@ -18,7 +18,7 @@ function setup(props?: Partial<UseSessionDataProps>) {
     return selector(state);
   });
 
-  const data = renderHook(() => useWords());
+  const data = renderHook(() => useWords(null));
 
   return { words: data.result.current };
 }

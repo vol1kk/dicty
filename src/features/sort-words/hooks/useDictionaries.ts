@@ -9,7 +9,7 @@ export default function useDictionaries() {
   const [localDictionaries, setLocalDictionaries] = useState<string[]>([]);
   const status = useSessionData(state => state.status);
 
-  const authedWords = api.words.getDictionaries.useQuery(undefined, {
+  const authedDictionaries = api.words.getDictionaries.useQuery(undefined, {
     enabled: isAuthed,
     refetchOnWindowFocus: false,
   });
@@ -26,9 +26,12 @@ export default function useDictionaries() {
   }, []);
 
   return {
-    ...authedWords,
-    isLoading: status === "unauthenticated" ? false : authedWords.isLoading,
+    ...authedDictionaries,
+    isLoading:
+      status === "unauthenticated" ? false : authedDictionaries.isLoading,
     data:
-      status === "unauthenticated" ? localDictionaries : authedWords.data || [],
+      status === "unauthenticated"
+        ? localDictionaries
+        : authedDictionaries.data || [],
   };
 }

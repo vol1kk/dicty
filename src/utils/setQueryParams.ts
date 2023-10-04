@@ -6,7 +6,8 @@ export default function setQueryParams(
   value: string | null,
   pathname?: string,
 ) {
-  const params = new URLSearchParams(router.query as Record<string, string>);
+  // https://nextjs.org/docs/pages/building-your-application/rendering/automatic-static-optimization#how-it-works
+  const params = new URLSearchParams(router.asPath.split("/?")[1] as string);
 
   const existingValue = params.get(key);
   if (existingValue === value) return;
@@ -16,6 +17,6 @@ export default function setQueryParams(
 
   void router.replace({
     pathname: pathname || router.pathname,
-    query: params.toString(),
+    query: Object.fromEntries(params.entries()),
   });
 }
