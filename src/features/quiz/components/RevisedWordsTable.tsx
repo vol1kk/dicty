@@ -33,7 +33,7 @@ export default function RevisedWordsTable({ locale }: RevisedWordsTableProps) {
       const revisedWordsTodayInd = parsedDates.findIndex(d => d === today);
 
       setRevisionInd(
-        revisedWordsTodayInd !== 1
+        revisedWordsTodayInd !== -1
           ? revisedWordsTodayInd
           : parsedDates.length - 1,
       );
