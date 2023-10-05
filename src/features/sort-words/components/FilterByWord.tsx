@@ -28,6 +28,7 @@ export default function FilterByWord({
       <SearchIcon
         height={36}
         width={36}
+        aria-hidden
         className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg fill-primary"
       />
     </div>

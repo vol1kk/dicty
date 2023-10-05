@@ -5,6 +5,7 @@ export type DropdownProps = {
   tabIndex?: number;
   className?: string;
   classNameContent?: string;
+  classNameTitle?: string;
   callback: (data: HTMLLIElement) => void;
   renderTitle: (isDropdownOpen: boolean) => React.ReactElement;
   renderContent: (
@@ -18,6 +19,7 @@ export default function Dropdown({
   renderTitle,
   tabIndex = 0,
   renderContent,
+  classNameTitle,
   classNameContent,
 }: DropdownProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -97,7 +99,13 @@ export default function Dropdown({
   }
 
   return (
-    <div data-testid="dropdown" className={className}>
+    <div
+      data-testid="dropdown"
+      className={cn(
+        className,
+        "outline-2 outline-offset-2 outline-primary focus-within:outline",
+      )}
+    >
       <div
         tabIndex={tabIndex}
         data-testid="dropdown-title"
@@ -105,7 +113,7 @@ export default function Dropdown({
         onBlur={dropdownFocusLoseHandler}
         onKeyDown={dropdownKeyboardHandler}
         onClick={dropdownClickHandler}
-        className="rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline"
+        className={cn(classNameTitle, "rounded-md outline-0")}
       >
         {title}
       </div>

@@ -33,13 +33,15 @@ export default function FilterByDictionaryProps({
   return (
     <Dropdown
       classNameContent="left-1/2 -translate-x-1/2 mobile-header:w-full mobile-header:right-0 mobile-header:px-2"
+      classNameTitle="relative flex cursor-pointer items-center justify-center pl-4 mobile-header:py-1"
       className="rounded-md bg-primary bg-opacity-30 px-4 py-2 dark:bg-opacity-60"
       callback={filterByLangCallback}
       renderTitle={isDropdownOpen => (
-        <div className="relative flex cursor-pointer items-center justify-center pl-4 mobile-header:py-1">
+        <>
           <ChevronIcon
             width={14}
             height={14}
+            aria-hidden
             className={cn(
               "absolute left-0 transition-transform [&>path]:fill-black dark:[&>path]:fill-white",
               isDropdownOpen && "rotate-90 [&>path]:fill-primary",
@@ -50,7 +52,7 @@ export default function FilterByDictionaryProps({
               ? capitalize(currentDictionary)
               : t("all") + " " + t("words.sort.by_dict.default", { count: 0 })}
           </span>
-        </div>
+        </>
       )}
       renderContent={dropdownItemHandler => (
         <ul
@@ -58,15 +60,17 @@ export default function FilterByDictionaryProps({
           className="mt-3 rounded-md bg-white p-3 shadow-3xl dark:bg-gray-900 [&>li]:leading-8"
         >
           {["all", ...availableDictionaries].map(dictionary => {
-            const isSameLang =
-              dictionary.toLowerCase() === currentDictionary?.toLowerCase();
+            const isSameDictionary =
+              dictionary === "all" && currentDictionary === null
+                ? true
+                : dictionary.toLowerCase() === currentDictionary?.toLowerCase();
 
             return (
               <li
                 role="option"
                 key={dictionary}
-                aria-selected={isSameLang}
-                tabIndex={isSameLang ? 0 : -1}
+                aria-selected={isSameDictionary}
+                tabIndex={isSameDictionary ? 0 : -1}
                 data-dict={dictionary.toLowerCase()}
                 data-testid={"dict-" + dictionary.toLowerCase()}
                 onClick={e => dropdownItemHandler(e)}
