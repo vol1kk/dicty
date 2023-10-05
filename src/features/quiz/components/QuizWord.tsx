@@ -21,6 +21,7 @@ export default function QuizWord({ word, isClicked }: QuizWordProps) {
       <div className="mb-2">
         {word.categories.map(category => (
           <Word.Category
+            id={category.id}
             key={category.id}
             categoryName={category.name}
             className={cn(
@@ -28,7 +29,10 @@ export default function QuizWord({ word, isClicked }: QuizWordProps) {
               "transition-[filter] duration-200",
             )}
           >
-            <Word.Meanings meanings={category.meanings} />
+            <Word.Meanings
+              meanings={category.meanings}
+              associatedCategory={category.name}
+            />
           </Word.Category>
         ))}
       </div>

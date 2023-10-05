@@ -76,7 +76,10 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
                     categoryName="Synonyms"
                     className="text-sm [&>h3]:text-base"
                   >
-                    <Word.Synonyms words={data} synonyms={word.synonyms} />
+                    <Word.Synonyms
+                      synonyms={word.synonyms}
+                      words={data.map(w => ({ name: w.name, id: w.id }))}
+                    />
                   </Word.Category>
                 )}
               </div>

@@ -4,18 +4,18 @@ import cn from "~/utils/cn";
 import { type Word } from "~/types/ApiTypes";
 
 export type WordSynonymsProps = {
-  words: Word[];
+  words: Pick<Word, "name" | "id">[];
   synonyms: string[];
 };
 
-export default function WordSynonyms({ words, synonyms }: WordSynonymsProps) {
-  function scrollBy(y: number) {
-    window.scrollBy({
-      top: y,
-      behavior: "smooth",
-    });
-  }
+function scrollBy(y: number) {
+  window.scrollBy({
+    top: y,
+    behavior: "smooth",
+  });
+}
 
+export default function WordSynonyms({ words, synonyms }: WordSynonymsProps) {
   function getWordBySynonym(id: string | undefined) {
     if (!id) return;
 
@@ -23,19 +23,25 @@ export default function WordSynonyms({ words, synonyms }: WordSynonymsProps) {
       `[data-testid='word-header-${id}']`,
     ) as HTMLDivElement;
     const parent = domElement.closest("li") as HTMLLIElement;
-    const offset = parent.getBoundingClientRect().y;
 
-    if (domElement.ariaExpanded === "true") scrollBy(offset);
-    domElement.ariaExpanded = "true";
+    if (domElement.ariaExpanded === "true")
+      scrollBy(parent.getBoundingClientRect().y - 10);
+    else {
+      domElement.ariaExpanded = "true";
 
-    const accordion = parent?.querySelector(
-      "[data-testid='accordion']",
-    ) as HTMLDivElement;
-    accordion.addEventListener("transitionend", transitionScrollListener);
+      const accordion = parent?.querySelector(
+        "[data-testid='accordion']",
+      ) as HTMLDivElement;
+      accordion.addEventListener("transitionend", transitionScrollListener);
 
-    function transitionScrollListener() {
-      scrollBy(offset);
-      accordion.removeEventListener("transitionend", transitionScrollListener);
+      function transitionScrollListener() {
+        scrollBy(parent.getBoundingClientRect().y - 10);
+
+        accordion.removeEventListener(
+          "transitionend",
+          transitionScrollListener,
+        );
+      }
     }
   }
 
