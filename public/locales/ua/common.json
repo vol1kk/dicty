@@ -1,5 +1,9 @@
 {
   "all": "Всі",
+  "or": "Або",
+
+  "definition_one": "Визначення",
+  "definition_other": "Визначення",
 
   "header.import": "Імпортувати",
   "header.export": "Експортувати",
@@ -29,6 +33,8 @@
   "quality.moderate": "Помірно",
   "quality.good": "Добре",
 
+  "words.list": "Список слів",
+
   "word.sort.by_query": "Знайти слово...",
 
   "words.sort.by_dict.default_one": "Словник",
@@ -39,8 +45,6 @@
 
   "words.sort.byDate.newest": "Найновіші",
   "words.sort.byDate.oldest": "Найстаріші",
-
-  "form.or": "Або",
 
   "form.code.import": "Імпортувати",
   "form.code.import.placeholder": "Введіть код",

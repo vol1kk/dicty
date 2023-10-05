@@ -41,17 +41,17 @@ describe("WordShare Tests", function () {
   });
 
   it("should render svg responsible for code deletion & input with attributes that correspond to existing share-code", () => {
-    const { iconComponent, inputComponent } = setup({ code: "code-exists" });
+    const { buttonComponent, inputComponent } = setup({ code: "code-exists" });
 
-    expect(iconComponent).toHaveAttribute("aria-label", "form.code.delete");
+    expect(buttonComponent).toHaveAttribute("aria-label", "form.code.delete");
     expect(inputComponent).toHaveAttribute("tabIndex", "0");
     expect(inputComponent).toHaveAttribute("value", "code-exists");
   });
 
   it("should render svg responsible for code generation & input with attributes that correspond to non-existing share-code", () => {
-    const { iconComponent, inputComponent } = setup({ code: null });
+    const { buttonComponent, inputComponent } = setup({ code: null });
 
-    expect(iconComponent).toHaveAttribute("aria-label", "form.code.generate");
+    expect(buttonComponent).toHaveAttribute("aria-label", "form.code.generate");
     expect(inputComponent).toHaveAttribute("tabIndex", "-1");
     expect(inputComponent).toHaveAttribute("value", "");
   });

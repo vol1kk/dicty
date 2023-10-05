@@ -1,5 +1,9 @@
 {
   "all": "All",
+  "or": "Or",
+
+  "definition_one": "Definition",
+  "definition_other": "Definitions",
 
   "header.import": "Import",
   "header.export": "Export",
@@ -29,6 +33,8 @@
   "quality.moderate": "Moderate",
   "quality.good": "Good",
 
+  "words.list": "Words List",
+
   "word.sort.by_query": "Search for your word...",
 
   "words.sort.by_dict.default_one": "Dictionary",
@@ -39,8 +45,6 @@
 
   "words.sort.byDate.newest": "Newest",
   "words.sort.byDate.oldest": "Oldest",
-
-  "form.or": "Or",
 
   "form.code.import": "Import",
   "form.code.import.placeholder": "Enter Code",

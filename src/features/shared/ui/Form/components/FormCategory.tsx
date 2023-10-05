@@ -75,25 +75,23 @@ export default function FormCategory({
 
   return (
     <div role="list" className="[&>*]:mb-4" key={`categories.${categoryIndex}`}>
-      <div>
-        <Input
-          id={`categories.${categoryIndex}.name`}
-          before={false}
-          className="w-full outline-0"
-          classNameLabel={cn(
-            hasErrorBorder && "outline-offset-4 ring-2 ring-red-500",
-            "flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md focus-within:outline outline-1 outline-primary outline-offset-4",
-          )}
-          value={category.name}
-          placeholder={t("form.word.category.placeholder")}
-        >
-          <CategoryOptions
-            callback={categoryCallback}
-            currentCategory={categoryIndex}
-            categoriesLength={categoriesLength}
-          />
-        </Input>
-      </div>
+      <Input
+        id={`categories.${categoryIndex}.name`}
+        before={false}
+        className="w-full outline-0"
+        classNameLabel={cn(
+          hasErrorBorder && "outline-offset-4 ring-2 ring-red-500",
+          "flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md focus-within:outline outline-1 outline-primary outline-offset-4",
+        )}
+        value={category.name}
+        placeholder={t("form.word.category.placeholder")}
+      >
+        <CategoryOptions
+          callback={categoryCallback}
+          currentCategory={categoryIndex}
+          categoriesLength={categoriesLength}
+        />
+      </Input>
       <FieldArray name={`categories.${categoryIndex}.meanings`}>
         {(meaningsHelpers: FieldArrayHelpers) => {
           meaningsHelpersRef.current.push = meaningsHelpers.push;

@@ -17,9 +17,9 @@ export default function WordTitle({
 }: WordTitleProps) {
   return (
     <div data-testid="word-title">
-      <h2 className={cn("text-4xl font-bold", classNameHeader)}>
+      <h2 className={cn("text-4xl font-bold mobile:text-3xl", classNameHeader)}>
         <Button className="flex items-center gap-2">
-          <span className="max-w-[25ch] truncate pb-1 mobile-small:max-w-[5ch]">
+          <span className="max-w-[25ch] truncate pb-1 mobile-small:max-w-[9ch]">
             {name}
           </span>
           <ChevronIcon

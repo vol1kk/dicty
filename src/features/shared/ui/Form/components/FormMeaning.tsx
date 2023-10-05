@@ -31,7 +31,7 @@ export default function FormMeaning({
 
   return (
     <div
-      className="grid grid-cols-[1fr,_1fr,_auto] gap-4 mobile:grid-cols-none"
+      className="grid grid-cols-[1fr,_1fr,_auto] gap-2 mobile:grid-cols-none"
       key={`meaning.${meaningIndex}`}
     >
       <Input

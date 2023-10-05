@@ -33,8 +33,7 @@ export default function FilterByDictionaryProps({
   return (
     <Dropdown
       classNameContent="left-1/2 -translate-x-1/2 mobile-header:w-full mobile-header:right-0 mobile-header:px-2"
-      classNameTitle="relative flex cursor-pointer items-center justify-center pl-4 mobile-header:py-1"
-      className="rounded-md bg-primary bg-opacity-30 px-4 py-2 dark:bg-opacity-60"
+      classNameTitle="relative flex cursor-pointer items-center justify-center rounded-md bg-primary bg-opacity-30 px-4 py-2 dark:bg-opacity-60 outline-2 outline-offset-2 outline-primary focus-visible:outline"
       callback={filterByLangCallback}
       renderTitle={isDropdownOpen => (
         <>
@@ -43,7 +42,7 @@ export default function FilterByDictionaryProps({
             height={14}
             aria-hidden
             className={cn(
-              "absolute left-0 transition-transform [&>path]:fill-black dark:[&>path]:fill-white",
+              "absolute left-4 transition-transform [&>path]:fill-black dark:[&>path]:fill-white",
               isDropdownOpen && "rotate-90 [&>path]:fill-primary",
             )}
           />

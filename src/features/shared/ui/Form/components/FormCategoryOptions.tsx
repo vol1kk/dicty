@@ -44,7 +44,7 @@ export default function CategoryOptions({
 
   return (
     <Dropdown
-      className="relative p-2"
+      className="relative p-2 focus-within:outline-0"
       tabIndex={-1}
       renderTitle={() => (
         <Button className="rounded-full bg-primary bg-opacity-30 p-2">

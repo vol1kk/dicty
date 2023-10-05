@@ -56,13 +56,10 @@ export default function WordShare({ code, wordId }: WordShareProps) {
       />
       <Button
         onClick={buttonClickHandler}
+        aria-label={t(shareCode ? "form.code.delete" : "form.code.generate")}
         className="bg-transparent dark:bg-transparent [&>svg]:fill-primary"
       >
-        {shareCode ? (
-          <CloseIcon aria-label={t("form.code.delete")} />
-        ) : (
-          <KeyIcon aria-label={t("form.code.generate")} />
-        )}
+        {shareCode ? <CloseIcon aria-hidden /> : <KeyIcon aria-hidden />}
       </Button>
     </div>
   );

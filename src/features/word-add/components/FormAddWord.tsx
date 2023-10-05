@@ -60,7 +60,10 @@ export default function FormAddWord() {
       >
         {t("form.word.button.add")}
         <span className="rounded-full border-2 border-black p-1 group-aria-expanded/accordionTitle:border-primary dark:border-white dark:group-aria-expanded/accordionTitle:border-white">
-          <CloseIcon className="h-4 w-4 -rotate-45 fill-black transition-transform group-aria-expanded/accordionTitle:rotate-0 group-aria-expanded/accordionTitle:fill-primary dark:fill-white" />
+          <CloseIcon
+            aria-hidden
+            className="h-4 w-4 -rotate-45 fill-black transition-transform group-aria-expanded/accordionTitle:rotate-0 group-aria-expanded/accordionTitle:fill-primary dark:fill-white"
+          />
         </span>
       </Button>
       <Accordion strategy={{ isOpen: isFormOpen }}>
@@ -73,7 +76,7 @@ export default function FormAddWord() {
             <div className="relative mx-2 flex select-none items-center justify-center">
               <div className="absolute h-1 w-full rounded-md bg-gray-300 dark:bg-gray-900" />
               <span className="text-bold relative z-[1] rounded-md bg-gray-300 px-6 py-1 text-sm font-bold uppercase dark:bg-gray-900">
-                {t("form.or")}
+                {t("or")}
               </span>
             </div>
           </>

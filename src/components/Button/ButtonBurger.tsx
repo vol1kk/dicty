@@ -22,7 +22,7 @@ export default function ButtonBurger({
       aria-expanded={isOpen}
       onClick={openHandler}
       className={cn(
-        "group/burger relative flex h-5 w-6 items-center  rounded-none bg-transparent dark:bg-transparent [&>span]:w-full [&>span]:bg-gray-400 [&>span]:transition-[transform,_opacity] [&>span]:duration-500 [&>span]:aria-expanded:bg-primary",
+        "group/burger relative flex h-5 w-6 items-center rounded-sm bg-transparent outline-offset-4 dark:bg-transparent [&>span]:w-full [&>span]:bg-gray-400 [&>span]:transition-[transform,_opacity] [&>span]:duration-300 [&>span]:aria-expanded:bg-primary",
         className,
       )}
       {...props}

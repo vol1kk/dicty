@@ -40,12 +40,12 @@ export default function WordSynonyms({ words, synonyms }: WordSynonymsProps) {
   }
 
   return (
-    <div data-testid="word-synonyms" className="mt-1 flex gap-2">
+    <ul data-testid="word-synonyms" className="mt-1 flex gap-2">
       {synonyms.map(synonym => {
         const existingWord = words.find(w => w.name === synonym);
 
         return (
-          <span
+          <li
             key={synonym}
             data-testid={"synonym-" + synonym.toLowerCase().replaceAll(" ", "")}
             onClick={getWordBySynonym.bind(undefined, existingWord?.id)}
@@ -56,9 +56,9 @@ export default function WordSynonyms({ words, synonyms }: WordSynonymsProps) {
             )}
           >
             {synonym}
-          </span>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 }

@@ -1,17 +1,23 @@
 import { type Meaning } from "~/types/ApiTypes";
+import { useTranslation } from "next-i18next";
 
 export type WordMeaningsProps = {
   meanings: Meaning[];
   showExamples?: boolean;
+  associatedCategory: string;
 };
 export default function WordMeanings({
   meanings,
+  associatedCategory,
   showExamples = true,
 }: WordMeaningsProps) {
+  const { t } = useTranslation();
+
   return (
-    <ul
+    <ol
       data-testid="word-meanings"
       className="ml-8 list-disc marker:text-primary"
+      aria-label={t("definition", { count: 0 }) + ` ${associatedCategory}`}
     >
       {meanings.map(meaning => (
         <li
@@ -27,6 +33,6 @@ export default function WordMeanings({
           )}
         </li>
       ))}
-    </ul>
+    </ol>
   );
 }

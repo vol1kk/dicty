@@ -110,7 +110,7 @@ export default function Form({
                   <span>{t("form.word.transcription")}</span>
                 </Input>
               </div>
-              <div className="flex flex-wrap gap-2 [&>label]:grow">
+              <div className="flex flex-wrap gap-4 [&>label]:grow">
                 <Input
                   id="dictionary"
                   className="w-full"
@@ -119,7 +119,7 @@ export default function Form({
                 <Input
                   id="language"
                   className="w-full"
-                  placeholder={t("words.sort.by_lang.default")}
+                  placeholder={t("words.sort.by_lang.default", { count: 1 })}
                 />
               </div>
             </div>

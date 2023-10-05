@@ -8,18 +8,20 @@ import WordCategory, {
 import WordMeanings from "~/components/Word/WordMeanings";
 
 function setup(props?: Partial<WordCategoryProps>) {
-  const categoryName = props?.categoryName || "Test Category";
+  const category = createCategory({
+    name: props?.categoryName || "Test Category",
+  });
 
-  const category = createCategory();
   const data = render(
-    <WordCategory categoryName={category.name}>
-      <WordMeanings meanings={category.meanings} />
+    <WordCategory id={category.id} categoryName={category.name}>
+      <WordMeanings
+        meanings={category.meanings}
+        associatedCategory={category.name}
+      />
     </WordCategory>,
   );
 
-  const categoryContainer = screen.getByTestId(
-    `category-${categoryName}-container`,
-  );
+  const categoryContainer = screen.getByTestId(`category-${category.id}`);
 
   return { data, categoryContainer };
 }

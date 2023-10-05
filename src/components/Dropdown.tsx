@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import cn from "~/utils/cn";
 
 export type DropdownProps = {
@@ -23,6 +24,7 @@ export default function Dropdown({
   classNameContent,
 }: DropdownProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const content = renderContent(dropdownItemHandler);
   const title = renderTitle(isDropdownOpen);
 
@@ -40,7 +42,7 @@ export default function Dropdown({
     setIsDropdownOpen(p => !p);
   }
 
-  function dropdownFocusLoseHandler(e: React.FocusEvent) {
+  function dropdownFocusLoseHandler(e: React.FocusEvent<HTMLDivElement>) {
     // If focused element doesn't have role of listbox, then close the menu
     if (!e.relatedTarget?.closest("[role='listbox']")) setIsDropdownOpen(false);
   }
@@ -99,21 +101,15 @@ export default function Dropdown({
   }
 
   return (
-    <div
-      data-testid="dropdown"
-      className={cn(
-        className,
-        "outline-2 outline-offset-2 outline-primary focus-within:outline",
-      )}
-    >
+    <div data-focused="false" data-testid="dropdown" className={cn(className)}>
       <div
         tabIndex={tabIndex}
         data-testid="dropdown-title"
         aria-expanded={isDropdownOpen}
+        onClick={dropdownClickHandler}
         onBlur={dropdownFocusLoseHandler}
         onKeyDown={dropdownKeyboardHandler}
-        onClick={dropdownClickHandler}
-        className={cn(classNameTitle, "rounded-md outline-0")}
+        className={cn(classNameTitle, "rounded-md")}
       >
         {title}
       </div>

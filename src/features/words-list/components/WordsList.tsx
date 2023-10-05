@@ -39,9 +39,13 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
   }
 
   return (
-    <ul data-testid="words-list" className="grid gap-4">
+    <ul
+      className="grid gap-4"
+      data-testid="words-list"
+      aria-label={t("words.list")}
+    >
       {data.map(word => (
-        <li key={word.id}>
+        <li key={word.id} aria-label={word.name}>
           <Word>
             <Word.Header
               aria-expanded={false}
@@ -55,14 +59,22 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
             <Accordion strategy={{ aria: true }}>
               <div className="mb-2">
                 {word.categories.map(category => (
-                  <Word.Category key={category.id} categoryName={category.name}>
-                    <Word.Meanings meanings={category.meanings} />
+                  <Word.Category
+                    id={category.id}
+                    key={category.id}
+                    categoryName={category.name}
+                  >
+                    <Word.Meanings
+                      meanings={category.meanings}
+                      associatedCategory={category.name}
+                    />
                   </Word.Category>
                 ))}
                 {word.synonyms?.length > 0 && (
                   <Word.Category
-                    className="text-sm [&>h3]:text-base"
+                    id="word-synonyms"
                     categoryName="Synonyms"
+                    className="text-sm [&>h3]:text-base"
                   >
                     <Word.Synonyms words={data} synonyms={word.synonyms} />
                   </Word.Category>
