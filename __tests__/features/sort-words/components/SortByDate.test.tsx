@@ -43,7 +43,7 @@ describe("SortByDate tests", function () {
 
     fireEvent.click(switchToNewest);
 
-    expect(mockRouter.query.order).toEqual("newest");
+    expect(mockRouter.query.order).toEqual(undefined);
   });
 
   it("should select order by oldest", () => {

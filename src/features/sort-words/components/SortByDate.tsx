@@ -24,9 +24,10 @@ export default function SortByDate({
 
   function sortByDateCallback(data: HTMLLIElement) {
     const orderByDate = data.dataset.orderby as SortByDateType;
+    const parsedOrder = orderByDate === "newest" ? null : orderByDate;
 
     setOrderByDate(orderByDate);
-    setQueryParams(router, "order", orderByDate);
+    setQueryParams(router, "order", parsedOrder);
   }
 
   return (
