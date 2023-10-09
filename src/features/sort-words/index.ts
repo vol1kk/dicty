@@ -18,6 +18,7 @@ import {
 
 import useDictionaries from "~/features/sort-words/hooks/useDictionaries";
 import FilterByDictionary from "~/features/sort-words/components/FilterByDictionary";
+import getUniqueDictionaries from "~/features/sort-words/utils/getUniqueDictionaries";
 
 export {
   SortNewest,
@@ -33,4 +34,5 @@ export {
   useDictionaries,
   useSortingParams,
   FilterByDictionary,
+  getUniqueDictionaries,
 };

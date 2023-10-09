@@ -1,5 +1,6 @@
 import { describe, expect, vi, it } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { createWord } from "#tests/utils";
 import FormAddWord from "~/features/word-add";
@@ -7,7 +8,7 @@ import * as useSessionModule from "~/store/useSessionData";
 import * as formUtilsModule from "~/features/shared/ui/Form/utils/formUtils";
 
 function setup() {
-  const data = render(<FormAddWord />);
+  const data = render(<FormAddWord />, { wrapper: MemoryRouterProvider });
 
   const formOpenButton = screen.getByTestId("form-open");
   const formCreateWord = screen.getByTestId("word-form");

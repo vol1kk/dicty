@@ -2,6 +2,7 @@ import { z } from "zod";
 import { nanoid } from "nanoid";
 import { TRPCError } from "@trpc/server";
 
+import { getUniqueDictionaries } from "~/features/sort-words";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
   type Category,
@@ -33,7 +34,8 @@ export const wordRouter = createTRPCRouter({
       select: { dictionary: true },
       distinct: ["dictionary"],
     });
-    return dictionaries.map(w => w.dictionary) as string[];
+
+    return getUniqueDictionaries(dictionaries);
   }),
 
   getAll: protectedProcedure

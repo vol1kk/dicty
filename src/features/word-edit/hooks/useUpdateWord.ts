@@ -1,12 +1,17 @@
+import { getQueryKey } from "@trpc/react-query";
+
 import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
 import modifyWordId from "~/utils/modifyWordId";
+import { getUniqueDictionaries } from "~/features/sort-words";
 
 export default function useUpdateWord(props?: Partial<HookOptions>) {
   const utils = api.useContext();
+  const getDictionariesKey = getQueryKey(api.words.getDictionaries);
+
   const isAuthed = useSessionData(state => state.isAuthed);
 
   const setLocalWords = useLocalData(state => state.setWords);
@@ -18,28 +23,39 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
       await utils.words.getAll.cancel();
 
       const previousData = utils.words.getAll.getData();
-      const dictionary = word.dictionary ? word.dictionary : null;
+      const previousDictionaries = utils.words.getDictionaries.getData();
 
+      const dictionary = word.dictionary || null;
       if (previousData) {
         const optimisticData = previousData.map(w =>
           w.id == word.id ? word : w,
         );
+        const optimisticDictionaries = getUniqueDictionaries(optimisticData);
 
         utils.words.getAll.setData(dictionary, optimisticData);
+        utils.words.getDictionaries.setData(
+          void getDictionariesKey,
+          optimisticDictionaries,
+        );
       }
 
-      return { previousData, dictionary };
+      return { previousData, previousDictionaries, dictionary };
     },
 
     onSettled() {
-      utils.words.getAll.invalidate().catch(console.error);
+      utils.words.invalidate().catch(console.error);
     },
 
     onError(e, _, context) {
       if (props?.onError) props.onError(e.message);
 
-      if (context)
+      if (context) {
         utils.words.getAll.setData(context.dictionary, context.previousData);
+        utils.words.getDictionaries.setData(
+          void getDictionariesKey,
+          context.previousDictionaries,
+        );
+      }
     },
   });
 
