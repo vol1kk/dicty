@@ -4,6 +4,7 @@ import modifyWordId from "~/utils/modifyWordId";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
+import { basicErrorCallback, basicPreviousData } from "~/features/shared/utils";
 
 export default function useImportWords(props?: Partial<HookOptions>) {
   const utils = api.useContext();
@@ -15,7 +16,7 @@ export default function useImportWords(props?: Partial<HookOptions>) {
     onSuccess() {
       if (props?.onSuccess) props.onSuccess();
 
-      utils.words.getAll.invalidate().catch(console.log);
+      utils.words.invalidate().catch(console.log);
     },
 
     onError(e) {
@@ -30,19 +31,20 @@ export default function useImportWords(props?: Partial<HookOptions>) {
 
         utils.words.getAll.setData(null, words);
 
-        const previousData = utils.words.getAll.getData();
-        return { previousData };
+        const { previousDictionaries, previousData, queryKey } =
+          await basicPreviousData(utils, words);
+
+        return { previousDictionaries, previousData, queryKey };
       },
 
       onSuccess() {
-        utils.words.getAll.invalidate().catch(console.log);
+        utils.words.invalidate().catch(console.log);
       },
 
       onError(e, _, context) {
         if (props?.onError) props.onError(e.message);
 
-        if (context?.previousData)
-          utils.words.getAll.setData(null, context.previousData);
+        if (context) basicErrorCallback({ utils, context });
       },
     });
 

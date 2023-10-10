@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 
-import { api } from "~/utils/api";
 import parseDate from "~/utils/parseDate";
 import { type Word } from "~/types/ApiTypes";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
+import { api, type ReactQueryOptions, type RouterInputs } from "~/utils/api";
 
-type UseWordProps = {
-  enabled?: boolean;
-};
+type WordGetAllInput = RouterInputs["words"]["getAll"];
+type WordsGetAllOptions = ReactQueryOptions["words"]["getAll"];
 
 export default function useWords(
-  dictionary: string | null,
-  props?: Partial<UseWordProps>,
+  dictionary: WordGetAllInput,
+  props?: Partial<WordsGetAllOptions>,
 ) {
   const isAuthed = useSessionData(state => state.isAuthed);
   const localWords = useLocalData(state => state.words);
@@ -20,6 +19,7 @@ export default function useWords(
   const status = useSessionData(state => state.status);
 
   const authedWords = api.words.getAll.useQuery(dictionary, {
+    ...props,
     enabled: isAuthed && (props?.enabled === undefined ? true : props.enabled),
     refetchOnWindowFocus: false,
   });

@@ -161,7 +161,7 @@ export const wordRouter = createTRPCRouter({
     }),
 
   deleteWord: protectedProcedure
-    .input(z.object({ id: z.string() }))
+    .input(z.object({ id: z.string(), dictionary: z.string().nullable() }))
     .mutation(async ({ ctx, input }) => {
       const existingWord = await ctx.prisma.word.findUnique({
         where: { id: input.id },

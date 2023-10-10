@@ -61,7 +61,10 @@ describe("EditWord Page Test", function () {
 
     await waitFor(() => {
       expect(mockRouter.asPath).toEqual("/");
-      expect(mockedUseDeleteWord).toHaveBeenCalledWith(word.id);
+      expect(mockedUseDeleteWord).toHaveBeenCalledWith({
+        id: word.id,
+        dictionary: word.dictionary,
+      });
     });
   });
 

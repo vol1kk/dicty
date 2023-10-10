@@ -7,6 +7,7 @@ import useWords from "~/hooks/useWords";
 import useDebounce from "~/hooks/useDebounce";
 import FormAddWord from "~/features/word-add";
 import WordsList from "~/features/words-list";
+import FetchOnceOptions from "~/utils/FetchOnceOptions";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 import {
   FilterByDictionary,
@@ -30,8 +31,8 @@ export default function Home() {
     dictionary: [dicty, setDicty],
   } = useSortingParams();
 
-  const { data: words, isLoading } = useWords(dicty);
-  const { data: availableDictionaries } = useDictionaries();
+  const { data: words, isLoading } = useWords(dicty, FetchOnceOptions);
+  const { data: availableDictionaries } = useDictionaries(FetchOnceOptions);
 
   const availableLanguages = [
     ...new Set(words.map(w => w.language?.toLowerCase())),

@@ -1,14 +1,13 @@
-import { getQueryKey } from "@trpc/react-query";
-
-import { api } from "~/utils/api";
+import { api, type RouterInputs } from "~/utils/api";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { type HookOptions } from "~/types/HookOptions";
 import { getUniqueDictionaries } from "~/features/sort-words";
 
+export type UseDeleteWordInputs = RouterInputs["words"]["deleteWord"];
+
 export default function useDeleteWord(props?: Partial<HookOptions>) {
   const utils = api.useContext();
-  const getDictionariesKey = getQueryKey(api.words.getDictionaries);
 
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -19,57 +18,58 @@ export default function useDeleteWord(props?: Partial<HookOptions>) {
     async onMutate(word) {
       if (props?.onSuccess) props?.onSuccess();
 
-      await utils.words.getAll.cancel();
+      await utils.words.getAll.cancel(null);
+      await utils.words.getDictionaries.cancel();
 
-      const previousData = utils.words.getAll.getData();
-      const previousDictionaries = utils.words.getDictionaries.getData();
+      let queryKey = null;
+      let previousData = utils.words.getAll.getData(queryKey);
 
-      const deletedWord = previousData?.find(w => w.id === word.id);
+      if (!previousData) {
+        queryKey = word.dictionary;
+        previousData = utils.words.getAll.getData(queryKey);
 
-      const dictionary = deletedWord?.dictionary || null;
+        await utils.words.getAll.cancel(queryKey);
+      }
+
       if (previousData) {
         const optimisticData = previousData.filter(w => w.id !== word.id);
         const optimisticDictionaries = getUniqueDictionaries(optimisticData);
 
-        utils.words.getAll.setData(dictionary, optimisticData);
-        utils.words.getDictionaries.setData(
-          void getDictionariesKey,
-          optimisticDictionaries,
-        );
+        utils.words.getAll.setData(queryKey, optimisticData);
+        utils.words.getDictionaries.setData(undefined, optimisticDictionaries);
       }
 
-      return { previousData, previousDictionaries, dictionary };
+      const previousDictionaries = utils.words.getDictionaries.getData();
+      return { previousData, previousDictionaries, queryKey };
     },
 
     onSettled() {
-      utils.words.getAll.invalidate().catch(console.error);
+      utils.words.invalidate().catch(console.error);
     },
 
     onError(e, _, context) {
       if (props?.onError) props.onError(e.message);
 
       if (context) {
-        utils.words.getAll.setData(context.dictionary, context.previousData);
+        utils.words.getAll.setData(context.queryKey, context.previousData);
         utils.words.getDictionaries.setData(
-          void getDictionariesKey,
+          undefined,
           context.previousDictionaries,
         );
       }
     },
   });
 
-  function deleteWord(id: string) {
-    if (isAuthed) deleteWordMutation({ id });
+  return function deleteWord(word: UseDeleteWordInputs) {
+    if (isAuthed) deleteWordMutation(word);
 
     if (!isAuthed) {
-      const filteredWords = localWords.filter(w => w.id !== id);
+      const filteredWords = localWords.filter(w => w.id !== word.id);
 
       localStorage.setItem("words", JSON.stringify(filteredWords));
       setLocalWords(filteredWords);
 
       if (props?.onSuccess) props.onSuccess();
     }
-  }
-
-  return deleteWord;
+  };
 }

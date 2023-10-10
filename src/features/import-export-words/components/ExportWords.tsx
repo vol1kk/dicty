@@ -7,6 +7,8 @@ import modifyWordId from "~/utils/modifyWordId";
 import { ImportIcon } from "~/components/Icons";
 import useHeaderData from "~/store/useHeaderData";
 import { downloadData } from "~/features/import-export-words";
+import cn from "~/utils/cn";
+import Spinner from "~/components/Spinner";
 
 type ExportWordsProps = {
   className?: string;
@@ -30,11 +32,19 @@ export default function ExportWords({ className, words }: ExportWordsProps) {
   return (
     <Button
       variant="darker"
-      className={className}
+      className={cn(
+        className,
+        "disabled:cursor-no-drop disabled:hover:scale-100",
+      )}
+      disabled={words.isLoading}
       onClick={exportWordsHandler}
       data-testid="export-words-container"
     >
-      <ImportIcon width={24} height={24} />
+      {words.isLoading ? (
+        <Spinner dimensions={24} text={t("spinner.load")} />
+      ) : (
+        <ImportIcon width={24} height={24} />
+      )}
       {t("header.export")}
     </Button>
   );

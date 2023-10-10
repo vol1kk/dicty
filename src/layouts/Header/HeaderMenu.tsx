@@ -14,7 +14,6 @@ import ChangeTheme from "~/features/change-theme";
 import useHeaderData from "~/store/useHeaderData";
 import useSessionData from "~/store/useSessionData";
 import ChangeLanguage from "~/features/change-language";
-import { useSortingParams } from "~/features/sort-words";
 import { AccountIcon, QuizIcon } from "~/components/Icons";
 import { ExportWords, ImportWords } from "~/features/import-export-words";
 
@@ -28,21 +27,8 @@ export default function HeaderMenu() {
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
 
-  const {
-    dictionary: [dicty],
-  } = useSortingParams();
-
-  // 1: If dicty isn't null, then not all words were fetched,
-  // hence, fetching all words on demand (if header is opened);
-  // 2: If pathname is "/", then it enabled by default,
-  // since useWords is used on main page;
-  // 3: In any other case fetching will take place when header is opened
   const words = useWords(null, {
-    enabled: dicty
-      ? isHeaderOpen
-      : router.pathname === "/"
-      ? true
-      : isHeaderOpen,
+    enabled: isHeaderOpen,
   });
 
   function authenticationHandler() {

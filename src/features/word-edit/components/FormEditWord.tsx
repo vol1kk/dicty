@@ -7,7 +7,11 @@ import { Button } from "~/components/Button";
 import Form from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
 import ButtonUndo from "~/components/Button/ButtonUndo";
-import { useDeleteWord, useUpdateWord } from "~/features/word-edit";
+import {
+  useDeleteWord,
+  type UseDeleteWordInputs,
+  useUpdateWord,
+} from "~/features/word-edit";
 import {
   useToasts,
   toastDelete,
@@ -119,8 +123,8 @@ export default function FormEditWord({ word }: FormEditWordProps) {
     void navigation.back();
   }
 
-  function deleteHandler(id: string) {
-    deleteWord(id);
+  function deleteHandler(data: UseDeleteWordInputs) {
+    deleteWord(data);
     void navigation.replace("/");
   }
 
@@ -153,7 +157,12 @@ export default function FormEditWord({ word }: FormEditWordProps) {
           <Button
             variant="darker"
             data-testid="button-delete"
-            onClick={deleteHandler.bind(undefined, word.id)}
+            onClick={() =>
+              deleteHandler({
+                id: word.id,
+                dictionary: word.dictionary,
+              })
+            }
             className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
           >
             {t("form.word.button.delete")}

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 
-import { api } from "~/utils/api";
 import { type Word } from "~/types/ApiTypes";
 import useSessionData from "~/store/useSessionData";
+import { api, type ReactQueryOptions } from "~/utils/api";
 
-export default function useDictionaries() {
+type UseDictionariesOptions = ReactQueryOptions["words"]["getDictionaries"];
+
+export default function useDictionaries(
+  props?: Partial<UseDictionariesOptions>,
+) {
   const isAuthed = useSessionData(state => state.isAuthed);
   const [localDictionaries, setLocalDictionaries] = useState<string[]>([]);
   const status = useSessionData(state => state.status);
@@ -12,6 +16,7 @@ export default function useDictionaries() {
   const authedDictionaries = api.words.getDictionaries.useQuery(undefined, {
     enabled: isAuthed,
     refetchOnWindowFocus: false,
+    ...props,
   });
 
   useEffect(() => {

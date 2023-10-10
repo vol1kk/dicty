@@ -3,6 +3,7 @@ import { createTRPCNext } from "@trpc/next";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import superjson from "superjson";
 import { type AppRouter } from "~/server/api/root";
+import { type inferReactQueryProcedureOptions } from "@trpc/react-query";
 
 let token = "";
 export function setToken(newToken: string) {
@@ -40,3 +41,4 @@ function getBaseUrl() {
 
 export type RouterInputs = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
+export type ReactQueryOptions = inferReactQueryProcedureOptions<AppRouter>;
