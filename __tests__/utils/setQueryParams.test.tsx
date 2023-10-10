@@ -3,7 +3,7 @@ import { it, describe, expect } from "vitest";
 import { render } from "@testing-library/react";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
-import setQueryParams from "~/utils/setQueryParams";
+import setQueryParams from "~/features/sort-words/utils/setQueryParams";
 
 async function setup() {
   const data = render(<main>Query Test</main>, {

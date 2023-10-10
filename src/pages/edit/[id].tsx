@@ -19,8 +19,7 @@ export default function EditPage() {
 
   let noData;
   if (!word) noData = <NotFound dimensions={128} text={t("list.not-found")} />;
-  if (isLoading)
-    noData = <Spinner text={`${t("spinner.load")}...`} dimensions={64} />;
+  if (isLoading) noData = <Spinner text={t("spinner.load")} dimensions={64} />;
 
   if (isLoading || !word)
     return (
