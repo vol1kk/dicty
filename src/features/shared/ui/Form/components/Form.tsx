@@ -40,8 +40,8 @@ export default function Form({
     submitHandler({
       ...values,
       synonyms: transformedSynonyms,
-      language: values.language?.toLowerCase() || null,
-      dictionary: values.dictionary?.toLowerCase() || null,
+      language: values.language || null,
+      dictionary: values.dictionary || null,
     });
   };
 
@@ -77,7 +77,7 @@ export default function Form({
         function handleFormReset() {
           resetForm();
           setErrors({});
-          setTouched({});
+          void setTouched({});
         }
 
         const formButtons = renderButtons(isValid, handleFormReset);

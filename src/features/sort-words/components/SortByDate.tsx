@@ -5,12 +5,8 @@ import React, { type SetStateAction } from "react";
 import cn from "~/utils/cn";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
-import {
-  setQueryParams,
-  SortNewest,
-  SortOldest,
-  SortValues,
-} from "~/features/sort-words";
+import setQueryParams from "~/utils/setQueryParams";
+import { SortNewest, SortOldest, SortValues } from "~/features/sort-words";
 
 export type SortByDateType = "newest" | "oldest";
 

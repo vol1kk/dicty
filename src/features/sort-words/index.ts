@@ -8,7 +8,6 @@ import FilterByLang from "~/features/sort-words/components/FilterByLang";
 import filterByWord from "~/features/sort-words/utils/filterByWord";
 import FilterByWord from "~/features/sort-words/components/FilterByWord";
 
-import setQueryParams from "~/features/sort-words/utils/setQueryParams";
 import useSortingParams from "~/features/sort-words/hooks/useSortingParams";
 
 import {
@@ -32,7 +31,6 @@ export {
   filterByLang,
   FilterByWord,
   filterByWord,
-  setQueryParams,
   useDictionaries,
   useSortingParams,
   FilterByDictionary,

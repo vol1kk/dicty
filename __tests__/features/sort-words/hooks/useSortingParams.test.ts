@@ -19,7 +19,7 @@ describe("useSortingParams tests", function () {
     expect(order).toEqual("newest");
   });
 
-  it("should have based that are in path", async () => {
+  it("should update query params", async () => {
     const { result, rerender } = renderHook(() => useSortingParams(), {
       wrapper: MemoryRouterProvider,
     });

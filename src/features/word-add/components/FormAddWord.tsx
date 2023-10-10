@@ -10,9 +10,15 @@ import useSessionData from "~/store/useSessionData";
 import { useCreateWord } from "~/features/word-add";
 import Form, { formTemplate } from "~/features/shared/ui/Form";
 import FormImportWord from "~/features/word-add/components/FormImportWord";
+import { useSortingParams } from "~/features/sort-words";
 
 export default function FormAddWord() {
   const { t } = useTranslation("common");
+
+  const {
+    lang: [lang],
+    dictionary: [dict],
+  } = useSortingParams();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const isAuthed = useSessionData(state => state.isAuthed);
@@ -82,7 +88,7 @@ export default function FormAddWord() {
           </>
         )}
         <Form
-          initialValues={formTemplate}
+          initialValues={{ ...formTemplate, dictionary: dict, language: lang }}
           submitHandler={word => createWord(word)}
           renderButtons={(isValid, handleFormReset) => {
             function handleFormResetWrapper() {

@@ -6,7 +6,7 @@ import cn from "~/utils/cn";
 import capitalize from "~/utils/capitalize";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
-import { setQueryParams } from "~/features/sort-words";
+import setQueryParams from "~/utils/setQueryParams";
 
 export type FilterByLangProps = {
   currentLang: null | string;

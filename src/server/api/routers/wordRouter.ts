@@ -44,7 +44,9 @@ export const wordRouter = createTRPCRouter({
       return ctx.prisma.word.findMany({
         where: {
           createdById: ctx.authedUser.id,
-          ...(input && { dictionary: input }),
+          ...(input && {
+            dictionary: { contains: input, mode: "insensitive" },
+          }),
         },
         include: { categories: { include: { meanings: true } } },
       });
