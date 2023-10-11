@@ -1,11 +1,15 @@
 import { useRef } from "react";
 import { useTranslation } from "next-i18next";
-import { FieldArray, type FormikErrors, type FormikTouched } from "formik";
+import {
+  type ArrayHelpers,
+  FieldArray,
+  type FormikErrors,
+  type FormikTouched,
+} from "formik";
 
 import cn from "~/utils/cn";
 import Input from "~/components/Input";
 import { type Category, type Meaning } from "~/types/ApiTypes";
-import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import {
   CategoryOptions,
   categoryTemplate,
@@ -19,7 +23,7 @@ type FormCategoryProps = {
   category: Category;
   categoryErrors: FormikErrors<Category[]> | undefined;
   categoryTouched: FormikTouched<Category[]> | undefined;
-} & Pick<FieldArrayHelpers, "push" | "remove" | "move">;
+} & Pick<ArrayHelpers, "push" | "remove" | "move">;
 
 export default function FormCategory({
   category,
@@ -34,7 +38,7 @@ export default function FormCategory({
   const { t } = useTranslation();
 
   const meaningsHelpersRef = useRef(
-    {} as Pick<FieldArrayHelpers, "push" | "remove">,
+    {} as Pick<ArrayHelpers, "push" | "remove">,
   );
 
   function removeCategoryHandler(i: number) {
@@ -93,9 +97,9 @@ export default function FormCategory({
         />
       </Input>
       <FieldArray name={`categories.${categoryIndex}.meanings`}>
-        {(meaningsHelpers: FieldArrayHelpers) => {
-          meaningsHelpersRef.current.push = meaningsHelpers.push;
-          meaningsHelpersRef.current.remove = meaningsHelpers.remove;
+        {(meanHelpers: ArrayHelpers) => {
+          meaningsHelpersRef.current.push = value => meanHelpers.push(value);
+          meaningsHelpersRef.current.remove = ind => meanHelpers.remove(ind);
 
           return (
             <>

@@ -4,13 +4,13 @@ import {
   FieldArray,
   type FormikErrors,
   Form as FormikForm,
+  type ArrayHelpers,
 } from "formik";
 import { useTranslation } from "next-i18next";
 
 import cn from "~/utils/cn";
 import Input from "~/components/Input";
 import { type Category, type Word } from "~/types/ApiTypes";
-import { type FieldArrayHelpers } from "~/types/FieldArrayHelpers";
 import FormCategory from "~/features/shared/ui/Form/components/FormCategory";
 import { formTemplate, formValidationSchema } from "~/features/shared/ui/Form";
 
@@ -124,7 +124,7 @@ export default function Form({
               </div>
             </div>
             <FieldArray name="categories">
-              {(categoryHelpers: FieldArrayHelpers) => (
+              {(ctgHelpers: ArrayHelpers) => (
                 <div>
                   <h2 className="mb-1 text-center">
                     {t("form.word.categories.label")}
@@ -134,9 +134,9 @@ export default function Form({
                       key={cIndex}
                       category={category}
                       categoryIndex={cIndex}
-                      push={categoryHelpers.push}
-                      move={categoryHelpers.move}
-                      remove={categoryHelpers.remove}
+                      remove={ind => ctgHelpers.remove(ind)}
+                      push={value => ctgHelpers.push(value)}
+                      move={(from, to) => ctgHelpers.move(from, to)}
                       categoryErrors={errorCategories}
                       categoryTouched={touched.categories}
                       categoriesLength={values.categories.length}
