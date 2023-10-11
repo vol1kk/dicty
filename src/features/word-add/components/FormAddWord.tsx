@@ -8,9 +8,9 @@ import Accordion from "~/components/Accordion";
 import { CloseIcon } from "~/components/Icons";
 import useSessionData from "~/store/useSessionData";
 import { useCreateWord } from "~/features/word-add";
+import { useSortingParams } from "~/features/sort-words";
 import Form, { formTemplate } from "~/features/shared/ui/Form";
 import FormImportWord from "~/features/word-add/components/FormImportWord";
-import { useSortingParams } from "~/features/sort-words";
 
 export default function FormAddWord() {
   const { t } = useTranslation("common");
@@ -68,11 +68,11 @@ export default function FormAddWord() {
         <span className="rounded-full border-2 border-black p-1 group-aria-expanded/accordionTitle:border-primary dark:border-white dark:group-aria-expanded/accordionTitle:border-white">
           <CloseIcon
             aria-hidden
-            className="h-4 w-4 -rotate-45 fill-black transition-transform group-aria-expanded/accordionTitle:rotate-0 group-aria-expanded/accordionTitle:fill-primary dark:fill-white"
+            className="h-4 w-4 -rotate-45 fill-black transition-transform duration-300 group-aria-expanded/accordionTitle:rotate-0 group-aria-expanded/accordionTitle:fill-primary dark:fill-white"
           />
         </span>
       </Button>
-      <Accordion strategy={{ isOpen: isFormOpen }}>
+      <Accordion strategy={{ isOpen: isFormOpen }} className="duration-300">
         {isAuthed && (
           <>
             <FormImportWord
