@@ -4,9 +4,7 @@ import basicPreviousData from "~/features/shared/utils/basicPreviousData";
 
 type BasicMutateCallback = {
   utils: ReturnType<typeof api.useContext>;
-  word:
-    | RouterInputs["words"]["createWord"]
-    | RouterInputs["words"]["updateWord"];
+  word: RouterInputs["words"]["createWord" | "updateWord"];
 };
 
 export default async function basicMutateCallback({
