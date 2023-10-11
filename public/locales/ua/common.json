@@ -1,6 +1,8 @@
 {
   "all": "Всі",
   "or": "Або",
+  "undo": "Відмінити",
+  "load": "Завантаження",
 
   "definition_one": "Визначення",
   "definition_other": "Визначення",
@@ -82,6 +84,7 @@
 
   "list.empty": "Ваш словник порожній",
   "list.not-found": "Жодного слова не було знайдено",
+  "list.not-found-other": "Не знайдено",
 
   "toast.createWord.success": "Успішно створено слово!",
   "toast.createWord.error": "Неможливо створити слово! Помилка: {{error}}",
@@ -97,9 +100,5 @@
   "toast.import.success_one": "Успішно імпортовано слово!",
   "toast.import.success_other": "Успішно імпортовано словник!",
   "toast.import.error_one": "Неможливо імпортувати слово! Помилка: {{error}}",
-  "toast.import.error_other": "Неможливо імпортувати слово! Помилка: {{error}}",
-
-  "toast.undo": "Відмінити",
-
-  "spinner.load": "Завантаження"
+  "toast.import.error_other": "Неможливо імпортувати слово! Помилка: {{error}}"
 }

@@ -38,7 +38,7 @@ export default function ImportWords({ className, words }: ImportWordsProps) {
               updateToast(id, { isOpen: false });
             }}
           >
-            {t("toast.undo")}
+            {t("undo")}
           </ButtonUndo>
         ),
       });

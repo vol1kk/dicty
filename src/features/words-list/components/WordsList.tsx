@@ -22,7 +22,7 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
       <Spinner
         containerClassName="flex justify-center"
         dimensions={64}
-        text={t("spinner.load")}
+        text={t("load")}
       />
     );
   }

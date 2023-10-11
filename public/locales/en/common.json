@@ -1,6 +1,8 @@
 {
   "all": "All",
   "or": "Or",
+  "undo": "Undo",
+  "load": "Loading",
 
   "definition_one": "Definition",
   "definition_other": "Definitions",
@@ -82,6 +84,7 @@
 
   "list.empty": "Your dictionary is empty",
   "list.not-found": "Couldn't find any words",
+  "list.not-found-other": "Not Found",
 
   "toast.createWord.success": "Word's been successfully created!",
   "toast.createWord.error": "Word cannot be created! Error: {{error}}",
@@ -97,9 +100,5 @@
   "toast.import.success_one": "Word's been successfully imported!",
   "toast.import.success_other": "Dictionary's been successfully imported!",
   "toast.import.error_one": "Word cannot be imported! Error: {{error}}",
-  "toast.import.error_other": "Dictionary cannot be imported! Error: {{error}}",
-
-  "toast.undo": "Undo",
-
-  "spinner.load": "Loading"
+  "toast.import.error_other": "Dictionary cannot be imported! Error: {{error}}"
 }

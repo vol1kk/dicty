@@ -41,7 +41,7 @@ export default function ExportWords({ className, words }: ExportWordsProps) {
       data-testid="export-words-container"
     >
       {words.isLoading ? (
-        <Spinner dimensions={24} text={t("spinner.load")} />
+        <Spinner dimensions={24} text={t("load")} />
       ) : (
         <ImportIcon width={24} height={24} />
       )}

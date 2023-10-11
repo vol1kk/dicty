@@ -58,7 +58,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
         text: t("toast.update.success"),
         action: (
           <ButtonUndo onClick={undoUpdate.bind(undefined, word)}>
-            {t("toast.undo")}
+            {t("undo")}
           </ButtonUndo>
         ),
       });
@@ -84,7 +84,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
         text: t("toast.delete.success"),
         action: (
           <ButtonUndo onClick={undoDelete.bind(undefined, word)}>
-            {t("toast.undo")}
+            {t("undo")}
           </ButtonUndo>
         ),
       });

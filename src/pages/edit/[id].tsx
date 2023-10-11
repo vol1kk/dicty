@@ -19,13 +19,13 @@ export default function EditPage() {
 
   let noData;
   if (!word) noData = <NotFound dimensions={128} text={t("list.not-found")} />;
-  if (isLoading) noData = <Spinner text={t("spinner.load")} dimensions={64} />;
+  if (isLoading) noData = <Spinner text={t("load")} dimensions={64} />;
 
-  if (isLoading || !word)
+  if (!word || isLoading)
     return (
       <>
         <Head>
-          <title>Dicty | {isLoading ? "Loading" : "Not Found"}</title>
+          <title>Dicty | {t("list.not-found-other")}</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className="grid place-content-center">{noData}</main>
