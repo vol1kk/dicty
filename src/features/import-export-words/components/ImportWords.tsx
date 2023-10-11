@@ -17,7 +17,7 @@ type ImportWordsProps = {
 
 export default function ImportWords({ className, words }: ImportWordsProps) {
   const { t } = useTranslation();
-  const { addToast, updateToast } = useToasts();
+  const { toast, updateToast } = useToasts();
 
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
 
@@ -26,7 +26,7 @@ export default function ImportWords({ className, words }: ImportWordsProps) {
     onSuccess() {
       const id = nanoid();
 
-      addToast({
+      toast.warning({
         id,
         type: "warning",
         autoClose: 10000,
@@ -46,7 +46,7 @@ export default function ImportWords({ className, words }: ImportWordsProps) {
   });
 
   function onError(e: string) {
-    addToast({
+    toast.error({
       type: "error",
       autoClose: false,
       text: t("toast.import.error", { count: 0, error: e }),

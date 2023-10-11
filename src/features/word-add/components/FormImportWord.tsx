@@ -13,22 +13,20 @@ export type FormCodeShareProps = {
 
 const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
   function FormImportWord({ closeHandler }, ref) {
-    const { addToast } = useToasts();
+    const { toast } = useToasts();
     const { t } = useTranslation();
     const isAuthed = useSessionData(state => state.isAuthed);
 
     const importFromCode = useImportFromCode({
       onSuccess() {
         setTimeout(closeHandler, 500);
-        addToast({
+        toast.success({
           text: t("toast.import.success", { count: 1 }),
         });
       },
 
       onError(e: string) {
-        addToast({
-          type: "error",
-          autoClose: false,
+        toast.error({
           text: t("toast.import.error", { count: 1, error: e }),
         });
       },

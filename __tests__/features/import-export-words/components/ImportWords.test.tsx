@@ -35,10 +35,10 @@ vi.mock("~/hooks/useWords", () => ({
   default: vi.fn(() => vi.fn()),
 }));
 
-const mockAddToast = vi.fn();
+const mockedErrorToast = vi.fn();
 vi.mock("~/features/toast/store/useToasts", () => ({
   default: vi.fn(() => ({
-    addToast: mockAddToast,
+    toast: { error: mockedErrorToast },
     removeToast: vi.fn(),
   })),
 }));
@@ -72,7 +72,7 @@ describe("ImportWords Tests", function () {
 
     await waitFor(() => {
       expect(mockImportWords).not.toHaveBeenCalled();
-      expect(mockAddToast).toHaveBeenCalledWith({
+      expect(mockedErrorToast).toHaveBeenCalledWith({
         type: "error",
         autoClose: false,
         text: "toast.import.error",

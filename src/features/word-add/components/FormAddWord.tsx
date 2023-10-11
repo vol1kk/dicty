@@ -23,7 +23,7 @@ export default function FormAddWord() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const isAuthed = useSessionData(state => state.isAuthed);
 
-  const { addToast, removeToast } = useToasts();
+  const { toast, removeToast } = useToasts();
   const inputCodeRef = useRef<HTMLInputElement>(null);
 
   function formCloseHandler() {
@@ -36,7 +36,7 @@ export default function FormAddWord() {
     onSuccess() {
       id = nanoid();
 
-      addToast({
+      toast.success({
         id,
         text: t("toast.createWord.success"),
       });
@@ -45,7 +45,7 @@ export default function FormAddWord() {
     onError(e) {
       if (id) removeToast(id);
 
-      addToast({
+      toast.error({
         type: "error",
         text: t("toast.createWord.error", { error: e }),
         autoClose: false,

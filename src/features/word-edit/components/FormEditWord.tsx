@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 
@@ -7,18 +6,13 @@ import { Button } from "~/components/Button";
 import Form from "~/features/shared/ui/Form";
 import { useCreateWord } from "~/features/word-add";
 import ButtonUndo from "~/components/Button/ButtonUndo";
+import useToastCounter from "~/features/toast/store/useToastCounter";
+import { useToasts, toastDelete, toastUpdate } from "~/features/toast";
 import {
   useDeleteWord,
-  type UseDeleteWordInputs,
   useUpdateWord,
+  type UseDeleteWordInputs,
 } from "~/features/word-edit";
-import {
-  useToasts,
-  toastDelete,
-  toastUpdate,
-  toastsCounter,
-  incrementToastsCounter,
-} from "~/features/toast";
 
 export type FormEditWordProps = {
   word: Word;
@@ -28,8 +22,11 @@ export default function FormEditWord({ word }: FormEditWordProps) {
   const { t } = useTranslation();
   const navigation = useRouter();
 
-  const prevToast = useRef(toastsCounter[word.id] || 0);
-  const { toasts, addToast, updateToast, removeToast } = useToasts();
+  const getToastCounter = useToastCounter(state => state.getToastCounter);
+  const setToastCounter = useToastCounter(state => state.setToastCounter);
+
+  const prevToast = getToastCounter(word.id);
+  const { toasts, toast, updateToast, removeToast } = useToasts();
 
   const closeToastOnSuccess = (id: string) =>
     updateToast(id, {
@@ -43,27 +40,21 @@ export default function FormEditWord({ word }: FormEditWordProps) {
   const undoUpdate = useUpdateWord({
     onSuccess: closeToastOnSuccess.bind(
       undefined,
-      `${toastUpdate}-${word.id}-${prevToast.current}`,
+      `${toastUpdate}-${word.id}-${prevToast}`,
     ),
   });
 
   const updateWord = useUpdateWord({
     onSuccess() {
       // If previous toast exists, delete it
-      if (prevToast)
-        closeToastOnSuccess(`${toastUpdate}-${word.id}-${prevToast.current}`);
+      if (prevToast !== undefined)
+        closeToastOnSuccess(`${toastUpdate}-${word.id}-${prevToast}`);
 
-      // Increment by 1 to have unique key
-      const nextToast = incrementToastsCounter(
-        word.id,
-        prevToast,
-        toastsCounter,
-      );
+      setToastCounter(word.id);
+      const nextToast = getToastCounter(word.id);
 
-      addToast({
+      toast.warning({
         id: `${toastUpdate}-${word.id}-${nextToast}`,
-        type: "warning",
-        autoClose: 10000,
         text: t("toast.update.success"),
         action: (
           <ButtonUndo onClick={undoUpdate.bind(undefined, word)}>
@@ -80,9 +71,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
 
       if (optimisticToast) removeToast(optimisticToast.id);
 
-      addToast({
-        type: "error",
-        autoClose: false,
+      toast.error({
         text: t("toast.update.error", { error: e }),
       });
     },
@@ -90,10 +79,8 @@ export default function FormEditWord({ word }: FormEditWordProps) {
 
   const deleteWord = useDeleteWord({
     onSuccess() {
-      addToast({
+      toast.warning({
         id: `${toastDelete}-${word.id}`,
-        type: "warning",
-        autoClose: 10000,
         text: t("toast.delete.success"),
         action: (
           <ButtonUndo onClick={undoDelete.bind(undefined, word)}>
@@ -110,9 +97,7 @@ export default function FormEditWord({ word }: FormEditWordProps) {
 
       if (optimisticToast) removeToast(optimisticToast.id);
 
-      addToast({
-        type: "error",
-        autoClose: false,
+      toast.error({
         text: t("toast.delete.error", { error: e }),
       });
     },

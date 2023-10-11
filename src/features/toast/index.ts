@@ -6,8 +6,6 @@ import {
   type ToastType,
   type ToastPosition,
 } from "~/features/toast/types/ToastTypes";
-import toastsCounter from "~/features/toast/store/toastsCounter";
-import incrementToastsCounter from "~/features/toast/utils/incrementToastsCounter";
 import {
   toastCreate,
   toastDelete,
@@ -23,7 +21,5 @@ export {
   toastDelete,
   toastUpdate,
   ToastPosition,
-  toastsCounter,
   getTranslateDirection,
-  incrementToastsCounter,
 };

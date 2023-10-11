@@ -13,7 +13,7 @@ export type WordShareProps = {
 
 export default function WordShare({ code, wordId }: WordShareProps) {
   const { t } = useTranslation();
-  const { addToast } = useToasts();
+  const { toast } = useToasts();
   const [shareCode, setShareCode] = useState(code);
   const formCodeRef = useRef<HTMLInputElement>(null);
 
@@ -23,7 +23,7 @@ export default function WordShare({ code, wordId }: WordShareProps) {
     },
 
     onError(e: string) {
-      addToast({
+      toast.error({
         type: "error",
         autoClose: false,
         text: t("toast.toggleCode.error", { error: e }),
