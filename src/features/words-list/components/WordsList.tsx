@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { useTranslation } from "next-i18next";
 
 import Word from "~/components/Word";
@@ -13,7 +13,10 @@ export type WordsListProps = {
   isLoading: boolean;
 };
 
-export default function WordsList({ data, isLoading }: WordsListProps) {
+const WordsList = forwardRef<HTMLLIElement, WordsListProps>(function WordsList(
+  { data, isLoading },
+  ref,
+) {
   const { t } = useTranslation();
   const isAuthed = useSessionData(state => state.isAuthed);
 
@@ -44,8 +47,12 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
       data-testid="words-list"
       aria-label={t("words.list")}
     >
-      {data.map(word => (
-        <li key={word.id} aria-label={word.name}>
+      {data.map((word, index) => (
+        <li
+          key={word.id}
+          aria-label={word.name}
+          {...(index === 0 && { ref: ref })}
+        >
           <Word>
             <Word.Header
               aria-expanded={false}
@@ -92,4 +99,6 @@ export default function WordsList({ data, isLoading }: WordsListProps) {
       ))}
     </ul>
   );
-}
+});
+
+export default WordsList;

@@ -16,6 +16,9 @@ import {
   SortValues,
 } from "~/features/sort-words/constants/SortTypes";
 
+import ItemsPerPage from "~/features/sort-words/constants/ItemsPerPage";
+import FilterByPage from "~/features/sort-words/components/FilterByPage";
+
 import useDictionaries from "~/features/sort-words/hooks/useDictionaries";
 import FilterByDictionary from "~/features/sort-words/components/FilterByDictionary";
 import getUniqueDictionaries from "~/features/sort-words/utils/getUniqueDictionaries";
@@ -30,6 +33,8 @@ export {
   FilterByLang,
   filterByLang,
   FilterByWord,
+  ItemsPerPage,
+  FilterByPage,
   filterByWord,
   useDictionaries,
   useSortingParams,

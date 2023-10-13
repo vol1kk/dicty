@@ -13,6 +13,9 @@ export default function useSortingParams() {
   const rawQuery = router.asPath.split("/?")[1];
   const searchParams = new URLSearchParams(rawQuery);
 
+  const initialPage = Number.parseInt(searchParams.get("page") || "1");
+  const [page, setPage] = useState(initialPage);
+
   const initialOrder = (searchParams.get("order") ||
     "newest") as SortByDateType;
   const [orderByDate, setOrderByDate] = useState<SortByDateType>(initialOrder);
@@ -27,10 +30,12 @@ export default function useSortingParams() {
     setOrderByDate(initialOrder);
     setLang(initialLanguage);
     setDicty(initialDictionary);
-  }, [initialOrder, initialLanguage, initialDictionary]);
+    setPage(initialPage);
+  }, [initialPage, initialOrder, initialLanguage, initialDictionary]);
 
   return {
     lang: [lang, setLang],
+    page: [page, setPage],
     dictionary: [dicty, setDicty],
     date: [orderByDate, setOrderByDate],
   } as const;

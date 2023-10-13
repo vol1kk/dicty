@@ -1,18 +1,20 @@
 import Head from "next/head";
-import { useMemo, useState } from "react";
 import { type GetStaticProps } from "next";
+import { useMemo, useRef, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import useWords from "~/hooks/useWords";
 import useDebounce from "~/hooks/useDebounce";
 import FormAddWord from "~/features/word-add";
-import WordsList from "~/features/words-list";
 import FetchOnceOptions from "~/utils/FetchOnceOptions";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
+import { ScrollToTop, WordsList } from "~/features/words-list";
 import {
   FilterByDictionary,
   useSortingParams,
   useDictionaries,
+  ItemsPerPage,
+  FilterByPage,
   FilterByLang,
   filterByLang,
   FilterByWord,
@@ -25,8 +27,11 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 300);
 
+  const wordsListRef = useRef<HTMLLIElement>(null);
+
   const {
     lang: [lang, setLang],
+    page: [page, setPage],
     date: [orderByDate, setOrderByDate],
     dictionary: [dicty, setDicty],
   } = useSortingParams();
@@ -48,6 +53,11 @@ export default function Home() {
     });
   }, [words, lang, orderByDate, debouncedSearch]);
 
+  const start = (page - 1) * ItemsPerPage;
+  const end = start + ItemsPerPage;
+
+  const paginatedWords = filteredWords.slice(start, end);
+
   return (
     <>
       <Head>
@@ -57,7 +67,7 @@ export default function Home() {
       </Head>
       <main data-testid="home-main">
         <FilterByWord searchValue={search} setSearchValue={setSearch} />
-        <div className="relative mb-2.5 grid auto-cols-fr grid-flow-col gap-x-6 gap-y-2 mobile-header:grid-flow-row">
+        <section className="relative mb-2.5 grid auto-cols-fr grid-flow-col gap-x-6 gap-y-2 mobile-header:grid-flow-row">
           <SortByDate
             currentOrderByDate={orderByDate}
             setOrderByDate={setOrderByDate}
@@ -72,9 +82,21 @@ export default function Home() {
             setLang={setLang}
             availableLanguages={availableLanguages.filter(w => w)}
           />
-        </div>
+        </section>
         <FormAddWord />
-        <WordsList data={filteredWords} isLoading={isLoading} />
+        <section>
+          <WordsList
+            ref={wordsListRef}
+            data={paginatedWords}
+            isLoading={isLoading}
+          />
+          <FilterByPage
+            currentPage={page}
+            setPage={setPage}
+            wordsLength={filteredWords.length}
+          />
+        </section>
+        <ScrollToTop ref={wordsListRef} isLoading={isLoading} />
       </main>
     </>
   );

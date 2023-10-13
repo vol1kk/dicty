@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { createWord } from "#tests/utils";
 import * as useSessionModule from "~/store/useSessionData";
 import { type UseSessionDataProps } from "~/store/useSessionData";
-import WordsList, { type WordsListProps } from "~/features/words-list";
+import { WordsList, type WordsListProps } from "~/features/words-list";
 
 function setup(props?: Partial<WordsListProps & UseSessionDataProps>) {
   vi.spyOn(useSessionModule, "default").mockImplementation(selector => {

@@ -15,8 +15,12 @@ export default function setQueryParams(
   if (value === null) params.delete(key);
   else params.set(key, value);
 
-  void router.replace({
-    pathname: pathname || router.pathname,
-    query: Object.fromEntries(params.entries()),
-  });
+  void router.replace(
+    {
+      pathname: pathname || router.pathname,
+      query: Object.fromEntries(params.entries()),
+    },
+    undefined,
+    { shallow: true },
+  );
 }
