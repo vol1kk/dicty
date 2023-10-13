@@ -9,6 +9,7 @@ import WordMeanings, {
 function setup(props?: Partial<WordMeaningsProps>) {
   const data = render(
     <WordMeanings
+      associatedCategory="Test Category"
       meanings={props?.meanings || [createMeaning()]}
       showExamples={props?.showExamples ?? true}
     />,

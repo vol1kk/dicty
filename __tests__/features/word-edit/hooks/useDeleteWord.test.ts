@@ -16,7 +16,7 @@ describe("useDeleteWord tests", function () {
     vi.spyOn(useSessionDataModule, "default").mockReturnValue(true);
 
     const { deleteWord } = setup();
-    deleteWord("word-1");
+    deleteWord({ id: "word-1", dictionary: null });
 
     expect(mockedUseDeleteWordMutation).toHaveBeenCalled();
   });
@@ -25,7 +25,7 @@ describe("useDeleteWord tests", function () {
     vi.spyOn(useSessionDataModule, "default").mockReturnValue(false);
 
     const { deleteWord } = setup();
-    deleteWord("word-1");
+    deleteWord({ id: "word-1", dictionary: null });
 
     expect(mockedSetWords).toHaveBeenCalled();
   });
