@@ -32,7 +32,7 @@ export default function Home() {
   const {
     lang: [lang, setLang],
     page: [page, setPage],
-    date: [orderByDate, setOrderByDate],
+    order: [orderByDate, setOrderByDate],
     dictionary: [dicty, setDicty],
   } = useSortingParams();
 

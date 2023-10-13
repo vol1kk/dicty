@@ -9,7 +9,7 @@ describe("useSortingParams tests", function () {
   it("should have default values", () => {
     const {
       lang: [lang],
-      date: [order],
+      order: [order],
       dictionary: [dict],
     } = renderHook(() => useSortingParams(), { wrapper: MemoryRouterProvider })
       .result.current;
@@ -26,7 +26,7 @@ describe("useSortingParams tests", function () {
 
     const {
       lang: [oldLang],
-      date: [oldOrder],
+      order: [oldOrder],
       dictionary: [oldDict],
     } = result.current;
 
@@ -42,7 +42,7 @@ describe("useSortingParams tests", function () {
 
     const {
       lang: [newLang],
-      date: [newOrder],
+      order: [newOrder],
       dictionary: [newDict],
     } = result.current;
 

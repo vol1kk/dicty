@@ -45,6 +45,8 @@ export default function WordShare({ code, wordId }: WordShareProps) {
     >
       <input
         type="text"
+        id={`${wordId}-code`}
+        name={`${wordId}-code`}
         key={shareCode}
         readOnly={true}
         ref={formCodeRef}

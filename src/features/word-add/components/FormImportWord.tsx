@@ -48,6 +48,8 @@ const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
       >
         <input
           ref={ref}
+          id="code"
+          name="code"
           type="text"
           data-testid="input-import-from-code"
           className="w-full rounded-md bg-gray-300 px-4 py-2 placeholder-[#757575] outline-1 outline-offset-2 outline-primary focus-visible:outline dark:bg-gray-900"

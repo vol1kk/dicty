@@ -37,6 +37,6 @@ export default function useSortingParams() {
     lang: [lang, setLang],
     page: [page, setPage],
     dictionary: [dicty, setDicty],
-    date: [orderByDate, setOrderByDate],
+    order: [orderByDate, setOrderByDate],
   } as const;
 }
