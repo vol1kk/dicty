@@ -127,31 +127,33 @@ export default function FormEditWord({ word }: FormEditWordProps) {
             onClick={() => {
               if (isValid) setTimeout(handleFormReset, 500);
             }}
-            className="hover:bg-green-500 hover:text-white disabled:cursor-no-drop dark:hover:bg-green-600"
+            className="mb-4 w-full !py-3 hover:bg-green-500 hover:text-white disabled:cursor-no-drop dark:hover:bg-green-600"
           >
             {t("form.word.button.save")}
           </Button>
-          <Button
-            variant="darker"
-            data-testid="button-back"
-            className="hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500"
-            onClick={() => void navigation.back()}
-          >
-            {t("form.word.button.cancel")}
-          </Button>
-          <Button
-            variant="darker"
-            data-testid="button-delete"
-            onClick={() =>
-              deleteHandler({
-                id: word.id,
-                dictionary: word.dictionary,
-              })
-            }
-            className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
-          >
-            {t("form.word.button.delete")}
-          </Button>
+          <div className="grid grid-cols-[2fr,_1fr] gap-4 mobile-small:grid-cols-1">
+            <Button
+              variant="darker"
+              data-testid="button-back"
+              className="hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-500"
+              onClick={() => void navigation.back()}
+            >
+              {t("form.word.button.cancel")}
+            </Button>
+            <Button
+              variant="darker"
+              data-testid="button-delete"
+              onClick={() =>
+                deleteHandler({
+                  id: word.id,
+                  dictionary: word.dictionary,
+                })
+              }
+              className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
+            >
+              {t("form.word.button.delete")}
+            </Button>
+          </div>
         </>
       )}
     />

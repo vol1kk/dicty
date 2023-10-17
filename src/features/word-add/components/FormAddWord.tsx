@@ -90,6 +90,7 @@ export default function FormAddWord() {
         <Form
           initialValues={{ ...formTemplate, dictionary: dict, language: lang }}
           submitHandler={word => createWord(word)}
+          classNameButtons="flex flex-wrap gap-4"
           renderButtons={(isValid, handleFormReset) => {
             function handleFormResetWrapper() {
               formCloseHandler();
@@ -103,7 +104,7 @@ export default function FormAddWord() {
                   isSubmit={true}
                   disabled={!isValid}
                   data-testid="button-word-create"
-                  className="hover:bg-green-500 hover:text-white disabled:cursor-no-drop disabled:!bg-opacity-70 dark:hover:bg-green-600"
+                  className="grow-[7] hover:bg-green-500 hover:text-white disabled:cursor-no-drop disabled:!bg-opacity-70 dark:hover:bg-green-600"
                   onClick={() => {
                     if (isValid) setTimeout(handleFormResetWrapper, 500);
                   }}
@@ -113,7 +114,7 @@ export default function FormAddWord() {
                 <Button
                   variant="darker"
                   data-testid="button-form-close"
-                  className="hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
+                  className="grow-[2] hover:bg-red-500 hover:text-white dark:hover:bg-red-500"
                   onClick={handleFormResetWrapper}
                 >
                   {t("form.word.button.close")}

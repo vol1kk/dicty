@@ -17,6 +17,7 @@ import { formTemplate, formValidationSchema } from "~/features/shared/ui/Form";
 type FormProps = {
   initialValues?: Word;
   submitHandler: (word: Word) => void;
+  classNameButtons?: string;
   renderButtons: (
     isValid: boolean,
     handleFormReset: () => void,
@@ -26,6 +27,7 @@ type FormProps = {
 export default function Form({
   renderButtons,
   submitHandler,
+  classNameButtons,
   initialValues = formTemplate,
 }: FormProps) {
   const { t } = useTranslation();
@@ -150,7 +152,12 @@ export default function Form({
               className="mb-8 w-full"
               placeholder={t("form.word.synonyms")}
             />
-            <div className="flex flex-wrap gap-4 [&>button:first-child]:flex-grow-[6] [&>button:nth-child(2)]:flex-grow-[2] [&>button]:flex-grow [&>button]:px-4 [&>button]:py-2 [&>button]:transition-colors">
+            <div
+              className={cn(
+                classNameButtons,
+                "[&_button]:px-4 [&_button]:py-2 [&_button]:transition-colors",
+              )}
+            >
               {formButtons}
             </div>
           </FormikForm>
