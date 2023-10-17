@@ -101,7 +101,7 @@ export default function Dropdown({
   }
 
   return (
-    <div data-focused="false" data-testid="dropdown" className={cn(className)}>
+    <div data-testid="dropdown" className={cn(className)}>
       <div
         tabIndex={tabIndex}
         data-testid="dropdown-title"
