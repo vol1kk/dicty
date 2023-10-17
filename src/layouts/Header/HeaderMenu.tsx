@@ -22,6 +22,7 @@ export default function HeaderMenu() {
   const router = useRouter();
 
   const isAuthEnabled = env.NEXT_PUBLIC_AUTH_ENABLED;
+  console.log();
 
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
@@ -31,14 +32,9 @@ export default function HeaderMenu() {
     enabled: isHeaderOpen,
   });
 
-  function authenticationHandler() {
-    if (isAuthed) void signOut();
-
-    if (!isAuthed) void signIn();
-  }
-
   function quizHandler() {
-    void router.push("/quiz");
+    void router.push({ pathname: "/quiz", query: { dict: router.query.dict } });
+
     setIsHeaderOpen(false);
   }
 
@@ -81,7 +77,7 @@ export default function HeaderMenu() {
                 <Button
                   variant="darker"
                   className={buttonClasses}
-                  onClick={authenticationHandler}
+                  onClick={() => void (isAuthed ? signOut() : signIn())}
                 >
                   <AccountIcon width={24} height={24} />
                   {isAuthed ? t("header.logout") : t("header.login")}

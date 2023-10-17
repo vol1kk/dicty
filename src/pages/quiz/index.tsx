@@ -1,5 +1,5 @@
-import React from "react";
 import Head from "next/head";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { type GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
@@ -9,15 +9,22 @@ import cn from "~/utils/cn";
 import Spinner from "~/components/Spinner";
 import { Button } from "~/components/Button";
 import { useWordsToRevise } from "~/features/quiz";
+import FetchOnceOptions from "~/utils/FetchOnceOptions";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
 import RevisedWordsTable from "~/features/quiz/components/RevisedWordsTable";
+import { FilterByDictionary, useDictionaries } from "~/features/sort-words";
 
 export default function QuizPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const locale = router.locale === "en" ? "en-us" : "uk-ua";
 
-  const { data: words, isLoading } = useWordsToRevise();
+  const [dict, setDict] = useState<string | null>(
+    router.query.dict ? (router.query.dict as string) : null,
+  );
+
+  const { data: words, isLoading } = useWordsToRevise(dict);
+  const { data: availableDictionaries } = useDictionaries(FetchOnceOptions);
 
   function startRevision() {
     void router.push(
@@ -40,7 +47,7 @@ export default function QuizPage() {
         <section className="mb-4">
           <RevisedWordsTable locale={locale} />
         </section>
-        <section className="flex justify-center">
+        <section className="relative flex flex-col justify-center gap-2 [&>div>div:last-child]:w-full [&>div>div>ul>li]:text-center">
           <Button
             className={cn(
               words.length === 0 && "text-green-500",
@@ -57,6 +64,11 @@ export default function QuizPage() {
               t("revisions.start")
             )}
           </Button>
+          <FilterByDictionary
+            setDictionary={setDict}
+            currentDictionary={dict}
+            availableDictionaries={availableDictionaries}
+          />
         </section>
       </main>
     </>

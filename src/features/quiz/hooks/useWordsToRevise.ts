@@ -1,14 +1,17 @@
-import { api } from "~/utils/api";
-import useSessionData from "~/store/useSessionData";
-import useLocalData from "~/store/useLocalData";
 import { useMemo } from "react";
 
-export default function useWordsToRevise() {
+import useLocalData from "~/store/useLocalData";
+import useSessionData from "~/store/useSessionData";
+import { api, type RouterInputs } from "~/utils/api";
+
+type UseWordsToReviseProps = RouterInputs["words"]["getWordsToRevise"];
+
+export default function useWordsToRevise(input: UseWordsToReviseProps) {
   const isAuthed = useSessionData(state => state.isAuthed);
   const localWords = useLocalData(state => state.words);
   const status = useSessionData(state => state.status);
 
-  const authedWords = api.words.getWordsToRevise.useQuery(undefined, {
+  const authedWords = api.words.getWordsToRevise.useQuery(input, {
     enabled: isAuthed,
     refetchOnWindowFocus: false,
   });

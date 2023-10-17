@@ -16,15 +16,20 @@ import {
 const NonExistentId = "000000000000000000000000";
 
 export const wordRouter = createTRPCRouter({
-  getWordsToRevise: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.word.findMany({
-      where: {
-        createdById: ctx.authedUser.id,
-        interval: { lte: new Date() },
-      },
-      include: { categories: { include: { meanings: true } } },
-    });
-  }),
+  getWordsToRevise: protectedProcedure
+    .input(z.string().nullable())
+    .query(({ input, ctx }) => {
+      return ctx.prisma.word.findMany({
+        where: {
+          createdById: ctx.authedUser.id,
+          interval: { lte: new Date() },
+          ...(input && {
+            dictionary: { contains: input, mode: "insensitive" },
+          }),
+        },
+        include: { categories: { include: { meanings: true } } },
+      });
+    }),
 
   getDictionaries: protectedProcedure.query(async ({ ctx }) => {
     const dictionaries = await ctx.prisma.word.findMany({
