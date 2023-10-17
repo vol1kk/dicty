@@ -22,6 +22,9 @@ const ScrollToTop = forwardRef<HTMLLIElement, ScrollToTopProps>(
           const exists = entry?.target.isConnected;
           if (!exists) return;
 
+          const isScrolledDown = entry.target.getBoundingClientRect().y < 0;
+          if (!isScrolledDown) return;
+
           if (entry?.isIntersecting) setScrollToTop(false);
           if (!entry?.isIntersecting) setScrollToTop(true);
         },
