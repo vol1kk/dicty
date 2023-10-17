@@ -46,7 +46,7 @@ export default function WordSynonyms({ words, synonyms }: WordSynonymsProps) {
   }
 
   return (
-    <ul data-testid="word-synonyms" className="mt-1 flex gap-2">
+    <ul data-testid="word-synonyms" className="mt-1 flex flex-wrap gap-2">
       {synonyms.map(synonym => {
         const existingWord = words.find(w => w.name === synonym);
 
