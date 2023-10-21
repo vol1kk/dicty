@@ -26,17 +26,28 @@ export default function useSortingParams() {
   const initialDictionary = searchParams.get("dict") || null;
   const [dicty, setDicty] = useState(initialDictionary);
 
+  const initialSearchQuery = searchParams.get("q") || "";
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
+
   useEffect(() => {
     setOrderByDate(initialOrder);
     setLang(initialLanguage);
     setDicty(initialDictionary);
     setPage(initialPage);
-  }, [initialPage, initialOrder, initialLanguage, initialDictionary]);
+    setSearchQuery(initialSearchQuery);
+  }, [
+    initialPage,
+    initialOrder,
+    initialLanguage,
+    initialDictionary,
+    initialSearchQuery,
+  ]);
 
   return {
     lang: [lang, setLang],
     page: [page, setPage],
     dictionary: [dicty, setDicty],
+    query: [searchQuery, setSearchQuery],
     order: [orderByDate, setOrderByDate],
   } as const;
 }

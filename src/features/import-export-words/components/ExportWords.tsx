@@ -1,14 +1,15 @@
 import React from "react";
 import { useTranslation } from "next-i18next";
 
-import type useWords from "~/hooks/useWords";
-import { Button } from "~/components/Button";
-import modifyWordId from "~/utils/modifyWordId";
-import { ImportIcon } from "~/components/Icons";
-import useHeaderData from "~/store/useHeaderData";
-import { downloadData } from "~/features/import-export-words";
 import cn from "~/utils/cn";
 import Spinner from "~/components/Spinner";
+import type useWords from "~/hooks/useWords";
+import { Button } from "~/components/Button";
+import { ImportIcon } from "~/components/Icons";
+import modifyWordId from "~/utils/modifyWordId";
+import useHeaderData from "~/store/useHeaderData";
+import { BaseRepetitionValues } from "~/features/quiz";
+import { downloadData } from "~/features/import-export-words";
 
 type ExportWordsProps = {
   className?: string;
@@ -21,9 +22,10 @@ export default function ExportWords({ className, words }: ExportWordsProps) {
   const setIsHeaderOpen = useHeaderData(state => state.setIsHeaderOpen);
 
   function exportWordsHandler() {
-    const modifiedWords = words.data.map(w =>
-      modifyWordId(w, { appendWithEmptyId: true }),
-    );
+    const modifiedWords = words.data.map(w => ({
+      ...modifyWordId(w, { appendWithEmptyId: true }),
+      ...BaseRepetitionValues,
+    }));
 
     downloadData(modifiedWords, `words-${+new Date()}`);
     setIsHeaderOpen(false);

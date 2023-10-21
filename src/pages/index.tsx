@@ -1,10 +1,9 @@
 import Head from "next/head";
+import { useMemo, useRef } from "react";
 import { type GetStaticProps } from "next";
-import { useMemo, useRef, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import useWords from "~/hooks/useWords";
-import useDebounce from "~/hooks/useDebounce";
 import FormAddWord from "~/features/word-add";
 import FetchOnceOptions from "~/utils/FetchOnceOptions";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
@@ -24,17 +23,15 @@ import {
 } from "~/features/sort-words";
 
 export default function Home() {
-  const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 300);
-
-  const wordsListRef = useRef<HTMLLIElement>(null);
-
   const {
     lang: [lang, setLang],
     page: [page, setPage],
     order: [orderByDate, setOrderByDate],
+    query: [searchQuery, setSearchQuery],
     dictionary: [dicty, setDicty],
   } = useSortingParams();
+
+  const wordsListRef = useRef<HTMLLIElement>(null);
 
   const { data: words, isLoading } = useWords(dicty, FetchOnceOptions);
   const { data: availableDictionaries } = useDictionaries(FetchOnceOptions);
@@ -49,9 +46,9 @@ export default function Home() {
 
     return filterByWord({
       data: filteredByLang,
-      query: debouncedSearch,
+      query: searchQuery,
     });
-  }, [words, lang, orderByDate, debouncedSearch]);
+  }, [words, lang, orderByDate, searchQuery]);
 
   const start = (page - 1) * ItemsPerPage;
   const end = start + ItemsPerPage;
@@ -66,7 +63,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main data-testid="home-main">
-        <FilterByWord searchValue={search} setSearchValue={setSearch} />
+        <FilterByWord
+          searchValue={searchQuery}
+          setSearchValue={setSearchQuery}
+        />
         <section className="relative mb-2.5 grid auto-cols-fr grid-flow-col gap-x-6 gap-y-2 mobile-header:grid-flow-row">
           <SortByDate
             currentOrderByDate={orderByDate}
