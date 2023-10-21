@@ -1,5 +1,6 @@
-import { getUniqueDictionaries } from "~/features/sort-words";
 import { type api, type RouterInputs } from "~/utils/api";
+import { getModifiedWords } from "~/features/word-edit";
+import { getUniqueDictionaries } from "~/features/sort-words";
 import basicPreviousData from "~/features/shared/utils/basicPreviousData";
 
 type BasicMutateCallback = {
@@ -15,10 +16,13 @@ export default async function basicMutateCallback({
   await utils.words.getDictionaries.cancel();
 
   const { previousDictionaries, previousData, queryKey } =
-    await basicPreviousData(utils, word);
+    await basicPreviousData(utils, {
+      ...word,
+      dictionary: word.dictionary || null,
+    });
 
   if (previousData) {
-    const optimisticData = previousData.map(w => (w.id == word.id ? word : w));
+    const optimisticData = getModifiedWords(previousData, word);
     const optimisticDictionaries = getUniqueDictionaries(optimisticData);
 
     utils.words.getAll.setData(queryKey, optimisticData);

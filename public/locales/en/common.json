@@ -9,6 +9,7 @@
   "export": "Export",
   "login": "Login",
   "logout": "Logout",
+  "reset": "Reset",
 
   "category_one": "Category",
   "category_other": "Categories",
@@ -105,6 +106,8 @@
   "toast.import.success_other": "Dictionary's been successfully imported!",
   "toast.import.error_one": "Word cannot be imported! Error: {{error}}",
   "toast.import.error_other": "Dictionary cannot be imported! Error: {{error}}",
+
+  "toast.revision.reset": "Successfully reset revision date!",
 
   "page.previous": "Previous page",
   "page.next": "Next Page"

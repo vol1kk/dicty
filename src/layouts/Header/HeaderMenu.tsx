@@ -22,7 +22,6 @@ export default function HeaderMenu() {
   const router = useRouter();
 
   const isAuthEnabled = env.NEXT_PUBLIC_AUTH_ENABLED;
-  console.log();
 
   const isAuthed = useSessionData(state => state.isAuthed);
   const isHeaderOpen = useHeaderData(state => state.isHeaderOpen);
@@ -33,7 +32,13 @@ export default function HeaderMenu() {
   });
 
   function quizHandler() {
-    void router.push({ pathname: "/quiz", query: { dict: router.query.dict } });
+    void router.push({
+      pathname: "/quiz",
+      query: {
+        ...(router.query.dict &&
+          router.query.dict.length > 0 && { dict: router.query.dict }),
+      },
+    });
 
     setIsHeaderOpen(false);
   }

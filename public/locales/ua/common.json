@@ -9,6 +9,7 @@
   "export": "Експортувати",
   "login": "Увійти",
   "logout": "Вийти",
+  "reset": "Скинути",
 
   "category_one": "Категорія",
   "category_other": "Категорії",
@@ -105,6 +106,8 @@
   "toast.import.success_other": "Успішно імпортовано словник!",
   "toast.import.error_one": "Неможливо імпортувати слово! Помилка: {{error}}",
   "toast.import.error_other": "Неможливо імпортувати слово! Помилка: {{error}}",
+
+  "toast.revision.reset": "Успішно анульовано дату ревізії!",
 
   "page.previous": "Попередня сторінка",
   "page.next": "Наступна сторінка"

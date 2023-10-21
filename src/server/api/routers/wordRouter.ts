@@ -15,6 +15,10 @@ import {
 // however, MongoDB wants exactly ObjectId-ish value
 const NonExistentId = "000000000000000000000000";
 
+const UpdateWordSchema = WordSchema.partial().required({
+  id: true,
+});
+
 export const wordRouter = createTRPCRouter({
   getWordsToRevise: protectedProcedure
     .input(z.string().nullable())
@@ -82,14 +86,15 @@ export const wordRouter = createTRPCRouter({
     }),
 
   updateWord: protectedProcedure
-    .input(WordSchema)
-    .mutation(async ({ ctx, input: updatedWord }) => {
+    .input(UpdateWordSchema)
+    .mutation(async ({ ctx, input: partialUpdatedWord }) => {
       const existingWord = await ctx.prisma.word.findUnique({
-        where: { id: updatedWord.id },
+        where: { id: partialUpdatedWord.id },
         include: { categories: { include: { meanings: true } } },
       });
 
       if (!existingWord) throw new TRPCError({ code: "NOT_FOUND" });
+      const updatedWord = { ...existingWord, ...partialUpdatedWord };
 
       if (existingWord.createdById !== updatedWord.createdById)
         throw new TRPCError({ code: "FORBIDDEN" });

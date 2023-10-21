@@ -13,18 +13,28 @@ const useRevisedWords = create<UseRevisedWordsProps>()(set => ({
   setRevisedWords: words => set({ revisedWords: words }),
 }));
 
-export type RevisedWord = Pick<Word, "id" | "name" | "interval"> & {
+export type RevisedWord = Pick<
+  Word,
+  "id" | "name" | "repetitions" | "easinessFactor"
+> & {
+  interval: Date | undefined;
   quality: QualityValues;
 };
 
-export function setRevisedWords(word: Word, quality: QualityValues) {
+export function setRevisedWords(
+  word: Word | RevisedWord,
+  quality: QualityValues,
+  dateString?: string,
+) {
   const localStorageKey = "revisedWords";
-  const today = new Date().toLocaleDateString("en-us");
+  const today = dateString || new Date().toLocaleDateString("en-us");
 
   const revisedWord: RevisedWord = {
     id: word.id,
     name: word.name,
     interval: word.interval,
+    repetitions: word.repetitions,
+    easinessFactor: word.easinessFactor,
     quality,
   };
 

@@ -6,31 +6,34 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import cn from "~/utils/cn";
+import getLocale from "~/utils/getLocale";
 import Spinner from "~/components/Spinner";
 import { Button } from "~/components/Button";
 import { useWordsToRevise } from "~/features/quiz";
-import FetchOnceOptions from "~/utils/FetchOnceOptions";
 import nextI18nConfig from "~/../next-i18next.config.mjs";
-import RevisedWordsTable from "~/features/quiz/components/RevisedWordsTable";
-import { FilterByDictionary, useDictionaries } from "~/features/sort-words";
+import RevisedWordsTable from "~/features/quiz/components/Table/RevisedWordsTable";
+import {
+  FilterByDictionary,
+  getUniqueDictionaries,
+} from "~/features/sort-words";
 
 export default function QuizPage() {
   const { t } = useTranslation();
   const router = useRouter();
-  const locale = router.locale === "en" ? "en-us" : "uk-ua";
+  const locale = getLocale(router.locale || "en");
 
   const [dict, setDict] = useState<string | null>(
     router.query.dict ? (router.query.dict as string) : null,
   );
 
   const { data: words, isLoading } = useWordsToRevise(dict);
-  const { data: availableDictionaries } = useDictionaries(FetchOnceOptions);
+  const availableDictionaries = getUniqueDictionaries(words);
 
   function startRevision() {
     void router.push(
       {
         pathname: "/quiz/start",
-        query: { words: JSON.stringify(words) },
+        query: { words: JSON.stringify(words), dict },
       },
       "/quiz",
     );
@@ -64,11 +67,13 @@ export default function QuizPage() {
               t("revisions.start")
             )}
           </Button>
-          <FilterByDictionary
-            setDictionary={setDict}
-            currentDictionary={dict}
-            availableDictionaries={availableDictionaries}
-          />
+          {availableDictionaries.length !== 0 && (
+            <FilterByDictionary
+              setDictionary={setDict}
+              currentDictionary={dict}
+              availableDictionaries={availableDictionaries}
+            />
+          )}
         </section>
       </main>
     </>

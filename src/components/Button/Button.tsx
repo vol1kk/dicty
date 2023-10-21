@@ -21,7 +21,7 @@ export default function Button({
       className={cn(
         variant === "darker" && "bg-gray-300 dark:bg-gray-900",
         variant === "lighter" && "bg-gray-100 dark:bg-gray-800",
-        `rounded-md  outline-2 outline-offset-2 outline-primary focus-visible:outline`,
+        `rounded-md outline-2 outline-offset-2 outline-primary focus-visible:outline`,
         className,
       )}
       {...props}

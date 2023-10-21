@@ -36,7 +36,14 @@ export default function QuizOptions({
   const isLastWord = words.length === 1;
 
   function handleNext() {
-    if (isLastWord) void router.replace("/quiz");
+    if (isLastWord)
+      void router.replace({
+        pathname: "/quiz",
+        query: {
+          ...(router.query.dict &&
+            router.query.dict.length > 0 && { dict: router.query.dict }),
+        },
+      });
 
     if (!isLastWord) {
       setIsClicked(false);

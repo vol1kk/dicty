@@ -1,8 +1,8 @@
-import modifyWordId from "~/utils/modifyWordId";
 import useLocalData from "~/store/useLocalData";
 import useSessionData from "~/store/useSessionData";
 import { api, type RouterInputs } from "~/utils/api";
 import { type HookOptions } from "~/types/HookOptions";
+import { getModifiedWords } from "~/features/word-edit";
 import {
   basicErrorCallback,
   basicMutateCallback,
@@ -35,15 +35,11 @@ export default function useUpdateWord(props?: Partial<HookOptions>) {
   });
 
   return function updateWord(word: UseEditWordInput) {
-    const modifiedWord = modifyWordId(word, { appendWithId: true });
-
-    if (isAuthed) updateWordMutation(modifiedWord);
+    if (isAuthed) updateWordMutation(word);
 
     if (!isAuthed) {
       setLocalWords(words => {
-        const updatedWords = words.map(prevWord =>
-          prevWord.id === modifiedWord.id ? modifiedWord : prevWord,
-        );
+        const updatedWords = getModifiedWords(words, word);
 
         localStorage.setItem("words", JSON.stringify(updatedWords));
 
