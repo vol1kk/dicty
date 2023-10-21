@@ -19,6 +19,7 @@ export const WordSchema = z.object({
   name: z.string().trim(),
   transcription: z.string().trim(),
   synonyms: z.array(z.string()),
+  antonyms: z.array(z.string()),
   language: z.string().trim().nullable(),
   dictionary: z.string().trim().nullable(),
   createdAt: z.coerce.date().nullable(),

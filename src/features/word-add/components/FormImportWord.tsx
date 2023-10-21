@@ -5,6 +5,7 @@ import { useToasts } from "~/features/toast";
 import { Button } from "~/components/Button";
 import useSessionData from "~/store/useSessionData";
 import { useImportFromCode } from "~/features/word-add";
+import { ImportIcon } from "~/components/Icons";
 
 export type FormCodeShareProps = {
   ref: Ref<HTMLInputElement>;
@@ -53,14 +54,20 @@ const FormImportWord = forwardRef<HTMLInputElement, FormCodeShareProps>(
           type="text"
           data-testid="input-import-from-code"
           className="w-full rounded-md bg-gray-300 px-4 py-2 placeholder-[#757575] outline-1 outline-offset-2 outline-primary focus-visible:outline dark:bg-gray-900"
-          placeholder={t("form.code.import.placeholder")}
+          placeholder={t("input.import.placeholder")}
         />
         <Button
           data-testid="button-import-from-code"
-          className="rounded-md bg-gray-300 p-2 outline-1 dark:bg-gray-900"
+          className="group flex items-center justify-center overflow-hidden rounded-md bg-gray-300 p-2 outline-1 dark:bg-gray-900 [&>*]:transition-[opacity,_transform]"
           isSubmit={true}
         >
-          {t("form.code.import")}
+          <ImportIcon
+            width={18}
+            className="-mt-1 translate-y-full fill-primary opacity-0 group-hover:translate-y-0  group-hover:opacity-100"
+          />
+          <span className="group-hover:translate-x-[10px]">
+            {t("input.import.placeholder")}
+          </span>
         </Button>
       </form>
     );

@@ -8,9 +8,11 @@ import {
   categoryTemplate,
   meaningTemplate,
 } from "~/features/shared/ui/Form/utils/formUtils";
+import FormTitle from "~/features/shared/ui/Form/components/FormTitle";
 
 export {
   DotsIcon,
+  FormTitle,
   formTemplate,
   FormMeaning,
   CategoryOptions,

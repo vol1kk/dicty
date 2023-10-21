@@ -29,6 +29,7 @@ model Word {
   transcription  String
   categories     Category[]
   synonyms       String[]
+  antonyms       String[]
   language       String?
   dictionary     String?
   shareCode      String?

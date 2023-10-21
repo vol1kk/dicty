@@ -37,7 +37,7 @@ export default function FormMeaning({
       <Input
         role="option"
         id={`categories.${categoryIndex}.meanings.${meaningIndex}.definition`}
-        placeholder={t("form.word.category.meaning.definition")}
+        placeholder={t("input.meaning.placeholder")}
         value={meaning.definition}
         className={cn(
           hasErrorBorder && "outline-offset-4 ring-2 ring-red-500",
@@ -48,7 +48,7 @@ export default function FormMeaning({
       <Input
         role="option"
         id={`categories.${categoryIndex}.meanings.${meaningIndex}.example`}
-        placeholder={t("form.word.category.meaning.example")}
+        placeholder={t("input.meaning.example.placeholder")}
         value={meaning.example || ""}
         className="w-full"
       />

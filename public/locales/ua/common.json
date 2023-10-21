@@ -4,19 +4,43 @@
   "undo": "Відмінити",
   "load": "Завантаження",
   "page": "Сторінка",
+  "related": "Пов'язане",
+  "import": "Імпортувати",
+  "export": "Експортувати",
+  "login": "Увійти",
+  "logout": "Вийти",
+
+  "category_one": "Категорія",
+  "category_other": "Категорії",
 
   "definition_one": "Визначення",
   "definition_other": "Визначення",
 
-  "header.import": "Імпортувати",
-  "header.export": "Експортувати",
+  "input.search_word": "Знайти слово...",
+
+  "input.import.placeholder": "Введіть код",
+
+  "input.name.placeholder": "Введіть назву",
+  "input.transcription.placeholder": "Введіть транскрипцію",
+
+  "input.dict.placeholder": "Введіть словник",
+  "input.lang.placeholder": "Введіть мову",
+
+  "input.category.placeholder": "Введіть категорію",
+  "input.meaning.placeholder": "Введіть значення",
+  "input.meaning.example.placeholder": "Введіть приклад",
+
+  "input.synonyms": "Синоніми",
+  "input.synonyms.placeholder": "Синоніми (напр. яскравий, сонячний)",
+
+  "input.antonyms": "Антоніми",
+  "input.antonyms.placeholder": "Антоніми (напр. темний, чорний)",
+
   "header.openMenu": "Відкрити меню",
   "header.icon": "Головна сторінка",
-  "header.login": "Увійти",
-  "header.logout": "Вийти",
 
-  "header.changeFont": "Змінити шрифт",
-  "header.changeTheme": "Перемкнути темну тему",
+  "change.font": "Змінити шрифт",
+  "change.theme": "Перемкнути темну тему",
 
   "revisions.name_one": "Ревізія",
   "revisions.name_other": "Ревізії",
@@ -38,35 +62,14 @@
 
   "words.list": "Список слів",
 
-  "word.sort.by_query": "Знайти слово...",
-
-  "words.sort.by_dict.default_one": "Словник",
-  "words.sort.by_dict.default_other": "Словники",
-
-  "words.sort.by_lang.default_one": "Мова",
-  "words.sort.by_lang.default_other": "Мови",
+  "words.sort.by_dict.default": "Словники",
+  "words.sort.by_lang.default": "Мови",
 
   "words.sort.byDate.newest": "Найновіші",
   "words.sort.byDate.oldest": "Найстаріші",
 
-  "form.code.import": "Імпортувати",
-  "form.code.import.placeholder": "Введіть код",
-
   "form.code.generate": "Поділитись словом",
   "form.code.delete": "Видалити код для шейрингу",
-
-  "form.word.name": "Назва",
-  "form.word.name.placeholder": "Введіть назву",
-
-  "form.word.transcription": "Транскрипція",
-  "form.word.transcription.placeholder": "Введіть транскрипцію",
-
-  "form.word.categories.label": "Категорії",
-  "form.word.category.placeholder": "Введіть категорію",
-  "form.word.category.meaning.definition": "Введіть значення",
-  "form.word.category.meaning.example": "Введіть приклад",
-
-  "form.word.synonyms": "Синоніми",
 
   "form.word.category.add": "Додати категорію",
   "form.word.category.remove": "Видалити категорію",

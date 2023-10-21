@@ -56,7 +56,7 @@ export default function SortByDate({
       renderContent={dropdownItemHandler => (
         <ul
           data-testid="word-sortbydate-list"
-          className="mt-3 rounded-md bg-white p-3 shadow-3xl dark:bg-gray-900 [&>li]:leading-8"
+          className="mt-3 rounded-md bg-white p-3 shadow-subtle dark:bg-gray-900 dark:shadow-3xl [&>li]:leading-8"
         >
           {SortValues.map(type => {
             const isSameSortOrder =

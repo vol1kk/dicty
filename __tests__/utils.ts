@@ -29,6 +29,7 @@ function createWord(wordExtenders?: Partial<Word>, clearId = false): Word {
     name: "Test Word",
     transcription: "/test-transcription/",
     synonyms: [],
+    antonyms: [],
     language: null,
     dictionary: null,
     easinessFactor: 2.5,

@@ -20,7 +20,7 @@ export default function ChangeTheme() {
     <Switch
       isChecked={isDarkTheme}
       handleCheck={themeToggleHandler}
-      switchAction={t("header.changeTheme")}
+      switchAction={t("change.theme")}
     />
   );
 }

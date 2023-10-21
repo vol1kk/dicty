@@ -28,4 +28,5 @@ export const formTemplate: Word = {
   interval: new Date(),
   categories: [categoryTemplate],
   synonyms: [],
+  antonyms: [],
 };

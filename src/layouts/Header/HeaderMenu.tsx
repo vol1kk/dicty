@@ -80,7 +80,7 @@ export default function HeaderMenu() {
                   onClick={() => void (isAuthed ? signOut() : signIn())}
                 >
                   <AccountIcon width={24} height={24} />
-                  {isAuthed ? t("header.logout") : t("header.login")}
+                  {isAuthed ? t("logout") : t("login")}
                 </Button>
               </li>
             )}

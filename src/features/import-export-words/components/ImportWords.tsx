@@ -79,7 +79,7 @@ export default function ImportWords({ className, words }: ImportWordsProps) {
       data-testid="import-container"
     >
       <ImportIcon className="rotate-180" />
-      {t("header.import")}
+      {t("import")}
       <input
         type="file"
         className="hidden"

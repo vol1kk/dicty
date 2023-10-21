@@ -80,11 +80,23 @@ const WordsList = forwardRef<HTMLLIElement, WordsListProps>(function WordsList(
                 {word.synonyms?.length > 0 && (
                   <Word.Category
                     id="word-synonyms"
-                    categoryName="Synonyms"
-                    className="text-sm [&>h3]:text-base"
+                    categoryName={t("input.synonyms")}
+                    className="mb-2 text-sm [&>h3]:text-base"
                   >
                     <Word.Synonyms
                       synonyms={word.synonyms}
+                      words={data.map(w => ({ name: w.name, id: w.id }))}
+                    />
+                  </Word.Category>
+                )}
+                {word.antonyms?.length > 0 && (
+                  <Word.Category
+                    id="word-antonyms"
+                    categoryName={t("input.antonyms")}
+                    className="text-sm [&>h3]:text-base"
+                  >
+                    <Word.Synonyms
+                      synonyms={word.antonyms}
                       words={data.map(w => ({ name: w.name, id: w.id }))}
                     />
                   </Word.Category>

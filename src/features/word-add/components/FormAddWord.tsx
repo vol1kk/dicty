@@ -9,7 +9,7 @@ import { CloseIcon } from "~/components/Icons";
 import useSessionData from "~/store/useSessionData";
 import { useCreateWord } from "~/features/word-add";
 import { useSortingParams } from "~/features/sort-words";
-import Form, { formTemplate } from "~/features/shared/ui/Form";
+import Form, { formTemplate, FormTitle } from "~/features/shared/ui/Form";
 import FormImportWord from "~/features/word-add/components/FormImportWord";
 
 export default function FormAddWord() {
@@ -79,11 +79,9 @@ export default function FormAddWord() {
               ref={inputCodeRef}
               closeHandler={formCloseHandler}
             />
-            <div className="relative mx-2 flex select-none items-center justify-center">
+            <div className="relative mx-2 flex items-center">
               <div className="absolute h-1 w-full rounded-md bg-gray-300 dark:bg-gray-900" />
-              <span className="text-bold relative z-[1] rounded-md bg-gray-300 px-6 py-1 text-sm font-bold uppercase dark:bg-gray-900">
-                {t("or")}
-              </span>
+              <FormTitle text={t("or")} className="z-[1] px-4 py-1" />
             </div>
           </>
         )}

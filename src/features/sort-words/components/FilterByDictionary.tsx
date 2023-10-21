@@ -49,14 +49,14 @@ export default function FilterByDictionaryProps({
           <span>
             {currentDictionary
               ? capitalize(currentDictionary)
-              : t("all") + " " + t("words.sort.by_dict.default", { count: 0 })}
+              : t("all") + " " + t("words.sort.by_dict.default")}
           </span>
         </>
       )}
       renderContent={dropdownItemHandler => (
         <ul
           data-testid="word-filterbylang-list"
-          className="mt-3 rounded-md bg-white p-3 shadow-3xl dark:bg-gray-900 [&>li]:leading-8"
+          className="mt-3 rounded-md bg-white p-3 shadow-subtle dark:bg-gray-900 dark:shadow-3xl [&>li]:leading-8"
         >
           {["all", ...availableDictionaries].map(dictionary => {
             const isSameDictionary =

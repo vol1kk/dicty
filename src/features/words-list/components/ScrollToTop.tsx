@@ -42,10 +42,13 @@ const ScrollToTop = forwardRef<HTMLLIElement, ScrollToTopProps>(
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         className={cn(
           scrollToTop ? "translate-x-1/2" : "invisible -translate-x-full",
-          "fixed bottom-3 left-0 rounded-full p-4 shadow-3xl transition-[transform,visibility]",
+          "fixed bottom-3 left-0 rounded-full p-4 shadow-subtle transition-[transform,visibility] dark:shadow-black/40",
         )}
       >
-        <ChevronIcon width={24} className="-rotate-90" />
+        <ChevronIcon
+          width={24}
+          className="-rotate-90 fill-primary dark:fill-white"
+        />
       </Button>
     );
   },

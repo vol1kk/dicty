@@ -155,6 +155,7 @@ export const wordRouter = createTRPCRouter({
             language: updatedWord.language,
             dictionary: updatedWord.dictionary,
             synonyms: updatedWord.synonyms,
+            antonyms: updatedWord.antonyms,
             interval: updatedWord.interval,
             repetitions: updatedWord.repetitions,
             easinessFactor: updatedWord.easinessFactor,
@@ -303,6 +304,7 @@ function createWord(data: Word, userId?: string) {
     name: data.name,
     shareCode: null,
     synonyms: data.synonyms,
+    antonyms: data.antonyms,
     language: data.language,
     dictionary: data.dictionary,
     categories: {

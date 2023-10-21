@@ -4,20 +4,43 @@
   "undo": "Undo",
   "load": "Loading",
   "page": "Page",
+  "related": "Related",
+  "import": "Import",
+  "export": "Export",
+  "login": "Login",
+  "logout": "Logout",
 
+  "category_one": "Category",
+  "category_other": "Categories",
 
   "definition_one": "Definition",
   "definition_other": "Definitions",
 
-  "header.import": "Import",
-  "header.export": "Export",
+  "input.search_word": "Search for your word...",
+
+  "input.import.placeholder": "Enter Code",
+
+  "input.name.placeholder": "Enter Name",
+  "input.transcription.placeholder": "Enter Transcription",
+
+  "input.dict.placeholder": "Enter Dictionary",
+  "input.lang.placeholder": "Enter Language",
+
+  "input.category.placeholder": "Enter Category",
+  "input.meaning.placeholder": "Enter Definition",
+  "input.meaning.example.placeholder": "Enter Example",
+
+  "input.synonyms": "Synonyms",
+  "input.synonyms.placeholder": "Synonyms (e.g. sunny, vivid)",
+
+  "input.antonyms": "Antonyms",
+  "input.antonyms.placeholder": "Antonyms (e.g. dark, black)",
+
   "header.openMenu": "Open Menu",
   "header.icon": "Home Icon",
-  "header.login": "Login",
-  "header.logout": "Logout",
 
-  "header.changeFont": "Change Font",
-  "header.theme": "Toggle Dark Theme",
+  "change.font": "Change Font",
+  "change.theme": "Toggle Dark Theme",
 
   "revisions.name_one": "Quiz",
   "revisions.name_other": "Revisions",
@@ -39,35 +62,14 @@
 
   "words.list": "Words List",
 
-  "word.sort.by_query": "Search for your word...",
-
-  "words.sort.by_dict.default_one": "Dictionary",
-  "words.sort.by_dict.default_other": "Dictionaries",
-
-  "words.sort.by_lang.default_one": "Language",
-  "words.sort.by_lang.default_other": "Languages",
+  "words.sort.by_dict.default": "Dictionaries",
+  "words.sort.by_lang.default": "Languages",
 
   "words.sort.byDate.newest": "Newest",
   "words.sort.byDate.oldest": "Oldest",
 
-  "form.code.import": "Import",
-  "form.code.import.placeholder": "Enter Code",
-
   "form.code.generate": "Share Word",
   "form.code.delete": "Delete Sharing Code",
-
-  "form.word.name": "Name",
-  "form.word.name.placeholder": "Enter Name",
-
-  "form.word.transcription": "Transcription",
-  "form.word.transcription.placeholder": "Enter Transcription",
-
-  "form.word.categories.label": "Categories",
-  "form.word.category.placeholder": "Enter Category",
-  "form.word.category.meaning.definition": "Enter Definition",
-  "form.word.category.meaning.example": "Enter Example",
-
-  "form.word.synonyms": "Synonyms",
 
   "form.word.category.add": "Add Category",
   "form.word.category.remove": "Remove Category",

@@ -88,7 +88,7 @@ export default function FormCategory({
           "flex col-span-2 dark:bg-gray-900 bg-gray-300 rounded-md focus-within:outline outline-1 outline-primary outline-offset-4",
         )}
         value={category.name}
-        placeholder={t("form.word.category.placeholder")}
+        placeholder={t("input.category.placeholder")}
       >
         <CategoryOptions
           callback={categoryCallback}

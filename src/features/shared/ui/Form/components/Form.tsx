@@ -12,7 +12,11 @@ import cn from "~/utils/cn";
 import Input from "~/components/Input";
 import { type Category, type Word } from "~/types/ApiTypes";
 import FormCategory from "~/features/shared/ui/Form/components/FormCategory";
-import { formTemplate, formValidationSchema } from "~/features/shared/ui/Form";
+import {
+  formTemplate,
+  FormTitle,
+  formValidationSchema,
+} from "~/features/shared/ui/Form";
 
 type FormProps = {
   initialValues?: Word;
@@ -32,9 +36,17 @@ export default function Form({
 }: FormProps) {
   const { t } = useTranslation();
   const formSubmitHandler = (
-    values: Omit<Word, "synonyms"> & { synonyms: string },
+    values: Omit<Word, "synonyms" | "antonyms"> & {
+      synonyms: string;
+      antonyms: string;
+    },
   ) => {
     const transformedSynonyms = values.synonyms
+      .split(",")
+      .map(s => s.trim())
+      .filter(s => s !== "");
+
+    const transformedAntonyms = values.antonyms
       .split(",")
       .map(s => s.trim())
       .filter(s => s !== "");
@@ -42,6 +54,7 @@ export default function Form({
     submitHandler({
       ...values,
       synonyms: transformedSynonyms,
+      antonyms: transformedAntonyms,
       language: values.language || null,
       dictionary: values.dictionary || null,
     });
@@ -52,6 +65,7 @@ export default function Form({
     language: initialValues?.language || "",
     dictionary: initialValues?.dictionary || "",
     synonyms: initialValues?.synonyms.join(", "),
+    antonyms: initialValues?.antonyms.join(", "),
   };
   return (
     <Formik
@@ -93,65 +107,69 @@ export default function Form({
               <div className="mb-4 flex flex-wrap gap-4 [&>label>span]:text-center [&>label]:grid [&>label]:grow">
                 <Input
                   id="name"
-                  placeholder={t("form.word.name.placeholder")}
+                  placeholder={t("input.name.placeholder")}
                   className={cn(
                     errors.name &&
                       touched.name &&
                       "outline-offset-4 ring-2 ring-red-500",
                     "w-full",
                   )}
-                >
-                  <span>{t("form.word.name")}</span>
-                </Input>
-
+                />
                 <Input
                   id="transcription"
                   className="w-full"
-                  placeholder={t("form.word.transcription.placeholder")}
-                >
-                  <span>{t("form.word.transcription")}</span>
-                </Input>
+                  placeholder={t("input.transcription.placeholder")}
+                />
               </div>
               <div className="flex flex-wrap gap-4 [&>label]:grow">
                 <Input
                   id="dictionary"
                   className="w-full"
-                  placeholder={t("words.sort.by_dict.default", { count: 1 })}
+                  placeholder={t("input.dict.placeholder")}
                 />
                 <Input
                   id="language"
                   className="w-full"
-                  placeholder={t("words.sort.by_lang.default", { count: 1 })}
+                  placeholder={t("input.lang.placeholder")}
                 />
               </div>
             </div>
             <FieldArray name="categories">
               {(ctgHelpers: ArrayHelpers) => (
                 <div>
-                  <h2 className="mb-1 text-center">
-                    {t("form.word.categories.label")}
-                  </h2>
+                  <FormTitle
+                    text={t("category", { count: 0 })}
+                    className="mb-2"
+                  />
                   {values.categories.map((category, cIndex) => (
                     <FormCategory
                       key={cIndex}
                       category={category}
                       categoryIndex={cIndex}
-                      remove={ind => ctgHelpers.remove(ind)}
-                      push={value => ctgHelpers.push(value)}
-                      move={(from, to) => ctgHelpers.move(from, to)}
                       categoryErrors={errorCategories}
                       categoryTouched={touched.categories}
+                      push={value => ctgHelpers.push(value)}
+                      remove={ind => ctgHelpers.remove(ind)}
                       categoriesLength={values.categories.length}
+                      move={(from, to) => ctgHelpers.move(from, to)}
                     />
                   ))}
                 </div>
               )}
             </FieldArray>
-            <Input
-              id="synonyms"
-              className="mb-8 w-full"
-              placeholder={t("form.word.synonyms")}
-            />
+            <div>
+              <FormTitle text={t("related")} className="mb-2" />
+              <Input
+                id="synonyms"
+                className="mb-4 w-full"
+                placeholder={t("input.synonyms.placeholder")}
+              />
+              <Input
+                id="antonyms"
+                className="w-full"
+                placeholder={t("input.antonyms.placeholder")}
+              />
+            </div>
             <div
               className={cn(
                 classNameButtons,

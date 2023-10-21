@@ -56,7 +56,7 @@ export default function CategoryOptions({
         return (
           <ul
             onClick={e => e.preventDefault()}
-            className="absolute -top-10 right-0 whitespace-nowrap rounded-md bg-white p-4 shadow-xl dark:bg-gray-900 [&>li]:cursor-pointer [&>li]:leading-10"
+            className="absolute -top-10 right-0 whitespace-nowrap rounded-md bg-white p-4 shadow-subtle dark:bg-gray-900 dark:shadow-3xl [&>li]:cursor-pointer [&>li]:leading-10"
           >
             {CATEGORY_OPTIONS.map((options, index) => (
               <li

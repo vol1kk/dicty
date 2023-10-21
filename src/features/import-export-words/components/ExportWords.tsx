@@ -45,7 +45,7 @@ export default function ExportWords({ className, words }: ExportWordsProps) {
       ) : (
         <ImportIcon width={24} height={24} />
       )}
-      {t("header.export")}
+      {t("export")}
     </Button>
   );
 }

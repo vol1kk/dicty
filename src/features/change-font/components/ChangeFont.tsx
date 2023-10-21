@@ -25,7 +25,7 @@ export default function ChangeFont() {
       classNameContent="-translate-x-1/2 right-1/2 left-1/2"
       renderTitle={isDropdownOpen => (
         <div className="flex min-w-[120px] cursor-pointer items-center justify-center gap-4">
-          <span className="sr-only">{t("header.changeFont")}</span>
+          <span className="sr-only">{t("change.font")}</span>
           <ChevronIcon
             width={18}
             height={18}

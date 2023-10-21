@@ -21,6 +21,7 @@ const config = {
       },
       boxShadow: {
         "3xl": "0 0 60px 15px rgba(0, 0, 0, 0.45)",
+        subtle: "0 0 10px 3px rgba(0, 0, 0, 0.2)",
       },
     },
   },

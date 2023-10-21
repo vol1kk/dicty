@@ -49,14 +49,14 @@ export default function FilterByLang({
           <span>
             {currentLang
               ? capitalize(t(currentLang))
-              : t("all") + " " + t("words.sort.by_lang.default", { count: 0 })}
+              : t("all") + " " + t("words.sort.by_lang.default")}
           </span>
         </>
       )}
       renderContent={dropdownItemHandler => (
         <ul
           data-testid="word-filterbylang-list"
-          className="mt-3 rounded-md bg-white p-3 shadow-3xl dark:bg-gray-900 [&>li]:leading-8"
+          className="mt-3 rounded-md bg-white p-3 shadow-subtle dark:bg-gray-900 dark:shadow-3xl [&>li]:leading-8"
         >
           {["all", ...availableLanguages].map(lang => {
             const isSameLang =
