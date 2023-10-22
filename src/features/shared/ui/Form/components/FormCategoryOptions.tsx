@@ -11,10 +11,10 @@ type CategoryOptionsProps = {
   callback: (data: HTMLLIElement) => void;
 };
 
-export default function CategoryOptions({
+export default function FormCategoryOptions({
+  callback,
   categoriesLength,
   currentCategory,
-  callback,
 }: CategoryOptionsProps) {
   const { t } = useTranslation();
   const CATEGORY_OPTIONS = [

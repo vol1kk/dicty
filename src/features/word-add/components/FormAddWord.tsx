@@ -73,18 +73,6 @@ export default function FormAddWord() {
         </span>
       </Button>
       <Accordion strategy={{ isOpen: isFormOpen }} className="duration-300">
-        {isAuthed && (
-          <>
-            <FormImportWord
-              ref={inputCodeRef}
-              closeHandler={formCloseHandler}
-            />
-            <div className="relative mx-2 flex items-center">
-              <div className="absolute h-1 w-full rounded-md bg-gray-300 dark:bg-gray-900" />
-              <FormTitle text={t("or")} className="z-[1] px-4 py-1" />
-            </div>
-          </>
-        )}
         <Form
           initialValues={{ ...formTemplate, dictionary: dict, language: lang }}
           submitHandler={word => createWord(word)}
@@ -121,6 +109,18 @@ export default function FormAddWord() {
             );
           }}
         />
+        {isAuthed && (
+          <>
+            <div className="relative mx-2 flex items-center">
+              <div className="absolute h-1 w-full rounded-md bg-gray-300 dark:bg-gray-900" />
+              <FormTitle text={t("or")} className="z-[1] px-4 py-1" />
+            </div>
+            <FormImportWord
+              ref={inputCodeRef}
+              closeHandler={formCloseHandler}
+            />
+          </>
+        )}
       </Accordion>
     </div>
   );

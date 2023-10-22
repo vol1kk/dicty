@@ -1,20 +1,21 @@
 import { type ReactElement } from "react";
+import { useTranslation } from "next-i18next";
 import {
   Formik,
   FieldArray,
   type FormikErrors,
-  Form as FormikForm,
   type ArrayHelpers,
+  Form as FormikForm,
 } from "formik";
-import { useTranslation } from "next-i18next";
 
 import cn from "~/utils/cn";
 import Input from "~/components/Input";
 import { type Category, type Word } from "~/types/ApiTypes";
-import FormCategory from "~/features/shared/ui/Form/components/FormCategory";
 import {
-  formTemplate,
   FormTitle,
+  prepareWord,
+  FormCategory,
+  formTemplate,
   formValidationSchema,
 } from "~/features/shared/ui/Form";
 
@@ -35,45 +36,19 @@ export default function Form({
   initialValues = formTemplate,
 }: FormProps) {
   const { t } = useTranslation();
-  const formSubmitHandler = (
-    values: Omit<Word, "synonyms" | "antonyms"> & {
-      synonyms: string;
-      antonyms: string;
-    },
-  ) => {
-    const transformedSynonyms = values.synonyms
-      .split(",")
-      .map(s => s.trim())
-      .filter(s => s !== "");
 
-    const transformedAntonyms = values.antonyms
-      .split(",")
-      .map(s => s.trim())
-      .filter(s => s !== "");
-
-    submitHandler({
-      ...values,
-      synonyms: transformedSynonyms,
-      antonyms: transformedAntonyms,
-      language: values.language || null,
-      dictionary: values.dictionary || null,
-    });
-  };
-
-  const modifiedInitialValues = {
-    ...initialValues,
-    language: initialValues?.language || "",
-    dictionary: initialValues?.dictionary || "",
-    synonyms: initialValues?.synonyms.join(", "),
-    antonyms: initialValues?.antonyms.join(", "),
-  };
   return (
     <Formik
       validateOnMount={true}
       enableReinitialize={true}
-      onSubmit={formSubmitHandler}
-      initialValues={modifiedInitialValues}
       validationSchema={formValidationSchema}
+      onSubmit={values =>
+        submitHandler(prepareWord({ data: values, transformFor: "api" }))
+      }
+      initialValues={prepareWord({
+        data: initialValues,
+        transformFor: "form",
+      })}
     >
       {formHelpers => {
         const {

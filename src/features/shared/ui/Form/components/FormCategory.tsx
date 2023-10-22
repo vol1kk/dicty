@@ -11,16 +11,16 @@ import cn from "~/utils/cn";
 import Input from "~/components/Input";
 import { type Category, type Meaning } from "~/types/ApiTypes";
 import {
-  CategoryOptions,
-  categoryTemplate,
   FormMeaning,
   meaningTemplate,
+  categoryTemplate,
+  FormCategoryOptions,
 } from "~/features/shared/ui/Form";
 
 type FormCategoryProps = {
+  category: Category;
   categoryIndex: number;
   categoriesLength: number;
-  category: Category;
   categoryErrors: FormikErrors<Category[]> | undefined;
   categoryTouched: FormikTouched<Category[]> | undefined;
 } & Pick<ArrayHelpers, "push" | "remove" | "move">;
@@ -90,7 +90,7 @@ export default function FormCategory({
         value={category.name}
         placeholder={t("input.category.placeholder")}
       >
-        <CategoryOptions
+        <FormCategoryOptions
           callback={categoryCallback}
           currentCategory={categoryIndex}
           categoriesLength={categoriesLength}
