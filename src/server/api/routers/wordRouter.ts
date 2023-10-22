@@ -81,7 +81,7 @@ export const wordRouter = createTRPCRouter({
     .input(WordSchema)
     .mutation(({ ctx, input }) => {
       return ctx.prisma.word.create({
-        data: createWord(input, ctx.authedUser.id),
+        data: createWord({ ...input, createdById: ctx.authedUser.id }),
       });
     }),
 
@@ -152,18 +152,13 @@ export const wordRouter = createTRPCRouter({
       });
 
       return ctx.prisma.$transaction(async tx => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { id, ...updatedWordRest } = updatedWord;
+
         return await tx.word.update({
           where: { id: existingWord.id },
           data: {
-            name: updatedWord.name,
-            transcription: updatedWord.transcription,
-            language: updatedWord.language,
-            dictionary: updatedWord.dictionary,
-            synonyms: updatedWord.synonyms,
-            antonyms: updatedWord.antonyms,
-            interval: updatedWord.interval,
-            repetitions: updatedWord.repetitions,
-            easinessFactor: updatedWord.easinessFactor,
+            ...updatedWordRest,
             categories: {
               upsert: updatedCategories,
               deleteMany: deleted.categories.map(m => ({ id: m })),
@@ -273,9 +268,12 @@ export const wordRouter = createTRPCRouter({
           data: { shareCode: null },
         });
 
-        existingWord.shareCode = null;
         return tx.word.create({
-          data: createWord(existingWord, ctx.authedUser.id),
+          data: createWord({
+            ...existingWord,
+            shareCode: null,
+            createdById: ctx.authedUser.id,
+          }),
         });
       });
     }),
@@ -304,20 +302,15 @@ function getDeletedItems<T extends { id: string; meanings: { id: string }[] }>(
   };
 }
 
-function createWord(data: Word, userId?: string) {
+function createWord(data: Word) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { id, createdAt, ...wordRest } = data;
   return {
-    name: data.name,
-    shareCode: null,
-    synonyms: data.synonyms,
-    antonyms: data.antonyms,
-    language: data.language,
-    dictionary: data.dictionary,
+    ...wordRest,
     categories: {
       create: data.categories.map(createCategory),
     },
-    transcription: data.transcription,
-    ...(userId && { createdById: userId }),
-    ...(data.createdAt && { createdAt: data.createdAt }),
+    ...(createdAt && { createdAt }),
   };
 }
 
