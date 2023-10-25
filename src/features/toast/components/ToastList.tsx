@@ -4,12 +4,15 @@ import { type ToastPosition, useToasts } from "~/features/toast";
 export default function ToastList() {
   const { toasts, removeToast, updateToast } = useToasts();
 
-  const positions = toasts.reduce((data, toast) => {
-    if (!data[toast.position]) data[toast.position] = 0;
-    else data[toast.position] += 1;
+  const positions = toasts.reduce(
+    (data, toast) => {
+      if (!data[toast.position]) data[toast.position] = 0;
+      else data[toast.position] += 1;
 
-    return data;
-  }, {} as Record<ToastPosition, number>);
+      return data;
+    },
+    {} as Record<ToastPosition, number>,
+  );
   const position = getMostFrequentKey(positions);
   const containerPosition = getContainerPosition(position);
 

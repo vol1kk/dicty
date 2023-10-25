@@ -21,17 +21,20 @@ export default function filterByWord<T extends { name: string }>({
   if (searchByName.length >= 1) return searchByName;
 
   // If query doesn't match anything, then try finding item by similar characters
-  const searchByCharacterOccurrences = data.reduce((data, i) => {
-    const characters = [...new Set(i.name.toLowerCase())];
+  const searchByCharacterOccurrences = data.reduce(
+    (data, i) => {
+      const characters = [...new Set(i.name.toLowerCase())];
 
-    const matchedCharacters = characters.filter(char => query.includes(char));
-    const matchedPercent = matchedCharacters.length / i.name.length;
-    const charDiff = Math.abs(i.name.length - query.length);
+      const matchedCharacters = characters.filter(char => query.includes(char));
+      const matchedPercent = matchedCharacters.length / i.name.length;
+      const charDiff = Math.abs(i.name.length - query.length);
 
-    if (matchedPercent >= matchThreshold && charDiff <= matchCharDiff)
-      data.push([matchedPercent, i]);
+      if (matchedPercent >= matchThreshold && charDiff <= matchCharDiff)
+        data.push([matchedPercent, i]);
 
-    return data;
-  }, [] as [number, T][]);
+      return data;
+    },
+    [] as [number, T][],
+  );
   return searchByCharacterOccurrences.sort(([a], [b]) => b - a).map(i => i[1]);
 }

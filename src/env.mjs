@@ -31,7 +31,10 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_AUTH_ENABLED: z.preprocess(value => value === "true", z.boolean()),
+    NEXT_PUBLIC_AUTH_ENABLED: z.preprocess(
+      value => value === "true",
+      z.boolean(),
+    ),
   },
 
   /**
