@@ -63,13 +63,14 @@ export default function RevisedWordsTable({ locale }: { locale: string }) {
   const selectedRevision = (revisedWords[selectedDate] as RevisedWord[]).map(
     parseDate,
   );
+  console.log(selectedRevision);
 
   function handleRevisionReset(word: RevisedWord, undo = false) {
     if (!selectedDate) return;
 
     setPreviousResetWord(word);
     setRevisedWords(
-      { ...word, interval: undefined },
+      { ...word, ...(!undo && { interval: undefined }) },
       word.quality,
       selectedDate,
     );
