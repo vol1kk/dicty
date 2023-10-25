@@ -72,6 +72,7 @@ export default function QuizPage() {
               setDictionary={setDict}
               currentDictionary={dict}
               availableDictionaries={availableDictionaries}
+              dropdownContentStyles="grid grid-cols-2 mobile-header:grid-cols-1"
             />
           )}
         </section>

@@ -8,6 +8,7 @@ import { ChevronIcon } from "~/components/Icons";
 import useSetQueryParams from "~/hooks/useSetQueryParams";
 
 export type FilterByDictionaryProps = {
+  dropdownContentStyles?: string;
   currentDictionary: null | string;
   availableDictionaries: string[];
   setDictionary: Dispatch<SetStateAction<null | string>>;
@@ -15,8 +16,9 @@ export type FilterByDictionaryProps = {
 
 export default function FilterByDictionaryProps({
   setDictionary,
-  availableDictionaries,
   currentDictionary,
+  availableDictionaries,
+  dropdownContentStyles,
 }: FilterByDictionaryProps) {
   const { t } = useTranslation();
   const setQueryParams = useSetQueryParams();
@@ -55,7 +57,10 @@ export default function FilterByDictionaryProps({
       renderContent={dropdownItemHandler => (
         <ul
           data-testid="word-filterbylang-list"
-          className="mt-3 rounded-md bg-white p-3 shadow-subtle dark:bg-gray-900 dark:shadow-3xl [&>li]:leading-8"
+          className={cn(
+            "mt-3 rounded-md bg-white p-3 shadow-subtle dark:bg-gray-900 dark:shadow-3xl [&>li]:leading-8",
+            dropdownContentStyles,
+          )}
         >
           {["all", ...availableDictionaries].map(dictionary => {
             const isSameDictionary =
@@ -72,7 +77,7 @@ export default function FilterByDictionaryProps({
                 data-dict={dictionary.toLowerCase()}
                 data-testid={"dict-" + dictionary.toLowerCase()}
                 onClick={e => dropdownItemHandler(e)}
-                className={`cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile-header:text-center`}
+                className="cursor-pointer whitespace-nowrap rounded-md px-12 py-1 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile-header:text-center"
               >
                 {capitalize(t(dictionary === "all" ? "all" : dictionary))}
               </li>
