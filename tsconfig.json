@@ -18,6 +18,7 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
+    "types": ["node"],
     "paths": {
       "~/*": ["./src/*"],
       "#tests/*": ["./__tests__/*"]
