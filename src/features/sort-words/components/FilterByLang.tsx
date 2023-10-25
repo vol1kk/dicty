@@ -1,17 +1,16 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import React, { type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 import cn from "~/utils/cn";
 import capitalize from "~/utils/capitalize";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
-import setQueryParams from "~/utils/setQueryParams";
+import useSetQueryParams from "~/hooks/useSetQueryParams";
 
 export type FilterByLangProps = {
   currentLang: null | string;
   availableLanguages: string[];
-  setLang: React.Dispatch<SetStateAction<null | string>>;
+  setLang: Dispatch<SetStateAction<null | string>>;
 };
 
 export default function FilterByLang({
@@ -19,15 +18,15 @@ export default function FilterByLang({
   currentLang,
   availableLanguages,
 }: FilterByLangProps) {
-  const router = useRouter();
   const { t } = useTranslation();
+  const setQueryParams = useSetQueryParams();
 
   function filterByLangCallback(data: HTMLLIElement) {
     const dataLang = data.dataset.lang as string;
     const parsedLang = dataLang === "all" ? null : dataLang;
 
     setLang(parsedLang);
-    setQueryParams(router, "lang", parsedLang);
+    setQueryParams("lang", parsedLang);
   }
 
   return (

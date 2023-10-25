@@ -1,10 +1,9 @@
 import { useTranslation } from "next-i18next";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
-import { SearchIcon } from "~/components/Icons";
-import setQueryParams from "~/utils/setQueryParams";
-import { useRouter } from "next/router";
 import useDebounce from "~/hooks/useDebounce";
+import { SearchIcon } from "~/components/Icons";
+import useSetQueryParams from "~/hooks/useSetQueryParams";
 
 export type SearchWordsProps = {
   searchValue: string;
@@ -15,19 +14,20 @@ export default function FilterByWord({
   searchValue,
   setSearchValue,
 }: SearchWordsProps) {
-  const router = useRouter();
+  const setQueryParams = useSetQueryParams();
 
   const [localSearch, setLocalSearch] = useState(searchValue);
   const debouncedSearchValue = useDebounce(localSearch, 300);
 
+  useEffect(() => setLocalSearch(searchValue), [searchValue]);
   useEffect(() => {
-    setSearchValue(localSearch);
+    setSearchValue(debouncedSearchValue);
+
     setQueryParams(
-      router,
       "q",
       debouncedSearchValue === "" ? null : debouncedSearchValue,
     );
-  }, [debouncedSearchValue, localSearch, router, setSearchValue]);
+  }, [debouncedSearchValue, setSearchValue]); // eslint-disable-line
 
   const { t } = useTranslation();
 

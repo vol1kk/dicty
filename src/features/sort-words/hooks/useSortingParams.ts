@@ -10,8 +10,12 @@ import { type SortByDateType } from "~/features/sort-words";
 export default function useSortingParams() {
   const router = useRouter();
 
-  const rawQuery = router.asPath.split("/?")[1];
-  const searchParams = new URLSearchParams(rawQuery);
+  const deliminator = router.pathname;
+
+  const params = new URLSearchParams(
+    router.asPath.split(deliminator)[1] as string,
+  );
+  const searchParams = new URLSearchParams(params);
 
   const initialPage = Number.parseInt(searchParams.get("page") || "1");
   const [page, setPage] = useState(initialPage);

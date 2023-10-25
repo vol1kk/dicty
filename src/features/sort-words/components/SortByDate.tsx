@@ -1,33 +1,32 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
-import React, { type SetStateAction } from "react";
+import { type Dispatch, type SetStateAction } from "react";
 
 import cn from "~/utils/cn";
 import Dropdown from "~/components/Dropdown";
 import { ChevronIcon } from "~/components/Icons";
-import setQueryParams from "~/utils/setQueryParams";
+import useSetQueryParams from "~/hooks/useSetQueryParams";
 import { SortNewest, SortOldest, SortValues } from "~/features/sort-words";
 
 export type SortByDateType = "newest" | "oldest";
 
 export type SortByDateProps = {
   currentOrderByDate: SortByDateType;
-  setOrderByDate: React.Dispatch<SetStateAction<SortByDateType>>;
+  setOrderByDate: Dispatch<SetStateAction<SortByDateType>>;
 };
 
 export default function SortByDate({
   currentOrderByDate,
   setOrderByDate,
 }: SortByDateProps) {
-  const router = useRouter();
   const { t } = useTranslation();
+  const setQueryParams = useSetQueryParams();
 
   function sortByDateCallback(data: HTMLLIElement) {
     const orderByDate = data.dataset.orderby as SortByDateType;
     const parsedOrder = orderByDate === "newest" ? null : orderByDate;
 
     setOrderByDate(orderByDate);
-    setQueryParams(router, "order", parsedOrder);
+    setQueryParams("order", parsedOrder);
   }
 
   return (

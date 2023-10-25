@@ -1,12 +1,11 @@
-import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { type Dispatch, type SetStateAction } from "react";
 
 import cn from "~/utils/cn";
 import { Button } from "~/components/Button";
 import { ChevronIcon } from "~/components/Icons";
-import setQueryParams from "~/utils/setQueryParams";
 import { ItemsPerPage } from "~/features/sort-words";
+import useSetQueryParams from "~/hooks/useSetQueryParams";
 
 type FilterByPageProps = {
   currentPage: number;
@@ -19,9 +18,8 @@ export default function FilterByPage({
   setPage,
   wordsLength,
 }: FilterByPageProps) {
-  const router = useRouter();
-
   const { t } = useTranslation();
+  const setQueryParams = useSetQueryParams();
 
   const pages = Array.from(
     { length: Math.ceil(wordsLength / ItemsPerPage) },
@@ -44,7 +42,7 @@ export default function FilterByPage({
 
   function handlePageSelect(page: number) {
     setPage(page);
-    setQueryParams(router, "page", page === 1 ? null : page.toString());
+    setQueryParams("page", page === 1 ? null : page.toString());
   }
 
   function handleButtonPageSelect(option: "previous" | "next") {
@@ -66,11 +64,7 @@ export default function FilterByPage({
         return prevPage;
       });
 
-    setQueryParams(
-      router,
-      "page",
-      newPageValue === 1 ? null : newPageValue.toString(),
-    );
+    setQueryParams("page", newPageValue === 1 ? null : newPageValue.toString());
   }
 
   return (
