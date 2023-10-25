@@ -1,5 +1,5 @@
 # Dictionary App
-A highly customizable dictionary app. Deployed on [Vercel](https://dicty-vol1kk.vercel.app/), yet keep in mind Vercel works pretty slowly
+A highly customizable dictionary app. Deployed on [Vercel](https://dicty-vol1kk.vercel.app/), though keep in mind MongoDB Atlas isn't that fast.
 
 ## Tech Stack
 - [T3 Stack](https://create.t3.gg/)
