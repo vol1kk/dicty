@@ -1,10 +1,10 @@
 import { useTranslation } from "next-i18next";
 
 import cn from "~/utils/cn";
+import Dropdown from "~/components/Dropdown";
 import useLocalData from "~/store/useLocalData";
 import { ChevronIcon } from "~/components/Icons";
-import { FONT_TYPES } from "~/features/change-font";
-import Dropdown from "~/components/Dropdown";
+import { FontTypes } from "~/features/change-font";
 
 export default function ChangeFont() {
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ export default function ChangeFont() {
           data-testid="fonts-list"
           className="rounded-md bg-white p-4 shadow-3xl dark:bg-gray-900 [&>li]:leading-8"
         >
-          {FONT_TYPES.map(type => {
+          {FontTypes.map(type => {
             const isFontSame = type.name.toLowerCase() === font.toLowerCase();
             return (
               <li
@@ -51,7 +51,7 @@ export default function ChangeFont() {
                 data-font={type.name}
                 aria-selected={isFontSame}
                 tabIndex={isFontSame ? 0 : -1}
-                data-testid={type.className.toLowerCase()}
+                data-testid={type.name.toLowerCase()}
                 onClick={e => dropdownItemHandler(e)}
                 className={cn(
                   "cursor-pointer whitespace-nowrap rounded-md px-4 py-2 outline-2 outline-offset-2 outline-primary hover:text-primary focus-visible:outline aria-selected:text-primary mobile:text-center",

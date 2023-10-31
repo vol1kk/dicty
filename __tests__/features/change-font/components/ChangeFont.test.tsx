@@ -1,8 +1,14 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, vi, expect } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import ChangeFont from "~/features/change-font";
 import { mockedSetFont } from "#tests/setup";
+
+vi.mock("next/font/google", () => ({
+  Poppins: () => ({ className: "poppins" }),
+  Merriweather: () => ({ className: "merriweather" }),
+  Inconsolata: () => ({ className: "inconsolata" }),
+}));
 
 function setup() {
   const data = render(<ChangeFont />);
@@ -10,17 +16,17 @@ function setup() {
   const changeFontContainer = screen.getByTestId("fonts-list");
 
   const fontSans = {
-    button: screen.getByTestId("font-poppins"),
+    button: screen.getByTestId("sans-serif"),
     value: "Sans-Serif",
   };
 
   const fontSerif = {
-    button: screen.getByTestId("font-merriweather"),
+    button: screen.getByTestId("serif"),
     value: "Serif",
   };
 
   const fontMono = {
-    button: screen.getByTestId("font-inconsolata"),
+    button: screen.getByTestId("mono"),
     value: "Mono",
   };
 

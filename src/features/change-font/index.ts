@@ -1,5 +1,9 @@
 import ChangeFont from "~/features/change-font/components/ChangeFont";
-import FONT_TYPES from "~/features/change-font/constants/fontTypes";
+import FontTypes, {
+  PoppinsFont,
+  InconsolataFont,
+  MerriweatherFont,
+} from "~/features/change-font/constants/FontTypes";
 
-export { FONT_TYPES };
+export { FontTypes, PoppinsFont, InconsolataFont, MerriweatherFont };
 export default ChangeFont;
