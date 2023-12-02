@@ -7,6 +7,7 @@ import { api, type ReactQueryOptions } from "~/utils/api";
 type UseDictionariesOptions = ReactQueryOptions["words"]["getDictionaries"];
 
 export default function useDictionaries(
+  words: Word[],
   props?: Partial<UseDictionariesOptions>,
 ) {
   const isAuthed = useSessionData(state => state.isAuthed);
@@ -22,13 +23,13 @@ export default function useDictionaries(
   useEffect(() => {
     const localData = localStorage.getItem("words");
     if (localData) {
-      const parsedWords = (JSON.parse(localData) as Word[])
+      const parsedDictionaries = (JSON.parse(localData) as Word[])
         .filter(w => w.dictionary)
-        .map(w => w.dictionary) as string[];
+        .map(w => w.dictionary?.toLowerCase()) as string[];
 
-      setLocalDictionaries(parsedWords);
+      setLocalDictionaries([...new Set(parsedDictionaries)]);
     }
-  }, []);
+  }, [words]);
 
   return {
     ...authedDictionaries,

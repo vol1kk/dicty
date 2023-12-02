@@ -34,7 +34,10 @@ export default function Home() {
   const wordsListRef = useRef<HTMLLIElement>(null);
 
   const { data: words, isLoading } = useWords(dicty, FetchOnceOptions);
-  const { data: availableDictionaries } = useDictionaries(FetchOnceOptions);
+  const { data: availableDictionaries } = useDictionaries(
+    words,
+    FetchOnceOptions,
+  );
 
   const availableLanguages = [
     ...new Set(words.map(w => w.language?.toLowerCase())),

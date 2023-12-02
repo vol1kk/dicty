@@ -29,7 +29,11 @@ export default function useWords(
     if (localData) {
       const parsedWords = (JSON.parse(localData) as Word[])
         .map(parseDate)
-        .filter(w => (dictionary ? w.dictionary === dictionary : true));
+        .filter(w =>
+          dictionary && w.dictionary
+            ? w.dictionary.toLowerCase() === dictionary.toLowerCase()
+            : true,
+        );
 
       setLocalWords(parsedWords);
     }
